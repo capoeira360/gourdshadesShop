@@ -1,0 +1,342 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: string;
+  images: string[];
+  description: string;
+  longDescription: string;
+  specifications: {
+    dimensions: string;
+    material: string;
+    bulbType: string;
+    wattage: string;
+    voltage: string;
+    warranty: string;
+  };
+  features: string[];
+  inStock: boolean;
+}
+
+const ProductDetailPage: React.FC = () => {
+  const params = useParams();
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features'>('description');
+
+  // Sample product data
+  const products: Product[] = [
+    {
+      id: '1',
+      name: 'Modern Pendant Light',
+      category: 'Pendant Lights',
+      price: '$299.99',
+      images: [
+        '/images/pendant-1.jpg',
+        '/images/pendant-2.jpg',
+        '/images/pendant-3.jpg'
+      ],
+      description: 'A sleek and modern pendant light perfect for contemporary spaces.',
+      longDescription: 'This stunning modern pendant light combines form and function to create the perfect lighting solution for your contemporary home. Crafted with premium materials and featuring a minimalist design, this pendant light adds sophistication to any room. The adjustable height makes it versatile for various ceiling heights, while the warm LED lighting creates the perfect ambiance for dining rooms, kitchens, or living spaces. The sleek metal finish complements modern decor styles and the energy-efficient LED technology ensures long-lasting performance.',
+      specifications: {
+        dimensions: '12" W x 18" H',
+        material: 'Brushed Steel & Glass',
+        bulbType: 'LED Integrated',
+        wattage: '15W',
+        voltage: '120V',
+        warranty: '2 Years'
+      },
+      features: [
+        'Adjustable height cord',
+        'Energy-efficient LED technology',
+        'Dimmable with compatible dimmer switch',
+        'Easy installation with included hardware',
+        'Modern minimalist design',
+        'Premium brushed steel finish'
+      ],
+      inStock: true
+    },
+    {
+      id: '2',
+      name: 'Vintage Table Lamp',
+      category: 'Table Lamps',
+      price: '$189.99',
+      images: [
+        '/images/table-1.jpg',
+        '/images/table-2.jpg'
+      ],
+      description: 'Classic vintage-style table lamp with brass finish.',
+      longDescription: 'Transport your space back in time with this beautifully crafted vintage table lamp. The antique brass finish and classic design elements make it a perfect addition to traditional or eclectic interiors. The fabric shade diffuses light beautifully, creating a warm and inviting atmosphere. Whether placed on a bedside table, desk, or living room side table, this lamp adds character and charm to any space.',
+      specifications: {
+        dimensions: '8" W x 22" H',
+        material: 'Brass & Fabric',
+        bulbType: 'E26 Standard',
+        wattage: '60W Max',
+        voltage: '120V',
+        warranty: '1 Year'
+      },
+      features: [
+        'Antique brass finish',
+        'Classic fabric shade',
+        'Stable weighted base',
+        'Standard E26 bulb socket',
+        'Inline on/off switch',
+        'Vintage-inspired design'
+      ],
+      inStock: true
+    },
+    {
+      id: '3',
+      name: 'Industrial Floor Lamp',
+      category: 'Floor Lamps',
+      price: '$399.99',
+      images: [
+        '/images/floor-1.jpg',
+        '/images/floor-2.jpg',
+        '/images/floor-3.jpg'
+      ],
+      description: 'Industrial-style floor lamp with adjustable arm.',
+      longDescription: 'Make a bold statement with this industrial-style floor lamp that combines rugged aesthetics with modern functionality. The adjustable arm and rotating head allow you to direct light exactly where you need it, making it perfect for reading corners, workspaces, or accent lighting. The weathered metal finish and exposed hardware give it an authentic industrial look that complements loft-style and modern industrial interiors.',
+      specifications: {
+        dimensions: '24" W x 65" H',
+        material: 'Steel & Iron',
+        bulbType: 'E26 Standard',
+        wattage: '100W Max',
+        voltage: '120V',
+        warranty: '3 Years'
+      },
+      features: [
+        'Adjustable arm and head',
+        'Weathered metal finish',
+        'Heavy-duty construction',
+        'Foot switch control',
+        'Industrial design aesthetic',
+        'Stable weighted base'
+      ],
+      inStock: false
+    }
+  ];
+
+  const product = products.find(p => p.id === params.id);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <Link href="/products" className="text-blue-600 hover:text-blue-800">
+            Back to Products
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            LampCraft
+          </Link>
+          <div className="flex space-x-8">
+            <Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link>
+            <Link href="/products" className="text-gray-600 hover:text-gray-900">Products</Link>
+            <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
+            <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Breadcrumb */}
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <nav className="flex text-sm text-gray-500">
+          <Link href="/" className="hover:text-gray-700">Home</Link>
+          <span className="mx-2">/</span>
+          <Link href="/products" className="hover:text-gray-700">Products</Link>
+          <span className="mx-2">/</span>
+          <span className="text-gray-900">{product.name}</span>
+        </nav>
+      </div>
+
+      {/* Product Content */}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Image Gallery */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <img
+                src={product.images[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Thumbnail Images */}
+            {product.images.length > 1 && (
+              <div className="flex space-x-2">
+                {product.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                      selectedImage === index ? 'border-blue-500' : 'border-gray-200'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Product Info */}
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+              <p className="text-gray-600 mb-4">{product.category}</p>
+              <p className="text-3xl font-bold text-blue-600">{product.price}</p>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                product.inStock 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-red-100 text-red-800'
+              }`}>
+                {product.inStock ? 'In Stock' : 'Out of Stock'}
+              </span>
+            </div>
+
+            <p className="text-gray-700 text-lg leading-relaxed">
+              {product.description}
+            </p>
+
+            <button 
+              className={`w-full py-3 px-6 rounded-lg font-medium text-white ${
+                product.inStock 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : 'bg-gray-400 cursor-not-allowed'
+              }`}
+              disabled={!product.inStock}
+            >
+              {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+            </button>
+          </div>
+        </div>
+
+        {/* Product Details Tabs */}
+        <div className="mt-16">
+          {/* Tab Navigation */}
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8">
+              <button
+                onClick={() => setActiveTab('description')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'description'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Description
+              </button>
+              <button
+                onClick={() => setActiveTab('specifications')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'specifications'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Specifications
+              </button>
+              <button
+                onClick={() => setActiveTab('features')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'features'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Features
+              </button>
+            </nav>
+          </div>
+
+          {/* Tab Content */}
+          <div className="py-8">
+            {activeTab === 'description' && (
+              <div className="max-w-4xl">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Product Description</h3>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {product.longDescription}
+                </p>
+              </div>
+            )}
+
+            {activeTab === 'specifications' && (
+              <div className="max-w-4xl">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Specifications</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Dimensions</dt>
+                    <dd className="text-gray-700">{product.specifications.dimensions}</dd>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Material</dt>
+                    <dd className="text-gray-700">{product.specifications.material}</dd>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Bulb Type</dt>
+                    <dd className="text-gray-700">{product.specifications.bulbType}</dd>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Wattage</dt>
+                    <dd className="text-gray-700">{product.specifications.wattage}</dd>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Voltage</dt>
+                    <dd className="text-gray-700">{product.specifications.voltage}</dd>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <dt className="font-medium text-gray-900">Warranty</dt>
+                    <dd className="text-gray-700">{product.specifications.warranty}</dd>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'features' && (
+              <div className="max-w-4xl">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
+                <ul className="space-y-3">
+                  {product.features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetailPage;

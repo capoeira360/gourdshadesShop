@@ -13,41 +13,40 @@ interface Product {
   description: string;
 }
 
-const ProductCard: React.FC<{ product: Product; index: number }> = ({ product, index }) => {
+interface ProductRowProps {
+  product: Product;
+  index: number;
+  isActive: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+}
+
+const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(entry.target);
         }
       },
-      { 
-        threshold: 0.2,
-        rootMargin: '50px 0px -50px 0px'
-      }
+      { threshold: 0.3 }
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
+    if (rowRef.current) {
+      observer.observe(rowRef.current);
     }
 
     return () => observer.disconnect();
   }, []);
 
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 60,
-      scale: 0.95,
-    },
+  const rowVariants = {
+    hidden: { opacity: 0, x: -30 },
     visible: {
       opacity: 1,
-      y: 0,
-      scale: 1,
+      x: 0,
       transition: {
         duration: 0.6,
         delay: index * 0.1,
@@ -57,109 +56,147 @@ const ProductCard: React.FC<{ product: Product; index: number }> = ({ product, i
   };
 
   return (
-    <motion.div
-      ref={cardRef}
-      className="group cursor-pointer"
-      variants={cardVariants}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-        {/* Product Image */}
-        <div className="relative h-80 overflow-hidden bg-gradient-to-br from-light-gray to-very-light-gray">
-          <motion.div
-            className="w-full h-full bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.4 }}
-          >
-            <span className="text-6xl opacity-30">{product.category === 'pendant' ? '💡' : product.category === 'chandelier' ? '✨' : product.category === 'sconce' ? '🏛️' : product.category === 'table' ? '🪔' : '🕯️'}</span>
-          </motion.div>
-          
-          {/* Overlay on hover */}
-          <motion.div
-            className="absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <motion.button
-              className="px-6 py-3 bg-accent text-primary rounded-full font-medium"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Details
-            </motion.button>
-          </motion.div>
-        </div>
-
-        {/* Product Info */}
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-3">
-            <h3 className="text-xl font-medium text-primary group-hover:text-accent transition-colors">
-              {product.name}
-            </h3>
-            <span className="text-lg font-semibold text-accent">
-              {product.price}
-            </span>
-          </div>
-          
-          <p className="text-sm text-text-secondary uppercase tracking-wide mb-3">
-            {product.category}
-          </p>
-          
-          <p className="text-text-secondary leading-relaxed">
+    <Link href={`/products/${product.id}`}>
+      <motion.div
+        ref={rowRef}
+        className={`group cursor-pointer py-8 px-6 border-b border-gray-100 transition-all duration-300 ${
+          isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
+        }`}
+        variants={rowVariants}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
+      >
+      <div className="flex justify-between items-center">
+        <div className="flex-1">
+          <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
+            isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
+          }`}>
+            {product.name}
+          </h3>
+          <p className="text-gray-600 mt-2 text-sm md:text-base">
             {product.description}
           </p>
+          <div className="flex items-center mt-4 space-x-4">
+            <span className="text-lg font-medium text-primary">
+              {product.price}
+            </span>
+            <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              {product.category}
+            </span>
+          </div>
+        </div>
+        <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <svg 
+            className="w-6 h-6 text-primary" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
+  );
+};
+
+interface ProductImageProps {
+  product: Product | null;
+}
+
+const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
+  return (
+    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden">
+      {product ? (
+        <motion.div
+          key={product.id}
+          className="w-full h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+        >
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+            <h4 className="text-white text-xl font-light mb-2">
+              {product.name}
+            </h4>
+            <p className="text-white/80 text-sm">
+              {product.description}
+            </p>
+          </div>
+        </motion.div>
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="text-center text-gray-400">
+            <svg 
+              className="w-16 h-16 mx-auto mb-4" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-lg">Hover over a product to see it here</p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
 const ProductsPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
   const products: Product[] = [
     {
       id: '1',
-      name: 'Minimalist Pendant',
+      name: 'Aurora Minimalist Pendant',
       category: 'pendant',
-      price: '$299',
+      price: '$329',
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iODAiIGZpbGw9IiNEQkI0MkMiLz4KPGxpbmUgeDE9IjIwMCIgeTE9IjEyMCIgeDI9IjIwMCIgeTI9IjgwIiBzdHJva2U9IiM0QTQ1NEIiIHN0cm9rZS13aWR0aD0iNCIvPgo8L3N2Zz4K',
-      description: 'Clean lines and modern aesthetics define this elegant pendant light.',
+      description: 'Sleek brushed aluminum pendant with warm LED technology, perfect for modern kitchens and dining areas.',
     },
     {
       id: '2',
-      name: 'Crystal Chandelier',
+      name: 'Venetian Crystal Chandelier',
       category: 'chandelier',
-      price: '$1,299',
+      price: '$1,899',
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjE4MCIgcj0iNjAiIGZpbGw9IiNEQkI0MkMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMjQwIiByPSIyMCIgZmlsbD0iI0RCQjQyQyIvPgo8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjIwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjI4MCIgcj0iMTUiIGZpbGw9IiNEQkI0MkMiLz4KPHN2Zz4K',
-      description: 'Luxurious crystal chandelier that transforms any space into a palace.',
+      description: 'Hand-cut Bohemian crystal chandelier with chrome finish, featuring 9 candelabra lights for grand spaces.',
     },
     {
       id: '3',
-      name: 'Industrial Sconce',
+      name: 'Brooklyn Industrial Sconce',
       category: 'sconce',
-      price: '$199',
+      price: '$249',
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE4MCIgeT0iMTUwIiB3aWR0aD0iNDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMTQwIiB3aWR0aD0iNjAiIGhlaWdodD0iMjAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Raw materials meet refined design in this industrial wall sconce.',
+      description: 'Vintage-inspired wall sconce with aged brass finish and Edison bulb compatibility for authentic industrial charm.',
     },
     {
       id: '4',
-      name: 'Ceramic Table Lamp',
+      name: 'Artisan Ceramic Table Lamp',
       category: 'table',
-      price: '$149',
+      price: '$189',
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE5NSIgeT0iMjAwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAwIiBmaWxsPSIjNEE0NTRCIi8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNjAiIHJ4PSI2MCIgcnk9IjQwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMzAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Handcrafted ceramic base with a soft linen shade for warm ambiance.',
+      description: 'Hand-thrown ceramic base in matte white glaze with natural linen drum shade, perfect for bedside or living room.',
     },
     {
       id: '5',
-      name: 'Arc Floor Lamp',
+      name: 'Meridian Arc Floor Lamp',
       category: 'floor',
-      price: '$399',
+      price: '$449',
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE5NSIgeT0iMTAwIiB3aWR0aD0iMTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNEE0NTRCIi8+CjxyZWN0IHg9IjE2MCIgeT0iODAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iI0RCQjQyQyIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIzMjAiIHI9IjMwIiBmaWxsPSIjNEE0NTRCIi8+Cjwvc3ZnPgo=',
-      description: 'Sweeping arc design provides focused lighting with dramatic presence.',
+      description: 'Contemporary arc floor lamp with marble base and adjustable LED spotlight, ideal for reading corners.',
     },
     {
       id: '6',
@@ -244,7 +281,7 @@ const ProductsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-very-light-gray pt-24">
+    <div className="min-h-screen bg-white pt-24">
       {/* Header Section */}
       <motion.div
         ref={headerRef}
@@ -276,7 +313,7 @@ const ProductsPage: React.FC = () => {
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 filter === category
                   ? 'bg-primary text-white'
-                  : 'bg-white text-primary hover:bg-primary hover:text-white'
+                  : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
               }`}
               onClick={() => setFilter(category)}
               whileHover={{ scale: 1.05 }}
@@ -288,12 +325,27 @@ const ProductsPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Products Grid */}
+      {/* Products Layout - Split View */}
       <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left Side - Product Names */}
+          <div className="space-y-0">
+            {filteredProducts.map((product, index) => (
+              <ProductRow 
+                key={product.id} 
+                product={product} 
+                index={index}
+                isActive={activeProduct?.id === product.id}
+                onHover={() => setActiveProduct(product)}
+                onLeave={() => setActiveProduct(null)}
+              />
+            ))}
+          </div>
+
+          {/* Right Side - Product Image */}
+          <div className="lg:block hidden">
+            <ProductImage product={activeProduct} />
+          </div>
         </div>
       </div>
 
