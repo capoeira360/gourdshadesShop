@@ -348,38 +348,6 @@ const ProductsPage: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Call to Action */}
-      <section className="bg-primary py-24">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-light text-white mb-6">
-            Need Help Choosing?
-          </h2>
-          <p className="text-xl text-white/80 mb-8">
-            Our lighting specialists are here to help you find the perfect solution for your space.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-              <motion.button
-                className="px-8 py-4 bg-accent text-primary rounded-full font-medium hover:bg-accent/90 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Us
-              </motion.button>
-            </Link>
-            <Link href="/gallery">
-              <motion.button
-                className="px-8 py-4 border-2 border-white text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View Gallery
-              </motion.button>
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

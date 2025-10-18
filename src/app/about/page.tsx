@@ -170,58 +170,7 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-24 bg-very-light-gray">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.h2
-            className="text-4xl md:text-5xl font-light text-primary text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            Meet Our Team
-          </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Giovanni Rossi',
-                role: 'Founder & Master Craftsman',
-                icon: '👨‍🎨',
-              },
-              {
-                name: 'Elena Martinez',
-                role: 'Head of Design',
-                icon: '👩‍💼',
-              },
-              {
-                name: 'Marcus Chen',
-                role: 'Innovation Director',
-                icon: '👨‍💻',
-              },
-            ].map((member, index) => (
-              <motion.div
-                key={member.name}
-                className="text-center p-8 bg-white rounded-2xl shadow-lg"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-6xl mb-6">{member.icon}</div>
-                <h3 className="text-xl font-medium text-primary mb-2">
-                  {member.name}
-                </h3>
-                <p className="text-text-secondary">
-                  {member.role}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="bg-accent py-24">
