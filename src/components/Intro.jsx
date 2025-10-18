@@ -17,6 +17,11 @@ export default function Intro() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Check if all refs are available before proceeding
+      if (!background.current || !introImage.current || !homeHeader.current || !heroTitle.current || !heroSubtitle.current) {
+        return;
+      }
+
       // Set initial states for all elements
       gsap.set(background.current, {
         clipPath: "inset(30%)",
@@ -64,11 +69,14 @@ export default function Intro() {
         onUpdate: (self) => {
           const progress = self.progress;
           
-          // Animate both texts together with smooth bidirectional movement
-          gsap.set([heroTitle.current, heroSubtitle.current], {
-            y: progress * -400,
-            opacity: 1 - progress
-          });
+          // Check if refs are still available before animating
+          if (heroTitle.current && heroSubtitle.current) {
+            // Animate both texts together with smooth bidirectional movement
+            gsap.set([heroTitle.current, heroSubtitle.current], {
+              y: progress * -400,
+              opacity: 1 - progress
+            });
+          }
         }
       });
 
