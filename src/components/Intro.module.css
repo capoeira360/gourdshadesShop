@@ -1,0 +1,134 @@
+/* White Monochrome Palette */
+.homeHeader {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: #FCFCFC;
+  z-index: 1;
+}
+
+.intro {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1rem, 5vw, 3rem);
+  max-width: 1200px;
+  width: 100%;
+  opacity: 1;
+}
+
+.introImage {
+  position: relative;
+  width: clamp(300px, 50vw, 600px);
+  height: clamp(400px, 60vh, 700px);
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s ease;
+}
+
+.introImage:hover {
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  color: #000000;
+  margin: 0;
+  margin-bottom: clamp(1rem, 3vh, 2rem);
+  text-transform: uppercase;
+  cursor: default;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.heroSubtitle {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.6;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .homeHeader {
+    height: 100svh; /* Use svh for better mobile support */
+  }
+  
+  .intro {
+    padding: 1rem;
+  }
+  
+  .introImage {
+    width: 80vw;
+    height: 50vh;
+    margin-bottom: 2rem;
+  }
+  
+  .heroTitle {
+    font-size: clamp(2rem, 12vw, 4rem);
+    line-height: 1;
+  }
+  
+  .heroSubtitle {
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .introImage {
+    width: 90vw;
+    height: 40vh;
+  }
+  
+  /* Graceful degradation for mobile */
+  .backgroundImage {
+    clip-path: none;
+  }
+}
+
+/* Performance optimizations */
+.homeHeader,
+.backgroundImage,
+.introImage,
+.heroTitle,
+.heroSubtitle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Locomotive Scroll classes */
+.homeHeader.is-inview {
+  opacity: 1;
+}
+
+/* Container styles */
+
+/* GPU acceleration for better performance */
+.container {
+  will-change: transform;
+  transform: translateZ(0);
+}
