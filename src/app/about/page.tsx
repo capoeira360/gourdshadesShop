@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface AboutSection {
   id: string;
@@ -16,47 +16,149 @@ interface AboutImageProps {
 }
 
 const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
+  // Define gradient colors for each section
+  const getGradientForSection = (sectionId: string) => {
+    const gradients = {
+      story: 'from-blue-400 via-purple-500 to-pink-500',
+      heritage: 'from-emerald-400 via-teal-500 to-cyan-600',
+      values: 'from-orange-400 via-red-500 to-pink-600',
+      mission: 'from-indigo-400 via-blue-500 to-purple-600'
+    };
+    return gradients[sectionId as keyof typeof gradients] || 'from-gray-400 to-gray-600';
+  };
+
   return (
-    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden">
-      {section ? (
-        <motion.div
-          key={section.id}
-          className="w-full h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-        >
-          <img
-            src={section.image}
-            alt={section.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-            <h4 className="text-white text-xl font-light mb-2">
-              {section.title}
-            </h4>
-            {section.subtitle && (
-              <p className="text-white/80 text-sm">
-                {section.subtitle}
-              </p>
-            )}
-          </div>
-        </motion.div>
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center text-gray-400">
-            <svg 
-              className="w-16 h-16 mx-auto mb-4" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl">
+      <AnimatePresence mode="wait">
+        {section ? (
+          <motion.div
+            key={section.id}
+            className="w-full h-full relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ 
+              duration: 0.3, 
+              ease: [0.4, 0, 0.2, 1]
+            }}
+          >
+            {/* Animated gradient background */}
+            <motion.div
+              className={`w-full h-full bg-gradient-to-br ${getGradientForSection(section.id)} relative`}
+              initial={{ backgroundPosition: '0% 50%' }}
+              animate={{ backgroundPosition: '100% 50%' }}
+              transition={{ 
+                duration: 8, 
+                repeat: Infinity, 
+                repeatType: "reverse",
+                ease: "linear"
+              }}
+              style={{
+                backgroundSize: '200% 200%'
+              }}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <p className="text-lg">Scroll to explore our story</p>
-          </div>
-        </div>
-      )}
+              {/* Floating geometric shapes */}
+              <motion.div
+                className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20 rounded-full"
+                animate={{ 
+                  y: [0, -20, 0],
+                  x: [0, 10, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rounded-lg rotate-45"
+                animate={{ 
+                  rotate: [45, 90, 45],
+                  y: [0, 15, 0]
+                }}
+                transition={{ 
+                  duration: 5, 
+                  repeat: Infinity, 
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25 rounded-full"
+                animate={{ 
+                  scale: [1, 1.3, 1],
+                  opacity: [0.25, 0.4, 0.25]
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity, 
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.div>
+
+            {/* Content overlay with enhanced styling */}
+            <motion.div 
+              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-8"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
+              <motion.h4 
+                className="text-white text-2xl font-light mb-3 tracking-wide"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.15, duration: 0.3 }}
+              >
+                {section.title}
+              </motion.h4>
+              {section.subtitle && (
+                <motion.p 
+                  className="text-white/90 text-base font-medium"
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
+                  {section.subtitle}
+                </motion.p>
+              )}
+            </motion.div>
+
+            {/* Subtle border glow effect */}
+            <div className="absolute inset-0 rounded-lg ring-1 ring-white/20" />
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="placeholder"
+            className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-center text-gray-500">
+              <motion.svg 
+                className="w-20 h-20 mx-auto mb-6" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  opacity: [0.5, 0.8, 0.5]
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity, 
+                  ease: "easeInOut"
+                }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </motion.svg>
+              <p className="text-xl font-light">Scroll to explore our story</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -72,24 +174,43 @@ interface SectionRowProps {
 const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+    const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.3;
+    
+    if (newIsVisible !== isVisible) {
+      setIsVisible(newIsVisible);
+      if (newIsVisible) {
+        // Add a small delay to prevent rapid state changes
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(() => {
+          onEnter();
+        }, 50);
+      }
+    }
+  }, [isVisible, onEnter]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          onEnter();
-        }
-      },
-      { threshold: 0.5 }
-    );
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: [0.3, 0.7],
+      rootMargin: '-20% 0px -20% 0px'
+    });
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
-  }, [onEnter]);
+    return () => {
+      observer.disconnect();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [handleIntersection]);
 
   const variants = {
     hidden: { opacity: 0, y: 50 },
