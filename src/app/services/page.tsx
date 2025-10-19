@@ -59,18 +59,6 @@ const ServicesPage: React.FC = () => {
     },
   ];
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    },
-  };
-
   return (
     <div className="min-h-screen bg-very-light-gray pt-24">
       {/* Hero Section */}

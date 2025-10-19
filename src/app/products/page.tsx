@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Product {
   id: string;
@@ -118,11 +119,14 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
         >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover"
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
             <h4 className="text-white text-xl font-light mb-2">
               {product.name}

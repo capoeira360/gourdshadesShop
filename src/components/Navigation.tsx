@@ -82,21 +82,6 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     },
   };
 
-  const linkHoverVariants = {
-    rest: {
-      rotateY: 0,
-      scale: 1,
-    },
-    hover: {
-      rotateY: 5,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const characterVariants = {
     closed: {
       opacity: 0,
@@ -111,24 +96,6 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
         delay: i * 0.05,
         duration: 0.4,
         ease: [0.76, 0, 0.24, 1] as const,
-      },
-    }),
-  };
-
-  const characterHoverVariants = {
-    rest: {
-      rotateY: 0,
-      scale: 1,
-      color: "#ffffff",
-    },
-    hover: (i: number) => ({
-      rotateY: Math.sin(i * 0.5) * 10,
-      scale: 1.1,
-      color: "#DBB42C",
-      transition: {
-        delay: i * 0.02,
-        duration: 0.3,
-        ease: "easeOut",
       },
     }),
   };

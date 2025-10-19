@@ -28,12 +28,12 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl">
+    <div className="sticky top-0 h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
             key={section.id}
-            className="w-full h-full relative"
+            className="w-full h-full relative flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -218,9 +218,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
-        delay: index * 0.1,
-        ease: [0.76, 0, 0.24, 1] as const,
+        duration: 0.6,
+        delay: index * 0.15,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
       },
     },
   };
@@ -228,8 +228,8 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   return (
     <motion.div
       ref={sectionRef}
-      className={`py-16 px-8 transition-all duration-300 ${
-        isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg' : ''
+      className={`h-[600px] flex items-center px-8 mb-8 transition-all duration-500 ${
+        isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
       }`}
       variants={variants}
       initial="hidden"
@@ -237,24 +237,39 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <div className="max-w-2xl">
-        <h2 className={`text-4xl md:text-5xl font-light mb-6 transition-colors duration-300 ${
-          isActive ? 'text-primary' : 'text-gray-900'
-        }`}>
+      <div className="max-w-2xl w-full">
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-light mb-8 transition-all duration-500 ${
+            isActive ? 'text-primary transform scale-105' : 'text-gray-900'
+          }`}
+          layout
+        >
           {section.title}
-        </h2>
+        </motion.h2>
         {section.subtitle && (
-          <h3 className="text-xl text-gray-600 mb-6 font-medium">
+          <motion.h3 
+            className="text-xl text-gray-600 mb-8 font-medium"
+            layout
+          >
             {section.subtitle}
-          </h3>
+          </motion.h3>
         )}
-        <div className="space-y-4">
+        <motion.div 
+          className="space-y-6"
+          layout
+        >
           {section.content.map((paragraph, idx) => (
-            <p key={idx} className="text-lg text-gray-700 leading-relaxed">
+            <motion.p 
+              key={idx} 
+              className="text-lg text-gray-700 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
+            >
               {paragraph}
-            </p>
+            </motion.p>
           ))}
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

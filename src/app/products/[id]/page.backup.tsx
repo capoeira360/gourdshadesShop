@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
 interface Product {
   id: string;
@@ -43,10 +44,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, productName }) => {
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
-        <img
+        <Image
           src={images[selectedImage]}
           alt={`${productName} - Image ${selectedImage + 1}`}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
         />
       </motion.div>
 
@@ -62,10 +64,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, productName }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <img
+            <Image
               src={image}
               alt={`${productName} thumbnail ${index + 1}`}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </motion.button>
         ))}
@@ -81,14 +84,20 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, productName }) => {
             exit={{ opacity: 0 }}
             onClick={() => setIsZoomed(false)}
           >
-            <motion.img
-              src={images[selectedImage]}
-              alt={`${productName} - Zoomed`}
-              className="max-w-full max-h-full object-contain"
+            <motion.div
+              className="relative max-w-full max-h-full"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-            />
+            >
+              <Image
+                src={images[selectedImage]}
+                alt={`${productName} - Zoomed`}
+                width={800}
+                height={600}
+                className="max-w-full max-h-full object-contain"
+              />
+            </motion.div>
             <button
               className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300"
               onClick={() => setIsZoomed(false)}
@@ -102,16 +111,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, productName }) => {
   );
 };
 
-const ProductDetailPage: React.FC = () => {
-  const params = useParams();
-  const router = useRouter();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features'>('description');
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  // Extended product data with multiple images
-  const products: Product[] = [
+// Extended product data with multiple images
+const products: Product[] = [
     {
       id: '1',
       name: 'Aurora Minimalist Pendant',
@@ -338,6 +339,13 @@ const ProductDetailPage: React.FC = () => {
     },
   ];
 
+const ProductDetailPage: React.FC = () => {
+  const params = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features'>('description');
+  const headerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const foundProduct = products.find(p => p.id === params.id);
     setProduct(foundProduct || null);
@@ -492,7 +500,7 @@ const ProductDetailPage: React.FC = () => {
               <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 {/* Tab Navigation */}
                 <div className="flex border-b border-gray-200">
-                  {['description', 'specifications', 'features'].map((tab) => (
+                  {(['description', 'specifications', 'features'] as const).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}

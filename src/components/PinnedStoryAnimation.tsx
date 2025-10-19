@@ -23,10 +23,11 @@ const PinnedStoryAnimation: React.FC<PinnedStoryAnimationProps> = ({
   const paragraphCharsRef = useRef<HTMLSpanElement[][]>([]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const currentContainer = containerRef.current;
+    if (!currentContainer) return;
 
     // Split title into characters
-    const titleElement = containerRef.current.querySelector('.story-title');
+    const titleElement = currentContainer.querySelector('.story-title');
     if (titleElement) {
       const titleText = titleElement.textContent || '';
       titleElement.innerHTML = titleText
@@ -40,7 +41,7 @@ const PinnedStoryAnimation: React.FC<PinnedStoryAnimationProps> = ({
     }
 
     // Split paragraphs into characters
-    const paragraphElements = containerRef.current.querySelectorAll('.story-paragraph');
+    const paragraphElements = currentContainer.querySelectorAll('.story-paragraph');
     paragraphElements.forEach((paragraph, pIndex) => {
       const paragraphText = paragraph.textContent || '';
       paragraph.innerHTML = paragraphText
@@ -62,7 +63,7 @@ const PinnedStoryAnimation: React.FC<PinnedStoryAnimationProps> = ({
     // Create GSAP timeline with ScrollTrigger
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
+        trigger: currentContainer,
         start: "top top",
         end: "+=800px", // Length of scroll animation
         pin: true,
@@ -91,7 +92,7 @@ const PinnedStoryAnimation: React.FC<PinnedStoryAnimationProps> = ({
     return () => {
       // Cleanup ScrollTrigger
       ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === containerRef.current) {
+        if (trigger.trigger === currentContainer) {
           trigger.kill();
         }
       });

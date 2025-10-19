@@ -102,10 +102,10 @@ const Footer: React.FC = () => {
       transition: {
         delay: i * 0.02,
         duration: 0.3,
-        ease: "easeOut",
+        ease: [0.76, 0, 0.24, 1] as const,
       },
     }),
-  };
+  } as const;
 
   // Render a navigation link with character animations and proximity expansion
   const renderAnimatedLink = (text: string, href: string) => {
@@ -158,7 +158,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer ref={footerRef} className="text-white py-24" style={{ minHeight: '400px', backgroundColor: '#262626' }}>
+    <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#262626' }}>
       <div className="max-w-7xl mx-auto px-6 h-full">
         {/* Main Content Grid */}
         <motion.div

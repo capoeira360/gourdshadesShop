@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import StickyFooterReveal from "@/components/StickyFooterReveal";
 
 export const metadata: Metadata = {
   title: "LampCo - Premium Lighting Solutions",
@@ -17,8 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Navigation />
-        {children}
-        <Footer />
+        <StickyFooterReveal>
+          {children}
+        </StickyFooterReveal>
       </body>
     </html>
   );
