@@ -311,60 +311,7 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Hours Section */}
-      <section className="bg-primary py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.h2
-            className="text-3xl md:text-4xl font-light text-white mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            Showroom Hours
-          </motion.h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <motion.div
-              className="text-left"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-medium text-white mb-4">Weekdays</h3>
-              <div className="space-y-2 text-white/80">
-                <p>Monday - Friday</p>
-                <p className="text-accent font-medium">9:00 AM - 6:00 PM</p>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              className="text-left"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-medium text-white mb-4">Weekends</h3>
-              <div className="space-y-2 text-white/80">
-                <p>Saturday - Sunday</p>
-                <p className="text-accent font-medium">10:00 AM - 4:00 PM</p>
-              </div>
-            </motion.div>
-          </div>
-          
-          <motion.p
-            className="text-white/60 mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            Appointments recommended for personalized consultations
-          </motion.p>
-        </div>
-      </section>
+
     </div>
   );
 };

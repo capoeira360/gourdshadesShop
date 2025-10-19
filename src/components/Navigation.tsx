@@ -175,7 +175,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
           {/* Menu/Close Text */}
           <div className="absolute right-20 top-1/2 transform -translate-y-1/2">
             <AnimatePresence mode="wait">
-              {!isOpen ? (
+              {!isOpen && (
                 <motion.span
                   key="menu"
                   initial={{ opacity: 0, y: 10 }}
@@ -185,17 +185,6 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                   className="text-sm font-medium text-primary"
                 >
                   Menu
-                </motion.span>
-              ) : (
-                <motion.span
-                  key="close"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-sm font-medium text-white"
-                >
-                  Close
                 </motion.span>
               )}
             </AnimatePresence>
@@ -219,50 +208,226 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               variants={backgroundVariants}
             />
 
-            {/* Menu Content */}
-            <div className="relative h-full flex">
-              {/* Left Side - Navigation Links */}
-              <div className="flex-1 flex flex-col justify-center items-start pl-16">
-                <motion.nav className="space-y-8">
-                  {menuItems.map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      variants={linkVariants}
-                      onMouseEnter={() => setHoveredLink(item.name)}
-                      onMouseLeave={() => setHoveredLink(null)}
-                    >
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className="block text-6xl font-light text-white hover:text-accent transition-colors duration-300"
-                      >
-                        {item.name.split('').map((char, charIndex) => (
-                          <motion.span
-                            key={charIndex}
-                            custom={charIndex}
-                            variants={characterVariants}
-                            className="inline-block"
-                          >
-                            {char}
-                          </motion.span>
-                        ))}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.nav>
-
-                {/* Footer Information */}
+            {/* Close Button and Text - Positioned in top right */}
+            <div className="absolute top-6 right-6 z-50 flex items-center space-x-4">
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="text-sm font-medium text-white"
+              >
+                Close
+              </motion.span>
+              <button
+                onClick={toggleMenu}
+                className="relative flex flex-col justify-center items-center w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 cursor-pointer hover:bg-white/20 transition-all duration-300"
+                aria-label="Close menu"
+              >
                 <motion.div
-                  className="absolute bottom-16 left-16 space-y-4"
+                  className="absolute w-5 h-0.5 bg-white"
+                  animate={{
+                    rotate: 45,
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.div
+                  className="absolute w-5 h-0.5 bg-white"
+                  animate={{
+                    rotate: -45,
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+              </button>
+            </div>
+
+            {/* Menu Content */}
+            <div className="relative h-full flex flex-col">
+              {/* Main Navigation Area */}
+              <div className="flex-1 flex">
+                {/* Left Side - Navigation Links Following Diagonal Flow */}
+                <div className="flex-1 flex flex-col justify-center items-start pl-16 pr-8 pt-24">
+                  <motion.nav className="relative">
+                  {/* Home - Top Left */}
+                  <motion.div
+                    variants={linkVariants}
+                    onMouseEnter={() => setHoveredLink(menuItems[0].name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="mb-8"
+                  >
+                    <Link
+                      href={menuItems[0].href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                    >
+                      {menuItems[0].name.split('').map((char, charIndex) => (
+                        <motion.span
+                          key={charIndex}
+                          custom={charIndex}
+                          variants={characterVariants}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </Link>
+                  </motion.div>
+
+                  {/* Products - Slightly indented */}
+                  <motion.div
+                    variants={linkVariants}
+                    onMouseEnter={() => setHoveredLink(menuItems[1].name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="mb-8 ml-8"
+                  >
+                    <Link
+                      href={menuItems[1].href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                    >
+                      {menuItems[1].name.split('').map((char, charIndex) => (
+                        <motion.span
+                          key={charIndex}
+                          custom={charIndex}
+                          variants={characterVariants}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </Link>
+                  </motion.div>
+
+                  {/* About - More indented */}
+                  <motion.div
+                    variants={linkVariants}
+                    onMouseEnter={() => setHoveredLink(menuItems[2].name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="mb-8 ml-16"
+                  >
+                    <Link
+                      href={menuItems[2].href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                    >
+                      {menuItems[2].name.split('').map((char, charIndex) => (
+                        <motion.span
+                          key={charIndex}
+                          custom={charIndex}
+                          variants={characterVariants}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </Link>
+                  </motion.div>
+
+                  {/* Services - Even more indented */}
+                  <motion.div
+                    variants={linkVariants}
+                    onMouseEnter={() => setHoveredLink(menuItems[3].name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="mb-8 ml-24"
+                  >
+                    <Link
+                      href={menuItems[3].href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                    >
+                      {menuItems[3].name.split('').map((char, charIndex) => (
+                        <motion.span
+                          key={charIndex}
+                          custom={charIndex}
+                          variants={characterVariants}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </Link>
+                  </motion.div>
+
+                  {/* Contact - Most indented */}
+                  <motion.div
+                    variants={linkVariants}
+                    onMouseEnter={() => setHoveredLink(menuItems[4].name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="mb-16 ml-32"
+                  >
+                    <Link
+                      href={menuItems[4].href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                    >
+                      {menuItems[4].name.split('').map((char, charIndex) => (
+                        <motion.span
+                          key={charIndex}
+                          custom={charIndex}
+                          variants={characterVariants}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </Link>
+                  </motion.div>
+                </motion.nav>
+                </div>
+
+                {/* Right Side - Image Preview Box */}
+                <div className="flex-1 flex justify-center items-center pr-16">
+                  <AnimatePresence mode="wait">
+                    {hoveredLink && (
+                      <motion.div
+                        key={hoveredLink}
+                        variants={previewVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="w-[400px] h-[300px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
+                      >
+                        <div className="w-full h-full bg-gradient-to-br from-accent/30 to-white/10 flex flex-col items-center justify-center p-8">
+                          <div className="text-6xl mb-6 text-white/80">
+                            {hoveredLink === 'Home' && '🏠'}
+                            {hoveredLink === 'Products' && '💡'}
+                            {hoveredLink === 'About' && '👥'}
+                            {hoveredLink === 'Services' && '🔧'}
+                            {hoveredLink === 'Contact' && '📞'}
+                          </div>
+                          <span className="text-white text-2xl font-light mb-2">
+                            {hoveredLink}
+                          </span>
+                          <span className="text-white/60 text-lg text-center">
+                            {hoveredLink === 'Home' && 'Discover our premium lighting collection'}
+                            {hoveredLink === 'Products' && 'Explore our curated lighting solutions'}
+                            {hoveredLink === 'About' && 'Learn about our lighting expertise'}
+                            {hoveredLink === 'Services' && 'Professional lighting services'}
+                            {hoveredLink === 'Contact' && 'Get in touch with our team'}
+                          </span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Footer Section - Reorganized Layout */}
+              <div className="absolute bottom-0 left-0 right-0 pb-12 px-16">
+                <motion.div
+                  className="flex justify-between items-end"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
                 >
+                  {/* Left Corner - Shop Address */}
                   <div className="text-white/60 text-sm">
-                    <p>Premium Lighting Solutions</p>
-                    <p>Est. 2024</p>
+                    <p>123 Lighting Street</p>
+                    <p>Design District, NY 10001</p>
                   </div>
-                  <div className="flex space-x-6 text-white/60 text-sm">
+
+                  {/* Center - Social Links */}
+                  <div className="flex space-x-8 text-white/60 text-sm">
                     <a href="#" className="hover:text-white transition-colors">
                       Instagram
                     </a>
@@ -273,29 +438,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                       LinkedIn
                     </a>
                   </div>
-                </motion.div>
-              </div>
 
-              {/* Right Side - Image Preview */}
-              <div className="flex-1 flex justify-center items-center pr-16">
-                <AnimatePresence mode="wait">
-                  {hoveredLink && (
-                    <motion.div
-                      key={hoveredLink}
-                      variants={previewVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="hidden"
-                      className="w-96 h-64 bg-white/10 rounded-lg overflow-hidden backdrop-blur-sm"
-                    >
-                      <div className="w-full h-full bg-gradient-to-br from-accent/20 to-white/10 flex items-center justify-center">
-                        <span className="text-white/60 text-lg">
-                          {hoveredLink} Preview
-                        </span>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  {/* Right Corner - Website */}
+                  <div className="text-white/60 text-sm">
+                    <p>www.theshop.com</p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
