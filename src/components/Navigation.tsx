@@ -64,6 +64,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     closed: {
       opacity: 0,
       y: 50,
+      rotateX: -90,
       transition: {
         duration: 0.4,
         ease: [0.76, 0, 0.24, 1] as const,
@@ -72,9 +73,25 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     open: {
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.6,
         ease: [0.76, 0, 0.24, 1] as const,
+      },
+    },
+  };
+
+  const linkHoverVariants = {
+    rest: {
+      rotateY: 0,
+      scale: 1,
+    },
+    hover: {
+      rotateY: 5,
+      scale: 1.02,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
       },
     },
   };
@@ -83,14 +100,34 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     closed: {
       opacity: 0,
       y: 20,
+      rotateX: -90,
     },
     open: (i: number) => ({
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
         delay: i * 0.05,
-        duration: 0.3,
+        duration: 0.4,
         ease: [0.76, 0, 0.24, 1] as const,
+      },
+    }),
+  };
+
+  const characterHoverVariants = {
+    rest: {
+      rotateY: 0,
+      scale: 1,
+      color: "#ffffff",
+    },
+    hover: (i: number) => ({
+      rotateY: Math.sin(i * 0.5) * 10,
+      scale: 1.1,
+      color: "#DBB42C",
+      transition: {
+        delay: i * 0.02,
+        duration: 0.3,
+        ease: "easeOut",
       },
     }),
   };
@@ -221,23 +258,27 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               </motion.span>
               <button
                 onClick={toggleMenu}
-                className="relative flex flex-col justify-center items-center w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 cursor-pointer hover:bg-white/20 transition-all duration-300"
+                className="relative flex flex-col justify-center items-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 cursor-pointer hover:bg-white/30 transition-all duration-300 shadow-lg"
                 aria-label="Close menu"
               >
-                <motion.div
-                  className="absolute w-5 h-0.5 bg-white"
-                  animate={{
-                    rotate: 45,
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.div
-                  className="absolute w-5 h-0.5 bg-white"
-                  animate={{
-                    rotate: -45,
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
+                <div className="relative w-6 h-6 flex items-center justify-center">
+                  <motion.div
+                    className="absolute w-4 h-0.5 bg-white shadow-sm"
+                    style={{ transformOrigin: 'center' }}
+                    animate={{
+                      rotate: 45,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.div
+                    className="absolute w-4 h-0.5 bg-white shadow-sm"
+                    style={{ transformOrigin: 'center' }}
+                    animate={{
+                      rotate: -45,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
               </button>
             </div>
 
@@ -254,6 +295,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     onMouseEnter={() => setHoveredLink(menuItems[0].name)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="mb-8"
+                    style={{ perspective: 1000 }}
+                    whileHover={{ 
+                      rotateY: 5, 
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
                   >
                     <Link
                       href={menuItems[0].href}
@@ -266,6 +313,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           custom={charIndex}
                           variants={characterVariants}
                           className="inline-block"
+                          style={{ transformOrigin: 'center bottom' }}
+                          whileHover={{
+                            rotateY: Math.sin(charIndex * 0.5) * 10,
+                            scale: 1.1,
+                            color: "#DBB42C",
+                            transition: {
+                              delay: charIndex * 0.02,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            },
+                          }}
                         >
                           {char}
                         </motion.span>
@@ -279,6 +337,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     onMouseEnter={() => setHoveredLink(menuItems[1].name)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="mb-8 ml-8"
+                    style={{ perspective: 1000 }}
+                    whileHover={{ 
+                      rotateY: -5, 
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
                   >
                     <Link
                       href={menuItems[1].href}
@@ -291,6 +355,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           custom={charIndex}
                           variants={characterVariants}
                           className="inline-block"
+                          style={{ transformOrigin: 'center bottom' }}
+                          whileHover={{
+                            rotateY: Math.sin(charIndex * 0.5) * -10,
+                            scale: 1.1,
+                            color: "#DBB42C",
+                            transition: {
+                              delay: charIndex * 0.02,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            },
+                          }}
                         >
                           {char}
                         </motion.span>
@@ -304,6 +379,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     onMouseEnter={() => setHoveredLink(menuItems[2].name)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="mb-8 ml-16"
+                    style={{ perspective: 1000 }}
+                    whileHover={{ 
+                      rotateY: 5, 
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
                   >
                     <Link
                       href={menuItems[2].href}
@@ -316,6 +397,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           custom={charIndex}
                           variants={characterVariants}
                           className="inline-block"
+                          style={{ transformOrigin: 'center bottom' }}
+                          whileHover={{
+                            rotateY: Math.sin(charIndex * 0.5) * 10,
+                            scale: 1.1,
+                            color: "#DBB42C",
+                            transition: {
+                              delay: charIndex * 0.02,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            },
+                          }}
                         >
                           {char}
                         </motion.span>
@@ -329,6 +421,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     onMouseEnter={() => setHoveredLink(menuItems[3].name)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="mb-8 ml-24"
+                    style={{ perspective: 1000 }}
+                    whileHover={{ 
+                      rotateY: -5, 
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
                   >
                     <Link
                       href={menuItems[3].href}
@@ -341,6 +439,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           custom={charIndex}
                           variants={characterVariants}
                           className="inline-block"
+                          style={{ transformOrigin: 'center bottom' }}
+                          whileHover={{
+                            rotateY: Math.sin(charIndex * 0.5) * -10,
+                            scale: 1.1,
+                            color: "#DBB42C",
+                            transition: {
+                              delay: charIndex * 0.02,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            },
+                          }}
                         >
                           {char}
                         </motion.span>
@@ -354,6 +463,12 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     onMouseEnter={() => setHoveredLink(menuItems[4].name)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="mb-16 ml-32"
+                    style={{ perspective: 1000 }}
+                    whileHover={{ 
+                      rotateY: 5, 
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
                   >
                     <Link
                       href={menuItems[4].href}
@@ -366,6 +481,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           custom={charIndex}
                           variants={characterVariants}
                           className="inline-block"
+                          style={{ transformOrigin: 'center bottom' }}
+                          whileHover={{
+                            rotateY: Math.sin(charIndex * 0.5) * 10,
+                            scale: 1.1,
+                            color: "#DBB42C",
+                            transition: {
+                              delay: charIndex * 0.02,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            },
+                          }}
                         >
                           {char}
                         </motion.span>
