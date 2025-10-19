@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import LanguageSelector from './LanguageSelector';
 
 interface NavigationProps {
   className?: string;
@@ -177,6 +178,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
           <Link href="/" className="text-2xl font-bold text-primary">
             LampCo
           </Link>
+
+          {/* Center - Language Selector */}
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+            <LanguageSelector />
+          </div>
 
           {/* Menu Button */}
           <button

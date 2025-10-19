@@ -47,12 +47,6 @@ const ContactPage: React.FC = () => {
 
   const contactInfo = [
     {
-      icon: '📍',
-      title: 'Visit Our Showroom',
-      details: ['123 Design District', 'New York, NY 10001'],
-      action: 'Get Directions',
-    },
-    {
       icon: '📞',
       title: 'Call Us',
       details: ['(555) 123-4567', 'Mon-Fri: 9AM-6PM'],
@@ -88,7 +82,7 @@ const ContactPage: React.FC = () => {
       {/* Contact Info Cards */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
@@ -275,38 +269,6 @@ const ContactPage: React.FC = () => {
                 </p>
               </motion.div>
             </form>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            className="bg-white rounded-3xl p-8 shadow-lg"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-light text-primary mb-4">
-                Visit Our Showroom
-              </h2>
-              <p className="text-text-secondary">
-                Experience our lighting collections in person at our Design District location.
-              </p>
-            </div>
-            
-            <div className="bg-light-gray rounded-2xl h-96 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🗺️</div>
-                <p className="text-text-secondary">Interactive Map</p>
-                <p className="text-sm text-text-secondary mt-2">
-                  123 Design District, New York, NY 10001
-                </p>
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>

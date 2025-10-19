@@ -2,8 +2,43 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 const Footer: React.FC = () => {
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const footerRef = useRef<HTMLElement>(null);
+  const navigationRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  // Ensure animations only run on client side to prevent hydration errors
+  useEffect(() => {
+    setIsClient(true);
+
+    // Throttled mouse tracking for better performance
+    let animationFrameId: number;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      
+      animationFrameId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+      };
+    }
+  }, []);
+
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -27,8 +62,103 @@ const Footer: React.FC = () => {
     },
   };
 
+  // Calculate distance between mouse and element
+  const calculateDistance = useCallback((element: HTMLElement | null) => {
+    if (!element) return Infinity;
+    
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const dx = mousePosition.x - centerX;
+    const dy = mousePosition.y - centerY;
+    
+    return Math.sqrt(dx * dx + dy * dy);
+  }, [mousePosition]);
+
+  // Calculate scale based on proximity (closer = larger)
+  const calculateProximityScale = useCallback((distance: number) => {
+    const maxDistance = 200; // Maximum distance for effect
+    const minScale = 1; // Minimum scale
+    const maxScale = 1.3; // Maximum scale when very close
+    
+    if (distance > maxDistance) return minScale;
+    
+    const normalizedDistance = 1 - (distance / maxDistance);
+    return minScale + (maxScale - minScale) * normalizedDistance;
+  }, []);
+
+  // Character animation variants from Navigation component
+  const characterHoverVariants = {
+    rest: {
+      rotateY: 0,
+      scale: 1,
+      color: "#ffffff70", // white/70 equivalent
+    },
+    hover: (i: number) => ({
+      rotateY: Math.sin(i * 0.5) * 10,
+      scale: 1.1,
+      color: "#DBB42C", // accent color
+      transition: {
+        delay: i * 0.02,
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    }),
+  };
+
+  // Render a navigation link with character animations and proximity expansion
+  const renderAnimatedLink = (text: string, href: string) => {
+    if (!isClient) {
+      // Server-side rendering: render static link
+      return (
+        <Link href={href} className="block text-white/70 hover:text-accent transition-colors text-lg">
+          {text}
+        </Link>
+      );
+    }
+
+    // Calculate proximity scale for this link
+    const linkElement = navigationRefs.current[text];
+    const distance = calculateDistance(linkElement);
+    const proximityScale = calculateProximityScale(distance);
+
+    // Client-side rendering: render animated link with proximity expansion
+    return (
+      <motion.div
+        ref={(el) => { navigationRefs.current[text] = el; }}
+        onMouseEnter={() => setHoveredLink(text)}
+        onMouseLeave={() => setHoveredLink(null)}
+        style={{ perspective: 1000 }}
+        animate={{
+          scale: proximityScale,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 30,
+        }}
+      >
+        <Link href={href} className="block text-white/70 hover:text-accent transition-colors text-lg">
+          {Array.from(text).map((char, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={characterHoverVariants}
+              initial="rest"
+              animate={hoveredLink === text ? "hover" : "rest"}
+              style={{ display: 'inline-block' }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </Link>
+      </motion.div>
+    );
+  };
+
   return (
-    <footer className="bg-primary text-white py-24" style={{ minHeight: '400px' }}>
+    <footer ref={footerRef} className="text-white py-24" style={{ minHeight: '400px', backgroundColor: '#262626' }}>
       <div className="max-w-7xl mx-auto px-6 h-full">
         {/* Main Content Grid */}
         <motion.div
@@ -60,21 +190,11 @@ const Footer: React.FC = () => {
           <motion.div variants={fadeInUp} className="lg:col-span-1">
             <h3 className="text-xl font-medium mb-8 text-white">SITEMAP</h3>
             <nav className="space-y-4">
-              <Link href="/" className="block text-white/70 hover:text-accent transition-colors text-lg">
-                Home
-              </Link>
-              <Link href="/about" className="block text-white/70 hover:text-accent transition-colors text-lg">
-                About
-              </Link>
-              <Link href="/services" className="block text-white/70 hover:text-accent transition-colors text-lg">
-                Services
-              </Link>
-              <Link href="/products" className="block text-white/70 hover:text-accent transition-colors text-lg">
-                Products
-              </Link>
-              <Link href="/contact" className="block text-white/70 hover:text-accent transition-colors text-lg">
-                Contact
-              </Link>
+              {renderAnimatedLink('Home', '/')}
+              {renderAnimatedLink('About', '/about')}
+              {renderAnimatedLink('Services', '/services')}
+              {renderAnimatedLink('Products', '/products')}
+              {renderAnimatedLink('Contact', '/contact')}
             </nav>
           </motion.div>
 

@@ -12,7 +12,6 @@ if (typeof window !== 'undefined') {
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -80,19 +79,7 @@ const Hero: React.FC = () => {
         }),
       });
 
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        invalidateOnRefresh: true,
-        refreshPriority: -1,
-        animation: gsap.to(imageRef.current, {
-          yPercent: -30,
-          scale: 1.1,
-          ease: 'none',
-        }),
-      });
+
 
       ScrollTrigger.create({
         trigger: heroRef.current,
@@ -195,25 +182,7 @@ const Hero: React.FC = () => {
         style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
       />
 
-      {/* Hero Image Layer */}
-      <div
-        ref={imageRef}
-        className="absolute inset-0 flex items-center justify-center"
-        style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
-      >
-        <div className="relative w-full h-full bg-gradient-to-r from-accent/10 to-primary/5">
-          {/* Floating Elements */}
-          <div className="floating-element absolute top-1/4 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-xl" />
-          <div className="floating-element absolute top-1/3 right-1/3 w-24 h-24 bg-primary/10 rounded-full blur-lg" />
-          <div className="floating-element absolute bottom-1/3 left-1/2 w-40 h-40 bg-accent/15 rounded-full blur-2xl" />
-          <div className="floating-element absolute top-1/2 right-1/4 w-28 h-28 bg-primary/15 rounded-full blur-xl" />
-          
-          {/* Main Hero Visual */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-96 h-96 bg-gradient-to-br from-accent/30 to-primary/20 rounded-full blur-3xl opacity-60" />
-          </div>
-        </div>
-      </div>
+
 
       {/* Text Content Layer */}
       <div

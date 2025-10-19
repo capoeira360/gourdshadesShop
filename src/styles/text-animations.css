@@ -1,0 +1,52 @@
+/* Text Gradient Animation Styles */
+.animated-char {
+  background: linear-gradient(90deg, #0bb7ff, #5fd3ff, #00d4ff, #4dd0e1);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Alternative gradient styles for different sections */
+.animated-char.gold-gradient {
+  background: linear-gradient(90deg, #ffd700, #ffed4e, #fff176, #ffeb3b);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.animated-char.purple-gradient {
+  background: linear-gradient(90deg, #9c27b0, #e91e63, #f06292, #ba68c8);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.animated-char.green-gradient {
+  background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39, #66bb6a);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (-webkit-background-clip: text) {
+  .animated-char {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #0bb7ff;
+  }
+}

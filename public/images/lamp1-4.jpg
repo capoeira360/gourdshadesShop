@@ -1,0 +1,31 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lampGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="baseGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#495057;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#343a40;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#ffffff"/>
+  
+  <!-- Lamp Base -->
+  <ellipse cx="200" cy="350" rx="60" ry="15" fill="url(#baseGradient1)"/>
+  <rect x="180" y="300" width="40" height="50" fill="url(#baseGradient1)" rx="5"/>
+  
+  <!-- Lamp Pole -->
+  <rect x="195" y="150" width="10" height="150" fill="url(#baseGradient1)"/>
+  
+  <!-- Lamp Shade -->
+  <path d="M 120 150 Q 200 100 280 150 L 260 200 Q 200 180 140 200 Z" fill="url(#lampGradient1)" stroke="#dee2e6" stroke-width="2"/>
+  
+  <!-- Light Effect -->
+  <ellipse cx="200" cy="175" rx="40" ry="8" fill="#fff3cd" opacity="0.6"/>
+  
+  <!-- Product Label -->
+  <text x="200" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6c757d">Modern Table Lamp</text>
+</svg>

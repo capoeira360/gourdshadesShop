@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Intro() {
   const background = useRef(null);
-  const introImage = useRef(null);
   const homeHeader = useRef(null);
   const heroTitle = useRef(null);
   const heroSubtitle = useRef(null);
@@ -18,7 +17,7 @@ export default function Intro() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Check if all refs are available before proceeding
-      if (!background.current || !introImage.current || !homeHeader.current || !heroTitle.current || !heroSubtitle.current) {
+      if (!background.current || !homeHeader.current || !heroTitle.current || !heroSubtitle.current) {
         return;
       }
 
@@ -27,11 +26,6 @@ export default function Intro() {
         clipPath: "inset(30%)",
         scale: 1.1
       });
-      
-      gsap.set(introImage.current, {
-        scale: 1.2,
-        opacity: 0.8
-      });
 
       // Ensure text elements start in their normal position with full brightness
       gsap.set([heroTitle.current, heroSubtitle.current], {
@@ -39,7 +33,7 @@ export default function Intro() {
         opacity: 1
       });
 
-      // Main scroll-triggered animation for background and image
+      // Main scroll-triggered animation for background
       gsap.timeline({
         scrollTrigger: {
           trigger: homeHeader.current,
@@ -52,11 +46,6 @@ export default function Intro() {
       .to(background.current, {
         clipPath: "inset(0%)",
         scale: 1,
-        ease: "none"
-      }, 0)
-      .to(introImage.current, {
-        scale: 1,
-        opacity: 1,
         ease: "none"
       }, 0);
 
@@ -91,18 +80,6 @@ export default function Intro() {
           scrub: 2
         }
       });
-
-      // Subtle parallax for image
-      gsap.to(introImage.current, {
-        yPercent: -8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: homeHeader.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1
-        }
-      });
     });
 
     return () => {
@@ -125,17 +102,6 @@ export default function Intro() {
       </div>
       
       <div className={styles.intro}>
-        <div className={styles.introImage} ref={introImage}>
-          <Image
-            src="/images/lamp-hero.jpg"
-            alt="Elegant Lamp"
-            fill
-            style={{ objectFit: 'contain' }}
-            priority
-            unoptimized
-          />
-        </div>
-        
         <h1 className={styles.heroTitle} ref={heroTitle}>
           Illuminate Your Space
         </h1>
