@@ -12,26 +12,21 @@ const StickyFooterReveal: React.FC<StickyFooterRevealProps> = ({ children }) => 
   const containerRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
   
-  // Use container scroll to track progress through the content
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  // Footer slides up from below as we approach the end
-  const footerY = useTransform(scrollYProgress, [0.8, 1], [footerHeight, 0]);
+  // Use window scroll for tracking
+  const { scrollY } = useScroll();
 
   useEffect(() => {
-    // Calculate footer height dynamically
+    // Calculate footer height
     const updateFooterHeight = () => {
       const footerElement = document.querySelector('footer');
       if (footerElement) {
-        setFooterHeight(footerElement.offsetHeight);
+        const height = footerElement.offsetHeight;
+        setFooterHeight(height);
       }
     };
 
-    // Initial calculation with delay to ensure footer is rendered
-    const timer = setTimeout(updateFooterHeight, 200);
+    // Initial calculation
+    const timer = setTimeout(updateFooterHeight, 100);
     
     window.addEventListener('resize', updateFooterHeight);
     
@@ -42,16 +37,31 @@ const StickyFooterReveal: React.FC<StickyFooterRevealProps> = ({ children }) => 
   }, []);
 
   useEffect(() => {
-    // Add full footer height as scroll space to allow complete reveal
+    // Add scroll space equal to footer height to allow reveal
     if (footerHeight > 0) {
-      const originalHeight = document.documentElement.scrollHeight;
-      document.body.style.minHeight = `${originalHeight + footerHeight}px`;
+      document.body.style.paddingBottom = `${footerHeight}px`;
     }
 
     return () => {
-      document.body.style.minHeight = '';
+      document.body.style.paddingBottom = '';
     };
   }, [footerHeight]);
+
+  // Calculate when footer should reveal based on scroll position
+  const documentHeight = typeof window !== 'undefined' ? document.documentElement.scrollHeight : 0;
+  const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
+  const maxScroll = documentHeight - windowHeight;
+  
+  // Footer reveals in the last scroll area (when we reach the added padding)
+  const revealStart = maxScroll - footerHeight;
+  const revealEnd = maxScroll;
+
+  // Transform footer from hidden to visible
+  const footerY = useTransform(
+    scrollY,
+    [revealStart, revealEnd],
+    [footerHeight, 0]
+  );
 
   return (
     <>
