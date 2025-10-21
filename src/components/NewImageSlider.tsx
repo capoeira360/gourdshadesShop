@@ -159,26 +159,26 @@ const NewImageSlider: React.FC = () => {
             className={`item ${index === currentIndex ? 'active' : ''}`}
             style={{ 
               zIndex: index === currentIndex ? 1 : 0,
-              opacity: index === currentIndex ? 1 : 0 
+              opacity: index === currentIndex ? 1 : 0,
+              backgroundImage: `url(${item.image})`
             }}
           >
+            {/* Blurred background */}
+            <div className="background-blur" style={{ backgroundImage: `url(${item.image})` }}></div>
+            
+            {/* Main image at original size */}
             <Image
               src={item.image}
               alt={item.title}
-              fill
+              width={0}
+              height={0}
+              sizes="100vw"
               className="slider-image"
-              style={{ objectFit: 'cover' }}
+              style={{ width: 'auto', height: '100vh', maxWidth: '100%' }}
               priority={index === 0}
             />
             <div className="content">
-              <div className="author">{item.author}</div>
               <div className="title">{item.title}</div>
-              <div className="topic">{item.topic}</div>
-              <div className="des">{item.description}</div>
-              <div className="buttons">
-                <button>{item.buttons.primary}</button>
-                <button>{item.buttons.secondary}</button>
-              </div>
             </div>
           </div>
         ))}
@@ -201,7 +201,6 @@ const NewImageSlider: React.FC = () => {
             />
             <div className="content">
               <div className="title">{item.thumbnail.title}</div>
-              <div className="description">{item.thumbnail.description}</div>
             </div>
           </div>
         ))}
@@ -238,18 +237,68 @@ const NewImageSlider: React.FC = () => {
         }
 
         .carousel .list .item :global(.slider-image) {
+          width: auto;
+          height: 100vh;
+          max-width: 100%;
+          object-fit: contain;
+          object-position: center;
+          margin: 0 auto;
+          display: block;
+          position: relative;
+          z-index: 2;
+        }
+
+        .carousel .list .item .background-blur {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          filter: blur(20px);
+          z-index: 1;
+          transform: scale(1.1);
+        }
+
+        .carousel .list .item::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: inherit;
+          background-size: cover;
+          background-position: center;
+          filter: blur(20px);
+          z-index: -1;
+          transform: scale(1.1);
+        }
+
+        .carousel .list .item {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          position: absolute;
+          inset: 0 0 0 0;
+          transition: opacity 0.5s ease-in-out;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
 
         .carousel .list .item .content {
           position: absolute;
-          top: 15%;
-          left: 8%;
-          width: 50%;
-          max-width: 600px;
-          padding: 40px;
+          top: 50%;
+          right: 5%;
+          transform: translateY(-50%);
+          width: auto;
+          max-width: 40%;
+          padding: 40px 60px;
           background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
           backdrop-filter: blur(10px);
           border-radius: 20px;
@@ -257,19 +306,12 @@ const NewImageSlider: React.FC = () => {
           box-sizing: border-box;
           color: #fff;
           text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .carousel .list .item .author {
-          font-weight: 600;
-          letter-spacing: 8px;
-          font-size: 12px;
-          margin-bottom: 15px;
-          color: #f1683a;
-          text-transform: uppercase;
+          z-index: 3;
+          text-align: center;
         }
 
         .carousel .list .item .title {
-          font-size: 3.5em;
+          font-size: 2.8em;
           font-weight: 800;
           line-height: 1.1em;
           margin-bottom: 5px;
@@ -277,78 +319,17 @@ const NewImageSlider: React.FC = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-        }
-
-        .carousel .list .item .topic {
-          font-size: 2.8em;
-          font-weight: 700;
-          line-height: 1.1em;
-          color: #f1683a;
-          margin-bottom: 20px;
-          text-shadow: 0 2px 4px rgba(241,104,58,0.3);
-        }
-
-        .carousel .list .item .des {
-          margin: 25px 0 30px 0;
-          line-height: 1.7;
-          font-size: 16px;
-          color: rgba(255,255,255,0.9);
-          font-weight: 300;
-        }
-
-        .carousel .list .item .buttons {
-          display: flex;
-          gap: 15px;
-          margin-top: 30px;
-        }
-
-        .carousel .list .item .buttons button {
-          padding: 12px 24px;
-          border: none;
-          border-radius: 30px;
-          letter-spacing: 2px;
-          font-family: 'Poppins', sans-serif;
-          font-weight: 600;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          text-transform: uppercase;
-          min-width: 140px;
-        }
-
-        .carousel .list .item .buttons button:first-child {
-          background: linear-gradient(135deg, #f1683a 0%, #ff8a65 100%);
-          color: #fff;
-          box-shadow: 0 4px 15px rgba(241,104,58,0.4);
-        }
-
-        .carousel .list .item .buttons button:nth-child(2) {
-          background-color: transparent;
-          border: 2px solid rgba(255,255,255,0.8);
-          color: #fff;
-          backdrop-filter: blur(10px);
-        }
-
-        .carousel .list .item .buttons button:first-child:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(241,104,58,0.6);
-        }
-
-        .carousel .list .item .buttons button:nth-child(2):hover {
-          background-color: rgba(255,255,255,0.1);
-          border-color: #f1683a;
-          color: #f1683a;
-          transform: translateY(-2px);
+          text-shadow: 0 2px 8px rgba(241,104,58,0.3);
         }
 
         /* Thumbnail styles */
         .thumbnail {
           position: absolute;
-          bottom: 40px;
-          left: 50%;
-          transform: translateX(-50%);
+          bottom: 112px;
+          right: 5%;
+          transform: none;
           width: auto;
-          max-width: 80%;
+          max-width: 40%;
           z-index: 100;
           display: flex;
           gap: 15px;
@@ -410,13 +391,6 @@ const NewImageSlider: React.FC = () => {
           font-weight: 600;
           font-size: 12px;
           margin-bottom: 4px;
-          text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-        }
-
-        .thumbnail .item .content .description {
-          font-weight: 300;
-          font-size: 10px;
-          opacity: 0.9;
           text-shadow: 0 1px 3px rgba(0,0,0,0.7);
         }
 
@@ -485,11 +459,7 @@ const NewImageSlider: React.FC = () => {
           z-index: 1;
         }
 
-        .carousel .list .item.active .content .author,
-        .carousel .list .item.active .content .title,
-        .carousel .list .item.active .content .topic,
-        .carousel .list .item.active .content .des,
-        .carousel .list .item.active .content .buttons {
+        .carousel .list .item.active .content .title {
           transform: translateY(50px);
           filter: blur(20px);
           opacity: 0;
@@ -506,18 +476,6 @@ const NewImageSlider: React.FC = () => {
 
         .carousel .list .item.active .content .title {
           animation-delay: 1.2s !important;
-        }
-
-        .carousel .list .item.active .content .topic {
-          animation-delay: 1.4s !important;
-        }
-
-        .carousel .list .item.active .content .des {
-          animation-delay: 1.6s !important;
-        }
-
-        .carousel .list .item.active .content .buttons {
-          animation-delay: 1.8s !important;
         }
 
         /* Progress bar */
@@ -552,14 +510,11 @@ const NewImageSlider: React.FC = () => {
             font-size: 3.5rem;
           }
 
-          .carousel .list .item .content .description {
-            font-size: 1rem;
-          }
-
           .thumbnail {
             max-width: 85%;
             bottom: 30px;
             padding: 15px;
+            right: 5%;
           }
 
           .thumbnail .item {
@@ -582,37 +537,22 @@ const NewImageSlider: React.FC = () => {
         @media screen and (max-width: 768px) {
           .carousel .list .item .content {
             padding: 20px;
-            max-width: 95%;
+            max-width: 85%;
+            right: 5%;
             text-align: center;
           }
 
           .carousel .list .item .content .title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             line-height: 1.2;
           }
 
-          .carousel .list .item .content .description {
-            font-size: 0.9rem;
-            margin: 15px 0;
-          }
-
-          .carousel .list .item .buttons {
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-          }
-
-          .carousel .list .item .buttons button {
-            width: 200px;
-            padding: 12px 20px;
-            font-size: 14px;
-          }
-
           .thumbnail {
-            bottom: 20px;
+            bottom: 80px;
             max-width: 90%;
             padding: 10px 15px;
             gap: 10px;
+            right: 5%;
           }
 
           .thumbnail .item {
@@ -644,10 +584,12 @@ const NewImageSlider: React.FC = () => {
         @media screen and (max-width: 480px) {
           .carousel .list .item .content {
             padding: 15px;
+            max-width: 90%;
+            right: 5%;
           }
 
           .carousel .list .item .content .title {
-            font-size: 2rem;
+            font-size: 1.8rem;
           }
 
           .carousel .list .item .content .description {
@@ -655,17 +597,12 @@ const NewImageSlider: React.FC = () => {
             margin: 10px 0;
           }
 
-          .carousel .list .item .buttons button {
-            width: 180px;
-            padding: 10px 16px;
-            font-size: 13px;
-          }
-
           .thumbnail {
-            bottom: 15px;
+            bottom: 70px;
             padding: 8px 12px;
             gap: 8px;
             max-width: 95%;
+            right: 2.5%;
           }
 
           .thumbnail .item {
