@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Intro from "@/components/Intro";
-import ImageSlider from "@/components/ImageSlider";
+import NewImageSlider from "@/components/NewImageSlider";
 
 export default function Home() {
   useEffect(() => {
@@ -21,8 +21,8 @@ export default function Home() {
       <main className="min-h-screen">
         <Intro />
         
-        {/* Image Slider Section */}
-        <ImageSlider />
+        {/* New Image Slider Section */}
+        <NewImageSlider />
       </main>
     </div>
   );
