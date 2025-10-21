@@ -6,11 +6,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   category: string;
-  price: number;
+  price: string;
   images: string[];
+  description: string;
   longDescription: string;
   specifications: string[];
   features: string[];
@@ -18,620 +19,206 @@ interface Product {
 
 const products: Product[] = [
   {
-    id: 1,
-    name: "Modern Table Lamp",
-    category: "Table Lamps",
-    price: 89.99,
+    id: 'aurora-collection',
+    name: 'Aurora Collection',
+    category: 'collection',
+    price: '$329 - $449',
     images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
+      '/images/20240405_131741-a1.jpg',
+      '/images/20240405_131752-a2.jpg',
+      '/images/20240405_132015-a3.jpg',
+      '/images/20240405_132238-a4.jpg',
+      '/images/20240408_112214-a5.jpg'
     ],
-    longDescription: "This elegant modern table lamp combines contemporary design with functional lighting. Crafted with premium materials, it features a sleek metal base and a sophisticated fabric shade that diffuses light beautifully. Perfect for reading, working, or creating ambient lighting in any room.",
+    description: 'A comprehensive lighting collection featuring pendant, chandelier, sconce, table, and floor lamps with sleek modern design and premium materials.',
+    longDescription: 'The Aurora Collection represents the pinnacle of contemporary lighting design, featuring five distinct pieces that work harmoniously together or as standalone statement pieces. Each lamp in this collection showcases sleek modern aesthetics with premium materials including brushed aluminum, tempered glass, and high-quality LED components. The collection includes a sophisticated pendant light perfect for dining areas, an elegant chandelier for grand spaces, a minimalist sconce for accent lighting, a versatile table lamp for task lighting, and a striking floor lamp for ambient illumination. All pieces feature energy-efficient LED technology with dimming capabilities and are designed to complement modern and transitional interior styles.',
     specifications: [
-      "Height: 24 inches",
-      "Base diameter: 6 inches",
-      "Shade diameter: 12 inches",
-      "Bulb type: E26 LED compatible",
-      "Maximum wattage: 60W",
-      "Material: Metal base, fabric shade",
-      "Cord length: 6 feet"
+      "Collection: 5 distinct lighting pieces",
+      "Materials: Brushed aluminum, tempered glass, premium LED",
+      "Finish: Satin nickel with clear glass accents",
+      "LED Technology: Integrated, dimmable, 3000K warm white",
+      "Power: 15W-45W depending on piece",
+      "Lifespan: 50,000+ hours LED life",
+      "Warranty: 5-year comprehensive coverage"
     ],
     features: [
-      "Adjustable brightness",
-      "Touch-sensitive switch",
-      "Energy-efficient LED compatible",
-      "Stable weighted base",
-      "Easy assembly required",
-      "1-year warranty included"
-    ]
-  },
-  {
-    id: 2,
-    name: "Crystal Chandelier",
-    category: "Chandeliers",
-    price: 299.99,
-    images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
-    ],
-    longDescription: "Elegant crystal chandelier that adds glamour and sophistication to any dining room or living space. Features hand-cut crystals that create beautiful light patterns and reflections throughout the room.",
-    specifications: [
-      "Height: 36 inches",
-      "Diameter: 24 inches",
-      "Material: Crystal and chrome",
-      "Bulb type: E12 candelabra",
-      "Maximum wattage: 40W per bulb",
-      "Number of bulbs: 6",
-      "Chain length: 72 inches"
-    ],
-    features: [
-      "Hand-cut crystal elements",
-      "Chrome finish frame",
-      "Adjustable chain length",
-      "Dimmable compatible",
-      "Easy installation",
-      "2-year warranty"
-    ]
-  },
-  {
-    id: 3,
-    name: "Vintage Pendant Light",
-    category: "Pendant Lights",
-    price: 129.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "Vintage-inspired pendant light with Edison bulb and brass finish. Perfect for kitchen islands, dining areas, or creating a warm, nostalgic atmosphere in any space.",
-    specifications: [
-      "Height: 12 inches",
-      "Diameter: 8 inches",
-      "Material: Brass and glass",
-      "Bulb type: E26 Edison",
-      "Maximum wattage: 60W",
-      "Cord length: 60 inches",
-      "Finish: Antique brass"
-    ],
-    features: [
-      "Vintage Edison bulb included",
-      "Antique brass finish",
-      "Clear glass shade",
-      "Adjustable cord length",
-      "Easy installation",
-      "Industrial vintage style"
-    ]
-  },
-  {
-    id: 4,
-    name: "Contemporary Floor Lamp",
-    category: "Floor Lamps",
-    price: 179.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "Sleek contemporary floor lamp with arc design and marble base. Features adjustable LED spotlight perfect for reading corners or accent lighting in modern living spaces.",
-    specifications: [
-      "Height: 65 inches",
-      "Arc reach: 48 inches",
-      "Base: 12 inch marble",
-      "Material: Steel and marble",
-      "LED: Integrated 15W",
-      "Finish: Brushed nickel",
-      "Switch: Dimmer on base"
-    ],
-    features: [
-      "Carrara marble base",
-      "Adjustable LED spotlight",
-      "Built-in dimmer switch",
-      "Arc design for over-furniture lighting",
-      "Energy-efficient LED",
-      "Modern contemporary style"
-    ]
-  },
-  {
-    id: 5,
-    name: "Rustic Wall Sconce",
-    category: "Wall Sconces",
-    price: 79.99,
-    images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
-    ],
-    longDescription: "Rustic wall sconce with weathered wood and metal construction. Ideal for farmhouse, cabin, or industrial decor themes. Provides warm ambient lighting for hallways and living areas.",
-    specifications: [
-      "Height: 14 inches",
-      "Width: 8 inches",
-      "Depth: 6 inches",
-      "Material: Wood and metal",
-      "Bulb type: E26 standard",
-      "Maximum wattage: 60W",
-      "Finish: Weathered wood"
-    ],
-    features: [
-      "Reclaimed wood construction",
-      "Metal cage design",
-      "Wall-mounted installation",
-      "Rustic farmhouse style",
-      "Easy wiring included",
-      "Weathered finish"
-    ]
-  },
-  {
-    id: 6,
-    name: "Industrial Floor Lamp",
-    category: "Floor Lamps",
-    price: 149.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "A striking industrial-style floor lamp that brings urban sophistication to any space. The exposed metal framework and Edison-style bulb create a vintage industrial aesthetic while providing excellent task lighting.",
-    specifications: [
-      "Height: 58 inches",
-      "Base: 12 inch diameter",
-      "Material: Steel frame",
-      "Finish: Matte black",
-      "Bulb: Edison LED included",
-      "Switch: Foot switch"
-    ],
-    features: [
-      "Vintage Edison bulb included",
-      "Sturdy steel construction",
-      "Foot-operated switch",
-      "Industrial design",
-      "Easy assembly"
-    ]
-  },
-  {
-    id: 7,
-    name: "Minimalist Desk Lamp",
-    category: "Desk Lamps",
-    price: 69.99,
-    images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
-    ],
-    longDescription: "Clean lines and functional design define this minimalist desk lamp. Perfect for modern workspaces, it offers focused lighting with an adjustable arm and head for optimal positioning.",
-    specifications: [
-      "Height: 18 inches",
-      "Arm reach: 14 inches",
-      "Base: 4 inch diameter",
-      "Material: Aluminum",
-      "Finish: White",
-      "LED: Integrated 12W"
-    ],
-    features: [
-      "Fully adjustable arm",
-      "Integrated LED",
-      "Touch controls",
-      "USB charging port",
-      "Memory function",
-      "Eye-care lighting"
-    ]
-  },
-  {
-    id: 8,
-    name: "Art Deco Table Lamp",
-    category: "Table Lamps",
-    price: 199.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "Stunning Art Deco inspired table lamp with geometric patterns and gold finish. Features a luxurious fabric shade and intricate metalwork that captures the glamour of the 1920s era.",
-    specifications: [
-      "Height: 26 inches",
-      "Base diameter: 7 inches",
-      "Shade diameter: 14 inches",
-      "Material: Metal and fabric",
-      "Finish: Antique gold",
-      "Bulb type: E26 LED compatible",
-      "Maximum wattage: 75W"
-    ],
-    features: [
-      "Art Deco geometric design",
-      "Antique gold finish",
-      "Premium fabric shade",
-      "Weighted base for stability",
-      "In-line dimmer switch",
-      "Vintage glamour style"
-    ]
-  },
-  {
-    id: 9,
-    name: "Modern Ceiling Fan Light",
-    category: "Ceiling Fans",
-    price: 249.99,
-    images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
-    ],
-    longDescription: "Contemporary ceiling fan with integrated LED lighting. Features reversible motor, remote control, and sleek blade design perfect for modern homes and offices.",
-    specifications: [
-      "Blade span: 52 inches",
-      "Height: 12 inches",
-      "Material: Steel and wood",
-      "LED: Integrated 24W",
-      "Motor: Reversible DC",
-      "Speed settings: 6",
-      "Remote control included"
-    ],
-    features: [
-      "Integrated LED lighting",
-      "Remote control operation",
-      "Reversible motor for year-round use",
-      "Energy-efficient DC motor",
-      "Quiet operation",
-      "Modern blade design"
-    ]
-  },
-  {
-    id: 10,
-    name: "Bohemian Pendant Cluster",
-    category: "Pendant Lights",
-    price: 189.99,
-    images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
-    ],
-    longDescription: "Eclectic bohemian pendant cluster featuring three woven rattan shades at varying heights. Creates beautiful textured lighting perfect for dining areas and bohemian-style interiors.",
-    specifications: [
-      "Total height: 36 inches",
-      "Shade diameter: 10 inches each",
-      "Material: Natural rattan",
-      "Number of pendants: 3",
-      "Bulb type: E26 standard",
-      "Maximum wattage: 60W each",
-      "Cord length: Adjustable"
-    ],
-    features: [
-      "Hand-woven rattan shades",
-      "Three pendant cluster design",
-      "Adjustable hanging heights",
-      "Natural bohemian style",
-      "Creates textured light patterns",
-      "Eco-friendly materials"
-    ]
-  },
-  {
-    id: 11,
-    name: "Smart LED Strip Light",
-    category: "LED Strips",
-    price: 59.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "WiFi-enabled smart LED strip light with millions of colors and app control. Perfect for accent lighting, gaming setups, or creating ambient mood lighting in any room.",
-    specifications: [
-      "Length: 16.4 feet",
-      "LED count: 300 LEDs",
-      "Colors: 16 million",
-      "Connectivity: WiFi 2.4GHz",
-      "Power: 24W",
-      "Voltage: 12V DC",
-      "App control: iOS/Android"
-    ],
-    features: [
-      "16 million color options",
-      "WiFi app control",
-      "Voice assistant compatible",
-      "Music sync capability",
-      "Timer and scheduling",
-      "Easy adhesive installation"
-    ]
-  },
-  {
-    id: 12,
-    name: "Tiffany Style Stained Glass Lamp",
-    category: "Table Lamps",
-    price: 159.99,
-    images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
-    ],
-    longDescription: "Beautiful Tiffany-style stained glass table lamp with intricate floral patterns. Hand-assembled glass pieces create stunning colored light effects reminiscent of classic Art Nouveau design.",
-    specifications: [
-      "Height: 22 inches",
-      "Shade diameter: 16 inches",
-      "Material: Stained glass and bronze",
-      "Pattern: Floral motif",
-      "Bulb type: E26 standard",
-      "Maximum wattage: 60W",
-      "Base: Cast bronze"
-    ],
-    features: [
-      "Hand-assembled stained glass",
-      "Authentic Tiffany-style design",
-      "Bronze finished base",
-      "Intricate floral patterns",
-      "Colored light effects",
-      "Classic Art Nouveau style"
-    ]
-  },
-  {
-    id: 13,
-    name: "Scandinavian Wood Floor Lamp",
-    category: "Floor Lamps",
-    price: 139.99,
-    images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
-    ],
-    longDescription: "Minimalist Scandinavian floor lamp crafted from sustainable oak wood with a clean white fabric shade. Embodies Nordic design principles of simplicity, functionality, and natural materials.",
-    specifications: [
-      "Height: 60 inches",
-      "Base: Oak wood tripod",
-      "Shade: White fabric drum",
-      "Shade diameter: 18 inches",
-      "Material: Sustainable oak",
-      "Bulb type: E26 LED compatible",
-      "Maximum wattage: 75W"
-    ],
-    features: [
-      "Sustainable oak wood construction",
-      "Scandinavian minimalist design",
-      "Tripod base for stability",
-      "Natural wood grain finish",
-      "White fabric drum shade",
-      "Eco-friendly materials"
-    ]
-  },
-  {
-    id: 14,
-    name: "Industrial Pipe Wall Light",
-    category: "Wall Sconces",
-    price: 89.99,
-    images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
-    ],
-    longDescription: "Rugged industrial wall light featuring exposed pipe construction and Edison bulb. Perfect for loft-style apartments, workshops, or adding urban character to any space.",
-    specifications: [
-      "Height: 10 inches",
-      "Width: 12 inches",
-      "Depth: 8 inches",
-      "Material: Iron pipe and fittings",
-      "Finish: Rust-resistant black",
-      "Bulb type: E26 Edison",
-      "Maximum wattage: 60W"
-    ],
-    features: [
-      "Authentic pipe construction",
-      "Edison bulb included",
-      "Rust-resistant finish",
-      "Industrial loft style",
-      "Easy wall mounting",
-      "Exposed hardware design"
-    ]
-  },
-  {
-    id: 15,
-    name: "Crystal Ball Table Lamp",
-    category: "Table Lamps",
-    price: 119.99,
-    images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
-    ],
-    longDescription: "Elegant crystal ball table lamp with chrome base and white pleated shade. The crystal sphere creates beautiful light refraction and adds glamorous sparkle to bedrooms and living areas.",
-    specifications: [
-      "Height: 20 inches",
-      "Crystal diameter: 6 inches",
-      "Shade diameter: 12 inches",
-      "Material: Crystal and chrome",
-      "Shade: White pleated fabric",
-      "Bulb type: E26 LED compatible",
-      "Maximum wattage: 60W"
-    ],
-    features: [
-      "Genuine crystal sphere base",
-      "Chrome finished accents",
-      "White pleated fabric shade",
-      "Light refraction effects",
-      "Glamorous contemporary style",
-      "Stable weighted base"
-    ]
-  },
-  {
-    id: 16,
-    name: "Moroccan Lantern Pendant",
-    category: "Pendant Lights",
-    price: 169.99,
-    images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
-    ],
-    longDescription: "Authentic Moroccan-style lantern pendant with intricate metalwork and colored glass panels. Creates exotic ambiance with beautiful patterned shadows and warm colored light.",
-    specifications: [
-      "Height: 18 inches",
-      "Diameter: 12 inches",
-      "Material: Brass and colored glass",
-      "Pattern: Traditional Moroccan",
-      "Bulb type: E26 standard",
-      "Maximum wattage: 60W",
-      "Chain length: 36 inches"
-    ],
-    features: [
-      "Authentic Moroccan design",
-      "Hand-crafted metalwork",
-      "Colored glass panels",
-      "Intricate shadow patterns",
-      "Antique brass finish",
-      "Exotic ambient lighting"
-    ]
-  },
-  {
-    id: 17,
-    name: "Modern Track Lighting System",
-    category: "Track Lighting",
-    price: 229.99,
-    images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
-    ],
-    longDescription: "Flexible track lighting system with four adjustable LED spotlights. Perfect for galleries, kitchens, or any space requiring directional accent lighting with modern appeal.",
-    specifications: [
-      "Track length: 48 inches",
-      "Number of lights: 4",
-      "LED power: 12W per light",
-      "Material: Aluminum track",
-      "Finish: Brushed nickel",
-      "Beam angle: Adjustable",
-      "Dimmer compatible: Yes"
-    ],
-    features: [
-      "Four adjustable LED spotlights",
-      "360-degree rotation capability",
-      "Brushed nickel finish",
+      "Complete 5-piece lighting collection",
+      "Coordinated modern design aesthetic",
       "Energy-efficient LED technology",
-      "Easy ceiling installation",
-      "Modern gallery-style lighting"
+      "Dimmable lighting control",
+      "Premium brushed aluminum construction",
+      "Tempered glass components",
+      "Easy installation with included hardware",
+      "5-year manufacturer warranty"
     ]
   },
   {
-    id: 18,
-    name: "Vintage Banker's Lamp",
-    category: "Desk Lamps",
-    price: 99.99,
+    id: 'brooklyn-series',
+    name: 'Brooklyn Series',
+    category: 'collection',
+    price: '$179 - $899',
     images: [
-      "/images/lamp7-1.jpg",
-      "/images/lamp7-2.jpg",
-      "/images/lamp7-3.jpg",
-      "/images/lamp7-4.jpg",
-      "/images/lamp7-5.jpg"
+      '/images/20240508_141055-b1.jpg',
+      '/images/20240508_141122-b2.jpg',
+      '/images/20240508_141338-b3.jpg',
+      '/images/20240508_141359-b4.jpg',
+      '/images/20240508_141454-b5.jpg'
     ],
-    longDescription: "Classic banker's lamp with green glass shade and brass base. Features traditional pull-chain switch and timeless design perfect for home offices, libraries, and study areas.",
+    description: 'Industrial-inspired lighting series combining geometric forms with warm brass finishes and smart technology integration.',
+    longDescription: 'The Brooklyn Series draws inspiration from the industrial heritage of New York\'s most iconic borough, featuring bold geometric forms and warm brass finishes that bring urban sophistication to any space. This five-piece collection seamlessly blends vintage industrial aesthetics with cutting-edge smart technology, offering app-controlled dimming, color temperature adjustment, and voice assistant compatibility. Each piece features hand-finished brass components, exposed Edison-style LED bulbs, and architectural lines that make a statement while providing exceptional functionality. Perfect for loft apartments, modern offices, or anyone looking to add urban character to their lighting design.',
     specifications: [
-      "Height: 14 inches",
-      "Shade length: 10 inches",
-      "Material: Brass and glass",
-      "Shade color: Emerald green",
-      "Bulb type: E26 standard",
-      "Maximum wattage: 60W",
-      "Switch: Pull chain"
+      "Collection: 5 industrial-inspired pieces",
+      "Materials: Brass, steel, Edison-style LED bulbs",
+      "Finish: Warm brass with matte black accents",
+      "Smart Features: App control, voice assistant compatible",
+      "LED Technology: Dimmable, adjustable color temperature",
+      "Power: 12W-60W depending on piece",
+      "Connectivity: WiFi enabled, smartphone app included"
     ],
     features: [
-      "Authentic banker's lamp design",
-      "Emerald green glass shade",
-      "Solid brass construction",
-      "Traditional pull-chain switch",
-      "Adjustable shade angle",
-      "Classic office style"
+      "Industrial-inspired geometric design",
+      "Smart technology integration",
+      "App-controlled dimming and color temperature",
+      "Voice assistant compatibility",
+      "Hand-finished brass construction",
+      "Edison-style LED bulbs included",
+      "Architectural statement pieces",
+      "Urban loft aesthetic"
     ]
   },
   {
-    id: 19,
-    name: "Contemporary Drum Chandelier",
-    category: "Chandeliers",
-    price: 279.99,
+    id: 'crystal-line',
+    name: 'Crystal Line',
+    category: 'collection',
+    price: '$189 - $2,199',
     images: [
-      "/images/lamp1-1.jpg",
-      "/images/lamp1-2.jpg",
-      "/images/lamp1-3.jpg",
-      "/images/lamp1-4.jpg",
-      "/images/lamp1-5.jpg"
+      '/images/20240520_161231-c1.jpg',
+      '/images/20240520_161301-c2.jpg',
+      '/images/20240520_161331-c3.jpg',
+      '/images/20240520_161401-c4.jpg',
+      '/images/20240520_161431-c5.jpg'
     ],
-    longDescription: "Sophisticated drum chandelier with white fabric shade and chrome frame. Provides elegant ambient lighting perfect for dining rooms, entryways, and contemporary living spaces.",
+    description: 'Luxurious crystal lighting collection featuring hand-cut crystals and elegant metalwork for sophisticated interiors.',
+    longDescription: 'The Crystal Line represents the epitome of luxury lighting, featuring genuine hand-cut crystals and precision-crafted metalwork that creates stunning light refraction and elegant ambiance. This prestigious collection includes five meticulously designed pieces, each showcasing different crystal cutting techniques and arrangements to maximize light dispersion and create captivating sparkle effects. The collection features premium chrome and gold finish options, with each crystal individually selected and positioned for optimal light performance. From intimate table lamps to grand chandeliers, the Crystal Line transforms any space into a sophisticated showcase of light and luxury.',
     specifications: [
-      "Height: 24 inches",
-      "Diameter: 20 inches",
-      "Material: Chrome and fabric",
-      "Shade: White drum fabric",
-      "Bulb type: E26 standard",
-      "Number of bulbs: 3",
-      "Maximum wattage: 60W each"
+      "Collection: 5 luxury crystal pieces",
+      "Materials: Hand-cut genuine crystals, premium metals",
+      "Finish Options: Polished chrome or 24k gold plated",
+      "Crystal Grade: Premium K9 crystal components",
+      "LED Technology: High-CRI, dimmable, warm white",
+      "Power: 20W-150W depending on piece",
+      "Installation: Professional installation recommended"
     ],
     features: [
-      "Large drum fabric shade",
-      "Chrome finished frame",
-      "Three-light configuration",
-      "Adjustable chain length",
-      "Contemporary elegant design",
-      "Soft ambient lighting"
+      "Genuine hand-cut crystal components",
+      "Premium chrome or gold finish options",
+      "Stunning light refraction effects",
+      "High-CRI LED for optimal crystal sparkle",
+      "Luxury packaging and presentation",
+      "Professional installation service available",
+      "Lifetime crystal replacement guarantee",
+      "Sophisticated European design"
     ]
   },
   {
-    id: 20,
-    name: "Solar Garden Path Lights",
-    category: "Outdoor Lighting",
-    price: 79.99,
+    id: 'designer-collection',
+    name: 'Designer Collection',
+    category: 'collection',
+    price: '$249 - $1,299',
     images: [
-      "/images/lamp6-1.jpg",
-      "/images/lamp6-2.jpg",
-      "/images/lamp6-3.jpg",
-      "/images/lamp6-4.jpg",
-      "/images/lamp6-5.jpg"
+      '/images/20240804_155809-d1.jpg',
+      '/images/20240804_155839-d2.jpg',
+      '/images/20240804_155909-d3.jpg',
+      '/images/20240804_155939-d4.jpg',
+      '/images/20240804_160009-d5.jpg'
     ],
-    longDescription: "Set of 8 solar-powered LED path lights with automatic dusk-to-dawn operation. Weather-resistant construction perfect for illuminating walkways, gardens, and outdoor spaces.",
+    description: 'Curated designer lighting collection featuring unique artistic forms and premium materials from renowned lighting designers.',
+    longDescription: 'The Designer Collection showcases the work of internationally acclaimed lighting designers, featuring five unique pieces that blur the line between functional lighting and artistic sculpture. Each piece in this collection represents a different design philosophy, from minimalist Scandinavian aesthetics to bold contemporary statements. Crafted with premium materials including hand-blown glass, sustainably sourced woods, and precision-machined metals, these pieces are as much about artistic expression as they are about illumination. The collection includes limited edition pieces and exclusive designs not available elsewhere, making each installation a unique artistic statement.',
     specifications: [
-      "Quantity: 8 lights",
-      "Height: 15 inches each",
-      "Material: Stainless steel",
-      "LED: Warm white 3000K",
-      "Solar panel: Monocrystalline",
-      "Battery: Rechargeable Li-ion",
-      "Runtime: 8-10 hours"
+      "Collection: 5 designer collaboration pieces",
+      "Materials: Hand-blown glass, premium woods, machined metals",
+      "Design: Limited edition and exclusive pieces",
+      "LED Technology: Artist-specified color temperatures",
+      "Power: Variable, optimized per design",
+      "Certification: Designer authenticity certificates included",
+      "Availability: Limited production runs"
     ],
     features: [
-      "Solar powered operation",
-      "Automatic dusk-to-dawn sensor",
-      "Weather-resistant construction",
-      "No wiring required",
-      "Warm white LED illumination",
-      "Easy stake installation"
+      "Internationally acclaimed designer collaborations",
+      "Limited edition and exclusive designs",
+      "Premium hand-crafted materials",
+      "Artistic sculpture meets functional lighting",
+      "Designer authenticity certificates",
+      "Collector-quality construction",
+      "Unique artistic statement pieces",
+      "Museum-quality presentation"
+    ]
+  },
+  {
+    id: 'essence-series',
+    name: 'Essence Series',
+    category: 'collection',
+    price: '$149 - $699',
+    images: [
+      '/images/20240804_155809-e1.jpg',
+      '/images/20240804_155839-e2.jpg',
+      '/images/20240804_155909-e3.jpg',
+      '/images/20240804_155939-e4.jpg',
+      '/images/20240804_160009-e5.jpg'
+    ],
+    description: 'Minimalist lighting series emphasizing clean lines, natural materials, and sustainable design principles.',
+    longDescription: 'The Essence Series embodies the philosophy that true beauty lies in simplicity, featuring five carefully designed pieces that celebrate clean lines, natural materials, and sustainable manufacturing practices. Each piece in this collection is crafted from responsibly sourced materials including FSC-certified woods, recycled metals, and low-impact finishes. The design aesthetic draws from Scandinavian minimalism and Japanese wabi-sabi principles, creating lighting that enhances rather than dominates a space. With energy-efficient LED technology and modular components for easy maintenance and upgrades, the Essence Series represents lighting design for the environmentally conscious consumer.',
+    specifications: [
+      "Collection: 5 minimalist sustainable pieces",
+      "Materials: FSC-certified wood, recycled metals",
+      "Sustainability: Carbon-neutral manufacturing",
+      "LED Technology: High-efficiency, long-life components",
+      "Power: Ultra-low energy consumption",
+      "Packaging: 100% recyclable materials",
+      "Certifications: ENERGY STAR, FSC, GREENGUARD"
+    ],
+    features: [
+      "Sustainable and eco-friendly materials",
+      "Minimalist Scandinavian design aesthetic",
+      "Carbon-neutral manufacturing process",
+      "Modular components for easy maintenance",
+      "Ultra-efficient LED technology",
+      "FSC-certified wood construction",
+      "100% recyclable packaging",
+      "ENERGY STAR certified"
+    ]
+  },
+  {
+    id: 'fusion-line',
+    name: 'Fusion Line',
+    category: 'collection',
+    price: '$199 - $1,099',
+    images: [
+      '/images/20240804_155809-f2.jpg',
+      '/images/20240804_155839-f3.jpg',
+      '/images/20240804_155909-f4.jpg',
+      '/images/20240804_155939-f5.jpg'
+    ],
+    description: 'Contemporary lighting collection blending traditional craftsmanship with modern technology and innovative materials.',
+    longDescription: 'The Fusion Line represents the perfect marriage of traditional craftsmanship and cutting-edge technology, featuring four distinctive pieces that showcase innovative material combinations and advanced lighting control systems. Each piece combines time-honored techniques like hand-forged metalwork and blown glass with modern innovations including smart sensors, adaptive lighting algorithms, and sustainable materials. The collection features pieces that automatically adjust color temperature throughout the day, respond to ambient light conditions, and can be controlled through intuitive gesture recognition. This fusion of old and new creates lighting that honors craftsmanship traditions while embracing the possibilities of tomorrow.',
+    specifications: [
+      "Collection: 4 technology-enhanced pieces",
+      "Materials: Hand-forged metals, blown glass, smart components",
+      "Technology: Adaptive lighting, gesture control, smart sensors",
+      "LED Technology: Circadian rhythm optimization",
+      "Power: Adaptive power management",
+      "Connectivity: Bluetooth, WiFi, smart home integration",
+      "Updates: Over-the-air firmware updates"
+    ],
+    features: [
+      "Traditional craftsmanship meets modern technology",
+      "Adaptive lighting with circadian rhythm support",
+      "Gesture recognition control system",
+      "Smart sensors for automatic adjustment",
+      "Hand-forged metal and blown glass construction",
+      "Smart home ecosystem integration",
+      "Over-the-air updates and new features",
+      "Innovative material combinations"
     ]
   }
 ];
@@ -641,7 +228,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const resolvedParams = use(params);
-  const productId = parseInt(resolvedParams.id);
+  const productId = resolvedParams.id;
   const product = products.find(p => p.id === productId);
 
   if (!product) {

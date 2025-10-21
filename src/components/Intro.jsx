@@ -102,13 +102,26 @@ export default function Intro() {
       </div>
       
       <div className={styles.intro}>
-        <h1 className={styles.heroTitle} ref={heroTitle}>
-          HAND MADE
-        </h1>
+        <div className={styles.textContent}>
+          <h1 className={styles.heroTitle} ref={heroTitle}>
+            HAND MADE
+          </h1>
+          
+          <p className={styles.heroSubtitle} ref={heroSubtitle}>
+            We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape. This allows the lampshade to display exceptionally beautiful patterns and shades of light to its surrounding.
+          </p>
+        </div>
         
-        <p className={styles.heroSubtitle} ref={heroSubtitle}>
-          We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape. This allows the lampshade to display exceptionally beautiful patterns and shades of light to its surrounding.
-        </p>
+        <div className={styles.imageContent}>
+          <Image
+            src="/images/20240913_211304-hero.jpg"
+            alt="Hero Lamp"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+            unoptimized
+          />
+        </div>
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ const NewImageSlider: React.FC = () => {
   const sliderItems: SliderItem[] = [
     {
       id: 1,
-      image: '/images/img1.jpg',
+      image: '/images/20240520_161231-featured-1.jpg',
       author: 'LAMPCO',
       title: 'PREMIUM LIGHTING',
       topic: 'COLLECTION',
@@ -49,7 +49,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 2,
-      image: '/images/img2.jpg',
+      image: '/images/20240612_135238-featured-2.jpg',
       author: 'LAMPCO',
       title: 'MODERN DESIGN',
       topic: 'INNOVATION',
@@ -65,7 +65,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 3,
-      image: '/images/img3.jpg',
+      image: '/images/20240614_140014-featured-3.jpg',
       author: 'LAMPCO',
       title: 'ARTISAN CRAFT',
       topic: 'HERITAGE',
@@ -81,7 +81,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 4,
-      image: '/images/img4.jpg',
+      image: '/images/20240804_155809-featured-4.jpg',
       author: 'LAMPCO',
       title: 'SMART LIGHTING',
       topic: 'TECHNOLOGY',

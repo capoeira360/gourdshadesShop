@@ -10,7 +10,7 @@ interface Product {
   name: string;
   category: string;
   price: string;
-  image: string;
+  images: string[];
   description: string;
 }
 
@@ -121,7 +121,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
         >
           <div className="relative w-full h-full">
             <Image
-              src={product.image}
+              src={product.images[0]}
               alt={product.name}
               fill
               className="object-cover"
@@ -163,80 +163,91 @@ const ProductsPage: React.FC = () => {
 
   const products: Product[] = [
     {
-      id: '1',
-      name: 'Aurora Minimalist Pendant',
-      category: 'pendant',
-      price: '$329',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iODAiIGZpbGw9IiNEQkI0MkMiLz4KPGxpbmUgeDE9IjIwMCIgeTE9IjEyMCIgeDI9IjIwMCIgeTI9IjgwIiBzdHJva2U9IiM0QTQ1NEIiIHN0cm9rZS13aWR0aD0iNCIvPgo8L3N2Zz4K',
-      description: 'Sleek brushed aluminum pendant with warm LED technology, perfect for modern kitchens and dining areas.',
+      id: 'aurora-collection',
+      name: 'Aurora Collection',
+      category: 'collection',
+      price: '$329 - $449',
+      images: [
+        '/images/20240405_131741-a1.jpg',
+        '/images/20240405_131752-a2.jpg',
+        '/images/20240405_132015-a3.jpg',
+        '/images/20240405_132238-a4.jpg',
+        '/images/20240408_112214-a5.jpg'
+      ],
+      description: 'A comprehensive lighting collection featuring pendant, chandelier, sconce, table, and floor lamps with sleek modern design and premium materials.',
     },
     {
-      id: '2',
-      name: 'Venetian Crystal Chandelier',
-      category: 'chandelier',
-      price: '$1,899',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjE4MCIgcj0iNjAiIGZpbGw9IiNEQkI0MkMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMjQwIiByPSIyMCIgZmlsbD0iI0RCQjQyQyIvPgo8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjIwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjI4MCIgcj0iMTUiIGZpbGw9IiNEQkI0MkMiLz4KPHN2Zz4K',
-      description: 'Hand-cut Bohemian crystal chandelier with chrome finish, featuring 9 candelabra lights for grand spaces.',
+      id: 'brooklyn-series',
+      name: 'Brooklyn Series',
+      category: 'collection',
+      price: '$179 - $899',
+      images: [
+        '/images/20240508_141055-b1.jpg',
+        '/images/20240508_141122-b2.jpg',
+        '/images/20240508_141338-b3.jpg',
+        '/images/20240508_141359-b4.jpg',
+        '/images/20240508_141454-b5.jpg'
+      ],
+      description: 'Industrial-inspired lighting series combining geometric forms with warm brass finishes and smart technology integration.',
     },
     {
-      id: '3',
-      name: 'Brooklyn Industrial Sconce',
-      category: 'sconce',
-      price: '$249',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE4MCIgeT0iMTUwIiB3aWR0aD0iNDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMTQwIiB3aWR0aD0iNjAiIGhlaWdodD0iMjAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Vintage-inspired wall sconce with aged brass finish and Edison bulb compatibility for authentic industrial charm.',
+      id: 'crystal-line',
+      name: 'Crystal Line',
+      category: 'collection',
+      price: '$189 - $2,199',
+      images: [
+        '/images/20240520_160914-c1.jpg',
+        '/images/20240520_161245-c2.jpg',
+        '/images/20240520_161300-c3.jpg',
+        '/images/20240520_161309-c4.jpg',
+        '/images/20240520_161319-c5.jpg'
+      ],
+      description: 'Elegant crystal and glass lighting collection featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.',
     },
     {
-      id: '4',
-      name: 'Artisan Ceramic Table Lamp',
-      category: 'table',
-      price: '$189',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE5NSIgeT0iMjAwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAwIiBmaWxsPSIjNEE0NTRCIi8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNjAiIHJ4PSI2MCIgcnk9IjQwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMzAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Hand-thrown ceramic base in matte white glaze with natural linen drum shade, perfect for bedside or living room.',
+      id: 'designer-collection',
+      name: 'Designer Collection',
+      category: 'collection',
+      price: '$159 - $1,299',
+      images: [
+        '/images/20240607_162317-d1.jpg',
+        '/images/20240607_162627-d2.jpg',
+        '/images/20240607_162641-d3.jpg',
+        '/images/20240607_162656-d4.jpg',
+        '/images/20240607_162743-d5.jpg'
+      ],
+      description: 'Curated designer lighting featuring industrial pendants, vintage chandeliers, and statement pieces with decorative metalwork.',
     },
     {
-      id: '5',
-      name: 'Meridian Arc Floor Lamp',
-      category: 'floor',
-      price: '$449',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE5NSIgeT0iMTAwIiB3aWR0aD0iMTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNEE0NTRCIi8+CjxyZWN0IHg9IjE2MCIgeT0iODAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iI0RCQjQyQyIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIzMjAiIHI9IjMwIiBmaWxsPSIjNEE0NTRCIi8+Cjwvc3ZnPgo=',
-      description: 'Contemporary arc floor lamp with marble base and adjustable LED spotlight, ideal for reading corners.',
+      id: 'essence-series',
+      name: 'Essence Series',
+      category: 'collection',
+      price: '$169 - $1,599',
+      images: [
+        '/images/20240612_135043-e1.jpg',
+        '/images/20240612_135118-e2.jpg',
+        '/images/20240612_135256-e3.jpg',
+        '/images/20240612_135313-e4.jpg',
+        '/images/20240612_140355-e5.jpg'
+      ],
+      description: 'Minimalist to Art Deco inspired lighting series with clean geometric lines and architectural presence for contemporary spaces.',
     },
     {
-      id: '6',
-      name: 'Geometric Pendant',
-      category: 'pendant',
-      price: '$249',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMDAgMTIwTDI2MCAyMDBIMTQwTDIwMCAxMjBaIiBmaWxsPSIjREJCNDJDIi8+CjxsaW5lIHgxPSIyMDAiIHkxPSIxMjAiIHgyPSIyMDAiIHkyPSI4MCIgc3Ryb2tlPSIjNEE0NTRCIiBzdHJva2Utd2lkdGg9IjQiLz4KPGxpbmUgeDE9IjE2MCIgeTE9IjE4MCIgeDI9IjI0MCIgeTI9IjE4MCIgc3Ryb2tlPSIjNEE0NTRCIiBzdHJva2Utd2lkdGg9IjIiLz4KPHN2Zz4K',
-      description: 'Bold geometric shapes create striking shadows and visual interest.',
-    },
-    {
-      id: '7',
-      name: 'Modern Chandelier',
-      category: 'chandelier',
-      price: '$899',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjE4MCIgcj0iNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzRBNDU0QiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxyZWN0IHg9IjE4MCIgeT0iMjIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNEQkI0MkMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMjQwIiByPSIxNSIgZmlsbD0iI0RCQjQyQyIvPgo8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjE1IiBmaWxsPSIjREJCNDJDIi8+Cjwvc3ZnPgo=',
-      description: 'Contemporary interpretation of the classic chandelier design.',
-    },
-    {
-      id: '8',
-      name: 'Brass Sconce',
-      category: 'sconce',
-      price: '$179',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE4MCIgeT0iMTUwIiB3aWR0aD0iNDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMTQwIiB3aWR0aD0iNjAiIGhlaWdodD0iMjAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Warm brass finish adds sophistication to any interior space.',
-    },
-    {
-      id: '9',
-      name: 'Smart Table Lamp',
-      category: 'table',
-      price: '$199',
-      image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjE5NSIgeT0iMjAwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAwIiBmaWxsPSIjNEE0NTRCIi8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNjAiIHJ4PSI2MCIgcnk9IjQwIiBmaWxsPSIjREJCNDJDIi8+CjxyZWN0IHg9IjE3MCIgeT0iMzAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAiIGZpbGw9IiM0QTQ1NEIiLz4KPHN2Zz4K',
-      description: 'Technology meets design with app-controlled lighting features.',
+      id: 'fusion-line',
+      name: 'Fusion Line',
+      category: 'collection',
+      price: '$259 - $799',
+      images: [
+        '/images/20240614_140132-f2.jpg',
+        '/images/20240614_140159-f3.jpg',
+        '/images/20240614_140218-f4.jpg',
+        '/images/20240614_135944-f5.jpg'
+      ],
+      description: 'Artisan-crafted lighting line featuring handcrafted details, award-winning designs, and premium materials with distinctive character.',
     },
   ];
 
-  const categories = ['all', 'pendant', 'chandelier', 'sconce', 'table', 'floor'];
+  const categories = ['all', 'collection'];
 
   const filteredProducts = filter === 'all' 
     ? products 
