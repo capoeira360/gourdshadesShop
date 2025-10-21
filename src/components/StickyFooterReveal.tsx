@@ -40,10 +40,13 @@ const StickyFooterReveal: React.FC<StickyFooterRevealProps> = ({ children }) => 
     // Add scroll space equal to footer height to allow reveal
     if (footerHeight > 0) {
       document.body.style.paddingBottom = `${footerHeight}px`;
+      // Set CSS custom property for other components to use
+      document.documentElement.style.setProperty('--footer-height', `${footerHeight}px`);
     }
 
     return () => {
       document.body.style.paddingBottom = '';
+      document.documentElement.style.removeProperty('--footer-height');
     };
   }, [footerHeight]);
 

@@ -28,7 +28,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-0 h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
+    <div className="sticky top-[calc(50vh-300px)] h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
