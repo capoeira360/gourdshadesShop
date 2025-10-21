@@ -16,6 +16,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        {/* Standalone Logo - positioned independently */}
+        <div className="fixed top-1 left-6 z-40">
+          <img 
+            src="/logo-gourd-shades-square.svg" 
+            alt="Gourd Shades" 
+            style={{ width: '150px', height: '150px' }}
+          />
+        </div>
         <Navigation />
         <StickyFooterReveal>
           {children}

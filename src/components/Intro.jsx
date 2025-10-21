@@ -103,11 +103,11 @@ export default function Intro() {
       
       <div className={styles.intro}>
         <h1 className={styles.heroTitle} ref={heroTitle}>
-          Illuminate Your Space
+          HAND MADE
         </h1>
         
         <p className={styles.heroSubtitle} ref={heroSubtitle}>
-          Discover our curated collection of premium lighting solutions
+          We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape. This allows the lampshade to display exceptionally beautiful patterns and shades of light to its surrounding.
         </p>
       </div>
     </div>

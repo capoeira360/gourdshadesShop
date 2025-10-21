@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import LanguageSelector from './LanguageSelector';
+import { usePathname } from 'next/navigation';
 
 interface NavigationProps {
   className?: string;
@@ -141,14 +141,9 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
       {/* Navigation Header */}
       <nav className={`fixed top-0 left-0 right-0 z-50 p-6 ${className}`}>
         <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-primary">
-            LampCo
-          </Link>
-
-          {/* Center - Language Selector */}
-          <div className="absolute left-1/2 transform -translate-x-1/2">
-            <LanguageSelector />
+          {/* Empty space for logo positioning */}
+          <div className="flex items-center">
+            {/* Logo removed from navigation */}
           </div>
 
           {/* Menu Button */}

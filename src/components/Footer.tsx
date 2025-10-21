@@ -158,16 +158,17 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#262626' }}>
-      <div className="max-w-7xl mx-auto px-6 h-full">
-        {/* Main Content Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+    <>
+      <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#262626' }}>
+        <div className="max-w-7xl mx-auto px-6 h-full">
+          {/* Main Content Grid */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
           {/* Logo & Description Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-8">
@@ -279,7 +280,8 @@ const Footer: React.FC = () => {
           </div>
         </motion.div>
       </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 
