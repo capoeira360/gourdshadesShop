@@ -130,8 +130,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 pb-0">
+      <div className="max-w-6xl mx-auto px-4 pb-0">
         {/* Back Navigation */}
         <div className="mb-6">
           <Link 
@@ -247,7 +247,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Product Details Tabs */}
-        <div className="bg-white rounded-lg shadow-sm mb-1">
+        <div className="bg-white rounded-lg shadow-sm mb-0">
           {/* Tab Navigation */}
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-8">
@@ -285,7 +285,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
 
           {/* Tab Content */}
-          <div className="p-8">
+          <div className="p-8 pb-0">
             {activeTab === 'description' && (
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold" style={{ color: '#1a1a1a' }}>Product Description</h3>
