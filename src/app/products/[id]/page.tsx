@@ -307,11 +307,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <div className="space-y-6" style={{ marginLeft: '-72px' }}>
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '180px' }}>{product.name}</h1>
-                <p className="text-2xl font-semibold" style={{ color: '#d4af37', marginLeft: '180px' }}>{product.price}</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px' }}>{product.name}</h1>
+                <p className="text-2xl font-semibold" style={{ color: '#d4af37', marginLeft: '216px' }}>{product.price}</p>
               </div>
 
-              <div className="space-y-4" style={{ marginLeft: '180px' }}>
+              <div className="space-y-4" style={{ marginLeft: '216px' }}>
                 <button 
                   className="text-white py-3 px-6 rounded-lg font-semibold transition-colors hover:opacity-90"
                   style={{ backgroundColor: '#1a1a1a', width: '360px' }}
@@ -339,7 +339,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </div>
 
               {/* Thumbnail Images */}
-              <div className="flex gap-2" style={{ marginLeft: '180px' }}>
+              <div className="flex gap-2" style={{ marginLeft: '216px' }}>
                 {product.images.map((image, index) => (
                   <button
                     key={index}

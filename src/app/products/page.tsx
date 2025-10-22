@@ -20,28 +20,49 @@ interface ProductRowProps {
   isActive: boolean;
   onHover: () => void;
   onLeave: () => void;
+  onScrollIntoView: () => void;
 }
 
-const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave }) => {
+const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave, onScrollIntoView }) => {
   const [isVisible, setIsVisible] = useState(false);
   const rowRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        // Only trigger when the element is intersecting AND reaches the center area of viewport
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.8) {
           setIsVisible(true);
+          
+          // Clear any existing timeout
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+          }
+          
+          // Set a timeout to ensure stable detection
+          scrollTimeoutRef.current = setTimeout(() => {
+            onScrollIntoView();
+          }, 100);
         }
       },
-      { threshold: 0.3 }
+      { 
+        threshold: [0, 0.5, 0.8, 1.0], // Multiple thresholds for precise detection
+        rootMargin: '-40% 0px -40% 0px' // Only trigger when element is in center 20% of viewport
+      }
     );
 
     if (rowRef.current) {
       observer.observe(rowRef.current);
     }
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [onScrollIntoView]);
 
   const rowVariants = {
     hidden: { opacity: 0, x: -30 },
@@ -109,33 +130,52 @@ interface ProductImageProps {
 }
 
 const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
+  const [currentProduct, setCurrentProduct] = useState<Product | null>(product);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    if (product && product.id !== currentProduct?.id) {
+      setIsTransitioning(true);
+      // Small delay to allow for smooth transition
+      const timer = setTimeout(() => {
+        setCurrentProduct(product);
+        setIsTransitioning(false);
+      }, 150);
+      
+      return () => clearTimeout(timer);
+    } else if (!product) {
+      setCurrentProduct(null);
+      setIsTransitioning(false);
+    }
+  }, [product, currentProduct?.id]);
+
   return (
     <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden">
-      {product ? (
-        <motion.div
-          key={product.id}
-          className="w-full h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-        >
-          <div className="relative w-full h-full">
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
+      {currentProduct ? (
+        <div className="w-full h-full relative">
+          <div 
+            className={`absolute inset-0 transition-opacity duration-300 ${
+              isTransitioning ? 'opacity-70' : 'opacity-100'
+            }`}
+          >
+            <div className="relative w-full h-full">
+              <Image
+                src={currentProduct.images[0]}
+                alt={currentProduct.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+              <h4 className="text-white text-xl font-light mb-2">
+                {currentProduct.name}
+              </h4>
+              <p className="text-white/80 text-sm">
+                {currentProduct.description}
+              </p>
+            </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-            <h4 className="text-white text-xl font-light mb-2">
-              {product.name}
-            </h4>
-            <p className="text-white/80 text-sm">
-              {product.description}
-            </p>
-          </div>
-        </motion.div>
+        </div>
       ) : (
         <div className="w-full h-full flex items-center justify-center">
           <div className="text-center text-gray-400">
@@ -237,9 +277,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
 const ProductsPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const productListRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastScrollProductRef = useRef<string | null>(null);
 
   const products: Product[] = [
     {
@@ -333,6 +377,14 @@ const ProductsPage: React.FC = () => {
   const filteredProducts = filter === 'all' 
     ? products 
     : products.filter(product => product.category === filter);
+
+  // Only set initial active product when page loads, not on filter changes
+  useEffect(() => {
+    // Only set initial product if no product is currently active
+    if (!activeProduct && filteredProducts.length > 0) {
+      setActiveProduct(filteredProducts[0]);
+    }
+  }, []); // Empty dependency array - only run once on mount
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -467,8 +519,21 @@ const ProductsPage: React.FC = () => {
                   product={product} 
                   index={index}
                   isActive={activeProduct?.id === product.id}
-                  onHover={() => setActiveProduct(product)}
-                  onLeave={() => setActiveProduct(null)}
+                  onHover={() => {
+                    setIsHovering(true);
+                    setActiveProduct(product);
+                  }}
+                  onLeave={() => {
+                    setIsHovering(false);
+                    // Don't automatically change image when leaving hover
+                  }}
+                  onScrollIntoView={() => {
+                    // Only change image when scrolling (not hovering) and product is different
+                    if (!isHovering && lastScrollProductRef.current !== product.id) {
+                      lastScrollProductRef.current = product.id;
+                      setActiveProduct(product);
+                    }
+                  }}
                 />
               ))}
             </div>
