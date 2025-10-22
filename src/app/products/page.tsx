@@ -145,9 +145,9 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <p className="text-lg">Hover over a product to see it here</p>
+            <p className="text-sm">Hover over a product to see preview</p>
           </div>
         </div>
       )}
@@ -155,8 +155,88 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   );
 };
 
+interface ProductCardProps {
+  product: Product;
+  index: number;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.76, 0, 0.24, 1] as const,
+      },
+    },
+  };
+
+  return (
+    <Link href={`/products/${product.id}`}>
+      <motion.div
+        ref={cardRef}
+        className="group cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+        variants={cardVariants}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        whileHover={{ y: -5 }}
+      >
+        <div className="relative aspect-square bg-gray-50 overflow-hidden">
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-light text-gray-900 group-hover:text-primary transition-colors duration-300 mb-2">
+            {product.name}
+          </h3>
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+            {product.description}
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-lg font-medium text-primary">
+              {product.price}
+            </span>
+            <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              {product.category}
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+};
+
 const ProductsPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -241,7 +321,8 @@ const ProductsPage: React.FC = () => {
         '/images/20240614_140132-f2.jpg',
         '/images/20240614_140159-f3.jpg',
         '/images/20240614_140218-f4.jpg',
-        '/images/20240614_135944-f5.jpg'
+        '/images/20240614_135944-f5.jpg',
+        '/images/20240614_140121-f5.jpg'
       ],
       description: 'Artisan-crafted lighting line featuring handcrafted details, award-winning designs, and premium materials with distinctive character.',
     },
@@ -314,54 +395,101 @@ const ProductsPage: React.FC = () => {
         </p>
       </motion.div>
 
-      {/* Filter Buttons */}
+      {/* Filter and View Toggle Section */}
       <motion.div
         className="max-w-7xl mx-auto px-6 mb-12"
         variants={filterVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
-        <div className="flex flex-wrap justify-center gap-4">
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                filter === category
-                  ? 'bg-primary text-white'
-                  : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
-              }`}
-              onClick={() => setFilter(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </motion.button>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Products Layout - Split View */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Side - Product Names */}
-          <div className="space-y-0">
-            {filteredProducts.map((product, index) => (
-              <ProductRow 
-                key={product.id} 
-                product={product} 
-                index={index}
-                isActive={activeProduct?.id === product.id}
-                onHover={() => setActiveProduct(product)}
-                onLeave={() => setActiveProduct(null)}
-              />
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  filter === category
+                    ? 'bg-primary text-white'
+                    : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
+                }`}
+                onClick={() => setFilter(category)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </motion.button>
             ))}
           </div>
 
-          {/* Right Side - Product Image */}
-          <div className="lg:block hidden">
-            <ProductImage product={activeProduct} />
+          {/* View Toggle */}
+          <div className="flex items-center bg-gray-100 rounded-full p-1">
+            <button
+              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+                viewMode === 'list'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-gray-600 hover:text-primary'
+              }`}
+              onClick={() => setViewMode('list')}
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              List
+            </button>
+            <button
+              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+                viewMode === 'grid'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-gray-600 hover:text-primary'
+              }`}
+              onClick={() => setViewMode('grid')}
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+              </svg>
+              Grid
+            </button>
           </div>
         </div>
+      </motion.div>
+
+      {/* Products Layout */}
+      <div className="max-w-7xl mx-auto px-6 pb-24">
+        {viewMode === 'list' ? (
+          /* List View - Original Split Layout */
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Side - Product Names */}
+            <div className="space-y-0">
+              {filteredProducts.map((product, index) => (
+                <ProductRow 
+                  key={product.id} 
+                  product={product} 
+                  index={index}
+                  isActive={activeProduct?.id === product.id}
+                  onHover={() => setActiveProduct(product)}
+                  onLeave={() => setActiveProduct(null)}
+                />
+              ))}
+            </div>
+
+            {/* Right Side - Product Image */}
+            <div className="lg:block hidden">
+              <ProductImage product={activeProduct} />
+            </div>
+          </div>
+        ) : (
+          /* Grid View - 4 Products Per Row */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredProducts.map((product, index) => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

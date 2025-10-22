@@ -92,11 +92,11 @@ const products: Product[] = [
     category: 'collection',
     price: '$189 - $2,199',
     images: [
-      '/images/20240520_161231-c1.jpg',
-      '/images/20240520_161301-c2.jpg',
-      '/images/20240520_161331-c3.jpg',
-      '/images/20240520_161401-c4.jpg',
-      '/images/20240520_161431-c5.jpg'
+      '/images/20240520_160914-c1.jpg',
+      '/images/20240520_161245-c2.jpg',
+      '/images/20240520_161300-c3.jpg',
+      '/images/20240520_161309-c4.jpg',
+      '/images/20240520_161319-c5.jpg'
     ],
     description: 'Luxurious crystal lighting collection featuring hand-cut crystals and elegant metalwork for sophisticated interiors.',
     longDescription: 'The Crystal Line represents the epitome of luxury lighting, featuring genuine hand-cut crystals and precision-crafted metalwork that creates stunning light refraction and elegant ambiance. This prestigious collection includes five meticulously designed pieces, each showcasing different crystal cutting techniques and arrangements to maximize light dispersion and create captivating sparkle effects. The collection features premium chrome and gold finish options, with each crystal individually selected and positioned for optimal light performance. From intimate table lamps to grand chandeliers, the Crystal Line transforms any space into a sophisticated showcase of light and luxury.',
@@ -126,11 +126,11 @@ const products: Product[] = [
     category: 'collection',
     price: '$249 - $1,299',
     images: [
-      '/images/20240804_155809-d1.jpg',
-      '/images/20240804_155839-d2.jpg',
-      '/images/20240804_155909-d3.jpg',
-      '/images/20240804_155939-d4.jpg',
-      '/images/20240804_160009-d5.jpg'
+      '/images/20240607_162317-d1.jpg',
+      '/images/20240607_162627-d2.jpg',
+      '/images/20240607_162641-d3.jpg',
+      '/images/20240607_162656-d4.jpg',
+      '/images/20240607_162743-d5.jpg'
     ],
     description: 'Curated designer lighting collection featuring unique artistic forms and premium materials from renowned lighting designers.',
     longDescription: 'The Designer Collection showcases the work of internationally acclaimed lighting designers, featuring five unique pieces that blur the line between functional lighting and artistic sculpture. Each piece in this collection represents a different design philosophy, from minimalist Scandinavian aesthetics to bold contemporary statements. Crafted with premium materials including hand-blown glass, sustainably sourced woods, and precision-machined metals, these pieces are as much about artistic expression as they are about illumination. The collection includes limited edition pieces and exclusive designs not available elsewhere, making each installation a unique artistic statement.',
@@ -160,11 +160,11 @@ const products: Product[] = [
     category: 'collection',
     price: '$149 - $699',
     images: [
-      '/images/20240804_155809-e1.jpg',
-      '/images/20240804_155839-e2.jpg',
-      '/images/20240804_155909-e3.jpg',
-      '/images/20240804_155939-e4.jpg',
-      '/images/20240804_160009-e5.jpg'
+      '/images/20240612_135043-e1.jpg',
+      '/images/20240612_135118-e2.jpg',
+      '/images/20240612_135256-e3.jpg',
+      '/images/20240612_135313-e4.jpg',
+      '/images/20240612_140355-e5.jpg'
     ],
     description: 'Minimalist lighting series emphasizing clean lines, natural materials, and sustainable design principles.',
     longDescription: 'The Essence Series embodies the philosophy that true beauty lies in simplicity, featuring five carefully designed pieces that celebrate clean lines, natural materials, and sustainable manufacturing practices. Each piece in this collection is crafted from responsibly sourced materials including FSC-certified woods, recycled metals, and low-impact finishes. The design aesthetic draws from Scandinavian minimalism and Japanese wabi-sabi principles, creating lighting that enhances rather than dominates a space. With energy-efficient LED technology and modular components for easy maintenance and upgrades, the Essence Series represents lighting design for the environmentally conscious consumer.',
@@ -194,10 +194,11 @@ const products: Product[] = [
     category: 'collection',
     price: '$199 - $1,099',
     images: [
-      '/images/20240804_155809-f2.jpg',
-      '/images/20240804_155839-f3.jpg',
-      '/images/20240804_155909-f4.jpg',
-      '/images/20240804_155939-f5.jpg'
+      '/images/20240614_140132-f2.jpg',
+      '/images/20240614_140159-f3.jpg',
+      '/images/20240614_140218-f4.jpg',
+      '/images/20240614_135944-f5.jpg',
+      '/images/20240614_140121-f5.jpg'
     ],
     description: 'Contemporary lighting collection blending traditional craftsmanship with modern technology and innovative materials.',
     longDescription: 'The Fusion Line represents the perfect marriage of traditional craftsmanship and cutting-edge technology, featuring four distinctive pieces that showcase innovative material combinations and advanced lighting control systems. Each piece combines time-honored techniques like hand-forged metalwork and blown glass with modern innovations including smart sensors, adaptive lighting algorithms, and sustainable materials. The collection features pieces that automatically adjust color temperature throughout the day, respond to ambient light conditions, and can be controlled through intuitive gesture recognition. This fusion of old and new creates lighting that honors craftsmanship traditions while embracing the possibilities of tomorrow.',
@@ -261,35 +262,37 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Product Header */}
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-8 mb-8" style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Product Images */}
             <div className="space-y-4">
-              <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px' }}>
                 <Image
                   src={product.images[currentImageIndex]}
                   alt={product.name}
-                  width={500}
-                  height={500}
+                  width={680}
+                  height={716}
                   className="w-full h-full object-cover"
                 />
                 
                 {/* Image Navigation Arrows */}
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all border border-gray-200"
+                  className="absolute left-1 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all border border-gray-200"
+                  style={{ width: '29px', height: '29px', padding: '4px' }}
                 >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
                 
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all border border-gray-200"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all border border-gray-200"
+                  style={{ width: '29px', height: '29px', padding: '4px' }}
                 >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
 
@@ -298,51 +301,29 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   {currentImageIndex + 1} / {product.images.length}
                 </div>
               </div>
-              
-              {/* Thumbnail Images */}
-                <div className="flex gap-2 justify-center">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                        currentImageIndex === index 
-                          ? 'border-gray-800 scale-105 shadow-md' 
-                          : 'border-gray-200 hover:border-gray-400'
-                      }`}
-                    >
-                      <Image
-                        src={image}
-                        alt={`${product.name} ${index + 1}`}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
             </div>
 
             {/* Product Info */}
-            <div className="space-y-6">
+            <div className="space-y-6" style={{ marginLeft: '-72px' }}>
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
-                <p className="text-2xl font-semibold" style={{ color: '#d4af37' }}>{product.price}</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '180px' }}>{product.name}</h1>
+                <p className="text-2xl font-semibold" style={{ color: '#d4af37', marginLeft: '180px' }}>{product.price}</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4" style={{ marginLeft: '180px' }}>
                 <button 
-                  className="w-full text-white py-3 px-6 rounded-lg font-semibold transition-colors hover:opacity-90"
-                  style={{ backgroundColor: '#1a1a1a' }}
+                  className="text-white py-3 px-6 rounded-lg font-semibold transition-colors hover:opacity-90"
+                  style={{ backgroundColor: '#1a1a1a', width: '360px' }}
                 >
                   Add to Cart
                 </button>
                 <button 
-                  className="w-full border-2 py-3 px-6 rounded-lg font-semibold transition-colors hover:text-white"
+                  className="border-2 py-3 px-6 rounded-lg font-semibold transition-colors hover:text-white"
                   style={{ 
                     borderColor: '#1a1a1a', 
-                    color: '#1a1a1a'
+                    color: '#1a1a1a',
+                    width: '360px'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#1a1a1a';
@@ -355,6 +336,29 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 >
                   Add to Wishlist
                 </button>
+              </div>
+
+              {/* Thumbnail Images */}
+              <div className="flex gap-2" style={{ marginLeft: '180px' }}>
+                {product.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      currentImageIndex === index 
+                        ? 'border-gray-800 scale-105 shadow-md' 
+                        : 'border-gray-200 hover:border-gray-400'
+                    }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`${product.name} ${index + 1}`}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
           </div>
