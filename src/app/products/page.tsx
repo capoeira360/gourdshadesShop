@@ -360,7 +360,7 @@ const ProductsPage: React.FC = () => {
       id: 'fusion-line',
       name: 'Fusion Line',
       category: 'collection',
-      price: '$259 - $799',
+      price: '$199 - $1,099',
       images: [
         '/images/20240614_140132-f2.jpg',
         '/images/20240614_140159-f3.jpg',
@@ -368,8 +368,120 @@ const ProductsPage: React.FC = () => {
         '/images/20240614_135944-f5.jpg',
         '/images/20240614_140121-f5.jpg'
       ],
-      description: 'Artisan-crafted lighting line featuring handcrafted details, award-winning designs, and premium materials with distinctive character.',
+      description: 'Contemporary lighting collection blending traditional craftsmanship with modern technology and innovative materials.',
     },
+    {
+      id: 'stellar-series',
+      name: 'Stellar Series',
+      category: 'collection',
+      price: '$199 - $899',
+      images: [
+        '/images/IMG-20241116-WA0036-s1.jpg',
+        '/images/IMG-20241116-WA0032-s2.jpg',
+        '/images/IMG-20241116-WA0024-s3.jpg',
+        '/images/IMG-20241116-WA0016-s4.jpg',
+        '/images/IMG-20241116-WA0014-s5.jpg'
+      ],
+      description: 'Contemporary stellar-inspired lighting collection featuring cosmic designs and celestial aesthetics for modern spaces.',
+    },
+    {
+      id: 'radiance-collection',
+      name: 'Radiance Collection',
+      category: 'collection',
+      price: '$229 - $1,199',
+      images: [
+        '/images/IMG-20250123-WA0028-r1.jpg',
+        '/images/IMG-20250123-WA0026-r2.jpg',
+        '/images/IMG-20250123-WA0022-r3.jpg',
+        '/images/IMG-20250123-WA0020-r4.jpg',
+        '/images/IMG-20250123-WA0016-r5.jpg'
+      ],
+      description: 'Luxurious radiance-focused lighting collection emphasizing brilliant illumination and sophisticated design elements.',
+    },
+    {
+      id: 'quantum-line',
+      name: 'Quantum Line',
+      category: 'collection',
+      price: '$179 - $799',
+      images: [
+        '/images/IMG-20250213-WA0011-q1.jpg',
+        '/images/IMG-20250213-WA0017-q2.jpg',
+        '/images/IMG-20250213-WA0007-q3.jpg',
+        '/images/IMG-20250213-WA0015-q4.jpg',
+        '/images/IMG-20250213-WA0013-q5.jpg'
+      ],
+      description: 'Futuristic quantum-inspired lighting line featuring cutting-edge technology and innovative design concepts.',
+    },
+    {
+      id: 'prism-series',
+      name: 'Prism Series',
+      category: 'collection',
+      price: '$159 - $699',
+      images: [
+        '/images/IMG-20250501-WA0021-p1.jpg',
+        '/images/IMG-20250501-WA0020-p2.jpg',
+        '/images/IMG-20250501-WA0018-p3.jpg',
+        '/images/IMG-20250501-WA0015-p4.jpg',
+        '/images/IMG-20250501-WA0009-p5.jpg'
+      ],
+      description: 'Prismatic lighting series featuring light refraction and spectrum effects for colorful and dynamic illumination.',
+    },
+    {
+      id: 'orbit-collection',
+      name: 'Orbit Collection',
+      category: 'collection',
+      price: '$189 - $899',
+      images: [
+        '/images/IMG-20250516-WA0016-o1.jpg',
+        '/images/IMG-20250516-WA0012-o2.jpg',
+        '/images/IMG-20250516-WA0004-o3.jpg',
+        '/images/IMG-20250516-WA0002-o4.jpg',
+        '/images/IMG-20250516-WA0006-o5.jpg'
+      ],
+      description: 'Orbital-inspired lighting collection featuring circular and spherical designs with rotating and dynamic elements.',
+    },
+    {
+      id: 'nova-line',
+      name: 'Nova Line',
+      category: 'collection',
+      price: '$149 - $599',
+      images: [
+        '/images/IMG-20250527-WA0035-n1.jpg',
+        '/images/IMG-20250527-WA0033-n2.jpg',
+        '/images/IMG-20250527-WA0039-n3.jpg',
+        '/images/IMG-20250527-WA0037-n4.jpg',
+        '/images/IMG-20250527-WA0036-n5.jpg'
+      ],
+      description: 'Explosive nova-inspired lighting line featuring burst patterns and radial designs for dramatic illumination effects.',
+    },
+    {
+      id: 'meridian-series',
+      name: 'Meridian Series',
+      category: 'collection',
+      price: '$169 - $749',
+      images: [
+        '/images/IMG-20250606-WA0007-m1.jpg',
+        '/images/IMG-20250606-WA0011-m2.jpg',
+        '/images/IMG-20250606-WA0021-m3.jpg',
+        '/images/IMG-20250606-WA0013-m4.jpg',
+        '/images/IMG-20250606-WA0001-m5.jpg'
+      ],
+      description: 'Meridian-inspired lighting series featuring linear and directional designs for precise illumination control.',
+    },
+    {
+      id: 'lumina-collection',
+      name: 'Lumina Collection',
+      category: 'collection',
+      price: '$139 - $649',
+      images: [
+        '/images/IMG-20250616-WA0007-l1.jpg',
+        '/images/IMG-20250616-WA0001-l2.jpg',
+        '/images/IMG-20250616-WA0003-l4.jpg',
+        '/images/IMG-20250616-WA0009-l4.jpg',
+        '/images/IMG-20250616-WA0005-l5.jpg'
+      ],
+      description: 'Pure lumina-focused lighting collection emphasizing clean illumination and minimalist design principles.',
+    }
   ];
 
   const categories = ['all', 'collection'];

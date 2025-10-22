@@ -221,6 +221,278 @@ const products: Product[] = [
       "Over-the-air updates and new features",
       "Innovative material combinations"
     ]
+  },
+  {
+    id: 'stellar-series',
+    name: 'Stellar Series',
+    category: 'collection',
+    price: '$199 - $899',
+    images: [
+      '/images/IMG-20241116-WA0036-s1.jpg',
+      '/images/IMG-20241116-WA0032-s2.jpg',
+      '/images/IMG-20241116-WA0024-s3.jpg',
+      '/images/IMG-20241116-WA0016-s4.jpg',
+      '/images/IMG-20241116-WA0014-s5.jpg'
+    ],
+    description: 'Contemporary stellar-inspired lighting collection featuring cosmic designs and celestial aesthetics for modern spaces.',
+    longDescription: 'The Stellar Series captures the wonder and beauty of the cosmos, featuring five distinctive pieces that bring celestial elegance to any interior. Each fixture in this collection draws inspiration from stellar formations, nebulae, and cosmic phenomena, translating these natural wonders into sophisticated lighting designs. The series combines modern materials with organic forms, creating pieces that serve as both functional lighting and artistic focal points. With energy-efficient LED technology and customizable brightness settings, the Stellar Series illuminates spaces with the same captivating beauty found in the night sky.',
+    specifications: [
+      "Collection: 5 cosmic-inspired pieces",
+      "Materials: Brushed metals, frosted glass, LED components",
+      "Finish: Cosmic bronze with stellar accents",
+      "LED Technology: Dimmable, color-changing capabilities",
+      "Power: 18W-55W depending on piece",
+      "Control: Remote control and app connectivity",
+      "Installation: Standard electrical mounting"
+    ],
+    features: [
+      "Cosmic and stellar-inspired designs",
+      "Color-changing LED technology",
+      "Remote control operation",
+      "Dimmable lighting with multiple settings",
+      "Premium brushed metal construction",
+      "Frosted glass diffusers for soft illumination",
+      "App connectivity for smart control",
+      "Celestial aesthetic appeal"
+    ]
+  },
+  {
+    id: 'radiance-collection',
+    name: 'Radiance Collection',
+    category: 'collection',
+    price: '$229 - $1,199',
+    images: [
+      '/images/IMG-20250123-WA0028-r1.jpg',
+      '/images/IMG-20250123-WA0026-r2.jpg',
+      '/images/IMG-20250123-WA0022-r3.jpg',
+      '/images/IMG-20250123-WA0020-r4.jpg',
+      '/images/IMG-20250123-WA0016-r5.jpg'
+    ],
+    description: 'Luxurious radiance-focused lighting collection emphasizing brilliant illumination and sophisticated design elements.',
+    longDescription: 'The Radiance Collection represents the pinnacle of illumination excellence, featuring five meticulously crafted pieces designed to maximize light output while maintaining elegant aesthetics. Each fixture incorporates advanced optical engineering to ensure optimal light distribution and minimal glare. The collection showcases premium materials including polished metals, precision-cut glass, and high-performance LED arrays. From intimate accent lighting to grand statement pieces, the Radiance Collection transforms any space with brilliant, beautiful light that enhances both functionality and ambiance.',
+    specifications: [
+      "Collection: 5 high-performance lighting pieces",
+      "Materials: Polished metals, precision glass, premium LEDs",
+      "Finish: Polished chrome with crystal accents",
+      "LED Technology: High-output, full-spectrum illumination",
+      "Power: 25W-80W depending on piece",
+      "Light Output: Up to 8000 lumens per fixture",
+      "Warranty: 7-year comprehensive coverage"
+    ],
+    features: [
+      "Maximum light output optimization",
+      "Full-spectrum LED illumination",
+      "Precision optical engineering",
+      "Glare-free light distribution",
+      "Premium polished metal construction",
+      "Crystal accent elements",
+      "High-performance LED arrays",
+      "Professional-grade illumination"
+    ]
+  },
+  {
+    id: 'quantum-line',
+    name: 'Quantum Line',
+    category: 'collection',
+    price: '$179 - $799',
+    images: [
+      '/images/IMG-20250213-WA0011-q1.jpg',
+      '/images/IMG-20250213-WA0017-q2.jpg',
+      '/images/IMG-20250213-WA0007-q3.jpg',
+      '/images/IMG-20250213-WA0015-q4.jpg',
+      '/images/IMG-20250213-WA0013-q5.jpg'
+    ],
+    description: 'Futuristic quantum-inspired lighting line featuring cutting-edge technology and innovative design concepts.',
+    longDescription: 'The Quantum Line pushes the boundaries of lighting design with five revolutionary pieces that incorporate quantum-inspired aesthetics and cutting-edge technology. Each fixture features unique geometric patterns that seem to shift and change as light passes through them, creating dynamic visual effects reminiscent of quantum phenomena. The collection utilizes advanced materials including quantum dot technology for enhanced color rendering and energy efficiency. With smart connectivity and adaptive lighting algorithms, the Quantum Line represents the future of intelligent illumination.',
+    specifications: [
+      "Collection: 5 quantum-inspired pieces",
+      "Materials: Advanced polymers, quantum dot LEDs",
+      "Technology: Quantum dot color enhancement",
+      "LED Technology: Adaptive color temperature",
+      "Power: 15W-50W depending on piece",
+      "Connectivity: WiFi, Bluetooth, smart home integration",
+      "Features: Dynamic light patterns and effects"
+    ],
+    features: [
+      "Quantum-inspired geometric designs",
+      "Dynamic light pattern effects",
+      "Quantum dot LED technology",
+      "Adaptive color temperature control",
+      "Smart home integration",
+      "Advanced polymer construction",
+      "Energy-efficient operation",
+      "Futuristic aesthetic appeal"
+    ]
+  },
+  {
+    id: 'prism-series',
+    name: 'Prism Series',
+    category: 'collection',
+    price: '$159 - $699',
+    images: [
+      '/images/IMG-20250501-WA0021-p1.jpg',
+      '/images/IMG-20250501-WA0020-p2.jpg',
+      '/images/IMG-20250501-WA0018-p3.jpg',
+      '/images/IMG-20250501-WA0015-p4.jpg',
+      '/images/IMG-20250501-WA0009-p5.jpg'
+    ],
+    description: 'Prismatic lighting series featuring light refraction and spectrum effects for colorful and dynamic illumination.',
+    longDescription: 'The Prism Series celebrates the beauty of light refraction and spectrum dispersion, featuring five distinctive pieces that transform ordinary illumination into spectacular light shows. Each fixture incorporates precision-cut prismatic elements that break white light into its component colors, creating rainbow effects and dynamic color patterns throughout the space. The collection combines artistic vision with optical science, resulting in lighting that is both functional and mesmerizing. Perfect for creative spaces, entertainment areas, or anywhere you want to add a touch of magic to your lighting design.',
+    specifications: [
+      "Collection: 5 prismatic light fixtures",
+      "Materials: Precision-cut prisms, optical glass",
+      "Effects: Light refraction and spectrum dispersion",
+      "LED Technology: High-intensity white light sources",
+      "Power: 20W-60W depending on piece",
+      "Optical Elements: Multi-faceted prismatic components",
+      "Installation: Adjustable mounting for optimal effects"
+    ],
+    features: [
+      "Prismatic light refraction effects",
+      "Spectrum dispersion and rainbow patterns",
+      "Precision-cut optical components",
+      "High-intensity LED light sources",
+      "Adjustable mounting systems",
+      "Dynamic color pattern creation",
+      "Artistic and functional lighting",
+      "Mesmerizing visual effects"
+    ]
+  },
+  {
+    id: 'orbit-collection',
+    name: 'Orbit Collection',
+    category: 'collection',
+    price: '$189 - $899',
+    images: [
+      '/images/IMG-20250516-WA0016-o1.jpg',
+      '/images/IMG-20250516-WA0012-o2.jpg',
+      '/images/IMG-20250516-WA0004-o3.jpg',
+      '/images/IMG-20250516-WA0002-o4.jpg',
+      '/images/IMG-20250516-WA0006-o5.jpg'
+    ],
+    description: 'Orbital-inspired lighting collection featuring circular and spherical designs with rotating and dynamic elements.',
+    longDescription: 'The Orbit Collection draws inspiration from planetary motion and celestial orbits, featuring five innovative pieces that incorporate circular and spherical design elements with dynamic movement capabilities. Each fixture features rotating or adjustable components that allow for customizable light direction and pattern creation. The collection combines kinetic design principles with modern lighting technology, creating fixtures that are both visually striking and highly functional. With smooth, silent operation and precision engineering, the Orbit Collection brings the elegance of celestial mechanics to interior lighting.',
+    specifications: [
+      "Collection: 5 orbital-inspired pieces",
+      "Materials: Precision metals, kinetic components",
+      "Movement: Rotating and adjustable elements",
+      "LED Technology: Directional and ambient lighting",
+      "Power: 22W-65W depending on piece",
+      "Control: Manual and motorized adjustment options",
+      "Operation: Silent precision movement"
+    ],
+    features: [
+      "Orbital and planetary-inspired designs",
+      "Rotating and adjustable components",
+      "Kinetic lighting elements",
+      "Directional and ambient illumination",
+      "Silent precision movement",
+      "Manual and motorized controls",
+      "Customizable light patterns",
+      "Celestial aesthetic appeal"
+    ]
+  },
+  {
+    id: 'nova-line',
+    name: 'Nova Line',
+    category: 'collection',
+    price: '$149 - $599',
+    images: [
+      '/images/IMG-20250527-WA0035-n1.jpg',
+      '/images/IMG-20250527-WA0033-n2.jpg',
+      '/images/IMG-20250527-WA0039-n3.jpg',
+      '/images/IMG-20250527-WA0037-n4.jpg',
+      '/images/IMG-20250527-WA0036-n5.jpg'
+    ],
+    description: 'Explosive nova-inspired lighting line featuring burst patterns and radial designs for dramatic illumination effects.',
+    longDescription: 'The Nova Line captures the explosive energy and radial beauty of stellar novae, featuring five dynamic pieces that create dramatic burst patterns and radial illumination effects. Each fixture incorporates multiple light sources arranged in explosive patterns that radiate outward from central points, mimicking the spectacular light shows of stellar explosions. The collection features adjustable intensity controls and pattern variations, allowing users to create everything from subtle ambient lighting to dramatic focal displays. With energy-efficient LED technology and artistic metalwork, the Nova Line brings cosmic drama to contemporary interiors.',
+    specifications: [
+      "Collection: 5 nova-inspired pieces",
+      "Materials: Artistic metals, multiple LED arrays",
+      "Patterns: Radial burst and explosive designs",
+      "LED Technology: Multi-point illumination systems",
+      "Power: 18W-55W depending on piece",
+      "Control: Adjustable intensity and pattern settings",
+      "Effects: Dramatic radial light projection"
+    ],
+    features: [
+      "Nova and stellar explosion-inspired designs",
+      "Radial burst light patterns",
+      "Multi-point LED illumination",
+      "Adjustable intensity controls",
+      "Pattern variation settings",
+      "Dramatic focal lighting effects",
+      "Artistic metalwork construction",
+      "Cosmic energy aesthetic"
+    ]
+  },
+  {
+    id: 'meridian-series',
+    name: 'Meridian Series',
+    category: 'collection',
+    price: '$169 - $749',
+    images: [
+      '/images/IMG-20250606-WA0007-m1.jpg',
+      '/images/IMG-20250606-WA0011-m2.jpg',
+      '/images/IMG-20250606-WA0021-m3.jpg',
+      '/images/IMG-20250606-WA0013-m4.jpg',
+      '/images/IMG-20250606-WA0001-m5.jpg'
+    ],
+    description: 'Meridian-inspired lighting series featuring linear and directional designs for precise illumination control.',
+    longDescription: 'The Meridian Series takes inspiration from navigational meridians and directional lines, featuring five precision-engineered pieces that offer exceptional control over light direction and distribution. Each fixture incorporates linear design elements and adjustable components that allow for precise beam shaping and directional lighting. The collection is perfect for task lighting, accent illumination, and architectural highlighting. With advanced optical systems and premium construction materials, the Meridian Series delivers professional-grade lighting performance in elegant, contemporary designs.',
+    specifications: [
+      "Collection: 5 directional lighting pieces",
+      "Materials: Precision metals, optical components",
+      "Design: Linear and meridian-inspired forms",
+      "LED Technology: Directional beam control",
+      "Power: 16W-48W depending on piece",
+      "Beam Control: Adjustable focus and direction",
+      "Applications: Task, accent, and architectural lighting"
+    ],
+    features: [
+      "Meridian and linear-inspired designs",
+      "Precision directional beam control",
+      "Adjustable focus and direction",
+      "Professional-grade optical systems",
+      "Task and accent lighting optimization",
+      "Architectural highlighting capabilities",
+      "Premium construction materials",
+      "Contemporary linear aesthetics"
+    ]
+  },
+  {
+    id: 'lumina-collection',
+    name: 'Lumina Collection',
+    category: 'collection',
+    price: '$139 - $649',
+    images: [
+      '/images/IMG-20250616-WA0007-l1.jpg',
+      '/images/IMG-20250616-WA0001-l2.jpg',
+      '/images/IMG-20250616-WA0003-l4.jpg',
+      '/images/IMG-20250616-WA0003-l4.jpg',
+      '/images/IMG-20250616-WA0005-l5.jpg'
+    ],
+    description: 'Pure lumina-focused lighting collection emphasizing clean illumination and minimalist design principles.',
+    longDescription: 'The Lumina Collection embodies the essence of pure light, featuring five minimalist pieces that prioritize clean illumination and understated elegance. Each fixture is designed to disappear into the architecture while providing exceptional light quality and distribution. The collection emphasizes simplicity, functionality, and the beauty of unadorned light. With high-efficiency LED technology and refined materials, the Lumina Collection offers sophisticated lighting solutions that enhance spaces without overwhelming them. Perfect for modern minimalist interiors and contemporary architectural settings.',
+    specifications: [
+      "Collection: 5 minimalist lighting pieces",
+      "Materials: Refined metals, clean glass elements",
+      "Design: Pure minimalist aesthetics",
+      "LED Technology: High-efficiency, clean illumination",
+      "Power: 14W-42W depending on piece",
+      "Light Quality: High CRI, flicker-free operation",
+      "Installation: Seamless architectural integration"
+    ],
+    features: [
+      "Pure minimalist design philosophy",
+      "Clean and unadorned illumination",
+      "High-efficiency LED technology",
+      "Seamless architectural integration",
+      "High CRI light quality",
+      "Flicker-free operation",
+      "Refined material construction",
+      "Understated elegance"
+    ]
   }
 ];
 

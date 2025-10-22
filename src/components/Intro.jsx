@@ -114,7 +114,7 @@ export default function Intro() {
         
         <div className={styles.imageContent}>
           <Image
-            src="/images/20240913_211304-hero.jpg"
+            src="/images/IMG-20250516-WA0016-hero-replace.jpg"
             alt="Hero Lamp"
             fill
             style={{ objectFit: 'contain' }}

@@ -33,7 +33,7 @@ const NewImageSlider: React.FC = () => {
   const sliderItems: SliderItem[] = [
     {
       id: 1,
-      image: '/images/20240520_161231-featured-1.jpg',
+      image: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
       author: 'LAMPCO',
       title: 'PREMIUM LIGHTING',
       topic: 'COLLECTION',

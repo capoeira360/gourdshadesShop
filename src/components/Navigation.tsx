@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 interface NavigationProps {
   className?: string;
@@ -31,11 +32,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   };
 
   const menuItems = [
-    { name: 'Home', href: '/', preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNEQkI0MkMiLz4KPHN2Zz4K' },
-    { name: 'Products', href: '/products', preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjEwMCIgeT0iNjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iODAiIGZpbGw9IiNEQkI0MkMiLz4KPHN2Zz4K' },
-    { name: 'About', href: '/about', preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0xNTAgNjBMMTgwIDEwMEgxMjBMMTUwIDYwWiIgZmlsbD0iI0RCQjQyQyIvPgo8L3N2Zz4K' },
-    { name: 'Services', href: '/services', preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxlbGxpcHNlIGN4PSIxNTAiIGN5PSIxMDAiIHJ4PSI2MCIgcnk9IjMwIiBmaWxsPSIjREJCNDJDIi8+Cjwvc3ZnPgo=' },
-    { name: 'Contact', href: '/contact', preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjgwIiB5PSI4MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MCIgZmlsbD0iI0RCQjQyQyIvPgo8L3N2Zz4K' },
+    { name: 'Home', href: '/', preview: '/images/20240913_211304-hero.jpg' },
+    { name: 'Products', href: '/products', preview: '/images/20240520_161231-featured-1.jpg' },
+    { name: 'About', href: '/about', preview: '/images/IMG-20250921-WA0000-nav-about.jpg' },
+    { name: 'Services', href: '/services', preview: '/images/IMG-20250301-WA0010-nav-services.jpg' },
+    { name: 'Contact', href: '/contact', preview: '/images/IMG-20250307-WA0009-nav-contacts.jpg' },
   ];
 
   const menuVariants = {
@@ -481,24 +482,27 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                         exit="hidden"
                         className="w-[400px] h-[300px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
                       >
-                        <div className="w-full h-full bg-gradient-to-br from-accent/30 to-white/10 flex flex-col items-center justify-center p-8">
-                          <div className="text-6xl mb-6 text-white/80">
-                            {hoveredLink === 'Home' && '🏠'}
-                            {hoveredLink === 'Products' && '💡'}
-                            {hoveredLink === 'About' && '👥'}
-                            {hoveredLink === 'Services' && '🔧'}
-                            {hoveredLink === 'Contact' && '📞'}
+                        {/* Display the actual preview image */}
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={menuItems.find(item => item.name === hoveredLink)?.preview || ''}
+                            alt={`${hoveredLink} preview`}
+                            fill
+                            className="object-cover"
+                          />
+                          {/* Overlay with text */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 flex flex-col items-center justify-center p-8">
+                            <span className="text-white text-2xl font-light mb-2">
+                              {hoveredLink}
+                            </span>
+                            <span className="text-white/80 text-lg text-center">
+                              {hoveredLink === 'Home' && 'Discover our premium lighting collection'}
+                              {hoveredLink === 'Products' && 'Explore our curated lighting solutions'}
+                              {hoveredLink === 'About' && 'Learn about our lighting expertise'}
+                              {hoveredLink === 'Services' && 'Professional lighting services'}
+                              {hoveredLink === 'Contact' && 'Get in touch with our team'}
+                            </span>
                           </div>
-                          <span className="text-white text-2xl font-light mb-2">
-                            {hoveredLink}
-                          </span>
-                          <span className="text-white/60 text-lg text-center">
-                            {hoveredLink === 'Home' && 'Discover our premium lighting collection'}
-                            {hoveredLink === 'Products' && 'Explore our curated lighting solutions'}
-                            {hoveredLink === 'About' && 'Learn about our lighting expertise'}
-                            {hoveredLink === 'Services' && 'Professional lighting services'}
-                            {hoveredLink === 'Contact' && 'Get in touch with our team'}
-                          </span>
                         </div>
                       </motion.div>
                     )}
