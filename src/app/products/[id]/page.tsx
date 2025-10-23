@@ -703,8 +703,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           <div className="p-8 pb-16">
             {activeTab === 'description' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#1a1a1a' }}>Product Description</h3>
-                <p className="text-gray-700 leading-relaxed text-base">
+                <h3 className="text-xl font-semibold" style={{ color: '#91631D' }}>Product Description</h3>
+                <p className="text-gray-700 leading-relaxed text-base font-bold">
                   {product.longDescription}
                 </p>
               </div>
@@ -712,10 +712,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
             {activeTab === 'specifications' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#1a1a1a' }}>Specifications</h3>
+                <h3 className="text-xl font-semibold" style={{ color: '#91631D' }}>Specifications</h3>
                 <ul className="space-y-2">
                   {product.specifications.map((spec, index) => (
-                    <li key={index} className="text-gray-700 flex items-start">
+                    <li key={index} className="text-gray-700 flex items-start font-bold">
                       <span 
                         className="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" 
                         style={{ backgroundColor: '#d4af37' }}
@@ -729,10 +729,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
             {activeTab === 'features' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#1a1a1a' }}>Key Features</h3>
+                <h3 className="text-xl font-semibold" style={{ color: '#91631D' }}>Key Features</h3>
                 <ul className="space-y-2">
                   {product.features.map((feature, index) => (
-                    <li key={index} className="text-gray-700 flex items-start">
+                    <li key={index} className="text-gray-700 flex items-start font-bold">
                       <span 
                         className="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" 
                         style={{ backgroundColor: '#d4af37' }}

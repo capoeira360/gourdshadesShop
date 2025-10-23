@@ -113,14 +113,16 @@ export default function Intro() {
         </div>
         
         <div className={styles.imageContent}>
-          <Image
-            src="/images/IMG-20250516-WA0016-hero-replace.jpg"
-            alt="Hero Lamp"
-            fill
-            style={{ objectFit: 'contain' }}
-            priority
-            unoptimized
-          />
+          <div className={styles.imageFrame}>
+            <Image
+              src="/images/IMG-20250516-WA0016-hero-replace.jpg"
+              alt="Hero Lamp"
+              fill
+              style={{ objectFit: 'contain' }}
+              priority
+              unoptimized
+            />
+          </div>
         </div>
       </div>
     </div>

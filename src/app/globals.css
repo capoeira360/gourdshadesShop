@@ -1,17 +1,35 @@
 @import "tailwindcss";
 
-/* Artine Font Face Declarations */
+/* Timeburner Font Face Declarations */
 @font-face {
-  font-family: 'ArtineLight';
-  src: url('/fonts/ArtineLight-1jRMM.ttf') format('truetype');
-  font-weight: 300;
+  font-family: 'Timeburner';
+  src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ArtineBold';
-  src: url('/fonts/ArtineBold-nA4d4.ttf') format('truetype');
+  font-family: 'Timeburner';
+  src: url('/fonts/TimeburnerBold-peGR.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cremotic Font Face Declarations */
+@font-face {
+  font-family: 'Cremotic';
+  src: url('/fonts/CremoticBold-4B924.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gemsbuck Font Face Declarations */
+@font-face {
+  font-family: 'Gemsbuck';
+  src: url('/fonts/Gemsbuck01Bold-OV33A.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -62,7 +80,7 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'ArtineLight', Arial, Helvetica, sans-serif;
+  font-family: 'Timeburner', Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -73,33 +91,18 @@ body {
   will-change: transform;
 }
 
-/* Artine font utility classes */
-.font-artine-light {
-  font-family: 'ArtineLight', Arial, Helvetica, sans-serif;
+/* Font utility classes */
+.text-xs, .text-sm, .text-base, .text-lg, p, span, small, .small-text {
+  font-family: 'Timeburner', sans-serif;
+  font-weight: 700;
 }
 
-.font-artine-bold {
-  font-family: 'ArtineBold', Arial, Helvetica, sans-serif;
-}
-
-/* Apply ArtineLight to small text elements */
-.text-xs, .text-sm, .text-base {
-  font-family: 'ArtineLight', Arial, Helvetica, sans-serif;
-}
-
-/* Apply ArtineLight to specific small text elements */
-p, span, div[class*="text-"], .text-text-secondary, .text-white, .text-gray {
-  font-family: 'ArtineLight', Arial, Helvetica, sans-serif;
-}
-
-/* Apply ArtineBold to large text elements */
-h1, h2, h3, h4, h5, h6, .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl {
-  font-family: 'ArtineBold', Arial, Helvetica, sans-serif;
-}
-
-/* Apply ArtineBold to specific large text classes */
-.font-light, .font-medium, .font-semibold, .font-bold {
-  font-family: 'ArtineBold', Arial, Helvetica, sans-serif;
+/* Large text styling */
+h1, h2, h3, h4, h5, h6,
+.text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl,
+.large-text {
+  font-family: 'Cremotic', serif;
+  color: #91631D;
 }
 
 .will-change-opacity {
