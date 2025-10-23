@@ -35,6 +35,47 @@
   font-display: swap;
 }
 
+/* Kyron Font Face Declarations */
+@font-face {
+  font-family: 'Kyron';
+  src: url('/fonts/KyronRegular-V4ovl.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kyron';
+  src: url('/fonts/KyronMedium-q2ej1.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kyron';
+  src: url('/fonts/KyronSemiBold-DY1qD.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kyron';
+  src: url('/fonts/KyronBold-pg0Gd.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kyron';
+  src: url('/fonts/KyronExtraBold-ARepp.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-primary: #1a1a1a;
   --color-accent: #B59268;
@@ -94,14 +135,30 @@ body {
 /* Font utility classes */
 .text-xs, .text-sm, .text-base, .text-lg, p, span, small, .small-text {
   font-family: 'Timeburner', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
+}
+
+/* Override font-light to be bolder */
+.font-light {
+  font-weight: 600 !important;
+}
+
+/* Override font-normal to be bolder */
+.font-normal {
+  font-weight: 700 !important;
+}
+
+/* Override font-medium to be bolder */
+.font-medium {
+  font-weight: 800 !important;
 }
 
 /* Large text styling */
 h1, h2, h3, h4, h5, h6,
 .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl,
 .large-text {
-  font-family: 'Cremotic', serif;
+  font-family: 'Kyron', 'Cremotic', serif;
+  font-weight: 600;
   color: #91631D;
 }
 

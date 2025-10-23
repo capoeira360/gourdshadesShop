@@ -311,6 +311,7 @@ const NewImageSlider: React.FC = () => {
         }
 
         .carousel .list .item .title {
+          font-family: 'Kyron', 'Poppins', sans-serif;
           font-size: 2.8em;
           font-weight: 800;
           line-height: 1.1em;
@@ -388,6 +389,7 @@ const NewImageSlider: React.FC = () => {
         }
 
         .thumbnail .item .content .title {
+          font-family: 'Kyron', 'Poppins', sans-serif;
           font-weight: 600;
           font-size: 12px;
           margin-bottom: 4px;

@@ -169,9 +169,10 @@ interface SectionRowProps {
   isActive: boolean;
   onEnter: () => void;
   onLeave: () => void;
+  onScrollIntoView: () => void;
 }
 
-const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave }) => {
+const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave, onScrollIntoView }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -180,24 +181,28 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
     const entry = entries[0];
     const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.3;
     
+    // Enhanced scroll-based trigger similar to products page
+     if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+       // Clear any existing timeout
+       if (timeoutRef.current) {
+         clearTimeout(timeoutRef.current);
+       }
+       
+       // Set a timeout to ensure stable detection
+       timeoutRef.current = setTimeout(() => {
+         onScrollIntoView();
+       }, 50);
+     }
+    
     if (newIsVisible !== isVisible) {
       setIsVisible(newIsVisible);
-      if (newIsVisible) {
-        // Add a small delay to prevent rapid state changes
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-        timeoutRef.current = setTimeout(() => {
-          onEnter();
-        }, 50);
-      }
     }
-  }, [isVisible, onEnter]);
+  }, [isVisible, onScrollIntoView, section.id]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: [0.3, 0.7],
-      rootMargin: '-20% 0px -20% 0px'
+      threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.8, 1.0], // More granular thresholds
+      rootMargin: '-20% 0px -20% 0px' // Less restrictive - center 60% of viewport
     });
 
     if (sectionRef.current) {
@@ -213,7 +218,6 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   }, [handleIntersection]);
 
   const variants = {
-    hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
@@ -232,8 +236,8 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
         isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
       }`}
       variants={variants}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
+      initial="visible"
+      animate="visible"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
@@ -278,7 +282,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
 const AboutPage: React.FC = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [activeSection, setActiveSection] = useState<AboutSection | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const lastScrollSectionRef = useRef<string | null>(null);
 
   const sections: AboutSection[] = [
     {
@@ -325,6 +331,13 @@ const AboutPage: React.FC = () => {
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGOEY4Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMjAwIDEyMEwyMDAgMjgwTTE0MCAyMDBMMjYwIDIwME0xNTUgMTU1TDI0NSAyNDVNMjQ1IDE1NUwxNTUgMjQ1IiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjMwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiNGRkZGRkYiLz4KPHN2Zz4='
     }
   ];
+
+  // Set initial active section when page loads
+  useEffect(() => {
+    if (!activeSection && sections.length > 0) {
+      setActiveSection(sections[0]);
+    }
+  }, [activeSection, sections]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -402,8 +415,19 @@ const AboutPage: React.FC = () => {
                 section={section} 
                 index={index}
                 isActive={activeSection?.id === section.id}
-                onEnter={() => setActiveSection(section)}
-                onLeave={() => setActiveSection(null)}
+                onEnter={() => {
+                  setIsHovering(true);
+                  setActiveSection(section);
+                }}
+                onLeave={() => {
+                  setIsHovering(false);
+                  // Don't automatically change image when leaving hover
+                }}
+                onScrollIntoView={() => {
+                  if (!isHovering) {
+                    setActiveSection(section);
+                  }
+                }}
               />
             ))}
           </div>

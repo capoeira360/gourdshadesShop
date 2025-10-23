@@ -24,7 +24,7 @@ interface ProductRowProps {
 }
 
 const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave, onScrollIntoView }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Changed to true for instant visibility
   const rowRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -33,8 +33,6 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
       ([entry]) => {
         // Only trigger when the element is intersecting AND reaches the center area of viewport
         if (entry.isIntersecting && entry.intersectionRatio >= 0.8) {
-          setIsVisible(true);
-          
           // Clear any existing timeout
           if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
@@ -150,7 +148,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden">
+    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden group cursor-pointer">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -167,10 +165,10 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
               />
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-              <h4 className="text-white text-xl font-light mb-2">
+              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300">
                 {currentProduct.name}
               </h4>
-              <p className="text-white/80 text-sm">
+              <p className="text-sm text-white/80 group-hover:text-[#C8A882]/90 transition-colors duration-300">
                 {currentProduct.description}
               </p>
             </div>
@@ -201,25 +199,26 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+  // Removed the intersection observer since we want instant visibility
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting) {
+  //         setIsVisible(true);
+  //       }
+  //     },
+  //     { threshold: 0.3 }
+  //   );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
+  //   if (cardRef.current) {
+  //     observer.observe(cardRef.current);
+  //   }
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -254,10 +253,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
         </div>
         <div className="p-6">
-          <h3 className="text-xl font-light text-gray-900 group-hover:text-primary transition-colors duration-300 mb-2">
+          <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2">
             {product.name}
           </h3>
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
             {product.description}
           </p>
           <div className="flex items-center justify-between">
