@@ -24,7 +24,7 @@ interface ProductRowProps {
 }
 
 const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave, onScrollIntoView }) => {
-  const [isVisible, setIsVisible] = useState(true); // Changed to true for instant visibility
+  const [isVisible] = useState(true); // Changed to true for instant visibility
   const rowRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -199,7 +199,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
-  const [isVisible, setIsVisible] = useState(true); // Changed to true for instant visibility
+  const [isVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Removed the intersection observer since we want instant visibility
@@ -280,8 +280,6 @@ const ProductsPage: React.FC = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  const productListRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollProductRef = useRef<string | null>(null);
 
   const products: Product[] = [
@@ -495,7 +493,7 @@ const ProductsPage: React.FC = () => {
     if (!activeProduct && filteredProducts.length > 0) {
       setActiveProduct(filteredProducts[0]);
     }
-  }, []); // Empty dependency array - only run once on mount
+  }, [activeProduct, filteredProducts]); // Added missing dependencies
 
   useEffect(() => {
     const observer = new IntersectionObserver(

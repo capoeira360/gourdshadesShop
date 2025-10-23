@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/* Tailwind CSS v4 Custom Theme */
+@theme {
+  --color-primary: #1a1a1a;
+  --color-accent: #B59268;
+  --color-light-gray: #f5f5f5;
+  --color-very-light-gray: #fafafa;
+  --color-white: #ffffff;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+}
+
 /* Timeburner Font Face Declarations */
 @font-face {
   font-family: 'Timeburner';
@@ -76,7 +89,7 @@
   font-display: swap;
 }
 
-@theme inline {
+:root {
   --color-primary: #1a1a1a;
   --color-accent: #B59268;
   --color-light-gray: #f5f5f5;
@@ -86,9 +99,6 @@
   --color-text-secondary: #666666;
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;
-}
-
-:root {
   --background: #ffffff;
   --foreground: #1a1a1a;
   --light-gray: #f5f5f5;

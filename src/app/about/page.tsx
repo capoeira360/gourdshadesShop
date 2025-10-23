@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 
 interface AboutSection {
   id: string;
@@ -197,7 +197,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
     if (newIsVisible !== isVisible) {
       setIsVisible(newIsVisible);
     }
-  }, [isVisible, onScrollIntoView, section.id]);
+  }, [isVisible, onScrollIntoView]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
@@ -284,9 +284,8 @@ const AboutPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<AboutSection | null>(null);
   const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  const lastScrollSectionRef = useRef<string | null>(null);
 
-  const sections: AboutSection[] = [
+  const sections: AboutSection[] = useMemo(() => [
     {
       id: 'story',
       title: 'Our Story',
@@ -330,7 +329,7 @@ const AboutPage: React.FC = () => {
       ],
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGOEY4Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMjAwIDEyMEwyMDAgMjgwTTE0MCAyMDBMMjYwIDIwME0xNTUgMTU1TDI0NSAyNDVNMjQ1IDE1NUwxNTUgMjQ1IiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjMwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiNGRkZGRkYiLz4KPHN2Zz4='
     }
-  ];
+  ], []);
 
   // Set initial active section when page loads
   useEffect(() => {

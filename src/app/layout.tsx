@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import StickyFooterReveal from "@/components/StickyFooterReveal";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "LampCo - Premium Lighting Solutions",
@@ -18,10 +19,11 @@ export default function RootLayout({
       <body className="antialiased">
         {/* Standalone Logo - positioned independently */}
         <div className="fixed top-1 left-6 z-40">
-          <img 
+          <Image 
             src="/logo-gourd-shades-square.svg" 
             alt="Gourd Shades" 
-            style={{ width: '150px', height: '150px' }}
+            width={150}
+            height={150}
           />
         </div>
         <Navigation />
