@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEnquiry } from '@/contexts/EnquiryContext';
 
 interface Product {
   id: string;
@@ -201,6 +202,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useEnquiry();
 
   // Removed the intersection observer since we want instant visibility
   // useEffect(() => {
@@ -233,43 +235,110 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
     },
   };
 
+  const handleAddToEnquiry = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation to product detail page
+    e.stopPropagation();
+    
+    console.log('Add to Enquiry clicked for:', product.name); // Debug log
+    
+    // Parse price string to number (remove $ and handle ranges)
+    const priceString = product.price.replace('$', '');
+    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
+    
+    console.log('Parsed price:', priceNumber); // Debug log
+    
+    const itemToAdd = {
+      id: product.id,
+      name: product.name,
+      price: priceNumber,
+      image: product.images[0],
+      category: product.category,
+    };
+    
+    console.log('Adding item:', itemToAdd); // Debug log
+    
+    addItem(itemToAdd);
+    
+    console.log('Item added to context'); // Debug log
+  };
+
   return (
-    <Link href={`/products/${product.id}`}>
-      <motion.div
-        ref={cardRef}
-        className="group cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
-        variants={cardVariants}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        whileHover={{ y: -5 }}
+    <div className="relative group">
+      {/* Add to Enquiry Button - Moved outside Link */}
+      <motion.button
+        onClick={(e) => {
+          console.log('Button clicked!'); // Debug log
+          handleAddToEnquiry(e);
+        }}
+        className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/80 transition-all duration-300 shadow-lg flex items-center space-x-2 z-20"
+        whileHover={{ 
+          scale: 1.05,
+          boxShadow: "0 10px 25px rgba(200, 168, 130, 0.3)"
+        }}
+        whileTap={{ 
+          scale: 0.95,
+          transition: { duration: 0.1 }
+        }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          delay: 0.2,
+          type: "spring",
+          stiffness: 300,
+          damping: 20
+        }}
       >
-        <div className="relative aspect-square bg-gray-50 overflow-hidden">
-          <Image
-            src={product.images[0]}
-            alt={product.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-        </div>
-        <div className="p-6">
-          <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2">
-            {product.name}
-          </h3>
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
-            {product.description}
-          </p>
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-medium text-primary">
-              {product.price}
-            </span>
-            <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
-              {product.category}
-            </span>
+        <motion.div
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ 
+            duration: 0.5,
+            ease: "easeInOut"
+          }}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8.5" />
+          </svg>
+        </motion.div>
+        <span>Add to Enquiry</span>
+      </motion.button>
+
+      <Link href={`/products/${product.id}`}>
+        <motion.div
+          ref={cardRef}
+          className="cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          variants={cardVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          whileHover={{ y: -5 }}
+        >
+          <div className="relative aspect-square bg-gray-50 overflow-hidden">
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
-        </div>
-      </motion.div>
-    </Link>
+          <div className="p-6">
+            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2">
+              {product.name}
+            </h3>
+            <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
+              {product.description}
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-medium text-primary">
+                {product.price}
+              </span>
+              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                {product.category}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </Link>
+    </div>
   );
 };
 

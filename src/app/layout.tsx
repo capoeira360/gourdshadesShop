@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import StickyFooterReveal from "@/components/StickyFooterReveal";
+import { EnquiryProvider } from "@/contexts/EnquiryContext";
+import EnquiryCart from "@/components/EnquiryCart";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -17,19 +19,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {/* Standalone Logo - positioned independently */}
-        <div className="fixed top-1 left-6 z-40">
-          <Image 
-            src="/logo-gourd-shades-square.svg" 
-            alt="Gourd Shades" 
-            width={150}
-            height={150}
-          />
-        </div>
-        <Navigation />
-        <StickyFooterReveal>
-          {children}
-        </StickyFooterReveal>
+        <EnquiryProvider>
+          {/* Standalone Logo - positioned independently */}
+          <div className="fixed top-1 left-6 z-40">
+            <Image 
+              src="/logo-gourd-shades-square.svg" 
+              alt="Gourd Shades" 
+              width={150}
+              height={150}
+            />
+          </div>
+          <Navigation />
+          <EnquiryCart />
+          <StickyFooterReveal>
+            {children}
+          </StickyFooterReveal>
+        </EnquiryProvider>
       </body>
     </html>
   );

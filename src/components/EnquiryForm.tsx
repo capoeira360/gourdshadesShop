@@ -1,0 +1,419 @@
+'use client';
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEnquiry } from '@/contexts/EnquiryContext';
+import { X, Mail, User, Phone, MessageSquare, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { validateContactForm, sanitizeString, sanitizeEmail, sanitizePhone } from '@/lib/validation';
+
+interface EnquiryFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+  general?: string;
+}
+
+const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
+  const { state, clearCart } = useEnquiry();
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const validateForm = (): boolean => {
+    const validation = validateContactForm(formData);
+    
+    if (!validation.success) {
+      const newErrors: FormErrors = {};
+      validation.error.issues.forEach(issue => {
+        const field = issue.path[0] as keyof FormErrors;
+        newErrors[field] = issue.message;
+      });
+      setErrors(newErrors);
+      return false;
+    }
+    
+    setErrors({});
+    return true;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  // Animation variants
+  const formVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.9,
+      y: 20
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.9,
+      y: 20
+    }
+  };
+
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
+  const inputVariants = {
+    focus: { 
+      scale: 1.02,
+      boxShadow: "0 0 0 3px rgba(200, 168, 130, 0.1)"
+    }
+  };
+
+  const buttonVariants = {
+    hover: { 
+      scale: 1.02,
+      boxShadow: "0 8px 25px rgba(200, 168, 130, 0.3)"
+    },
+    tap: { scale: 0.98 }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrors({});
+
+    try {
+      // Sanitize form data
+      const sanitizedData = {
+        name: sanitizeString(formData.name),
+        email: sanitizeEmail(formData.email),
+        phone: sanitizePhone(formData.phone),
+        message: sanitizeString(formData.message),
+        items: state.items,
+        totalItems: state.totalItems,
+        totalValue: state.totalValue,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await fetch('/api/send-enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sanitizedData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          setErrors({ general: 'Too many requests. Please try again later.' });
+        } else if (result.details) {
+          // Handle validation errors from server
+          const newErrors: FormErrors = {};
+          result.details.forEach((detail: { field: string; message: string }) => {
+            const field = detail.field.split('.').pop() as keyof FormErrors;
+            newErrors[field] = detail.message;
+          });
+          setErrors(newErrors);
+        } else {
+          setErrors({ general: result.error || 'Failed to send enquiry. Please try again.' });
+        }
+        setSubmitStatus('error');
+        return;
+      }
+
+      setSubmitStatus('success');
+      clearCart();
+      
+      // Auto-close after success
+      setTimeout(() => {
+        onClose();
+        setSubmitStatus('idle');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error sending enquiry:', error);
+      setErrors({ general: 'Network error. Please check your connection and try again.' });
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (submitStatus === 'success') {
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="bg-white rounded-lg p-8 max-w-md w-full text-center"
+                variants={formVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Enquiry Sent!</h2>
+                <p className="text-gray-600">
+                  Thank you for your enquiry. We&apos;ll get back to you within 24 hours.
+                </p>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    );
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+
+          {/* Form Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              variants={formVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bg-primary text-white p-6 rounded-t-lg">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold">Send Enquiry</h2>
+                  <button
+                    onClick={onClose}
+                    className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+                <p className="text-gray-200 mt-2">
+                  Complete your details below to send your enquiry
+                </p>
+              </div>
+
+              {/* Selected Items Summary */}
+              <div className="p-6 border-b bg-gray-50">
+                <h3 className="font-semibold text-gray-900 mb-3">Selected Items ({state.totalItems})</h3>
+                <div className="space-y-2 max-h-32 overflow-y-auto">
+                  {state.items.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center text-sm">
+                      <span className="text-gray-700">{item.name} × {item.quantity}</span>
+                      <span className="font-semibold text-primary">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-t pt-2 mt-2">
+                  <div className="flex justify-between items-center font-semibold">
+                    <span>Total Value:</span>
+                    <span className="text-primary">${state.totalValue.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                {/* Name Field */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <User size={16} className="inline mr-2" />
+                    Full Name *
+                  </label>
+                  <motion.input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter your full name"
+                    variants={inputVariants}
+                    whileFocus="focus"
+                    animate="blur"
+                  />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Mail size={16} className="inline mr-2" />
+                    Email Address *
+                  </label>
+                  <motion.input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter your email address"
+                    variants={inputVariants}
+                    whileFocus="focus"
+                    animate="blur"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                  )}
+                </div>
+
+                {/* Phone Field */}
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Phone size={16} className="inline mr-2" />
+                    Phone Number *
+                  </label>
+                  <motion.input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                      errors.phone ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter your phone number"
+                    variants={inputVariants}
+                    whileFocus="focus"
+                    animate="blur"
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                  )}
+                </div>
+
+                {/* Message Field */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    <MessageSquare size={16} className="inline mr-2" />
+                    Message *
+                  </label>
+                  <motion.textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none ${
+                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Tell us about your requirements or any questions you have..."
+                    variants={inputVariants}
+                    whileFocus="focus"
+                    animate="blur"
+                  />
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                  )}
+                </div>
+
+                {/* Error Messages */}
+                {(submitStatus === 'error' || errors.general) && (
+                  <motion.div
+                    className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <AlertCircle className="text-red-500 mr-3" size={20} />
+                    <p className="text-red-700">
+                      {errors.general || 'Failed to send enquiry. Please try again or contact us directly.'}
+                    </p>
+                  </motion.div>
+                )}
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center space-x-2 ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-primary hover:bg-opacity-90 text-white'
+                  }`}
+                  variants={buttonVariants}
+                  whileHover={!isSubmitting ? "hover" : undefined}
+                  whileTap={!isSubmitting ? "tap" : undefined}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="animate-spin" size={20} />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      <span>Send Enquiry</span>
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default EnquiryForm;

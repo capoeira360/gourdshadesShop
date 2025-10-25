@@ -42,60 +42,107 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
               ease: [0.4, 0, 0.2, 1]
             }}
           >
-            {/* Animated gradient background */}
-            <motion.div
-              className={`w-full h-full bg-gradient-to-br ${getGradientForSection(section.id)} relative`}
-              initial={{ backgroundPosition: '0% 50%' }}
-              animate={{ backgroundPosition: '100% 50%' }}
-              transition={{ 
-                duration: 8, 
-                repeat: Infinity, 
-                repeatType: "reverse",
-                ease: "linear"
-              }}
-              style={{
-                backgroundSize: '200% 200%'
-              }}
-            >
-              {/* Floating geometric shapes */}
+            {/* Display actual images for story, craft, and heritage sections */}
+            {section.id === 'story' ? (
               <motion.div
-                className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20 rounded-full"
-                animate={{ 
-                  y: [0, -20, 0],
-                  x: [0, 10, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  ease: "easeInOut"
-                }}
-              />
+                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src="/images/IMG-20250921-WA0000-nav-about.jpg"
+                  alt="Isaac Munis - About"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+                {/* Dark overlay for text readability */}
+                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+              </motion.div>
+            ) : section.id === 'heritage' ? (
               <motion.div
-                className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rounded-lg rotate-45"
-                animate={{ 
-                  rotate: [45, 90, 45],
-                  y: [0, 15, 0]
-                }}
-                transition={{ 
-                  duration: 5, 
-                  repeat: Infinity, 
-                  ease: "easeInOut"
-                }}
-              />
+                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src="/images/about-image-card2.jpeg"
+                  alt="Discovering Gourd Craft"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+                {/* Dark overlay for text readability */}
+                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+              </motion.div>
+            ) : section.id === 'values' ? (
               <motion.div
-                className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25 rounded-full"
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [0.25, 0.4, 0.25]
-                }}
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity, 
-                  ease: "easeInOut"
-                }}
-              />
-            </motion.div>
+                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src="/images/about-image-card3.jpeg"
+                  alt="Cultural Heritage"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+                {/* Dark overlay for text readability */}
+                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+              </motion.div>
+            ) : (
+              <motion.div
+                 className={`w-full h-full bg-gradient-to-br ${getGradientForSection(section.id)} relative`}
+                 initial={{ backgroundPosition: '0% 50%' }}
+                 animate={{ backgroundPosition: '100% 50%' }}
+                 transition={{ 
+                   duration: 8, 
+                   repeat: Infinity, 
+                   repeatType: "reverse",
+                   ease: "linear"
+                 }}
+                 style={{
+                   backgroundSize: '200% 200%'
+                 }}
+               >
+                {/* Floating geometric shapes */}
+                <motion.div
+                  className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20 rounded-full"
+                  animate={{ 
+                    y: [0, -20, 0],
+                    x: [0, 10, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity, 
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div
+                  className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rounded-lg rotate-45"
+                  animate={{ 
+                    rotate: [45, 90, 45],
+                    y: [0, 15, 0]
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity, 
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div
+                  className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25 rounded-full"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.25, 0.4, 0.25]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut"
+                  }}
+                />
+              </motion.div>
+            )}
 
             {/* Content overlay with enhanced styling */}
             <motion.div 
@@ -288,33 +335,31 @@ const AboutPage: React.FC = () => {
   const sections: AboutSection[] = useMemo(() => [
     {
       id: 'story',
-      title: 'Our Story',
-      subtitle: 'Founded in Milan, 1985',
+      title: 'My Story',
+      subtitle: 'From Arusha, Tanzania',
       content: [
-        'Founded by master craftsman Giovanni Rossi in Milan, LampCo began as a small workshop dedicated to creating bespoke lighting fixtures for luxury hotels and residences across Europe.',
-        'Today, we continue that tradition of excellence, combining traditional craftsmanship with modern innovation to create lighting that stands the test of time.'
+        'My name is Isaac Munis, I was born in Arusha, Tanzania. Since very young I have been passionate about hand craft work. I would build just random things from rubbish or anything I could find from the streets.',
+        'I started making Gourd lamps in 2020 as a part time job but now 6 years later I\'m doing it full time. I cannot say I\'m a fully professional in this art, but it is my aim to be among the best out there.'
       ],
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjUwIiB5PSI1MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNEQkI0MkMiIHJ4PSIyMCIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIxNTAiIHI9IjQwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHg9IjE1MCIgeT0iMjIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRkZGRkZGIiByeD0iMTAiLz4KPHN2ZyB4PSIxNzAiIHk9IjI0MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQwIj4KPHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA2MCA0MCIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik0xMCAyMEw1MCAyMCIgc3Ryb2tlPSIjREJCNDJDIiBzdHJva2Utd2lkdGg9IjIiLz4KPHN2Zz4KPHN2Zz4KPHN2Zz4='
     },
     {
       id: 'heritage',
-      title: 'Heritage & Innovation',
-      subtitle: '40 Years of Excellence',
+      title: 'Discovering Gourd Craft',
+      subtitle: 'The First Lamp Shade',
       content: [
-        'Blending 40 years of traditional craftsmanship with cutting-edge LED technology and smart home integration.',
-        'Our artisans combine time-honored techniques passed down through generations with the latest innovations in lighting technology.',
-        'Every piece reflects our commitment to both preserving traditional craftsmanship and embracing the future of lighting design.'
+        'I discovered gourd craft through trying many hand craft ideas. I did my first gourd art for a friend who wanted a lamp shade.',
+        'I was so happy with the result of the work and even more happier with all the positive feedback from the friend and many more who saw the work.'
       ],
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjBGMEYwIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTIwIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iNCIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjQwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMjAiIGZpbGw9IiNGRkZGRkYiLz4KPHN2Zz4='
     },
     {
       id: 'values',
-      title: 'Our Values',
-      subtitle: 'Quality, Sustainability, Design',
+      title: 'Cultural Heritage',
+      subtitle: 'Traditional Uses of Calabashes',
       content: [
-        'Quality First: Every piece is meticulously crafted using premium materials and time-honored techniques.',
-        'Sustainability: We\'re committed to eco-friendly practices and energy-efficient LED technology.',
-        'Timeless Design: Our designs transcend trends, creating pieces that remain beautiful for generations.'
+        'For many years in my country, calabashes / gourds have been used for storing water, seeds and most common milk.',
+        'It\'s my main objective to make people of my country aware of this other use of calabashes.'
       ],
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRkFGQUZBIi8+CjxwYXRoIGQ9Ik0yMDAgMTAwTDI4MCAyMDBIMTIwTDIwMCAxMDBaIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjI4MCIgcj0iNDAiIGZpbGw9IiNEQkI0MkMiLz4KPHJlY3QgeD0iMTcwIiB5PSIyNTAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjREJCNDJDIiBzdHJva2Utd2lkdGg9IjIiLz4KPHN2Zz4='
     },
