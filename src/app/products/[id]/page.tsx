@@ -4,6 +4,7 @@ import { useState, use } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEnquiry } from '@/contexts/EnquiryContext';
 
 interface Product {
   id: string;
@@ -19,10 +20,10 @@ interface Product {
 
 const products: Product[] = [
   {
-    id: 'aurora-collection',
-    name: 'Aurora Collection',
-    category: 'collection',
-    price: '$329 - $449',
+    id: 'artisan-series',
+    name: 'Tembo/Twiga savana',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/20240405_131741-a1.jpg',
       '/images/20240405_131752-a2.jpg',
@@ -30,33 +31,30 @@ const products: Product[] = [
       '/images/20240405_132238-a4.jpg',
       '/images/20240408_112214-a5.jpg'
     ],
-    description: 'A comprehensive lighting collection featuring pendant, chandelier, sconce, table, and floor lamps with sleek modern design and premium materials.',
-    longDescription: 'The Aurora Collection represents the pinnacle of contemporary lighting design, featuring five distinct pieces that work harmoniously together or as standalone statement pieces. Each lamp in this collection showcases sleek modern aesthetics with premium materials including brushed aluminum, tempered glass, and high-quality LED components. The collection includes a sophisticated pendant light perfect for dining areas, an elegant chandelier for grand spaces, a minimalist sconce for accent lighting, a versatile table lamp for task lighting, and a striking floor lamp for ambient illumination. All pieces feature energy-efficient LED technology with dimming capabilities and are designed to complement modern and transitional interior styles.',
+    description: 'Handcrafted lighting featuring herbivores animals in the savanna, artisanal techniques with contemporary design from natural materials.',
+    longDescription: 'The Tembo/Twiga savana piece showcases the majestic beauty of African wildlife through intricate handcrafted gourd artistry. This unique lamp features detailed depictions of elephants (Tembo) and giraffes (Twiga) in their natural savanna habitat, created using traditional calabash crafting techniques passed down through generations. Each piece tells a story of the African wilderness, with carefully carved details that come alive when illuminated, casting beautiful shadow patterns that dance across your walls.',
     specifications: [
-      "Collection: 5 distinct lighting pieces",
-      "Materials: Brushed aluminum, tempered glass, premium LED",
-      "Finish: Satin nickel with clear glass accents",
-      "LED Technology: Integrated, dimmable, 3000K warm white",
-      "Power: 15W-45W depending on piece",
-      "Lifespan: 50,000+ hours LED life",
-      "Warranty: 5-year comprehensive coverage"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Complete 5-piece lighting collection",
-      "Coordinated modern design aesthetic",
-      "Energy-efficient LED technology",
-      "Dimmable lighting control",
-      "Premium brushed aluminum construction",
-      "Tempered glass components",
-      "Easy installation with included hardware",
-      "5-year manufacturer warranty"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
-    id: 'brooklyn-series',
-    name: 'Brooklyn Series',
-    category: 'collection',
-    price: '$179 - $899',
+    id: 'bronze-collection',
+    name: 'Spackle blue/red',
+    category: 'piece',
+    price: '$120 - $150',
     images: [
       '/images/20240508_141055-b1.jpg',
       '/images/20240508_141122-b2.jpg',
@@ -64,33 +62,31 @@ const products: Product[] = [
       '/images/20240508_141359-b4.jpg',
       '/images/20240508_141454-b5.jpg'
     ],
-    description: 'Industrial-inspired lighting series combining geometric forms with warm brass finishes and smart technology integration.',
-    longDescription: 'The Brooklyn Series draws inspiration from the industrial heritage of New York\'s most iconic borough, featuring bold geometric forms and warm brass finishes that bring urban sophistication to any space. This five-piece collection seamlessly blends vintage industrial aesthetics with cutting-edge smart technology, offering app-controlled dimming, color temperature adjustment, and voice assistant compatibility. Each piece features hand-finished brass components, exposed Edison-style LED bulbs, and architectural lines that make a statement while providing exceptional functionality. Perfect for loft apartments, modern offices, or anyone looking to add urban character to their lighting design.',
+    description: 'Sophisticated abstract lighting combining Crystal beads elegance with modern patterns and timeless appeal.',
+    longDescription: 'The Spackle blue/red piece represents a perfect fusion of abstract artistry and functional lighting. This sophisticated lamp features an intricate pattern of blue and red crystal beads that create mesmerizing light patterns when illuminated. The abstract design allows for personal interpretation while maintaining universal appeal, making it a perfect conversation piece for any modern interior.',
     specifications: [
-      "Collection: 5 industrial-inspired pieces",
-      "Materials: Brass, steel, Edison-style LED bulbs",
-      "Finish: Warm brass with matte black accents",
-      "Smart Features: App control, voice assistant compatible",
-      "LED Technology: Dimmable, adjustable color temperature",
-      "Power: 12W-60W depending on piece",
-      "Connectivity: WiFi enabled, smartphone app included"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Blue/red crystal beads",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Industrial-inspired geometric design",
-      "Smart technology integration",
-      "App-controlled dimming and color temperature",
-      "Voice assistant compatibility",
-      "Hand-finished brass construction",
-      "Edison-style LED bulbs included",
-      "Architectural statement pieces",
-      "Urban loft aesthetic"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'crystal-line',
-    name: 'Crystal Line',
-    category: 'collection',
-    price: '$189 - $2,199',
+    name: 'Natural African woman',
+    category: 'piece',
+    price: '$150 - $180',
     images: [
       '/images/20240520_160914-c1.jpg',
       '/images/20240520_161245-c2.jpg',
@@ -98,33 +94,31 @@ const products: Product[] = [
       '/images/20240520_161309-c4.jpg',
       '/images/20240520_161319-c5.jpg'
     ],
-    description: 'Luxurious crystal lighting collection featuring hand-cut crystals and elegant metalwork for sophisticated interiors.',
-    longDescription: 'The Crystal Line represents the epitome of luxury lighting, featuring genuine hand-cut crystals and precision-crafted metalwork that creates stunning light refraction and elegant ambiance. This prestigious collection includes five meticulously designed pieces, each showcasing different crystal cutting techniques and arrangements to maximize light dispersion and create captivating sparkle effects. The collection features premium chrome and gold finish options, with each crystal individually selected and positioned for optimal light performance. From intimate table lamps to grand chandeliers, the Crystal Line transforms any space into a sophisticated showcase of light and luxury.',
+    description: 'Elegant crystal beads and three sides showing different aspects of African woman featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.',
+    longDescription: 'The Natural African woman piece celebrates the beauty, strength, and grace of African femininity through three distinct artistic perspectives. Each side of this elegant lamp showcases a different aspect of womanhood, adorned with carefully placed crystal beads that create stunning prismatic effects when lit. This piece serves as both a lighting fixture and a tribute to the diverse beauty of African women.',
     specifications: [
-      "Collection: 5 luxury crystal pieces",
-      "Materials: Hand-cut genuine crystals, premium metals",
-      "Finish Options: Polished chrome or 24k gold plated",
-      "Crystal Grade: Premium K9 crystal components",
-      "LED Technology: High-CRI, dimmable, warm white",
-      "Power: 20W-150W depending on piece",
-      "Installation: Professional installation recommended"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Blue/red beads",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Genuine hand-cut crystal components",
-      "Premium chrome or gold finish options",
-      "Stunning light refraction effects",
-      "High-CRI LED for optimal crystal sparkle",
-      "Luxury packaging and presentation",
-      "Professional installation service available",
-      "Lifetime crystal replacement guarantee",
-      "Sophisticated European design"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'designer-collection',
-    name: 'Designer Collection',
-    category: 'collection',
-    price: '$249 - $1,299',
+    name: 'Trees for life',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/20240607_162317-d1.jpg',
       '/images/20240607_162627-d2.jpg',
@@ -132,33 +126,31 @@ const products: Product[] = [
       '/images/20240607_162656-d4.jpg',
       '/images/20240607_162743-d5.jpg'
     ],
-    description: 'Curated designer lighting collection featuring unique artistic forms and premium materials from renowned lighting designers.',
-    longDescription: 'The Designer Collection showcases the work of internationally acclaimed lighting designers, featuring five unique pieces that blur the line between functional lighting and artistic sculpture. Each piece in this collection represents a different design philosophy, from minimalist Scandinavian aesthetics to bold contemporary statements. Crafted with premium materials including hand-blown glass, sustainably sourced woods, and precision-machined metals, these pieces are as much about artistic expression as they are about illumination. The collection includes limited edition pieces and exclusive designs not available elsewhere, making each installation a unique artistic statement.',
+    description: 'Three different trees on different sides, together with blue/purple crystal beads. very unique pattern design.',
+    longDescription: 'The Trees for life piece represents the interconnectedness of nature and the vital role trees play in our ecosystem. This unique lamp features three different tree species on different sides, each complemented by blue and purple crystal beads that represent the life-giving elements of water and sky. The design celebrates biodiversity and environmental consciousness while providing beautiful ambient lighting.',
     specifications: [
-      "Collection: 5 designer collaboration pieces",
-      "Materials: Hand-blown glass, premium woods, machined metals",
-      "Design: Limited edition and exclusive pieces",
-      "LED Technology: Artist-specified color temperatures",
-      "Power: Variable, optimized per design",
-      "Certification: Designer authenticity certificates included",
-      "Availability: Limited production runs"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Blue/purple crystal beads",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Internationally acclaimed designer collaborations",
-      "Limited edition and exclusive designs",
-      "Premium hand-crafted materials",
-      "Artistic sculpture meets functional lighting",
-      "Designer authenticity certificates",
-      "Collector-quality construction",
-      "Unique artistic statement pieces",
-      "Museum-quality presentation"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'essence-series',
-    name: 'Essence Series',
-    category: 'collection',
-    price: '$149 - $699',
+    name: 'Twiga mugshot',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/20240612_135043-e1.jpg',
       '/images/20240612_135118-e2.jpg',
@@ -166,33 +158,30 @@ const products: Product[] = [
       '/images/20240612_135313-e4.jpg',
       '/images/20240612_140355-e5.jpg'
     ],
-    description: 'Minimalist lighting series emphasizing clean lines, natural materials, and sustainable design principles.',
-    longDescription: 'The Essence Series embodies the philosophy that true beauty lies in simplicity, featuring five carefully designed pieces that celebrate clean lines, natural materials, and sustainable manufacturing practices. Each piece in this collection is crafted from responsibly sourced materials including FSC-certified woods, recycled metals, and low-impact finishes. The design aesthetic draws from Scandinavian minimalism and Japanese wabi-sabi principles, creating lighting that enhances rather than dominates a space. With energy-efficient LED technology and modular components for easy maintenance and upgrades, the Essence Series represents lighting design for the environmentally conscious consumer.',
+    description: 'A giraffe shown on three different perspectives. Minimalist to Art Deco inspired lighting with clean and architectural presence for contemporary spaces.',
+    longDescription: 'The Twiga mugshot piece captures the elegant beauty of the giraffe from three distinct perspectives, showcasing the grace and majesty of this iconic African animal. The minimalist approach to the design, inspired by Art Deco aesthetics, creates clean lines and architectural presence that fits perfectly in contemporary spaces while honoring traditional African wildlife artistry.',
     specifications: [
-      "Collection: 5 minimalist sustainable pieces",
-      "Materials: FSC-certified wood, recycled metals",
-      "Sustainability: Carbon-neutral manufacturing",
-      "LED Technology: High-efficiency, long-life components",
-      "Power: Ultra-low energy consumption",
-      "Packaging: 100% recyclable materials",
-      "Certifications: ENERGY STAR, FSC, GREENGUARD"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Sustainable and eco-friendly materials",
-      "Minimalist Scandinavian design aesthetic",
-      "Carbon-neutral manufacturing process",
-      "Modular components for easy maintenance",
-      "Ultra-efficient LED technology",
-      "FSC-certified wood construction",
-      "100% recyclable packaging",
-      "ENERGY STAR certified"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'fusion-line',
-    name: 'Fusion Line',
-    category: 'collection',
-    price: '$199 - $1,099',
+    name: 'The wild sunset',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/20240614_140132-f2.jpg',
       '/images/20240614_140159-f3.jpg',
@@ -200,33 +189,30 @@ const products: Product[] = [
       '/images/20240614_135944-f5.jpg',
       '/images/20240614_140121-f5.jpg'
     ],
-    description: 'Contemporary lighting collection blending traditional craftsmanship with modern technology and innovative materials.',
-    longDescription: 'The Fusion Line represents the perfect marriage of traditional craftsmanship and cutting-edge technology, featuring four distinctive pieces that showcase innovative material combinations and advanced lighting control systems. Each piece combines time-honored techniques like hand-forged metalwork and blown glass with modern innovations including smart sensors, adaptive lighting algorithms, and sustainable materials. The collection features pieces that automatically adjust color temperature throughout the day, respond to ambient light conditions, and can be controlled through intuitive gesture recognition. This fusion of old and new creates lighting that honors craftsmanship traditions while embracing the possibilities of tomorrow.',
+    description: 'The mix of all the animals herbivores and carnivores on a beautiful sunset of the savanna. The design includes large to small animals.',
+    longDescription: 'The wild sunset piece captures the dramatic beauty of an African savanna at golden hour, featuring a comprehensive ecosystem of both herbivores and carnivores in their natural habitat. This intricate design showcases animals of all sizes, from the mighty elephant to the smallest antelope, all set against the backdrop of a stunning savanna sunset. The piece tells the complete story of African wildlife in perfect harmony.',
     specifications: [
-      "Collection: 4 technology-enhanced pieces",
-      "Materials: Hand-forged metals, blown glass, smart components",
-      "Technology: Adaptive lighting, gesture control, smart sensors",
-      "LED Technology: Circadian rhythm optimization",
-      "Power: Adaptive power management",
-      "Connectivity: Bluetooth, WiFi, smart home integration",
-      "Updates: Over-the-air firmware updates"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Traditional craftsmanship meets modern technology",
-      "Adaptive lighting with circadian rhythm support",
-      "Gesture recognition control system",
-      "Smart sensors for automatic adjustment",
-      "Hand-forged metal and blown glass construction",
-      "Smart home ecosystem integration",
-      "Over-the-air updates and new features",
-      "Innovative material combinations"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'stellar-series',
-    name: 'Stellar Series',
-    category: 'collection',
-    price: '$199 - $899',
+    name: 'Fallen leaves 2.0',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20241116-WA0036-s1.jpg',
       '/images/IMG-20241116-WA0032-s2.jpg',
@@ -234,33 +220,30 @@ const products: Product[] = [
       '/images/IMG-20241116-WA0016-s4.jpg',
       '/images/IMG-20241116-WA0014-s5.jpg'
     ],
-    description: 'Contemporary stellar-inspired lighting collection featuring cosmic designs and celestial aesthetics for modern spaces.',
-    longDescription: 'The Stellar Series captures the wonder and beauty of the cosmos, featuring five distinctive pieces that bring celestial elegance to any interior. Each fixture in this collection draws inspiration from stellar formations, nebulae, and cosmic phenomena, translating these natural wonders into sophisticated lighting designs. The series combines modern materials with organic forms, creating pieces that serve as both functional lighting and artistic focal points. With energy-efficient LED technology and customizable brightness settings, the Stellar Series illuminates spaces with the same captivating beauty found in the night sky.',
+    description: 'Contemporary plant leaves-inspired lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
+    longDescription: 'Fallen leaves 2.0 represents the evolution of natural design, combining the organic beauty of fallen autumn leaves with contemporary artistic interpretation. This piece captures the delicate patterns and textures of leaves in their final stage of beauty, creating a meditation on the cycles of nature and the beauty found in transition.',
     specifications: [
-      "Collection: 5 cosmic-inspired pieces",
-      "Materials: Brushed metals, frosted glass, LED components",
-      "Finish: Cosmic bronze with stellar accents",
-      "LED Technology: Dimmable, color-changing capabilities",
-      "Power: 18W-55W depending on piece",
-      "Control: Remote control and app connectivity",
-      "Installation: Standard electrical mounting"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Cosmic and stellar-inspired designs",
-      "Color-changing LED technology",
-      "Remote control operation",
-      "Dimmable lighting with multiple settings",
-      "Premium brushed metal construction",
-      "Frosted glass diffusers for soft illumination",
-      "App connectivity for smart control",
-      "Celestial aesthetic appeal"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'radiance-collection',
-    name: 'Radiance Collection',
-    category: 'collection',
-    price: '$229 - $1,199',
+    name: 'The five mugshots',
+    category: 'piece',
+    price: '$200 - $250',
     images: [
       '/images/IMG-20250123-WA0028-r1.jpg',
       '/images/IMG-20250123-WA0026-r2.jpg',
@@ -268,31 +251,28 @@ const products: Product[] = [
       '/images/IMG-20250123-WA0020-r4.jpg',
       '/images/IMG-20250123-WA0016-r5.jpg'
     ],
-    description: 'Luxurious radiance-focused lighting collection emphasizing brilliant illumination and sophisticated design elements.',
-    longDescription: 'The Radiance Collection represents the pinnacle of illumination excellence, featuring five meticulously crafted pieces designed to maximize light output while maintaining elegant aesthetics. Each fixture incorporates advanced optical engineering to ensure optimal light distribution and minimal glare. The collection showcases premium materials including polished metals, precision-cut glass, and high-performance LED arrays. From intimate accent lighting to grand statement pieces, the Radiance Collection transforms any space with brilliant, beautiful light that enhances both functionality and ambiance.',
+    description: 'The big five of the animal kingdom displaying their faces all around the lamp emphasizing brilliant illumination and sophisticated design elements.',
+    longDescription: 'The five mugshots piece celebrates Africa\'s legendary "Big Five" - the lion, leopard, rhinoceros, elephant, and Cape buffalo. Each animal\'s face is prominently featured around the lamp, creating a powerful tribute to these magnificent creatures. This larger piece commands attention and serves as a statement of respect for African wildlife conservation.',
     specifications: [
-      "Collection: 5 high-performance lighting pieces",
-      "Materials: Polished metals, precision glass, premium LEDs",
-      "Finish: Polished chrome with crystal accents",
-      "LED Technology: High-output, full-spectrum illumination",
-      "Power: 25W-80W depending on piece",
-      "Light Output: Up to 8000 lumens per fixture",
-      "Warranty: 7-year comprehensive coverage"
+      "Dimensions: Various sizes available (35\"- 40\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Maximum light output optimization",
-      "Full-spectrum LED illumination",
-      "Precision optical engineering",
-      "Glare-free light distribution",
-      "Premium polished metal construction",
-      "Crystal accent elements",
-      "High-performance LED arrays",
-      "Professional-grade illumination"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'quantum-line',
-    name: 'Quantum Line',
+    name: 'Fallen leaves 00',
     category: 'collection',
     price: '$179 - $799',
     images: [
@@ -302,33 +282,30 @@ const products: Product[] = [
       '/images/IMG-20250213-WA0015-q4.jpg',
       '/images/IMG-20250213-WA0013-q5.jpg'
     ],
-    description: 'Futuristic quantum-inspired lighting line featuring cutting-edge technology and innovative design concepts.',
-    longDescription: 'The Quantum Line pushes the boundaries of lighting design with five revolutionary pieces that incorporate quantum-inspired aesthetics and cutting-edge technology. Each fixture features unique geometric patterns that seem to shift and change as light passes through them, creating dynamic visual effects reminiscent of quantum phenomena. The collection utilizes advanced materials including quantum dot technology for enhanced color rendering and energy efficiency. With smart connectivity and adaptive lighting algorithms, the Quantum Line represents the future of intelligent illumination.',
+    description: 'Contemporary plant-leaves,lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
+    longDescription: 'Fallen leaves 00 represents the original concept in the fallen leaves series, featuring the pure essence of plant leaves in their natural state. This collection captures the intricate vein patterns, organic shapes, and natural beauty of leaves, creating lighting that brings the serenity of nature indoors.',
     specifications: [
-      "Collection: 5 quantum-inspired pieces",
-      "Materials: Advanced polymers, quantum dot LEDs",
-      "Technology: Quantum dot color enhancement",
-      "LED Technology: Adaptive color temperature",
-      "Power: 15W-50W depending on piece",
-      "Connectivity: WiFi, Bluetooth, smart home integration",
-      "Features: Dynamic light patterns and effects"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Quantum-inspired geometric designs",
-      "Dynamic light pattern effects",
-      "Quantum dot LED technology",
-      "Adaptive color temperature control",
-      "Smart home integration",
-      "Advanced polymer construction",
-      "Energy-efficient operation",
-      "Futuristic aesthetic appeal"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'prism-series',
-    name: 'Prism Series',
-    category: 'collection',
-    price: '$159 - $699',
+    name: 'Family tree',
+    category: 'piece',
+    price: '$250 - $350',
     images: [
       '/images/IMG-20250501-WA0021-p1.jpg',
       '/images/IMG-20250501-WA0020-p2.jpg',
@@ -336,33 +313,30 @@ const products: Product[] = [
       '/images/IMG-20250501-WA0015-p4.jpg',
       '/images/IMG-20250501-WA0009-p5.jpg'
     ],
-    description: 'Prismatic lighting series featuring light refraction and spectrum effects for colorful and dynamic illumination.',
-    longDescription: 'The Prism Series celebrates the beauty of light refraction and spectrum dispersion, featuring five distinctive pieces that transform ordinary illumination into spectacular light shows. Each fixture incorporates precision-cut prismatic elements that break white light into its component colors, creating rainbow effects and dynamic color patterns throughout the space. The collection combines artistic vision with optical science, resulting in lighting that is both functional and mesmerizing. Perfect for creative spaces, entertainment areas, or anywhere you want to add a touch of magic to your lighting design.',
+    description: 'A stand lamp with three branches each one faces its own directions, featuring light refraction and spectrum effects for abstracts and dynamic illumination.',
+    longDescription: 'The Family tree piece is a unique standing lamp that symbolizes the interconnectedness of family relationships. With three branches extending in different directions, each representing different family members or generations, this piece creates a beautiful metaphor for how families grow and spread while remaining connected at their roots. The multi-directional lighting creates dynamic illumination patterns throughout the room.',
     specifications: [
-      "Collection: 5 prismatic light fixtures",
-      "Materials: Precision-cut prisms, optical glass",
-      "Effects: Light refraction and spectrum dispersion",
-      "LED Technology: High-intensity white light sources",
-      "Power: 20W-60W depending on piece",
-      "Optical Elements: Multi-faceted prismatic components",
-      "Installation: Adjustable mounting for optimal effects"
+      "Dimensions: Various sizes available (20\"-30\" diameter for calabashes/ 100\"-200cm stand heights)",
+      "Materials: gourd(calabash)/metal stand",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Prismatic light refraction effects",
-      "Spectrum dispersion and rainbow patterns",
-      "Precision-cut optical components",
-      "High-intensity LED light sources",
-      "Adjustable mounting systems",
-      "Dynamic color pattern creation",
-      "Artistic and functional lighting",
-      "Mesmerizing visual effects"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'orbit-collection',
-    name: 'Orbit Collection',
-    category: 'collection',
-    price: '$189 - $899',
+    name: 'The young roar',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20250516-WA0016-o1.jpg',
       '/images/IMG-20250516-WA0012-o2.jpg',
@@ -370,33 +344,30 @@ const products: Product[] = [
       '/images/IMG-20250516-WA0002-o4.jpg',
       '/images/IMG-20250516-WA0006-o5.jpg'
     ],
-    description: 'Orbital-inspired lighting collection featuring circular and spherical designs with rotating and dynamic elements.',
-    longDescription: 'The Orbit Collection draws inspiration from planetary motion and celestial orbits, featuring five innovative pieces that incorporate circular and spherical design elements with dynamic movement capabilities. Each fixture features rotating or adjustable components that allow for customizable light direction and pattern creation. The collection combines kinetic design principles with modern lighting technology, creating fixtures that are both visually striking and highly functional. With smooth, silent operation and precision engineering, the Orbit Collection brings the elegance of celestial mechanics to interior lighting.',
+    description: 'Lion inspired design with two sides a young lion roaring and a very chilled dad each side showing a unique and dynamic patterns.',
+    longDescription: 'The young roar piece captures the duality of lion behavior, showcasing both the fierce energy of a young lion announcing its presence to the world and the calm confidence of a mature male lion at rest. This dual-sided design tells the story of growth, maturity, and the different aspects of strength found in the king of beasts.',
     specifications: [
-      "Collection: 5 orbital-inspired pieces",
-      "Materials: Precision metals, kinetic components",
-      "Movement: Rotating and adjustable elements",
-      "LED Technology: Directional and ambient lighting",
-      "Power: 22W-65W depending on piece",
-      "Control: Manual and motorized adjustment options",
-      "Operation: Silent precision movement"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Orbital and planetary-inspired designs",
-      "Rotating and adjustable components",
-      "Kinetic lighting elements",
-      "Directional and ambient illumination",
-      "Silent precision movement",
-      "Manual and motorized controls",
-      "Customizable light patterns",
-      "Celestial aesthetic appeal"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'nova-line',
-    name: 'Nova Line',
-    category: 'collection',
-    price: '$149 - $599',
+    name: 'Butterfly effects',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20250527-WA0035-n1.jpg',
       '/images/IMG-20250527-WA0033-n2.jpg',
@@ -404,33 +375,31 @@ const products: Product[] = [
       '/images/IMG-20250527-WA0037-n4.jpg',
       '/images/IMG-20250527-WA0036-n5.jpg'
     ],
-    description: 'Explosive nova-inspired lighting line featuring burst patterns and radial designs for dramatic illumination effects.',
-    longDescription: 'The Nova Line captures the explosive energy and radial beauty of stellar novae, featuring five dynamic pieces that create dramatic burst patterns and radial illumination effects. Each fixture incorporates multiple light sources arranged in explosive patterns that radiate outward from central points, mimicking the spectacular light shows of stellar explosions. The collection features adjustable intensity controls and pattern variations, allowing users to create everything from subtle ambient lighting to dramatic focal displays. With energy-efficient LED technology and artistic metalwork, the Nova Line brings cosmic drama to contemporary interiors.',
+    description: 'Explosive butterfly design with crystal spackle, featuring burst patterns and radial designs for dramatic illumination effects.',
+    longDescription: 'Butterfly effects explores the concept that small changes can have large consequences, represented through an explosive butterfly design enhanced with crystal spackle. The piece features burst patterns that radiate from the central butterfly motif, creating dramatic illumination effects that symbolize the far-reaching impact of transformation and change.',
     specifications: [
-      "Collection: 5 nova-inspired pieces",
-      "Materials: Artistic metals, multiple LED arrays",
-      "Patterns: Radial burst and explosive designs",
-      "LED Technology: Multi-point illumination systems",
-      "Power: 18W-55W depending on piece",
-      "Control: Adjustable intensity and pattern settings",
-      "Effects: Dramatic radial light projection"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "pink/red/green crystal beads",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Nova and stellar explosion-inspired designs",
-      "Radial burst light patterns",
-      "Multi-point LED illumination",
-      "Adjustable intensity controls",
-      "Pattern variation settings",
-      "Dramatic focal lighting effects",
-      "Artistic metalwork construction",
-      "Cosmic energy aesthetic"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'meridian-series',
-    name: 'Meridian Series',
-    category: 'collection',
-    price: '$169 - $749',
+    name: 'The wild sere',
+    category: 'piece',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20250606-WA0007-m1.jpg',
       '/images/IMG-20250606-WA0011-m2.jpg',
@@ -438,60 +407,54 @@ const products: Product[] = [
       '/images/IMG-20250606-WA0013-m4.jpg',
       '/images/IMG-20250606-WA0001-m5.jpg'
     ],
-    description: 'Meridian-inspired lighting series featuring linear and directional designs for precise illumination control.',
-    longDescription: 'The Meridian Series takes inspiration from navigational meridians and directional lines, featuring five precision-engineered pieces that offer exceptional control over light direction and distribution. Each fixture incorporates linear design elements and adjustable components that allow for precise beam shaping and directional lighting. The collection is perfect for task lighting, accent illumination, and architectural highlighting. With advanced optical systems and premium construction materials, the Meridian Series delivers professional-grade lighting performance in elegant, contemporary designs.',
+    description: 'The wild inspired lamp, featuring linear and directional designs for precise illumination control.',
+    longDescription: 'The wild sere piece captures the essence of the African wilderness in its most raw and untamed form. The design features linear and directional elements that represent the paths and territories of wild animals, creating precise illumination control that mimics the way light filters through the African bush.',
     specifications: [
-      "Collection: 5 directional lighting pieces",
-      "Materials: Precision metals, optical components",
-      "Design: Linear and meridian-inspired forms",
-      "LED Technology: Directional beam control",
-      "Power: 16W-48W depending on piece",
-      "Beam Control: Adjustable focus and direction",
-      "Applications: Task, accent, and architectural lighting"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Meridian and linear-inspired designs",
-      "Precision directional beam control",
-      "Adjustable focus and direction",
-      "Professional-grade optical systems",
-      "Task and accent lighting optimization",
-      "Architectural highlighting capabilities",
-      "Premium construction materials",
-      "Contemporary linear aesthetics"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   },
   {
     id: 'lumina-collection',
-    name: 'Lumina Collection',
+    name: 'The humming',
     category: 'collection',
-    price: '$139 - $649',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20250616-WA0007-l1.jpg',
       '/images/IMG-20250616-WA0001-l2.jpg',
       '/images/IMG-20250616-WA0003-l4.jpg',
-      '/images/IMG-20250616-WA0003-l4.jpg',
+      '/images/IMG-20250616-WA0009-l4.jpg',
       '/images/IMG-20250616-WA0005-l5.jpg'
     ],
-    description: 'Pure lumina-focused lighting collection emphasizing clean illumination and minimalist design principles.',
-    longDescription: 'The Lumina Collection embodies the essence of pure light, featuring five minimalist pieces that prioritize clean illumination and understated elegance. Each fixture is designed to disappear into the architecture while providing exceptional light quality and distribution. The collection emphasizes simplicity, functionality, and the beauty of unadorned light. With high-efficiency LED technology and refined materials, the Lumina Collection offers sophisticated lighting solutions that enhance spaces without overwhelming them. Perfect for modern minimalist interiors and contemporary architectural settings.',
+    description: 'Elegant design showing hummingbird with different artisanal style clean illumination and minimalist design principles.',
+    longDescription: 'The humming piece celebrates the delicate beauty and incredible energy of the hummingbird through elegant artisanal design. This piece showcases different artistic interpretations of these remarkable birds, emphasizing their grace, speed, and the joy they bring to any garden. The clean illumination and minimalist design principles create a serene and uplifting atmosphere.',
     specifications: [
-      "Collection: 5 minimalist lighting pieces",
-      "Materials: Refined metals, clean glass elements",
-      "Design: Pure minimalist aesthetics",
-      "LED Technology: High-efficiency, clean illumination",
-      "Power: 14W-42W depending on piece",
-      "Light Quality: High CRI, flicker-free operation",
-      "Installation: Seamless architectural integration"
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
     ],
     features: [
-      "Pure minimalist design philosophy",
-      "Clean and unadorned illumination",
-      "High-efficiency LED technology",
-      "Seamless architectural integration",
-      "High CRI light quality",
-      "Flicker-free operation",
-      "Refined material construction",
-      "Understated elegance"
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
     ]
   }
 ];
@@ -501,6 +464,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
+  const { addItem } = useEnquiry();
 
   const resolvedParams = use(params);
   const productId = resolvedParams.id;
@@ -509,6 +473,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   if (!product) {
     notFound();
   }
+
+  const handleAddToEnquiry = () => {
+    console.log('Add to Enquiry clicked for:', product.name); // Debug log
+    
+    // Parse price string to number (remove $ and handle ranges)
+    const priceString = product.price.replace('$', '');
+    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
+    
+    console.log('Parsed price:', priceNumber); // Debug log
+    
+    const itemToAdd = {
+      id: product.id,
+      name: product.name,
+      price: priceNumber,
+      image: product.images[0],
+      category: product.category,
+    };
+    
+    console.log('Adding item:', itemToAdd); // Debug log
+    
+    addItem(itemToAdd);
+    
+    console.log('Item added to context'); // Debug log
+  };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
@@ -610,10 +598,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
               <div className="space-y-4" style={{ marginLeft: '216px' }}>
                 <button 
+                  onClick={handleAddToEnquiry}
                   className="text-white py-3 px-6 rounded-lg font-semibold transition-colors hover:opacity-90"
                   style={{ backgroundColor: '#1a1a1a', width: '360px' }}
                 >
-                  Add to Cart
+                  Add to Enquiry
                 </button>
                 <button 
                   className="border-2 py-3 px-6 rounded-lg font-semibold transition-colors hover:text-white"

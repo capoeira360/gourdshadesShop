@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 interface SliderItem {
@@ -97,7 +97,7 @@ const NewImageSlider: React.FC = () => {
     }
   ];
 
-  const showSlider = (type: 'next' | 'prev') => {
+  const showSlider = useCallback((type: 'next' | 'prev') => {
     if (isAnimating) return;
     
     setIsAnimating(true);
@@ -124,7 +124,7 @@ const NewImageSlider: React.FC = () => {
     autoNextRef.current = setTimeout(() => {
       showSlider('next');
     }, timeAutoNext);
-  };
+  }, [isAnimating, sliderItems.length, timeRunning, timeAutoNext]);
 
   const handleNext = () => showSlider('next');
   const handlePrev = () => showSlider('prev');
@@ -139,7 +139,7 @@ const NewImageSlider: React.FC = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (autoNextRef.current) clearTimeout(autoNextRef.current);
     };
-  }, []);
+  }, [showSlider]);
 
   // Cleanup on unmount
   useEffect(() => {

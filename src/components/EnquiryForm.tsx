@@ -84,11 +84,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-    exit: { opacity: 0 }
-  };
+  // Removed unused overlayVariants - using inline animation instead
 
   const inputVariants = {
     focus: { 
@@ -105,7 +101,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
     tap: { scale: 0.98 }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent default form submission
     
     if (!validateForm()) {
       return;

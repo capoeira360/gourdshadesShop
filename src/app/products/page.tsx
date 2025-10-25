@@ -28,6 +28,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const rowRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { addItem } = useEnquiry();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,51 +77,118 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
     },
   };
 
+  const handleAddToEnquiry = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation to product detail page
+    e.stopPropagation();
+    
+    console.log('Add to Enquiry clicked for:', product.name); // Debug log
+    
+    // Parse price string to number (remove $ and handle ranges)
+    const priceString = product.price.replace('$', '');
+    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
+    
+    console.log('Parsed price:', priceNumber); // Debug log
+    
+    const itemToAdd = {
+      id: product.id,
+      name: product.name,
+      price: priceNumber,
+      image: product.images[0],
+      category: product.category,
+    };
+    
+    console.log('Adding item:', itemToAdd); // Debug log
+    
+    addItem(itemToAdd);
+    
+    console.log('Item added to context'); // Debug log
+  };
+
   return (
-    <Link href={`/products/${product.id}`}>
-      <motion.div
-        ref={rowRef}
-        className={`group cursor-pointer py-8 px-6 border-b border-gray-100 transition-all duration-300 ${
-          isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
-        }`}
-        variants={rowVariants}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
+    <div className="relative group">
+      {/* Add to Enquiry Button */}
+      <motion.button
+        onClick={(e) => {
+          console.log('Button clicked!'); // Debug log
+          handleAddToEnquiry(e);
+        }}
+        className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/80 transition-all duration-300 shadow-lg flex items-center space-x-2 z-20"
+        whileHover={{ 
+          scale: 1.05,
+          boxShadow: "0 10px 25px rgba(200, 168, 130, 0.3)"
+        }}
+        whileTap={{ 
+          scale: 0.95,
+          transition: { duration: 0.1 }
+        }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          delay: 0.2,
+          type: "spring",
+          stiffness: 300,
+          damping: 20
+        }}
       >
-      <div className="flex justify-between items-center">
-        <div className="flex-1">
-          <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
-            isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
-          }`}>
-            {product.name}
-          </h3>
-          <p className="text-gray-600 mt-2 text-sm md:text-base">
-            {product.description}
-          </p>
-          <div className="flex items-center mt-4 space-x-4">
-            <span className="text-lg font-medium text-primary">
-              {product.price}
-            </span>
-            <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
-              {product.category}
-            </span>
+        <motion.div
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ 
+            duration: 0.5,
+            ease: "easeInOut"
+          }}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8.5" />
+          </svg>
+        </motion.div>
+        <span>Add to Enquiry</span>
+      </motion.button>
+
+      <Link href={`/products/${product.id}`}>
+        <motion.div
+          ref={rowRef}
+          className={`group cursor-pointer py-8 px-6 border-b border-gray-100 transition-all duration-300 ${
+            isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
+          }`}
+          variants={rowVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          onMouseEnter={onHover}
+          onMouseLeave={onLeave}
+        >
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
+              isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
+            }`}>
+              {product.name}
+            </h3>
+            <p className="text-gray-600 mt-2 text-sm md:text-base">
+              {product.description}
+            </p>
+            <div className="flex items-center mt-4 space-x-4">
+              <span className="text-lg font-medium text-primary">
+                {product.price}
+              </span>
+              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                {product.category}
+              </span>
+            </div>
+          </div>
+          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <svg 
+              className="w-6 h-6 text-primary" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </div>
         </div>
-        <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <svg 
-            className="w-6 h-6 text-primary" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-      </div>
-      </motion.div>
-    </Link>
+        </motion.div>
+      </Link>
+    </div>
   );
 };
 
@@ -353,10 +421,10 @@ const ProductsPage: React.FC = () => {
 
   const products: Product[] = [
     {
-      id: 'aurora-collection',
-      name: 'Aurora Collection',
-      category: 'collection',
-      price: '$329 - $449',
+      id: 'artisan-series',
+      name: 'Tembo/Twiga savana',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/20240405_131741-a1.jpg',
         '/images/20240405_131752-a2.jpg',
@@ -364,13 +432,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240405_132238-a4.jpg',
         '/images/20240408_112214-a5.jpg'
       ],
-      description: 'A comprehensive lighting collection featuring pendant, chandelier, sconce, table, and floor lamps with sleek modern design and premium materials.',
+      description: 'Handcrafted lighting featuring herbivores animals in the savanna, artisanal techniques with contemporary design from natural materials.',
     },
     {
-      id: 'brooklyn-series',
-      name: 'Brooklyn Series',
-      category: 'collection',
-      price: '$179 - $899',
+      id: 'bronze-collection',
+      name: 'Spackle blue/red',
+      category: 'piece',
+      price: '$120 - $150',
       images: [
         '/images/20240508_141055-b1.jpg',
         '/images/20240508_141122-b2.jpg',
@@ -378,13 +446,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240508_141359-b4.jpg',
         '/images/20240508_141454-b5.jpg'
       ],
-      description: 'Industrial-inspired lighting series combining geometric forms with warm brass finishes and smart technology integration.',
+      description: 'Sophisticated abstract lighting combining Crystal beads elegance with modern patterns and timeless appeal.',
     },
     {
       id: 'crystal-line',
-      name: 'Crystal Line',
-      category: 'collection',
-      price: '$189 - $2,199',
+      name: 'Natural African woman',
+      category: 'piece',
+      price: '$150 - $180',
       images: [
         '/images/20240520_160914-c1.jpg',
         '/images/20240520_161245-c2.jpg',
@@ -392,13 +460,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240520_161309-c4.jpg',
         '/images/20240520_161319-c5.jpg'
       ],
-      description: 'Elegant crystal and glass lighting collection featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.',
+      description: 'Elegant crystal beads and three sides showing different aspects of African woman featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.',
     },
     {
       id: 'designer-collection',
-      name: 'Designer Collection',
-      category: 'collection',
-      price: '$159 - $1,299',
+      name: 'Trees for life',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/20240607_162317-d1.jpg',
         '/images/20240607_162627-d2.jpg',
@@ -406,13 +474,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240607_162656-d4.jpg',
         '/images/20240607_162743-d5.jpg'
       ],
-      description: 'Curated designer lighting featuring industrial pendants, vintage chandeliers, and statement pieces with decorative metalwork.',
+      description: 'Three different trees on different sides, together with blue/purple crystal beads. very unique pattern design.',
     },
     {
       id: 'essence-series',
-      name: 'Essence Series',
-      category: 'collection',
-      price: '$169 - $1,599',
+      name: 'Twiga mugshot',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/20240612_135043-e1.jpg',
         '/images/20240612_135118-e2.jpg',
@@ -420,13 +488,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240612_135313-e4.jpg',
         '/images/20240612_140355-e5.jpg'
       ],
-      description: 'Minimalist to Art Deco inspired lighting series with clean geometric lines and architectural presence for contemporary spaces.',
+      description: 'A giraffe shown on three different perspectives. Minimalist to Art Deco inspired lighting with clean and architectural presence for contemporary spaces.',
     },
     {
       id: 'fusion-line',
-      name: 'Fusion Line',
-      category: 'collection',
-      price: '$199 - $1,099',
+      name: 'The wild sunset',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/20240614_140132-f2.jpg',
         '/images/20240614_140159-f3.jpg',
@@ -434,13 +502,13 @@ const ProductsPage: React.FC = () => {
         '/images/20240614_135944-f5.jpg',
         '/images/20240614_140121-f5.jpg'
       ],
-      description: 'Contemporary lighting collection blending traditional craftsmanship with modern technology and innovative materials.',
+      description: 'The mix of all the animals herbivores and carnivores on a beautiful sunset of the savanna. The design includes large to small animals.',
     },
     {
       id: 'stellar-series',
-      name: 'Stellar Series',
-      category: 'collection',
-      price: '$199 - $899',
+      name: 'Fallen leaves 2.0',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20241116-WA0036-s1.jpg',
         '/images/IMG-20241116-WA0032-s2.jpg',
@@ -448,13 +516,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20241116-WA0016-s4.jpg',
         '/images/IMG-20241116-WA0014-s5.jpg'
       ],
-      description: 'Contemporary stellar-inspired lighting collection featuring cosmic designs and celestial aesthetics for modern spaces.',
+      description: 'Contemporary plant leaves-inspired lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
     },
     {
       id: 'radiance-collection',
-      name: 'Radiance Collection',
-      category: 'collection',
-      price: '$229 - $1,199',
+      name: 'The five mugshots',
+      category: 'piece',
+      price: '$200 - $250',
       images: [
         '/images/IMG-20250123-WA0028-r1.jpg',
         '/images/IMG-20250123-WA0026-r2.jpg',
@@ -462,11 +530,11 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250123-WA0020-r4.jpg',
         '/images/IMG-20250123-WA0016-r5.jpg'
       ],
-      description: 'Luxurious radiance-focused lighting collection emphasizing brilliant illumination and sophisticated design elements.',
+      description: 'The big five of the animal kingdom displaying their faces all around the lamp emphasizing brilliant illumination and sophisticated design elements.',
     },
     {
       id: 'quantum-line',
-      name: 'Quantum Line',
+      name: 'Fallen leaves 00',
       category: 'collection',
       price: '$179 - $799',
       images: [
@@ -476,13 +544,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250213-WA0015-q4.jpg',
         '/images/IMG-20250213-WA0013-q5.jpg'
       ],
-      description: 'Futuristic quantum-inspired lighting line featuring cutting-edge technology and innovative design concepts.',
+      description: 'Contemporary plant-leaves,lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
     },
     {
       id: 'prism-series',
-      name: 'Prism Series',
-      category: 'collection',
-      price: '$159 - $699',
+      name: 'Family tree',
+      category: 'piece',
+      price: '$250 - $350',
       images: [
         '/images/IMG-20250501-WA0021-p1.jpg',
         '/images/IMG-20250501-WA0020-p2.jpg',
@@ -490,13 +558,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250501-WA0015-p4.jpg',
         '/images/IMG-20250501-WA0009-p5.jpg'
       ],
-      description: 'Prismatic lighting series featuring light refraction and spectrum effects for colorful and dynamic illumination.',
+      description: 'A stand lamp with three branches each one faces its own directions, featuring light refraction and spectrum effects for abstracts and dynamic illumination.',
     },
     {
       id: 'orbit-collection',
-      name: 'Orbit Collection',
-      category: 'collection',
-      price: '$189 - $899',
+      name: 'The young roar',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20250516-WA0016-o1.jpg',
         '/images/IMG-20250516-WA0012-o2.jpg',
@@ -504,13 +572,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250516-WA0002-o4.jpg',
         '/images/IMG-20250516-WA0006-o5.jpg'
       ],
-      description: 'Orbital-inspired lighting collection featuring circular and spherical designs with rotating and dynamic elements.',
+      description: 'Lion inspired design with two sides a young lion roaring and a very chilled dad each side showing a unique and dynamic patterns.',
     },
     {
       id: 'nova-line',
-      name: 'Nova Line',
-      category: 'collection',
-      price: '$149 - $599',
+      name: 'Butterfly effects',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20250527-WA0035-n1.jpg',
         '/images/IMG-20250527-WA0033-n2.jpg',
@@ -518,13 +586,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250527-WA0037-n4.jpg',
         '/images/IMG-20250527-WA0036-n5.jpg'
       ],
-      description: 'Explosive nova-inspired lighting line featuring burst patterns and radial designs for dramatic illumination effects.',
+      description: 'Explosive butterfly design with crystal spackle, featuring burst patterns and radial designs for dramatic illumination effects.',
     },
     {
       id: 'meridian-series',
-      name: 'Meridian Series',
-      category: 'collection',
-      price: '$169 - $749',
+      name: 'The wild sere',
+      category: 'piece',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20250606-WA0007-m1.jpg',
         '/images/IMG-20250606-WA0011-m2.jpg',
@@ -532,13 +600,13 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250606-WA0013-m4.jpg',
         '/images/IMG-20250606-WA0001-m5.jpg'
       ],
-      description: 'Meridian-inspired lighting series featuring linear and directional designs for precise illumination control.',
+      description: 'The wild inspired lamp, featuring linear and directional designs for precise illumination control.',
     },
     {
       id: 'lumina-collection',
-      name: 'Lumina Collection',
+      name: 'The humming',
       category: 'collection',
-      price: '$139 - $649',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20250616-WA0007-l1.jpg',
         '/images/IMG-20250616-WA0001-l2.jpg',
@@ -546,7 +614,7 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250616-WA0009-l4.jpg',
         '/images/IMG-20250616-WA0005-l5.jpg'
       ],
-      description: 'Pure lumina-focused lighting collection emphasizing clean illumination and minimalist design principles.',
+      description: 'Elegant design showing hummingbird with different artisanal style clean illumination and minimalist design principles.',
     }
   ];
 

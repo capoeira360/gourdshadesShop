@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 
 interface AboutSection {
   id: string;
@@ -50,10 +51,13 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img
+                <Image
                   src="/images/IMG-20250921-WA0000-nav-about.jpg"
                   alt="Isaac Munis - About"
                   className="w-full h-full object-cover rounded-lg shadow-lg"
+                  width={800}
+                  height={600}
+                  priority
                 />
                 {/* Dark overlay for text readability */}
                 <div className="absolute inset-0 bg-black/20 rounded-lg" />
@@ -65,10 +69,12 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img
+                <Image
                   src="/images/about-image-card2.jpeg"
                   alt="Discovering Gourd Craft"
                   className="w-full h-full object-cover rounded-lg shadow-lg"
+                  width={800}
+                  height={600}
                 />
                 {/* Dark overlay for text readability */}
                 <div className="absolute inset-0 bg-black/20 rounded-lg" />
@@ -80,10 +86,12 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <img
+                <Image
                   src="/images/about-image-card3.jpeg"
                   alt="Cultural Heritage"
                   className="w-full h-full object-cover rounded-lg shadow-lg"
+                  width={800}
+                  height={600}
                 />
                 {/* Dark overlay for text readability */}
                 <div className="absolute inset-0 bg-black/20 rounded-lg" />

@@ -6,11 +6,8 @@ import { useEnquiry } from '@/contexts/EnquiryContext';
 import { X, Plus, Minus, ShoppingCart, Mail } from 'lucide-react';
 import EnquiryForm from './EnquiryForm';
 
-interface EnquiryCartProps {
-  onProceedToForm?: () => void;
-}
-
-const EnquiryCart: React.FC<EnquiryCartProps> = ({ onProceedToForm }) => {
+// Removed empty interface - using React.FC without props type
+const EnquiryCart: React.FC = () => {
   const { state, updateQuantity, removeItem, clearCart } = useEnquiry();
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);

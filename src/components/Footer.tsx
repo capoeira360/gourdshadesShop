@@ -175,15 +175,15 @@ const Footer: React.FC = () => {
               <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
                 <div className="w-6 h-6 bg-primary rounded-sm"></div>
               </div>
-              <span className="text-2xl font-medium">LAMPCO</span>
+              <span className="text-2xl font-medium">Gourd Shades</span>
             </div>
             <p className="text-white/70 leading-relaxed mb-6">
-              Illuminating spaces with premium lighting solutions since 1985. 
-              We transform environments with exceptional design and quality craftsmanship.
+              Crafting unique lighting experiences with artisanal gourd-inspired designs. 
+              We blend natural aesthetics with modern functionality to create distinctive lighting solutions.
             </p>
             <div className="text-white/60 text-sm">
-              <p>Premium Lighting Solutions</p>
-              <p>Est. 1985</p>
+              <p>Artisanal Lighting Design</p>
+              <p>Handcrafted Excellence</p>
             </div>
           </motion.div>
 
@@ -197,6 +197,15 @@ const Footer: React.FC = () => {
               {renderAnimatedLink('Products', '/products')}
               {renderAnimatedLink('Contact', '/contact')}
             </nav>
+            
+            {/* Legal Pages Section */}
+            <div className="mt-8 pt-6 border-t border-white/20">
+              <h4 className="text-sm font-medium mb-4 text-white/80">LEGAL</h4>
+              <nav className="space-y-3">
+                {renderAnimatedLink('Privacy Policy', '/privacy')}
+                {renderAnimatedLink('Disclaimer', '/disclaimer')}
+              </nav>
+            </div>
           </motion.div>
 
           {/* Contact Section */}
@@ -204,43 +213,43 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-medium mb-8 text-white">CONTACT</h3>
             <div className="space-y-4 text-white/70">
               <div>
-                <p className="text-lg">info@lampco.com</p>
-                <p className="text-lg">+1 (555) 123-4567</p>
+                <p className="text-lg">hello@gourdshades.com</p>
+                <p className="text-lg">+1 (555) 847-2637</p>
               </div>
               <div className="mt-6">
-                <p className="text-base">123 Design District</p>
-                <p className="text-base">New York, NY 10001</p>
+                <p className="text-base">456 Artisan Quarter</p>
+                <p className="text-base">Portland, OR 97201</p>
               </div>
               <div className="mt-6">
-                <p className="text-base">Showroom Hours:</p>
-                <p className="text-base">Mon-Fri: 9am-6pm</p>
-                <p className="text-base">Sat: 10am-4pm</p>
+                <p className="text-base">Studio Hours:</p>
+                <p className="text-base">Tue-Sat: 10am-7pm</p>
+                <p className="text-base">Sun: 12pm-5pm</p>
               </div>
             </div>
           </motion.div>
 
           {/* Lighting Gallery Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8 text-white">OUR WORK</h3>
+            <h3 className="text-xl font-medium mb-8 text-white">OUR CREATIONS</h3>
             <div className="grid grid-cols-2 gap-3">
-              {/* Top Image - Pendant Lights */}
+              {/* Top Image - Gourd Pendants */}
               <div className="col-span-2 bg-accent/20 rounded-lg overflow-hidden h-28 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center">
-                  <span className="text-white/80 text-sm font-medium">Modern Pendants</span>
+                  <span className="text-white/80 text-sm font-medium">Gourd Pendants</span>
                 </div>
               </div>
               
-              {/* Bottom Left - Chandeliers */}
+              {/* Bottom Left - Table Lamps */}
               <div className="bg-accent/20 rounded-lg overflow-hidden h-24 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/40 to-accent/20 flex items-center justify-center">
-                  <span className="text-white/80 text-xs font-medium">Chandeliers</span>
+                  <span className="text-white/80 text-xs font-medium">Table Lamps</span>
                 </div>
               </div>
               
-              {/* Bottom Right - Floor Lamps */}
+              {/* Bottom Right - Sculptural Pieces */}
               <div className="bg-accent/20 rounded-lg overflow-hidden h-24 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/50 to-accent/30 flex items-center justify-center">
-                  <span className="text-white/80 text-xs font-medium">Floor Lamps</span>
+                  <span className="text-white/80 text-xs font-medium">Sculptures</span>
                 </div>
               </div>
             </div>
@@ -276,7 +285,7 @@ const Footer: React.FC = () => {
 
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-8 text-sm text-white/60">
             <span>Site by Balky Studio</span>
-            <span>©2024 - LampCo Premium Lighting</span>
+            <span>©2024 - Gourd Shades Artisan Lighting</span>
           </div>
         </motion.div>
       </div>

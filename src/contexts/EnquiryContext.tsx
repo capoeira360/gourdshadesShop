@@ -34,7 +34,7 @@ const initialState: EnquiryState = {
 };
 
 function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryState {
-  console.log('EnquiryReducer: Action received:', action.type, action.payload); // Debug log
+  console.log('EnquiryReducer: Action received:', action.type, 'payload' in action ? action.payload : 'no payload'); // Debug log
   
   switch (action.type) {
     case 'ADD_ITEM': {

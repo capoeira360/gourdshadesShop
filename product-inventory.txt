@@ -1,0 +1,475 @@
+GOURD SHADES LAMP BUSINESS - PRODUCT INVENTORY
+==============================================
+
+INSTRUCTIONS FOR EDITING:
+- Edit the values after the colons (:) for each field
+- Keep the structure and field names intact
+- Add new products by copying the template at the bottom
+- Image codes correspond to the naming convention: a1-a5, b1-b5, c1-c5, etc.
+- Price format: Use ranges like "$159 - $699" for collections
+
+==============================================
+
+PRODUCT 1:
+----------
+ID: artisan-series
+NAME: Tembo/Twiga savana
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: Handcrafted lighting featuring herbivores animals in the savanna, artisanal techniques with contemporary design from natural materials.
+IMAGES: 
+  - /images/20240405_131741-a1.jpg
+  - /images/20240405_131752-a2.jpg
+  - /images/20240405_132015-a3.jpg
+  - /images/20240405_132238-a4.jpg
+  - /images/20240408_112214-a5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 2:
+----------
+ID: bronze-collection
+NAME: Spackle blue/red
+CATEGORY: piece
+PRICE: $120 - $150
+DESCRIPTION: Sophisticated abstract lighting combining Crystal beads elegance with modern patterns and timeless appeal.
+IMAGES:
+  - /images/20240508_141055-b1.jpg
+  - /images/20240508_141122-b2.jpg
+  - /images/20240508_141338-b3.jpg
+  - /images/20240508_141359-b4.jpg
+  - /images/20240508_141454-b5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Blue/red crystal beads
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 3:
+----------
+ID: crystal-line
+NAME: Natural African woman
+CATEGORY: piece
+PRICE: $150 - $180
+DESCRIPTION: Elegant crystal beads and three sides showing different aspects of African woman featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.
+IMAGES:
+  - /images/20240520_160914-c1.jpg
+  - /images/20240520_161245-c2.jpg
+  - /images/20240520_161300-c3.jpg
+  - /images/20240520_161309-c4.jpg
+  - /images/20240520_161319-c5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Blue/red beads
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 4:
+----------
+ID: designer-collection
+NAME: Trees for life
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: Three different trees on different sides, together with blue/purple crystal beads. very unique pattern design. 
+IMAGES:
+  - /images/20240607_162317-d1.jpg
+  - /images/20240607_162627-d2.jpg
+  - /images/20240607_162641-d3.jpg
+  - /images/20240607_162656-d4.jpg
+  - /images/20240607_162743-d5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  = Blue/purple crystal beads
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+==============================================
+
+PRODUCT 5:
+----------
+ID: essence-series
+NAME: Twiga mugshot 
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: A giraffe shown on three different perspectives. Minimalist to Art Deco inspired lighting with clean and architectural presence for contemporary spaces.
+IMAGES:
+  - /images/20240612_135043-e1.jpg
+  - /images/20240612_135118-e2.jpg
+  - /images/20240612_135256-e3.jpg
+  - /images/20240612_135313-e4.jpg
+  - /images/20240612_140355-e5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 6:
+----------
+ID: fusion-line
+NAME: The wild sunset
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: The mix of all the animals herbivores and carnivores on a beautiful sunset of the savanna. The design includes large to small animals.
+IMAGES:
+  - /images/20240614_140132-f2.jpg
+  - /images/20240614_140159-f3.jpg
+  - /images/20240614_140218-f4.jpg
+  - /images/20240614_135944-f5.jpg
+  - /images/20240614_140121-f5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 7:
+----------
+ID: stellar-series
+NAME: Fallen leaves 2.0
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: Contemporary plant leaves-inspired lighting featuring cosmic designs and celestial aesthetics for modern spaces.
+IMAGES:
+  - /images/IMG-20241116-WA0036-s1.jpg
+  - /images/IMG-20241116-WA0032-s2.jpg
+  - /images/IMG-20241116-WA0024-s3.jpg
+  - /images/IMG-20241116-WA0016-s4.jpg
+  - /images/IMG-20241116-WA0014-s5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 8:
+----------
+ID: radiance-collection
+NAME: The five mugshots
+CATEGORY: piece
+PRICE: $200 - $250
+DESCRIPTION: The big five of the animal kingdom displaying their faces all around the lamp emphasizing brilliant illumination and sophisticated design elements.
+IMAGES:
+  - /images/IMG-20250123-WA0028-r1.jpg
+  - /images/IMG-20250123-WA0026-r2.jpg
+  - /images/IMG-20250123-WA0022-r3.jpg
+  - /images/IMG-20250123-WA0020-r4.jpg
+  - /images/IMG-20250123-WA0016-r5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (35"- 40" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 9:
+----------
+ID: quantum-line
+NAME: Fallen leaves 00
+CATEGORY: collection
+PRICE: $179 - $799
+DESCRIPTION: Contemporary plant-leaves,lighting featuring cosmic designs and celestial aesthetics for modern spaces.
+IMAGES:
+  - /images/IMG-20250213-WA0011-q1.jpg
+  - /images/IMG-20250213-WA0017-q2.jpg
+  - /images/IMG-20250213-WA0007-q3.jpg
+  - /images/IMG-20250213-WA0015-q4.jpg
+  - /images/IMG-20250213-WA0013-q5.jpg
+  SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 10:
+-----------
+ID: prism-series
+NAME: Family tree
+CATEGORY: piece
+PRICE: $250 - $350
+DESCRIPTION: A stand lamp with three branches each one faces its own directions, featuring light refraction and spectrum effects for abstracts and dynamic illumination.
+IMAGES:
+  - /images/IMG-20250501-WA0021-p1.jpg
+  - /images/IMG-20250501-WA0020-p2.jpg
+  - /images/IMG-20250501-WA0018-p3.jpg
+  - /images/IMG-20250501-WA0015-p4.jpg
+  - /images/IMG-20250501-WA0009-p5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter for calabashes/ 100"-200cm stand heights)
+  - Materials: gourd(calabash)/metal stand
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 11:
+-----------
+ID: orbit-collection
+NAME: The young roar
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: Lion inspired design with two sides a young lion roaring and a very chilled dad each side showing a unique and dynamic patterns.
+IMAGES:
+  - /images/IMG-20250516-WA0016-o1.jpg
+  - /images/IMG-20250516-WA0012-o2.jpg
+  - /images/IMG-20250516-WA0004-o3.jpg
+  - /images/IMG-20250516-WA0002-o4.jpg
+  - /images/IMG-20250516-WA0006-o5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 12:
+-----------
+ID: nova-line
+NAME: Butterfly effects 
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: Explosive butterfly design with crystal spackle, featuring burst patterns and radial designs for dramatic illumination effects.
+IMAGES:
+  - /images/IMG-20250527-WA0035-n1.jpg
+  - /images/IMG-20250527-WA0033-n2.jpg
+  - /images/IMG-20250527-WA0039-n3.jpg
+  - /images/IMG-20250527-WA0037-n4.jpg
+  - /images/IMG-20250527-WA0036-n5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - pink/red/green crystal beads
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 13:
+-----------
+ID: meridian-series
+NAME: The wild sere
+CATEGORY: piece
+PRICE: $100 - $150
+DESCRIPTION: The wild inspired lamp, featuring linear and directional designs for precise illumination control.
+IMAGES:
+  - /images/IMG-20250606-WA0007-m1.jpg
+  - /images/IMG-20250606-WA0011-m2.jpg
+  - /images/IMG-20250606-WA0021-m3.jpg
+  - /images/IMG-20250606-WA0013-m4.jpg
+  - /images/IMG-20250606-WA0001-m5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+PRODUCT 14:
+-----------
+ID: lumina-collection
+NAME: The humming
+CATEGORY: collection
+PRICE: $100 - $150
+DESCRIPTION: Elegant design showing hummingbird with different artisanal style clean illumination and minimalist design principles.
+IMAGES:
+  - /images/IMG-20250616-WA0007-l1.jpg
+  - /images/IMG-20250616-WA0001-l2.jpg
+  - /images/IMG-20250616-WA0003-l4.jpg
+  - /images/IMG-20250616-WA0009-l4.jpg
+  - /images/IMG-20250616-WA0005-l5.jpg
+SPECIFICATIONS:
+  - Dimensions: Various sizes available (20"-30" diameter/ 25"-35cm heights)
+  - Materials: gourd(calabash)
+  - Bulb Type: E27 Standard Base
+  - Wattage: 3W-10W (LED recommended)
+  - Voltage: 120V-240V AC
+  - Warranty: on electrical fixtures (3 months)
+FEATURES:
+  - Handcrafted artisanal construction
+  - Premium material selection
+  - Traditional craftsmanship techniques
+  - Contemporary design integration
+  - Multiple size options available
+  - Energy-efficient LED bulbs
+
+==============================================
+
+NEW PRODUCT TEMPLATE:
+--------------------
+ID: [unique-product-id]
+NAME: [Product Name]
+CATEGORY: collection
+PRICE: $[min] - $[max]
+DESCRIPTION: [Detailed product description highlighting key features and target spaces]
+IMAGES:
+  - /images/[image-filename-1]
+  - /images/[image-filename-2]
+  - /images/[image-filename-3]
+  - /images/[image-filename-4]
+  - /images/[image-filename-5]
+SPECIFICATIONS:
+  - Dimensions: [width x height x depth or diameter]
+  - Materials: [Primary materials used]
+  - Bulb Type: [E26, LED, etc.]
+  - Wattage: [Min-Max wattage]
+  - Voltage: [120V AC, etc.]
+  - Warranty: [Years] Limited
+FEATURES:
+  - [Key feature 1]
+  - [Key feature 2]
+  - [Key feature 3]
+  - [Key feature 4]
+  - [Key feature 5]
+  - [Key feature 6]
+
+==============================================
+
+NOTES:
+- All images are stored in the /images/ directory
+- Image naming follows pattern: date-code or IMG-date-code
+- Product IDs should be lowercase with hyphens
+- Prices should reflect realistic market ranges
+- Features should highlight unique selling points
+- Specifications should be accurate and complete
+
+==============================================
+END OF INVENTORY FILE
