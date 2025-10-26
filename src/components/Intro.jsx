@@ -104,7 +104,7 @@ export default function Intro() {
       <div className={styles.intro}>
         <div className={styles.textContent}>
           <h1 className={styles.heroTitle} ref={heroTitle}>
-            HAND MADE
+            HAND <span className={styles.underlinedText}>MADE</span>
           </h1>
           
           <p className={styles.heroSubtitle} ref={heroSubtitle}>

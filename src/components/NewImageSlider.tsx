@@ -120,26 +120,37 @@ const NewImageSlider: React.FC = () => {
       setIsAnimating(false);
     }, timeRunning);
 
-    // Set next auto-advance
-    autoNextRef.current = setTimeout(() => {
-      showSlider('next');
-    }, timeAutoNext);
-  }, [isAnimating, sliderItems.length, timeRunning, timeAutoNext]);
+  }, [isAnimating, sliderItems.length, timeRunning]);
 
   const handleNext = () => showSlider('next');
   const handlePrev = () => showSlider('prev');
 
   // Auto-advance functionality
   useEffect(() => {
-    autoNextRef.current = setTimeout(() => {
-      showSlider('next');
-    }, timeAutoNext);
+    const startAutoAdvance = () => {
+      if (autoNextRef.current) clearTimeout(autoNextRef.current);
+      
+      autoNextRef.current = setTimeout(() => {
+        if (!isAnimating) {
+          setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
+          carouselRef.current?.classList.add('next');
+          
+          setTimeout(() => {
+            carouselRef.current?.classList.remove('next');
+          }, timeRunning);
+          
+          startAutoAdvance(); // Restart the cycle
+        }
+      }, timeAutoNext);
+    };
+
+    startAutoAdvance();
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (autoNextRef.current) clearTimeout(autoNextRef.current);
     };
-  }, [showSlider]);
+  }, [timeAutoNext, timeRunning, sliderItems.length, isAnimating]);
 
   // Cleanup on unmount
   useEffect(() => {

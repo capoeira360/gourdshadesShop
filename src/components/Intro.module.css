@@ -92,6 +92,19 @@
   font-family: 'Kyron', 'Gemsbuck', 'Cremotic', Arial, Helvetica, sans-serif;
 }
 
+.underlinedText {
+  text-decoration: underline;
+  text-decoration-color: #000000;
+  text-underline-offset: 0.1em;
+  text-decoration-thickness: 1px;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-transform: inherit;
+  font-family: inherit;
+}
+
 .heroSubtitle {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-weight: 700; /* Make hero subtitle bold too */
