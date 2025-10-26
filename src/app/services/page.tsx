@@ -64,18 +64,16 @@ const ServicesPage: React.FC = () => {
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
-        className="max-w-7xl mx-auto px-6 py-16 text-center"
+        className="max-w-7xl mx-auto px-6 py-16"
         initial={{ opacity: 0, y: 30 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-5xl md:text-7xl font-light text-primary mb-6">
-          Our Services
-        </h1>
-        <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-          From consultation to installation, we provide comprehensive lighting solutions 
-          to illuminate your world with precision and style.
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <h1 className="text-2xl md:text-3xl font-light text-primary">
+            Services
+          </h1>
+        </div>
       </motion.section>
 
       {/* Services Grid */}

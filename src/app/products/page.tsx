@@ -28,7 +28,6 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const rowRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { addItem } = useEnquiry();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -77,73 +76,8 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
     },
   };
 
-  const handleAddToEnquiry = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation to product detail page
-    e.stopPropagation();
-    
-    console.log('Add to Enquiry clicked for:', product.name); // Debug log
-    
-    // Parse price string to number (remove $ and handle ranges)
-    const priceString = product.price.replace('$', '');
-    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
-    
-    console.log('Parsed price:', priceNumber); // Debug log
-    
-    const itemToAdd = {
-      id: product.id,
-      name: product.name,
-      price: priceNumber,
-      image: product.images[0],
-      category: product.category,
-    };
-    
-    console.log('Adding item:', itemToAdd); // Debug log
-    
-    addItem(itemToAdd);
-    
-    console.log('Item added to context'); // Debug log
-  };
-
   return (
     <div className="relative group">
-      {/* Add to Enquiry Button */}
-      <motion.button
-        onClick={(e) => {
-          console.log('Button clicked!'); // Debug log
-          handleAddToEnquiry(e);
-        }}
-        className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/80 transition-all duration-300 shadow-lg flex items-center space-x-2 z-20"
-        whileHover={{ 
-          scale: 1.05,
-          boxShadow: "0 10px 25px rgba(200, 168, 130, 0.3)"
-        }}
-        whileTap={{ 
-          scale: 0.95,
-          transition: { duration: 0.1 }
-        }}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          delay: 0.2,
-          type: "spring",
-          stiffness: 300,
-          damping: 20
-        }}
-      >
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeInOut"
-          }}
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8.5" />
-          </svg>
-        </motion.div>
-        <span>Add to Enquiry</span>
-      </motion.button>
-
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={rowRef}
@@ -167,7 +101,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
               {product.description}
             </p>
             <div className="flex items-center mt-4 space-x-4">
-              <span className="text-lg font-medium text-primary">
+              <span className="text-lg font-semibold" style={{ color: '#d4af37' }}>
                 {product.price}
               </span>
               <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
@@ -270,7 +204,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
-  const { addItem } = useEnquiry();
 
   // Removed the intersection observer since we want instant visibility
   // useEffect(() => {
@@ -303,73 +236,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
     },
   };
 
-  const handleAddToEnquiry = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation to product detail page
-    e.stopPropagation();
-    
-    console.log('Add to Enquiry clicked for:', product.name); // Debug log
-    
-    // Parse price string to number (remove $ and handle ranges)
-    const priceString = product.price.replace('$', '');
-    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
-    
-    console.log('Parsed price:', priceNumber); // Debug log
-    
-    const itemToAdd = {
-      id: product.id,
-      name: product.name,
-      price: priceNumber,
-      image: product.images[0],
-      category: product.category,
-    };
-    
-    console.log('Adding item:', itemToAdd); // Debug log
-    
-    addItem(itemToAdd);
-    
-    console.log('Item added to context'); // Debug log
-  };
-
   return (
     <div className="relative group">
-      {/* Add to Enquiry Button - Moved outside Link */}
-      <motion.button
-        onClick={(e) => {
-          console.log('Button clicked!'); // Debug log
-          handleAddToEnquiry(e);
-        }}
-        className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/80 transition-all duration-300 shadow-lg flex items-center space-x-2 z-20"
-        whileHover={{ 
-          scale: 1.05,
-          boxShadow: "0 10px 25px rgba(200, 168, 130, 0.3)"
-        }}
-        whileTap={{ 
-          scale: 0.95,
-          transition: { duration: 0.1 }
-        }}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          delay: 0.2,
-          type: "spring",
-          stiffness: 300,
-          damping: 20
-        }}
-      >
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeInOut"
-          }}
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8.5" />
-          </svg>
-        </motion.div>
-        <span>Add to Enquiry</span>
-      </motion.button>
-
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={cardRef}
@@ -396,7 +264,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
               {product.description}
             </p>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-medium text-primary">
+              <span className="text-lg font-semibold" style={{ color: '#d4af37' }}>
                 {product.price}
               </span>
               <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
@@ -679,18 +547,16 @@ const ProductsPage: React.FC = () => {
       {/* Header Section */}
       <motion.div
         ref={headerRef}
-        className="max-w-7xl mx-auto px-6 py-16 text-center"
+        className="max-w-7xl mx-auto px-6 py-16"
         variants={headerVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
-        <h1 className="text-5xl md:text-7xl font-light text-primary mb-6">
-          Our Products
-        </h1>
-        <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-          Discover our carefully curated collection of premium lighting solutions, 
-          each piece selected for its exceptional design and quality craftsmanship.
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <h1 className="text-2xl md:text-3xl font-light text-primary">
+            Products
+          </h1>
+        </div>
       </motion.div>
 
       {/* Filter and View Toggle Section */}

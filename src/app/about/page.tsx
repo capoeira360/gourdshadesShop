@@ -436,24 +436,19 @@ const AboutPage: React.FC = () => {
       {/* Hero Section */}
       <motion.section
         ref={headerRef}
-        className="max-w-7xl mx-auto px-6 py-16 text-center"
+        className="max-w-7xl mx-auto px-6 py-16"
         variants={staggerContainer}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
-        <motion.h1
-          className="text-5xl md:text-7xl font-light text-primary mb-6"
-          variants={fadeInUp}
-        >
-          About LampCo
-        </motion.h1>
-        <motion.p
-          className="text-xl text-text-secondary max-w-3xl mx-auto"
-          variants={fadeInUp}
-        >
-          Illuminating spaces with premium lighting solutions since 1985. 
-          We believe that exceptional lighting transforms not just rooms, but lives.
-        </motion.p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <motion.h1
+            className="text-2xl md:text-3xl font-light text-primary"
+            variants={fadeInUp}
+          >
+            About
+          </motion.h1>
+        </div>
       </motion.section>
 
       {/* Split View Layout */}

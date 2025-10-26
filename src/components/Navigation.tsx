@@ -479,7 +479,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
-                        className="w-[400px] h-[300px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
+                        className="w-[544px] h-[444px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
                       >
                         {/* Display the actual preview image */}
                         <div className="relative w-full h-full">
@@ -489,19 +489,6 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                             fill
                             className="object-cover"
                           />
-                          {/* Overlay with text */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 flex flex-col items-center justify-center p-8">
-                            <span className="text-white text-2xl font-light mb-2">
-                              {hoveredLink}
-                            </span>
-                            <span className="text-white/80 text-lg text-center">
-                              {hoveredLink === 'Home' && 'Discover our premium lighting collection'}
-                              {hoveredLink === 'Products' && 'Explore our curated lighting solutions'}
-                              {hoveredLink === 'About' && 'Learn about our lighting expertise'}
-                              {hoveredLink === 'Services' && 'Professional lighting services'}
-                              {hoveredLink === 'Contact' && 'Get in touch with our team'}
-                            </span>
-                          </div>
                         </div>
                       </motion.div>
                     )}
