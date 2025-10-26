@@ -48,44 +48,69 @@
   font-display: swap;
 }
 
-/* Kyron Font Face Declarations */
+/* Regen Font Face Declarations */
 @font-face {
-  font-family: 'Kyron';
-  src: url('/fonts/KyronRegular-V4ovl.ttf') format('truetype');
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Kyron';
-  src: url('/fonts/KyronMedium-q2ej1.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Kyron';
-  src: url('/fonts/KyronSemiBold-DY1qD.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Kyron';
-  src: url('/fonts/KyronBold-pg0Gd.ttf') format('truetype');
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Kyron';
-  src: url('/fonts/KyronExtraBold-ARepp.ttf') format('truetype');
-  font-weight: 800;
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regen Font Face Declarations */
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
+  font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -167,7 +192,7 @@ body {
 h1, h2, h3, h4, h5, h6,
 .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl,
 .large-text {
-  font-family: 'Kyron', 'Cremotic', serif;
+  font-family: 'Regen', 'Cremotic', serif;
   font-weight: 600;
   color: #91631D;
 }

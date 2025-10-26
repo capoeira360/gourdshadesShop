@@ -70,7 +70,7 @@ const ServicesPage: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary">
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
             Services
           </h1>
         </div>
@@ -92,7 +92,7 @@ const ServicesPage: React.FC = () => {
               >
                 <div className="text-center mb-8">
                   <div className="text-6xl mb-4">{service.icon}</div>
-                  <h3 className="text-2xl font-medium text-primary mb-4">
+                  <h3 className="text-2xl font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                     {service.title}
                   </h3>
                   <p className="text-text-secondary leading-relaxed mb-6">
@@ -104,7 +104,7 @@ const ServicesPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="font-medium text-primary mb-4">What&apos;s Included:</h4>
+                  <h4 className="font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>What&apos;s Included:</h4>
                   {service.features.map((feature, featureIndex) => (
                     <motion.div
                       key={feature}
@@ -144,6 +144,7 @@ const ServicesPage: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
           >
             Ready to Get Started?
           </motion.h2>

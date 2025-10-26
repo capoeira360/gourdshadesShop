@@ -94,7 +94,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
           <div className="flex-1">
             <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
               isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
-            }`}>
+            }`} style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-gray-600 mt-2 text-sm md:text-base">
@@ -168,7 +168,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
               />
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300">
+              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                 {currentProduct.name}
               </h4>
               <p className="text-sm text-white/80 group-hover:text-[#C8A882]/90 transition-colors duration-300">
@@ -257,7 +257,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2">
+            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
@@ -665,7 +665,7 @@ const ProductsPage: React.FC = () => {
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary">
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
             Products
           </h1>
         </div>

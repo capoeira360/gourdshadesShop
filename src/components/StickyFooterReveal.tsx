@@ -10,60 +10,49 @@ interface StickyFooterRevealProps {
 
 const StickyFooterReveal: React.FC<StickyFooterRevealProps> = ({ children }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
   
-  // Use window scroll for tracking
-  const { scrollY } = useScroll();
+  // Use scroll progress from the container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
+  // Calculate footer height on mount and resize
   useEffect(() => {
-    // Calculate footer height
-    const updateFooterHeight = () => {
-      const footerElement = document.querySelector('footer');
-      if (footerElement) {
-        const height = footerElement.offsetHeight;
+    const calculateFooterHeight = () => {
+      if (footerRef.current) {
+        const height = footerRef.current.offsetHeight;
         setFooterHeight(height);
+        // Set body padding to prevent content jump
+        document.body.style.paddingBottom = `${height}px`;
       }
     };
 
-    // Initial calculation
-    const timer = setTimeout(updateFooterHeight, 100);
+    // Calculate height after a short delay to ensure footer is rendered
+    const timer = setTimeout(calculateFooterHeight, 100);
     
-    window.addEventListener('resize', updateFooterHeight);
+    // Recalculate on window resize
+    const handleResize = () => {
+      calculateFooterHeight();
+    };
+    
+    window.addEventListener('resize', handleResize);
     
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('resize', updateFooterHeight);
+      window.removeEventListener('resize', handleResize);
+      document.body.style.paddingBottom = '';
     };
   }, []);
 
-  useEffect(() => {
-    // Add scroll space equal to footer height to allow reveal
-    if (footerHeight > 0) {
-      document.body.style.paddingBottom = `${footerHeight}px`;
-      // Set CSS custom property for other components to use
-      document.documentElement.style.setProperty('--footer-height', `${footerHeight}px`);
-    }
-
-    return () => {
-      document.body.style.paddingBottom = '';
-      document.documentElement.style.removeProperty('--footer-height');
-    };
-  }, [footerHeight]);
-
-  // Calculate when footer should reveal based on scroll position
-  const documentHeight = typeof window !== 'undefined' ? document.documentElement.scrollHeight : 0;
-  const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
-  const maxScroll = documentHeight - windowHeight;
-  
-  // Footer reveals in the last scroll area (when we reach the added padding)
-  const revealStart = maxScroll - footerHeight;
-  const revealEnd = maxScroll;
-
-  // Transform footer from hidden to visible
+  // Transform footer position based on scroll progress
+  // Footer starts hidden (translated down by its height) and slides up as user scrolls
   const footerY = useTransform(
-    scrollY,
-    [revealStart, revealEnd],
-    [footerHeight, 0]
+    scrollYProgress,
+    [0.7, 1], // Start revealing when 70% scrolled, fully revealed at 100%
+    [footerHeight, 0] // From hidden (footerHeight) to visible (0)
   );
 
   return (
@@ -71,15 +60,25 @@ const StickyFooterReveal: React.FC<StickyFooterRevealProps> = ({ children }) => 
       {/* Main content container */}
       <div
         ref={containerRef}
-        className="relative z-10 bg-white"
+        className="relative z-10 bg-white min-h-screen"
       >
         {children}
       </div>
 
-      {/* Fixed footer that slides up from below */}
+      {/* Sticky footer that reveals on scroll */}
       <motion.div 
+        ref={footerRef}
         className="fixed bottom-0 left-0 right-0 z-0"
-        style={{ y: footerY }}
+        style={{ 
+          y: footerY,
+          willChange: 'transform'
+        }}
+        initial={{ y: footerHeight }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 30
+        }}
       >
         <Footer />
       </motion.div>

@@ -71,7 +71,7 @@ const ContactPage: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary">
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
             Get In Touch
           </h1>
           <p className="text-base text-text-secondary max-w-2xl">
@@ -96,7 +96,7 @@ const ContactPage: React.FC = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="text-5xl mb-6">{info.icon}</div>
-                <h3 className="text-xl font-medium text-primary mb-4">
+                <h3 className="text-xl font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                   {info.title}
                 </h3>
                 <div className="space-y-2 mb-6">
@@ -130,7 +130,7 @@ const ContactPage: React.FC = () => {
             viewport={{ once: true }}
           >
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-light text-primary mb-4">
+              <h2 className="text-3xl md:text-4xl font-light text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                 Send Us a Message
               </h2>
               <p className="text-text-secondary">

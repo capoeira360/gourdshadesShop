@@ -164,6 +164,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
+                style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
               >
                 {section.title}
               </motion.h4>
@@ -302,6 +303,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
             isActive ? 'text-primary transform scale-105' : 'text-gray-900'
           }`}
           layout
+          style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
         >
           {section.title}
         </motion.h2>
@@ -309,6 +311,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
           <motion.h3 
             className="text-xl text-gray-600 mb-8 font-medium"
             layout
+            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
           >
             {section.subtitle}
           </motion.h3>
@@ -445,6 +448,7 @@ const AboutPage: React.FC = () => {
           <motion.h1
             className="text-2xl md:text-3xl font-light text-primary"
             variants={fadeInUp}
+            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
           >
             About
           </motion.h1>

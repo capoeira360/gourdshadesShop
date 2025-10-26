@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#262626' }}>
+      <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#3B3C37' }}>
         <div className="max-w-7xl mx-auto px-6 h-full">
           {/* Main Content Grid */}
           <motion.div
@@ -175,7 +175,7 @@ const Footer: React.FC = () => {
               <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
                 <div className="w-6 h-6 bg-primary rounded-sm"></div>
               </div>
-              <span className="text-2xl font-medium" style={{ color: '#d4af37' }}>Gourd Shades</span>
+              <span className="text-2xl font-medium" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>Gourd Shades</span>
             </div>
             <p className="text-white/70 leading-relaxed mb-6">
               Crafting unique lighting experiences with artisanal gourd-inspired designs. 
@@ -189,7 +189,7 @@ const Footer: React.FC = () => {
 
           {/* Sitemap Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#d4af37' }}>SITEMAP</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>SITEMAP</h3>
             <nav className="space-y-4">
               {renderAnimatedLink('Home', '/')}
               {renderAnimatedLink('About', '/about')}
@@ -200,7 +200,7 @@ const Footer: React.FC = () => {
             
             {/* Legal Pages Section */}
             <div className="mt-8 pt-6 border-t border-white/20">
-              <h4 className="text-sm font-medium mb-4" style={{ color: '#d4af37' }}>LEGAL</h4>
+              <h4 className="text-sm font-medium mb-4" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>LEGAL</h4>
               <nav className="space-y-3">
                 {renderAnimatedLink('Privacy Policy', '/privacy')}
                 {renderAnimatedLink('Disclaimer', '/disclaimer')}
@@ -210,7 +210,7 @@ const Footer: React.FC = () => {
 
           {/* Contact Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#d4af37' }}>CONTACT</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>CONTACT</h3>
             <div className="space-y-4 text-white/70">
               <div>
                 <p className="text-lg">hello@gourdshades.com</p>
@@ -230,7 +230,7 @@ const Footer: React.FC = () => {
 
           {/* Lighting Gallery Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#d4af37' }}>OUR CREATIONS</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>OUR CREATIONS</h3>
             <div className="grid grid-cols-2 gap-3">
               {/* Top Image - Gourd Pendants */}
               <div className="col-span-2 bg-accent/20 rounded-lg overflow-hidden h-28 border border-accent/30">
