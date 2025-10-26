@@ -841,7 +841,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
                 <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>{product.name}</h1>
-                <p className="text-2xl font-semibold" style={{ color: '#d4af37', marginLeft: '216px' }}>{product.price}</p>
+                <p className="text-2xl font-semibold" style={{ color: '#786861', marginLeft: '216px' }}>{product.price}</p>
               </div>
 
               <div className="space-y-4" style={{ marginLeft: '216px' }}>

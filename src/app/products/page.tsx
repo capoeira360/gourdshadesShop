@@ -101,7 +101,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
               {product.description}
             </p>
             <div className="flex items-center mt-4 space-x-4">
-              <span className="text-lg font-semibold" style={{ color: '#d4af37' }}>
+              <span className="text-lg font-semibold" style={{ color: '#786861' }}>
                 {product.price}
               </span>
               <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
@@ -264,7 +264,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
               {product.description}
             </p>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold" style={{ color: '#d4af37' }}>
+              <span className="text-lg font-semibold" style={{ color: '#786861' }}>
                 {product.price}
               </span>
               <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">

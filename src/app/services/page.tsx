@@ -98,9 +98,6 @@ const ServicesPage: React.FC = () => {
                   <p className="text-text-secondary leading-relaxed mb-6">
                     {service.description}
                   </p>
-                  <div className="text-xl font-semibold text-accent">
-                    {service.price}
-                  </div>
                 </div>
 
                 <div className="space-y-3">
@@ -136,7 +133,7 @@ const ServicesPage: React.FC = () => {
 
 
       {/* CTA Section */}
-      <section className="bg-accent py-24">
+      <section className="py-24" style={{ backgroundColor: '#EAE3C9' }}>
         <div className="max-w-4xl mx-auto text-center px-6">
           <motion.h2
             className="text-4xl font-light text-primary mb-6"

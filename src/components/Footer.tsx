@@ -172,10 +172,7 @@ const Footer: React.FC = () => {
           {/* Logo & Description Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-8">
-              <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-                <div className="w-6 h-6 bg-primary rounded-sm"></div>
-              </div>
-              <span className="text-2xl font-medium" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>Gourd Shades</span>
+              <span className="text-4xl font-medium" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>Gourd Shades</span>
             </div>
             <p className="text-white/85 leading-relaxed mb-6">
               Crafting unique lighting experiences with artisanal gourd-inspired designs. 
