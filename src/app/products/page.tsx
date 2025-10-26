@@ -483,6 +483,118 @@ const ProductsPage: React.FC = () => {
         '/images/IMG-20250616-WA0005-l5.jpg'
       ],
       description: 'Elegant design showing hummingbird with different artisanal style clean illumination and minimalist design principles.',
+    },
+    {
+      id: 'heritage-k-series',
+      name: 'African Rhinoceros',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20231002_141245_IMG_0901-k1.jpg',
+        '/images/20231002_141245_IMG_0901-k2.jpg',
+        '/images/20231002_141245_IMG_0901-k3.jpg',
+        '/images/20231002_141052_IMG_0893-k4.jpg',
+        '/images/20231002_140955_IMG_0889-k5.jpg'
+      ],
+      description: 'African rhino on three different carving style with traditional craftsmanship meets contemporary design in this heritage featuring intricate patterns and timeless elegance.',
+    },
+    {
+      id: 'artisan-j-series',
+      name: 'cool king',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20231004_155909_IMG_0908-j1.jpg',
+        '/images/20231004_160327_IMG_0926-j2.jpg',
+        '/images/20231004_160327_IMG_0926-j3.jpg',
+        '/images/20231004_160327_IMG_0926-j4.jpg',
+        '/images/20231004_160327_IMG_0926-j5.jpg'
+      ],
+      description: 'A king of the jungle in three different styles, Masterfully crafted lighting pieces showcasing exceptional artisanal techniques and sophisticated design elements.',
+    },
+    {
+      id: 'illumina-i-series',
+      name: 'Chilly cheetah',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20231011_145655_IMG_0938-i1.jpg',
+        '/images/20231011_145655_IMG_0938-i2.jpg',
+        '/images/20231011_145605_IMG_0937-i3.jpg',
+        '/images/20231011_145655_IMG_0938-i4.jpg',
+        '/images/20231011_150015_IMG_0953-i5.jpg'
+      ],
+      description: 'Exploration of artistry in three different sides. Innovative lighting solutions combining modern aesthetics with functional brilliance for contemporary living spaces.',
+    },
+    {
+      id: 'terra-t-series',
+      name: 'Bibi baobab',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20231014_142008_IMG_0984-t1.jpg',
+        '/images/20231014_141946_IMG_0982-t2.jpg',
+        '/images/20231014_142225_IMG_0989-t3.jpg',
+        '/images/20231014_142151_IMG_0987-t4.jpg',
+        '/images/20231014_142516_IMG_0997-t5.jpg'
+      ],
+      description: 'Three different aspects of a baobab tree. Earth-inspired designs featuring natural textures and organic forms that bring warmth and character to any environment.',
+    },
+    {
+      id: 'urban-u-series',
+      name: 'Brother Buffalo',
+      category: 'piece',
+      price: '$120 - $150',
+      images: [
+        '/images/20231019_144959_IMG_1031-u1.jpg',
+        '/images/20231019_145104_IMG_1035-u2.jpg',
+        '/images/20231019_145026_IMG_1032-u3.jpg',
+        '/images/20231019_145051_IMG_1034-u4.jpg',
+        '/images/20231019_145204_IMG_1038-u5.jpg'
+      ],
+      description: 'Three sided buffalo with metropolitan-inspired lighting featuring sleek patterns and contemporary finishes perfect for modern urban spaces.',
+    },
+    {
+      id: 'golden-g-series',
+      name: 'Tied Wave',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20240105_163859_IMG_1386-g1.jpg',
+        '/images/20240105_163859_IMG_1386-g2.jpg',
+        '/images/20240105_163851_IMG_1385-g3.jpg',
+        '/images/20240105_163847_IMG_1384-g4.jpg',
+        '/images/20240105_163754_IMG_1380-g5.jpg'
+      ],
+      description: 'Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.',
+    },
+    {
+      id: 'vintage-v-series',
+      name: 'Posing Zebra',
+      category: 'piece',
+      price: '$100 - $160',
+      images: [
+        '/images/20240122_155926_IMG_1502-v1.jpg',
+        '/images/20240122_160019_IMG_1505-v2.jpg',
+        '/images/20240122_160128_IMG_1511-v3.jpg',
+        '/images/20240122_160137_IMG_1512-v4.jpg',
+        '/images/20240122_160320_IMG_1517-v5.jpg'
+      ],
+      description: 'The silly zebra trying to show that he got some moves. creative craftsmanship combining different styles for the same results.',
+    },
+    {
+      id: 'harmony-h-series',
+      name: 'Elephant Mama',
+      category: 'piece',
+      price: '$100 - $150',
+      images: [
+        '/images/20240326_142130_IMG_1803-h1.jpg',
+        '/images/20240326_142155_IMG_1804-h2.jpg',
+        '/images/20240326_142228_IMG_1805-h3.jpg',
+        '/images/20240326_142228_IMG_1805-h4.jpg',
+        '/images/20240326_142228_IMG_1805-h5.jpg'
+      ],
+      description: 'Mama elephant with her baby in three different styles. Harmonious designs that create perfect balance between form and function in any living space.',
     }
   ];
 

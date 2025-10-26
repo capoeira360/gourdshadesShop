@@ -456,6 +456,254 @@ const products: Product[] = [
       "Multiple size options available",
       "Energy-efficient LED bulbs"
     ]
+  },
+  {
+    id: 'heritage-k-series',
+    name: 'African Rhinoceros',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20231002_141245_IMG_0901-k1.jpg',
+      '/images/20231002_141245_IMG_0901-k2.jpg',
+      '/images/20231002_141245_IMG_0901-k3.jpg',
+      '/images/20231002_141052_IMG_0893-k4.jpg',
+      '/images/20231002_140955_IMG_0889-k5.jpg'
+    ],
+    description: 'African rhino on three different carving style with traditional craftsmanship meets contemporary design in this heritage featuring intricate patterns and timeless elegance.',
+    longDescription: 'The African Rhinoceros piece showcases the mighty rhino through three distinct carving styles, each highlighting different aspects of this powerful creature. Traditional craftsmanship techniques are combined with contemporary design sensibilities to create a heritage piece that tells the story of one of Africa\'s most iconic animals through intricate patterns and timeless elegance.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'artisan-j-series',
+    name: 'Cool King',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20231004_155909_IMG_0908-j1.jpg',
+      '/images/20231004_160327_IMG_0926-j2.jpg',
+      '/images/20231004_160327_IMG_0926-j3.jpg',
+      '/images/20231004_160327_IMG_0926-j4.jpg',
+      '/images/20231004_160327_IMG_0926-j5.jpg'
+    ],
+    description: 'A king of the jungle in three different styles, masterfully crafted lighting pieces showcasing exceptional artisanal techniques and sophisticated design elements.',
+    longDescription: 'The Cool King piece celebrates the majesty of the lion through three different artistic interpretations. Each style captures a unique aspect of the king of the jungle, from fierce authority to regal composure. This masterfully crafted lighting piece showcases exceptional artisanal techniques and sophisticated design elements that honor the lion\'s legendary status.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'illumina-i-series',
+    name: 'Chilly Cheetah',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20231011_145655_IMG_0938-i1.jpg',
+      '/images/20231011_145655_IMG_0938-i2.jpg',
+      '/images/20231011_145605_IMG_0937-i3.jpg',
+      '/images/20231011_145655_IMG_0938-i4.jpg',
+      '/images/20231011_150015_IMG_0953-i5.jpg'
+    ],
+    description: 'Exploration of artistry in three different sides. Innovative lighting solutions combining modern aesthetics with functional brilliance for contemporary living spaces.',
+    longDescription: 'The Chilly Cheetah piece explores the grace and speed of the world\'s fastest land animal through three different artistic perspectives. Each side reveals a unique aspect of the cheetah\'s character, from its relaxed demeanor to its explosive energy. This innovative lighting solution combines modern aesthetics with functional brilliance, perfect for contemporary living spaces.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'terra-t-series',
+    name: 'Bibi Baobab',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20231014_142008_IMG_0984-t1.jpg',
+      '/images/20231014_141946_IMG_0982-t2.jpg',
+      '/images/20231014_142225_IMG_0989-t3.jpg',
+      '/images/20231014_142151_IMG_0987-t4.jpg',
+      '/images/20231014_142516_IMG_0997-t5.jpg'
+    ],
+    description: 'Three different aspects of a baobab tree. Earth-inspired designs featuring natural textures and organic forms that bring warmth and character to any environment.',
+    longDescription: 'The Bibi Baobab piece celebrates the iconic African baobab tree through three different artistic interpretations. Known as the \"Tree of Life,\" the baobab is showcased in various stages and perspectives, from its massive trunk to its distinctive silhouette. These earth-inspired designs feature natural textures and organic forms that bring the warmth and ancient wisdom of the baobab to any environment.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'urban-u-series',
+    name: 'Brother Buffalo',
+    category: 'piece',
+    price: '$120 - $150',
+    images: [
+      '/images/20231019_144959_IMG_1031-u1.jpg',
+      '/images/20231019_145104_IMG_1035-u2.jpg',
+      '/images/20231019_145026_IMG_1032-u3.jpg',
+      '/images/20231019_145051_IMG_1034-u4.jpg',
+      '/images/20231019_145204_IMG_1038-u5.jpg'
+    ],
+    description: 'Three sided buffalo with metropolitan-inspired lighting featuring sleek patterns and contemporary finishes perfect for modern urban spaces.',
+    longDescription: 'The Brother Buffalo piece honors the strength and resilience of the African buffalo through three distinct perspectives. Each side captures different aspects of this formidable creature, from its powerful stance to its protective nature. The metropolitan-inspired lighting features sleek patterns and contemporary finishes that make it perfect for modern urban spaces while maintaining connection to African wildlife.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'golden-g-series',
+    name: 'Tied Wave',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20240105_163859_IMG_1386-g1.jpg',
+      '/images/20240105_163859_IMG_1386-g2.jpg',
+      '/images/20240105_163851_IMG_1385-g3.jpg',
+      '/images/20240105_163847_IMG_1384-g4.jpg',
+      '/images/20240105_163754_IMG_1380-g5.jpg'
+    ],
+    description: 'Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.',
+    longDescription: 'The Tied Wave piece explores the beauty of abstract forms through luxurious yet undefined shapes that invite personal interpretation. This elegant piece combines flowing, wave-like patterns with intricate binding details that create a sense of movement and fluidity. The sophisticated craftsmanship makes it perfect for contemporary interiors that appreciate artistic ambiguity and refined aesthetics.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'vintage-v-series',
+    name: 'Posing Zebra',
+    category: 'piece',
+    price: '$100 - $160',
+    images: [
+      '/images/20240122_155926_IMG_1502-v1.jpg',
+      '/images/20240122_160019_IMG_1505-v2.jpg',
+      '/images/20240122_160128_IMG_1511-v3.jpg',
+      '/images/20240122_160137_IMG_1512-v4.jpg',
+      '/images/20240122_160320_IMG_1517-v5.jpg'
+    ],
+    description: 'The silly zebra trying to show that he got some moves. Creative craftsmanship combining different styles for the same results.',
+    longDescription: 'The Posing Zebra piece captures the playful and spirited nature of zebras through whimsical artistic interpretation. This charming lamp showcases a zebra in various poses, each demonstrating the animal\'s personality and grace. The creative craftsmanship combines different artistic styles to achieve a cohesive yet dynamic result that brings joy and character to any space.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'harmony-h-series',
+    name: 'Elephant Mama',
+    category: 'piece',
+    price: '$100 - $150',
+    images: [
+      '/images/20240326_142130_IMG_1803-h1.jpg',
+      '/images/20240326_142155_IMG_1804-h2.jpg',
+      '/images/20240326_142228_IMG_1805-h3.jpg',
+      '/images/20240326_142228_IMG_1805-h4.jpg',
+      '/images/20240326_142228_IMG_1805-h5.jpg'
+    ],
+    description: 'Mama elephant with her baby in three different styles. Harmonious designs that create perfect balance between form and function in any living space.',
+    longDescription: 'The Elephant Mama piece celebrates the tender bond between mother and child through three different artistic interpretations. Each style captures the protective love and gentle strength of a mother elephant with her baby, showcasing the deep family bonds that elephants are known for. These harmonious designs create perfect balance between emotional storytelling and functional lighting for any living space.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
   }
 ];
 

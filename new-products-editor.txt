@@ -1,0 +1,228 @@
+================================================================================
+                    NEW PRODUCT COLLECTIONS EDITOR
+                         Asset-2-Images Integration
+================================================================================
+
+INSTRUCTIONS FOR EDITING:
+- Each product section is clearly marked with separators
+- Edit any field as needed (name, price, description, etc.)
+- Image paths should remain consistent with the /images/ directory
+- Save this file after making changes for reference
+- Use this as a template for future product additions
+
+================================================================================
+
+COLLECTION 1: HERITAGE K SERIES
+================================================================================
+Product ID: heritage-k-series
+Display Name: African Rhinoceros 
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20231002_141245_IMG_0901-k1.jpg
+2. /images/20231002_141245_IMG_0901-k2.jpg
+3. /images/20231002_141245_IMG_0901-k3.jpg
+4. /images/20231002_141052_IMG_0893-k4.jpg
+5. /images/20231002_140955_IMG_0889-k5.jpg
+
+Description:
+African rhino on three different carving style with traditional craftsmanship meets contemporary design in this heritage featuring intricate patterns and timeless elegance.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 2: ARTISAN J SERIES
+================================================================================
+Product ID: artisan-j-series
+Display Name: cool king
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20231004_155909_IMG_0908-j1.jpg
+2. /images/20231004_160327_IMG_0926-j2.jpg
+3. /images/20231004_160327_IMG_0926-j3.jpg
+4. /images/20231004_160327_IMG_0926-j4.jpg
+5. /images/20231004_160327_IMG_0926-j5.jpg
+
+Description:
+A king of the jungle in three different styles, Masterfully crafted lighting pieces showcasing exceptional artisanal techniques and sophisticated design elements.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 3: ILLUMINA I SERIES
+================================================================================
+Product ID: illumina-i-series
+Display Name: Chilly cheetah 
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20231011_145655_IMG_0938-i1.jpg
+2. /images/20231011_145655_IMG_0938-i2.jpg
+3. /images/20231011_145605_IMG_0937-i3.jpg
+4. /images/20231011_145655_IMG_0938-i4.jpg
+5. /images/20231011_150015_IMG_0953-i5.jpg
+
+Description:
+Exploration of artistry in three different sides. Innovative lighting solutions combining modern aesthetics with functional brilliance for contemporary living spaces.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 4: TERRA T SERIES
+================================================================================
+Product ID: terra-t-series
+Display Name: Bibi baobab 
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20231014_142008_IMG_0984-t1.jpg
+2. /images/20231014_141946_IMG_0982-t2.jpg
+3. /images/20231014_142225_IMG_0989-t3.jpg
+4. /images/20231014_142151_IMG_0987-t4.jpg
+5. /images/20231014_142516_IMG_0997-t5.jpg
+
+Description:
+Three different aspects of a baobab tree. Earth-inspired designs featuring natural textures and organic forms that bring warmth and character to any environment.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 5: URBAN U SERIES
+================================================================================
+Product ID: urban-u-series
+Display Name: Brother Buffalo 
+Category: piece
+Price Range: $120 - $150
+
+Image Files:
+1. /images/20231019_144959_IMG_1031-u1.jpg
+2. /images/20231019_145104_IMG_1035-u2.jpg
+3. /images/20231019_145026_IMG_1032-u3.jpg
+4. /images/20231019_145051_IMG_1034-u4.jpg
+5. /images/20231019_145204_IMG_1038-u5.jpg
+
+Description:
+Three sided buffalo with metropolitan-inspired lighting featuring sleek patterns and contemporary finishes perfect for modern urban spaces.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 6: GOLDEN G SERIES
+================================================================================
+Product ID: golden-g-series
+Display Name: Tied Wave
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20240105_163859_IMG_1386-g1.jpg
+2. /images/20240105_163859_IMG_1386-g2.jpg
+3. /images/20240105_163851_IMG_1385-g3.jpg
+4. /images/20240105_163847_IMG_1384-g4.jpg
+5. /images/20240105_163754_IMG_1380-g5.jpg
+
+Description:
+Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 7: VINTAGE V SERIES
+================================================================================
+Product ID: vintage-v-series
+Display Name: Posing Zebra
+Category: piece
+Price Range: $100 - $160
+
+Image Files:
+1. /images/20240122_155926_IMG_1502-v1.jpg
+2. /images/20240122_160019_IMG_1505-v2.jpg
+3. /images/20240122_160128_IMG_1511-v3.jpg
+4. /images/20240122_160137_IMG_1512-v4.jpg
+5. /images/20240122_160320_IMG_1517-v5.jpg
+
+Description:
+The silly zebra trying to show that he got some moves. creative craftsmanship combining different styles for the same results.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+COLLECTION 8: HARMONY H SERIES
+================================================================================
+Product ID: harmony-h-series
+Display Name: Toto Tundu
+Category: piece
+Price Range: $100 - $150
+
+Image Files:
+1. /images/20240326_142130_IMG_1803-h1.jpg
+2. /images/20240326_142155_IMG_1804-h2.jpg
+3. /images/20240326_142228_IMG_1805-h3.jpg
+4. /images/20240326_142228_IMG_1805-h4.jpg
+5. /images/20240326_142228_IMG_1805-h5.jpg
+
+Description:
+Harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance.
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+
+EDITING CHECKLIST:
+================================================================================
+□ Product names are descriptive and appealing
+□ Price ranges are competitive and appropriate
+□ Descriptions highlight unique features and benefits
+□ Image paths are correct and accessible
+□ Category assignments are appropriate
+□ Product IDs follow consistent naming convention
+□ All collections have complete information
+
+================================================================================
+
+TECHNICAL NOTES:
+================================================================================
+- All images have been copied to /public/images/ directory
+- Product data is integrated in both:
+  * /src/app/products/page.tsx (main products page)
+  * /src/app/products/[id]/page.tsx (individual product pages)
+- Each collection follows the established pattern of 5 images
+- Image naming convention: [timestamp]-[series_letter][number].jpg
+- All collections are categorized as "piece" type products
+
+================================================================================
+
+FUTURE ADDITIONS TEMPLATE:
+================================================================================
+Product ID: [new-product-id]
+Display Name: [Product Display Name]
+Category: [piece/collection]
+Price Range: $[min] - $[max]
+
+Image Files:
+1. /images/[image1-filename]
+2. /images/[image2-filename]
+3. /images/[image3-filename]
+4. /images/[image4-filename]
+5. /images/[image5-filename]
+
+Description:
+[Detailed product description highlighting unique features and benefits]
+
+Notes: [Add any special notes or modifications here]
+
+================================================================================
+                              END OF FILE
+================================================================================
