@@ -211,7 +211,7 @@ const ContactPage: React.FC = () => {
                   viewport={{ once: true }}
                 >
                   <label htmlFor="service" className="block text-sm font-medium text-primary mb-2">
-                    Service Interest
+                    Community Interest
                   </label>
                   <select
                     id="service"
@@ -220,7 +220,7 @@ const ContactPage: React.FC = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
                   >
-                    <option value="">Select a service</option>
+                    <option value="">Select a community service</option>
                     <option value="consultation">Lighting Consultation</option>
                     <option value="installation">Professional Installation</option>
                     <option value="maintenance">Maintenance & Repair</option>

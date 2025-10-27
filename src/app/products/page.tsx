@@ -584,7 +584,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 'harmony-h-series',
-      name: 'Elephant Mama',
+      name: 'Toto Tundu',
       category: 'piece',
       price: '$100 - $150',
       images: [
@@ -594,7 +594,7 @@ const ProductsPage: React.FC = () => {
         '/images/20240326_142228_IMG_1805-h4.jpg',
         '/images/20240326_142228_IMG_1805-h5.jpg'
       ],
-      description: 'Mama elephant with her baby in three different styles. Harmonious designs that create perfect balance between form and function in any living space.',
+      description: 'Harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance.',
     }
   ];
 

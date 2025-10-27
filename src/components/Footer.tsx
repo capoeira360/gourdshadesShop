@@ -190,7 +190,7 @@ const Footer: React.FC = () => {
             <nav className="space-y-4">
               {renderAnimatedLink('Home', '/')}
               {renderAnimatedLink('About', '/about')}
-              {renderAnimatedLink('Services', '/services')}
+              {renderAnimatedLink('Community', '/services')}
               {renderAnimatedLink('Products', '/products')}
               {renderAnimatedLink('Contact', '/contact')}
             </nav>

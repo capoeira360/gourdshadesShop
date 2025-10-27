@@ -71,111 +71,79 @@ const ServicesPage: React.FC = () => {
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
-            Services
+            Community
           </h1>
         </div>
       </motion.section>
 
-      {/* Services Grid */}
+      {/* Community Services */}
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.id}
-                className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-center mb-8">
-                  <div className="text-6xl mb-4">{service.icon}</div>
-                  <h3 className="text-2xl font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
-                    {service.title}
-                  </h3>
-                  <p className="text-text-secondary leading-relaxed mb-6">
-                    {service.description}
-                  </p>
+        <div className="max-w-6xl mx-auto px-4" style={{ paddingLeft: '0rem', paddingRight: '0rem' }}>
+          <div className="space-y-8">
+            {/* First Service Card */}
+            <motion.div
+              className="bg-white rounded-lg shadow-sm p-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Image Section */}
+                <div className="space-y-4">
+                  <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
+                    <img
+                      src="/images/IMG-20250301-WA0010-nav-services.jpg"
+                      alt="Community Lighting Consultation"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                 </div>
-
-                <div className="space-y-3">
-                  <h4 className="font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>What&apos;s Included:</h4>
-                  {service.features.map((feature, featureIndex) => (
-                    <motion.div
-                      key={feature}
-                      className="flex items-center space-x-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: (index * 0.1) + (featureIndex * 0.1) }}
-                      viewport={{ once: true }}
-                    >
-                      <div className="w-2 h-2 bg-accent rounded-full"></div>
-                      <span className="text-text-secondary">{feature}</span>
-                    </motion.div>
-                  ))}
+                
+                {/* Content Section */}
+                <div className="space-y-6" style={{ marginLeft: '-72px' }}>
+                  <div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                      Outreach
+                    </h1>
+                  </div>
                 </div>
+              </div>
+            </motion.div>
 
-                <motion.button
-                  className="w-full mt-8 px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Learn More
-                </motion.button>
-              </motion.div>
-            ))}
+            {/* Second Service Card */}
+            <motion.div
+              className="bg-white rounded-lg shadow-sm p-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Image Section */}
+                <div className="space-y-4">
+                  <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
+                    <img
+                      src="/images/20240405_131741-a1.jpg"
+                      alt="Community Installation & Support"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+                
+                {/* Content Section */}
+                <div className="space-y-6" style={{ marginLeft: '-72px' }}>
+                  <div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                      Exhibition
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
-
-
-
-      {/* CTA Section */}
-      <section className="py-24" style={{ backgroundColor: '#EAE3C9' }}>
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <motion.h2
-            className="text-4xl font-light text-primary mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
-          >
-            Ready to Get Started?
-          </motion.h2>
-          <motion.p
-            className="text-xl text-primary/80 mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            Contact us today for a free consultation and discover how we can illuminate your space.
-          </motion.p>
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Schedule Consultation
-            </motion.button>
-            <motion.button
-              className="px-8 py-4 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Call (555) 123-4567
-            </motion.button>
-          </motion.div>
         </div>
       </section>
     </div>

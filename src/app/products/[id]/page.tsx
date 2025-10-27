@@ -676,7 +676,7 @@ const products: Product[] = [
   },
   {
     id: 'harmony-h-series',
-    name: 'Elephant Mama',
+    name: 'Toto Tundu',
     category: 'piece',
     price: '$100 - $150',
     images: [
@@ -686,8 +686,8 @@ const products: Product[] = [
       '/images/20240326_142228_IMG_1805-h4.jpg',
       '/images/20240326_142228_IMG_1805-h5.jpg'
     ],
-    description: 'Mama elephant with her baby in three different styles. Harmonious designs that create perfect balance between form and function in any living space.',
-    longDescription: 'The Elephant Mama piece celebrates the tender bond between mother and child through three different artistic interpretations. Each style captures the protective love and gentle strength of a mother elephant with her baby, showcasing the deep family bonds that elephants are known for. These harmonious designs create perfect balance between emotional storytelling and functional lighting for any living space.',
+    description: 'Harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance.',
+    longDescription: 'The Toto Tundu piece embodies harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance. This carefully crafted lighting solution combines traditional artisanal techniques with contemporary design principles to deliver a serene and sophisticated lighting experience that enhances any living space.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
