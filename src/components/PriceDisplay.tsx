@@ -11,7 +11,6 @@ interface PriceDisplayProps {
 
 const PriceDisplay: React.FC<PriceDisplayProps> = ({ 
   price, 
-  originalCurrency = 'USD',
   className = '',
   style
 }) => {

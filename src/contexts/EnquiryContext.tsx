@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 
 export interface EnquiryItem {
   id: string;
@@ -24,13 +24,37 @@ type EnquiryAction =
   | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
   | { type: 'CLEAR_CART' }
   | { type: 'TOGGLE_CART' }
-  | { type: 'SET_CART_OPEN'; payload: boolean };
+  | { type: 'SET_CART_OPEN'; payload: boolean }
+  | { type: 'LOAD_FROM_STORAGE'; payload: { items: EnquiryItem[]; totalItems: number; totalValue: number } };
 
 const initialState: EnquiryState = {
   items: [],
   isCartOpen: false,
   totalItems: 0,
   totalValue: 0,
+};
+
+// Helper functions for localStorage
+const STORAGE_KEY = 'enquiry-cart';
+
+const loadFromStorage = (): EnquiryItem[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Error loading enquiry cart from localStorage:', error);
+    return [];
+  }
+};
+
+const saveToStorage = (items: EnquiryItem[]) => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch (error) {
+    console.error('Error saving enquiry cart to localStorage:', error);
+  }
 };
 
 function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryState {
@@ -57,7 +81,8 @@ function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryStat
       const totalItems = newItems.reduce((sum, item) => sum + item.quantity, 0);
       const totalValue = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-      
+      // Save to localStorage
+      saveToStorage(newItems);
 
       return {
         ...state,
@@ -71,6 +96,9 @@ function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryStat
       const newItems = state.items.filter(item => item.id !== action.payload);
       const totalItems = newItems.reduce((sum, item) => sum + item.quantity, 0);
       const totalValue = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      // Save to localStorage
+      saveToStorage(newItems);
 
       return {
         ...state,
@@ -90,6 +118,9 @@ function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryStat
       const totalItems = newItems.reduce((sum, item) => sum + item.quantity, 0);
       const totalValue = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
+      // Save to localStorage
+      saveToStorage(newItems);
+
       return {
         ...state,
         items: newItems,
@@ -99,6 +130,9 @@ function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryStat
     }
 
     case 'CLEAR_CART':
+      // Clear localStorage
+      saveToStorage([]);
+      
       return {
         ...state,
         items: [],
@@ -116,6 +150,14 @@ function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryStat
       return {
         ...state,
         isCartOpen: action.payload,
+      };
+
+    case 'LOAD_FROM_STORAGE':
+      return {
+        ...state,
+        items: action.payload.items,
+        totalItems: action.payload.totalItems,
+        totalValue: action.payload.totalValue,
       };
 
     default:
@@ -137,6 +179,21 @@ const EnquiryContext = createContext<EnquiryContextType | undefined>(undefined);
 
 export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(enquiryReducer, initialState);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const storedItems = loadFromStorage();
+    if (storedItems.length > 0) {
+      const totalItems = storedItems.reduce((sum, item) => sum + item.quantity, 0);
+      const totalValue = storedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      // Initialize state with stored items
+      dispatch({ 
+        type: 'LOAD_FROM_STORAGE', 
+        payload: { items: storedItems, totalItems, totalValue } 
+      });
+    }
+  }, []);
 
   const addItem = (item: Omit<EnquiryItem, 'quantity'>) => {
 

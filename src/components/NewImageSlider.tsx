@@ -44,7 +44,7 @@ const NewImageSlider: React.FC = () => {
       },
       thumbnail: {
         title: 'Premium Collection',
-        description: 'Luxury Lighting'
+        description: 'Handcrafted lighting with exquisite materials and contemporary design'
       }
     },
     {
@@ -60,7 +60,7 @@ const NewImageSlider: React.FC = () => {
       },
       thumbnail: {
         title: 'Modern Design',
-        description: 'Contemporary Style'
+        description: 'Contemporary lighting with sleek elegance and modern appeal'
       }
     },
     {
@@ -76,7 +76,7 @@ const NewImageSlider: React.FC = () => {
       },
       thumbnail: {
         title: 'Artisan Craft',
-        description: 'Handmade Excellence'
+        description: 'Traditional craftsmanship with heritage techniques and handcrafted details'
       }
     },
     {
@@ -92,7 +92,7 @@ const NewImageSlider: React.FC = () => {
       },
       thumbnail: {
         title: 'Smart Lighting',
-        description: 'Future Technology'
+        description: 'Intelligent systems with advanced technology and intuitive controls'
       }
     }
   ];
@@ -190,6 +190,7 @@ const NewImageSlider: React.FC = () => {
             />
             <div className="content">
               <div className="title">{item.title}</div>
+              <div className="description">{item.thumbnail.description}</div>
             </div>
           </div>
         ))}
@@ -323,15 +324,25 @@ const NewImageSlider: React.FC = () => {
 
         .carousel .list .item .title {
           font-family: 'Regen', 'Poppins', sans-serif;
-          font-size: 2.8em;
+          font-size: 2.2em;
           font-weight: 800;
           line-height: 1.1em;
-          margin-bottom: 5px;
+          margin-bottom: 15px;
           background: linear-gradient(135deg, #fff 0%, #f1683a 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           text-shadow: 0 2px 8px rgba(241,104,58,0.3);
+        }
+
+        .carousel .list .item .description {
+          font-family: 'Timeburner', sans-serif;
+          font-size: 1em;
+          font-weight: 800;
+          line-height: 1.4em;
+          color: rgba(255, 255, 255, 0.9);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          margin-top: 10px;
         }
 
         /* Thumbnail styles */
@@ -405,6 +416,20 @@ const NewImageSlider: React.FC = () => {
           font-size: 12px;
           margin-bottom: 4px;
           text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+        }
+
+        .thumbnail .item .content .description {
+          font-family: 'Timeburner', sans-serif;
+          font-size: 9px;
+          font-weight: 800;
+          line-height: 1.3em;
+          color: rgba(255, 255, 255, 0.85);
+          text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+          margin-top: 2px;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
 
         /* Arrow styles */
@@ -560,6 +585,11 @@ const NewImageSlider: React.FC = () => {
             line-height: 1.2;
           }
 
+          .carousel .list .item .content .description {
+            font-size: 0.9em;
+            margin-top: 8px;
+          }
+
           .thumbnail {
             bottom: 80px;
             max-width: 90%;
@@ -575,7 +605,18 @@ const NewImageSlider: React.FC = () => {
           }
 
           .thumbnail .item .content {
-            display: none;
+            padding: 8px;
+          }
+
+          .thumbnail .item .content .title {
+            font-size: 10px;
+            margin-bottom: 2px;
+          }
+
+          .thumbnail .item .content .description {
+            font-size: 7px;
+            line-height: 1.2em;
+            -webkit-line-clamp: 2;
           }
 
           .arrows {
@@ -606,7 +647,7 @@ const NewImageSlider: React.FC = () => {
           }
 
           .carousel .list .item .content .description {
-            font-size: 0.8rem;
+            font-size: 0.7em;
             margin: 10px 0;
           }
 

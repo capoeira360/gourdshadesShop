@@ -521,10 +521,10 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                   {/* Center - Social Links */}
                   <div className="flex space-x-8 text-white/60 text-sm">
-                    <a href="#" className="hover:text-white transition-colors">
+                    <a href="https://www.instagram.com/gourdshadestz?igsh=MTZteGx1OXR5Zno1NQ==" className="hover:text-white transition-colors">
                       Instagram
                     </a>
-                    <a href="#" className="hover:text-white transition-colors">
+                    <a href="https://www.facebook.com/gourdshadestz" className="hover:text-white transition-colors">
                       Facebook
                     </a>
                   </div>

@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEnquiry } from '@/contexts/EnquiryContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import PriceDisplay from '@/components/PriceDisplay';
 
 interface Product {
@@ -714,6 +715,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
   const { addItem } = useEnquiry();
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlist();
 
   const resolvedParams = use(params);
   const productId = resolvedParams.id;
@@ -745,6 +747,26 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     addItem(itemToAdd);
     
 
+  };
+
+  const handleWishlistToggle = () => {
+    // Parse price string to number (remove $ and handle ranges)
+    const priceString = product.price.replace('$', '');
+    const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
+    
+    const wishlistItem = {
+      id: product.id,
+      name: product.name,
+      price: priceNumber,
+      image: product.images[0],
+      category: product.category,
+    };
+
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(wishlistItem);
+    }
   };
 
   const nextImage = () => {
@@ -859,22 +881,28 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   Add to Enquiry
                 </button>
                 <button 
+                  onClick={handleWishlistToggle}
                   className="border-2 py-3 px-6 rounded-lg font-semibold transition-colors hover:text-white"
                   style={{ 
                     borderColor: '#1a1a1a', 
-                    color: '#1a1a1a',
+                    color: isInWishlist(product.id) ? 'white' : '#1a1a1a',
+                    backgroundColor: isInWishlist(product.id) ? '#1a1a1a' : 'transparent',
                     width: '360px'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#1a1a1a';
-                    e.currentTarget.style.color = 'white';
+                    if (!isInWishlist(product.id)) {
+                      e.currentTarget.style.backgroundColor = '#1a1a1a';
+                      e.currentTarget.style.color = 'white';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = '#1a1a1a';
+                    if (!isInWishlist(product.id)) {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#1a1a1a';
+                    }
                   }}
                 >
-                  Add to Wishlist
+                  {isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 </button>
               </div>
 

@@ -76,7 +76,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
               className="py-1 overflow-auto text-base max-h-60 focus:outline-none sm:text-sm"
               role="listbox"
             >
-              {currencies.map((currency: Currency, index: number) => (
+              {currencies.map((currency: Currency) => (
                 <li key={currency.code}>
                   <button
                     onClick={() => handleCurrencySelect(currency)}

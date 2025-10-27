@@ -3,7 +3,9 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import StickyFooterReveal from "@/components/StickyFooterReveal";
 import { EnquiryProvider } from "@/contexts/EnquiryContext";
+import { WishlistProvider } from "@/contexts/WishlistContext";
 import EnquiryCart from "@/components/EnquiryCart";
+import WishlistButton from "@/components/WishlistButton";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -20,20 +22,23 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <EnquiryProvider>
-          {/* Standalone Logo - positioned independently */}
-          <div className="fixed top-1 left-6 z-40">
-            <Image 
-              src="/logo-gourd-shades-square.svg" 
-              alt="Gourd Shades" 
-              width={150}
-              height={150}
-            />
-          </div>
-          <Navigation />
-          <EnquiryCart />
-          <StickyFooterReveal>
-            {children}
-          </StickyFooterReveal>
+          <WishlistProvider>
+            {/* Standalone Logo - positioned independently */}
+            <div className="fixed top-1 left-6 z-40">
+              <Image 
+                src="/logo-gourd-shades-square.svg" 
+                alt="Gourd Shades" 
+                width={150}
+                height={150}
+              />
+            </div>
+            <Navigation />
+            <EnquiryCart />
+            <WishlistButton />
+            <StickyFooterReveal>
+              {children}
+            </StickyFooterReveal>
+          </WishlistProvider>
         </EnquiryProvider>
       </body>
     </html>

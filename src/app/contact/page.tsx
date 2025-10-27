@@ -82,7 +82,7 @@ const ContactPage: React.FC = () => {
     {
       icon: '✉️',
       title: 'Email Us',
-      details: ['gourdshadestz@gmail.com', 'We respond within 24 hours'],
+      details: ['gourdshadestz@gmail.com', 'info@gourdshades.com', 'We respond within 24 hours'],
       action: 'Send Email',
     },
   ];
