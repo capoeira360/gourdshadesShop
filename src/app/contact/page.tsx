@@ -39,23 +39,50 @@ const ContactPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    
+    try {
+      const response = await fetch('/api/send-enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          items: [],
+          totalItems: 0,
+          totalValue: 0,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully! We\'ll get back to you within 24 hours.');
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    }
   };
 
   const contactInfo = [
     {
       icon: '📞',
       title: 'Call Us',
-      details: ['(555) 123-4567', 'Mon-Fri: 9AM-6PM'],
+      details: ['+255 746 754 878', 'Mon-Sat: 9am-5pm'],
       action: 'Call Now',
     },
     {
       icon: '✉️',
       title: 'Email Us',
-      details: ['hello@lampco.com', 'We respond within 24 hours'],
+      details: ['gourdshadestz@gmail.com', 'We respond within 24 hours'],
       action: 'Send Email',
     },
   ];

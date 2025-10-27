@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEnquiry } from '@/contexts/EnquiryContext';
+
+import PriceDisplay from '@/components/PriceDisplay';
 
 interface Product {
   id: string;
@@ -264,9 +265,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
               {product.description}
             </p>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold" style={{ color: '#786861' }}>
-                {product.price}
-              </span>
+              <PriceDisplay 
+                price={product.price}
+                className="text-lg font-semibold"
+              />
               <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
                 {product.category}
               </span>

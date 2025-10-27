@@ -34,30 +34,30 @@ const initialState: EnquiryState = {
 };
 
 function enquiryReducer(state: EnquiryState, action: EnquiryAction): EnquiryState {
-  console.log('EnquiryReducer: Action received:', action.type, 'payload' in action ? action.payload : 'no payload'); // Debug log
+
   
   switch (action.type) {
     case 'ADD_ITEM': {
-      console.log('EnquiryReducer: Processing ADD_ITEM'); // Debug log
+
       const existingItem = state.items.find(item => item.id === action.payload.id);
       
       let newItems: EnquiryItem[];
       if (existingItem) {
-        console.log('EnquiryReducer: Item exists, updating quantity'); // Debug log
+        
         newItems = state.items.map(item =>
           item.id === action.payload.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        console.log('EnquiryReducer: New item, adding to cart'); // Debug log
+        
         newItems = [...state.items, { ...action.payload, quantity: 1 }];
       }
 
       const totalItems = newItems.reduce((sum, item) => sum + item.quantity, 0);
       const totalValue = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-      console.log('EnquiryReducer: New state:', { items: newItems, totalItems, totalValue }); // Debug log
+      
 
       return {
         ...state,
@@ -139,9 +139,9 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(enquiryReducer, initialState);
 
   const addItem = (item: Omit<EnquiryItem, 'quantity'>) => {
-    console.log('EnquiryContext: addItem called with:', item); // Debug log
+
     dispatch({ type: 'ADD_ITEM', payload: item });
-    console.log('EnquiryContext: ADD_ITEM action dispatched'); // Debug log
+
   };
 
   const removeItem = (id: string) => {

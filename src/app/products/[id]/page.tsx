@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEnquiry } from '@/contexts/EnquiryContext';
+import PriceDisplay from '@/components/PriceDisplay';
 
 interface Product {
   id: string;
@@ -706,7 +707,7 @@ const products: Product[] = [
     ]
   }
 ];
-
+  
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features'>('description');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -723,13 +724,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }
 
   const handleAddToEnquiry = () => {
-    console.log('Add to Enquiry clicked for:', product.name); // Debug log
+
     
     // Parse price string to number (remove $ and handle ranges)
     const priceString = product.price.replace('$', '');
     const priceNumber = parseFloat(priceString.split(' - ')[0]); // Take the first price if it's a range
     
-    console.log('Parsed price:', priceNumber); // Debug log
+
     
     const itemToAdd = {
       id: product.id,
@@ -739,11 +740,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       category: product.category,
     };
     
-    console.log('Adding item:', itemToAdd); // Debug log
+
     
     addItem(itemToAdd);
     
-    console.log('Item added to context'); // Debug log
+
   };
 
   const nextImage = () => {
@@ -773,6 +774,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="bg-gray-50 pt-24 pb-8" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
+      
       <div className="max-w-6xl mx-auto px-4" style={{ paddingLeft: '0rem', paddingRight: '0rem' }}>
         {/* Back Navigation */}
         <div className="mb-6">
@@ -841,7 +843,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
                 <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>{product.name}</h1>
-                <p className="text-2xl font-semibold" style={{ color: '#786861', marginLeft: '216px' }}>{product.price}</p>
+                <PriceDisplay 
+                  price={product.price} 
+                  className="text-2xl font-semibold" 
+                  style={{ color: '#786861', marginLeft: '216px' }}
+                />
               </div>
 
               <div className="space-y-4" style={{ marginLeft: '216px' }}>

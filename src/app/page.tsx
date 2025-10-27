@@ -6,7 +6,7 @@ import NewImageSlider from "@/components/NewImageSlider";
 
 export default function Home() {
   useEffect(() => {
-    console.log('Home: Component mounted');
+  
     
     // Remove conflicting scroll container setup
     document.body.style.overflow = '';

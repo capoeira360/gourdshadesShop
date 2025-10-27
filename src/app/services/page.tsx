@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const ServicesPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -62,40 +63,7 @@ const ServicesPage: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  const services = [
-    {
-      id: 'consultation',
-      title: 'Lighting Consultation',
-      description: 'Expert advice on lighting design tailored to your space and needs.',
-      icon: '💡',
-      features: ['Space Analysis', 'Design Recommendations', 'Energy Efficiency Planning', 'Budget Optimization'],
-      price: 'From $150',
-    },
-    {
-      id: 'installation',
-      title: 'Professional Installation',
-      description: 'Certified electricians ensure safe and proper installation of all fixtures.',
-      icon: '🔧',
-      features: ['Licensed Electricians', 'Safety Compliance', 'Warranty Coverage', 'Clean-up Service'],
-      price: 'From $200',
-    },
-    {
-      id: 'maintenance',
-      title: 'Maintenance & Repair',
-      description: 'Keep your lighting systems running perfectly with our maintenance services.',
-      icon: '⚙️',
-      features: ['Regular Inspections', 'LED Upgrades', 'Emergency Repairs', 'Performance Optimization'],
-      price: 'From $100',
-    },
-    {
-      id: 'custom',
-      title: 'Custom Design',
-      description: 'Bespoke lighting solutions designed specifically for your unique requirements.',
-      icon: '🎨',
-      features: ['3D Visualization', 'Material Selection', 'Handcrafted Production', 'Exclusive Designs'],
-      price: 'Quote on Request',
-    },
-  ];
+
 
   return (
     <div className="min-h-screen bg-very-light-gray pt-24">
@@ -131,9 +99,11 @@ const ServicesPage: React.FC = () => {
                 {/* Image Section */}
                 <div className="space-y-4">
                   <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
-                    <img
+                    <Image
                       src={outreachImages[outreachImageIndex]}
                       alt="Community Lighting Consultation"
+                      width={640}
+                      height={676}
                       className="w-full h-full object-contain transition-opacity duration-300"
                     />
                     
@@ -200,9 +170,11 @@ const ServicesPage: React.FC = () => {
                 {/* Image Section */}
                 <div className="space-y-4">
                   <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
-                    <img
+                    <Image
                       src={exhibitionImages[exhibitionImageIndex]}
                       alt="Community Installation & Support"
+                      width={640}
+                      height={676}
                       className="w-full h-full object-contain transition-opacity duration-300"
                     />
                     

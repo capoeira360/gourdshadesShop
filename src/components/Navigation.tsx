@@ -34,7 +34,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     { name: 'Home', href: '/', preview: '/images/20240913_211304-hero.jpg' },
     { name: 'Products', href: '/products', preview: '/images/20240520_161231-featured-1.jpg' },
     { name: 'About', href: '/about', preview: '/images/IMG-20250921-WA0000-nav-about.jpg' },
-    { name: 'Community', href: '/services', preview: '/images/IMG-20250301-WA0010-nav-services.jpg' },
+    { name: 'Community', href: '/services', preview: '/images/20240525_152521-community-nav.jpg' },
     { name: 'Contact', href: '/contact', preview: '/images/IMG-20250307-WA0009-nav-contacts.jpg' },
   ];
 
@@ -513,10 +513,10 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
                 >
-                  {/* Left Corner - Shop Address */}
+                  {/* Left Corner - Contact Info */}
                   <div className="text-white/60 text-sm">
-                    <p>123 Lighting Street</p>
-                    <p>Design District, NY 10001</p>
+                    <p>gourdshadestz@gmail.com</p>
+                    <p>+255 746 754 876</p>
                   </div>
 
                   {/* Center - Social Links */}
@@ -525,16 +525,14 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                       Instagram
                     </a>
                     <a href="#" className="hover:text-white transition-colors">
-                      Twitter
-                    </a>
-                    <a href="#" className="hover:text-white transition-colors">
-                      LinkedIn
+                      Facebook
                     </a>
                   </div>
 
-                  {/* Right Corner - Website */}
+                  {/* Right Corner - Business Info */}
                   <div className="text-white/60 text-sm">
-                    <p>www.theshop.com</p>
+                    <p>Gourd Shades</p>
+                    <p>Handcrafted Lighting</p>
                   </div>
                 </motion.div>
               </div>
