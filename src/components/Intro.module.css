@@ -92,6 +92,15 @@
   font-family: 'Regen', 'Gemsbuck', 'Cremotic', Arial, Helvetica, sans-serif;
 }
 
+.handText {
+  font-size: 1.02em; /* Slightly larger to match MADE dimensions */
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-transform: inherit;
+  font-family: inherit;
+}
+
 .underlinedText {
   text-decoration: underline;
   text-decoration-color: #000000;

@@ -469,6 +469,15 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                 </motion.nav>
                 </div>
 
+                {/* Vertical Divider Line */}
+                <motion.div
+                  className="w-px bg-white/20 mx-8 my-24"
+                  initial={{ scaleY: 0, opacity: 0 }}
+                  animate={{ scaleY: 1, opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+                  style={{ transformOrigin: 'top' }}
+                />
+
                 {/* Right Side - Image Preview Box */}
                 <div className="flex-1 flex justify-center items-center pr-16">
                   <AnimatePresence mode="wait">
