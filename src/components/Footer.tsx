@@ -142,14 +142,18 @@ const Footer: React.FC = () => {
         <Link href={href} className="block text-white/85 hover:text-accent transition-colors text-lg">
           {Array.from(text).map((char, i) => (
             <motion.span
-              key={i}
+              key={`${text}-${i}`}
               custom={i}
               variants={characterHoverVariants}
               initial="rest"
               animate={hoveredLink === text ? "hover" : "rest"}
-              style={{ display: 'inline-block' }}
+              style={{ 
+                display: 'inline-block',
+                transformOrigin: 'center',
+                minWidth: char === ' ' ? '0.25em' : 'auto'
+              }}
             >
-              {char}
+              {char === ' ' ? '\u00A0' : char}
             </motion.span>
           ))}
         </Link>
