@@ -4,6 +4,8 @@ import Navigation from "@/components/Navigation";
 import StickyFooterReveal from "@/components/StickyFooterReveal";
 import { EnquiryProvider } from "@/contexts/EnquiryContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
+import { ViewProvider } from "@/contexts/ViewContext";
+import { PanelProvider } from "@/contexts/PanelContext";
 import EnquiryCart from "@/components/EnquiryCart";
 import WishlistButton from "@/components/WishlistButton";
 import Image from "next/image";
@@ -23,21 +25,25 @@ export default function RootLayout({
       <body className="antialiased">
         <EnquiryProvider>
           <WishlistProvider>
-            {/* Standalone Logo - positioned independently */}
-            <div className="fixed top-1 left-6 z-40">
-              <Image 
-                src="/logo-gourd-shades-square.svg" 
-                alt="Gourd Shades" 
-                width={150}
-                height={150}
-              />
-            </div>
-            <Navigation />
-            <EnquiryCart />
-            <WishlistButton />
-            <StickyFooterReveal>
-              {children}
-            </StickyFooterReveal>
+            <ViewProvider>
+              <PanelProvider>
+              {/* Standalone Logo - positioned independently */}
+              <div className="fixed top-1 left-6 z-40">
+                <Image 
+                  src="/logo-gourd-shades-square.svg" 
+                  alt="Gourd Shades" 
+                  width={150}
+                  height={150}
+                />
+              </div>
+              <Navigation />
+              <EnquiryCart />
+              <WishlistButton />
+              <StickyFooterReveal>
+                {children}
+              </StickyFooterReveal>
+              </PanelProvider>
+            </ViewProvider>
           </WishlistProvider>
         </EnquiryProvider>
       </body>

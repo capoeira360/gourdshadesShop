@@ -109,13 +109,6 @@ const WishlistPage: React.FC = () => {
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
               Start adding products you love to your wishlist. You can save items for later and easily find them here.
             </p>
-            <Link
-              href="/products"
-              className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
-            >
-              <span className="font-semibold">Browse Products</span>
-              <ArrowLeft size={18} className="ml-2 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
           </motion.div>
         ) : (
           // Wishlist Items

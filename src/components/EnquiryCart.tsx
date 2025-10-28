@@ -2,15 +2,21 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingCart, X, Trash2, Mail, Plus, Minus } from 'lucide-react';
 import { useEnquiry } from '@/contexts/EnquiryContext';
-import { X, Plus, Minus, ShoppingCart, Mail } from 'lucide-react';
+import { usePanel } from '@/contexts/PanelContext';
 import EnquiryForm from './EnquiryForm';
+import PriceDisplay from './PriceDisplay';
 
 // Removed empty interface - using React.FC without props type
 const EnquiryCart: React.FC = () => {
   const { state, updateQuantity, removeItem, clearCart } = useEnquiry();
+  const { setEnquiryOpen, state: panelState } = usePanel();
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  // Hide cart button when navigation panel is open
+  const isCartButtonHidden = panelState.isNavigationOpen;
 
   const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -33,6 +39,7 @@ const EnquiryCart: React.FC = () => {
   const handleProceedToForm = () => {
     setIsFormOpen(true);
     setIsOpen(false);
+    setEnquiryOpen(false);
   };
 
   const cartVariants = {
@@ -88,13 +95,18 @@ const EnquiryCart: React.FC = () => {
     <>
       {/* Cart Toggle Button */}
       <motion.button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const newIsOpen = !isOpen;
+          setIsOpen(newIsOpen);
+          setEnquiryOpen(newIsOpen);
+        }}
         className="fixed top-20 right-6 z-50 bg-primary text-white p-3 rounded-full shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
+        animate={{ opacity: isCartButtonHidden ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+        style={{ display: isCartButtonHidden ? 'none' : 'block' }}
       >
         <ShoppingCart size={24} />
         {totalItems > 0 && (
@@ -120,7 +132,10 @@ const EnquiryCart: React.FC = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setEnquiryOpen(false);
+              }}
               transition={{ duration: 0.3 }}
             />
 
@@ -142,7 +157,10 @@ const EnquiryCart: React.FC = () => {
               <div className="bg-primary text-white p-4 flex justify-between items-center">
                 <h2 className="text-xl font-bold">Enquiry Cart</h2>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setEnquiryOpen(false);
+                  }}
                   className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
                 >
                   <X size={24} />
@@ -208,7 +226,7 @@ const EnquiryCart: React.FC = () => {
                               <div className="flex items-center space-x-3">
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -220,7 +238,7 @@ const EnquiryCart: React.FC = () => {
                                 </span>
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -230,7 +248,7 @@ const EnquiryCart: React.FC = () => {
                               </div>
                               <div className="text-right">
                                 <p className="text-sm text-gray-600">Subtotal</p>
-                                <p className="font-bold text-primary">
+                                <p className="font-bold" style={{ color: '#91631D' }}>
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </p>
                               </div>
@@ -242,11 +260,17 @@ const EnquiryCart: React.FC = () => {
                     </div>
 
                     {/* Footer */}
-                    <div className="border-t bg-gray-50 p-4 space-y-4">
+                    <div className="border-t bg-white p-4 space-y-4 shadow-sm">
                       {/* Total */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-semibold">Total Items:</span>
-                        <span className="text-lg font-bold text-primary">{totalItems}</span>
+                      <div className="space-y-3 bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-semibold text-gray-700">Total Items:</span>
+                          <span className="text-lg font-bold" style={{ color: '#91631D' }}>{state.totalItems}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-semibold text-gray-700">Total Value:</span>
+                          <span className="text-xl font-bold" style={{ color: '#91631D' }}>${state.totalValue.toFixed(2)}</span>
+                        </div>
                       </div>
 
                       {/* Action Buttons */}

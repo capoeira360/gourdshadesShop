@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useView } from '@/contexts/ViewContext';
 
 import PriceDisplay from '@/components/PriceDisplay';
 
@@ -282,7 +283,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
 
 const ProductsPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const { viewMode, setViewMode } = useView();
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);

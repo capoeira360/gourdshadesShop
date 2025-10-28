@@ -19,8 +19,13 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
 
   return (
     <span 
-      className={`text-2xl font-bold text-gray-900 ${className}`}
-      style={style}
+      className={`text-2xl font-bold ${className}`}
+      style={{ 
+        fontFamily: 'Timeburner, Arial, Helvetica, sans-serif',
+        fontWeight: '700',
+        color: '#91631D',
+        ...style 
+      }}
     >
       {price}
     </span>

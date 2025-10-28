@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePanel } from '@/contexts/PanelContext';
 
 interface NavigationProps {
   className?: string;
@@ -12,6 +13,7 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const { setNavigationOpen } = usePanel();
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -25,6 +27,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  // Update global panel state separately
+  useEffect(() => {
+    setNavigationOpen(isOpen);
+  }, [isOpen, setNavigationOpen]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

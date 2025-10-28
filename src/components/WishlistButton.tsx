@@ -4,10 +4,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { useWishlist } from '@/contexts/WishlistContext';
+import { usePanel } from '@/contexts/PanelContext';
 import Link from 'next/link';
 
 const WishlistButton: React.FC = () => {
   const { state } = useWishlist();
+  const { state: panelState } = usePanel();
+
+  // Hide button when navigation or enquiry panels are open
+  const isHidden = panelState.isNavigationOpen || panelState.isEnquiryOpen;
 
   const buttonVariants = {
     hover: { 
@@ -16,15 +21,20 @@ const WishlistButton: React.FC = () => {
     },
     tap: { 
       scale: 0.9
-    }
+    },
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 }
   };
 
   return (
     <motion.div
       className="fixed top-36 right-6 z-50"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7 }}
+      initial="hidden"
+      animate={isHidden ? "exit" : "visible"}
+      variants={buttonVariants}
+      transition={{ duration: 0.3 }}
+      style={{ display: isHidden ? 'none' : 'block' }}
     >
       <Link href="/wishlist">
         <motion.button
