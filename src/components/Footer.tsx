@@ -279,7 +279,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-8 text-sm text-white/80">
-            <span>Site by Balky Studio</span>
+            <span>Site by <a href="https://tapitsoftwares.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">TAPit</a></span>
             <span>©2024 - Gourd Shades Artisan Lighting</span>
           </div>
         </motion.div>

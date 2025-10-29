@@ -81,7 +81,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 4,
-      image: '/images/20240804_155809-featured-4.jpg',
+      image: '/images/IMG-20250307-WA0009-nav-contacts.jpg',
       author: 'GOURDSHADES',
       title: 'SMART LIGHTING',
       topic: 'TECHNOLOGY',
