@@ -86,11 +86,14 @@ export async function POST(request: NextRequest) {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false, // true for 465, false for other ports
+      secure: process.env.SMTP_SECURE === 'true',
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     // Generate items HTML
@@ -113,7 +116,7 @@ export async function POST(request: NextRequest) {
       <html>
         <head>
           <meta charset="utf-8">
-          <title>New Enquiry - LampCo</title>
+          <title>New Enquiry - Gourdshades</title>
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -158,7 +161,7 @@ export async function POST(request: NextRequest) {
             </div>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-              <p>This enquiry was submitted through the LampCo website.</p>
+              <p>This enquiry was submitted through the Gourdshades website.</p>
               <p>Please respond to the customer within 24 hours.</p>
             </div>
           </div>
@@ -184,7 +187,7 @@ export async function POST(request: NextRequest) {
       <html>
         <head>
           <meta charset="utf-8">
-          <title>Enquiry Confirmation - LampCo</title>
+          <title>Enquiry Confirmation - Gourd Shades</title>
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -205,7 +208,7 @@ export async function POST(request: NextRequest) {
 
             <p>If you have any urgent questions, please don't hesitate to contact us directly.</p>
             
-            <p>Best regards,<br>The LampCo Team</p>
+            <p>Best regards,<br>The Gourdshades Team</p>
           </div>
         </body>
       </html>
@@ -214,7 +217,7 @@ export async function POST(request: NextRequest) {
     const confirmationOptions = {
       from: process.env.SMTP_FROM || process.env.SMTP_USER,
       to: sanitizedData.email,
-      subject: 'Enquiry Confirmation - LampCo',
+      subject: 'Enquiry Confirmation - Gourdshades',
       html: confirmationHtml,
     };
 

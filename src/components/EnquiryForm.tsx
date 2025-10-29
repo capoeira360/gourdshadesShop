@@ -125,12 +125,24 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         timestamp: new Date().toISOString(),
       };
 
-      const response = await fetch('/api/send-enquiry', {
+      // Use contact API if no items, otherwise use enquiry API
+      const apiEndpoint = state.items.length === 0 ? '/api/send-contact' : '/api/send-enquiry';
+      const requestBody = state.items.length === 0 
+        ? {
+            name: sanitizedData.name,
+            email: sanitizedData.email,
+            phone: sanitizedData.phone,
+            message: sanitizedData.message,
+            timestamp: sanitizedData.timestamp,
+          }
+        : sanitizedData;
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(sanitizedData),
+        body: JSON.stringify(requestBody),
       });
 
       const result = await response.json();
@@ -267,7 +279,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
                     <User size={16} className="inline mr-2" />
                     Full Name *
                   </label>
@@ -277,7 +289,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
                       errors.name ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Enter your full name"
@@ -292,7 +304,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                     <Mail size={16} className="inline mr-2" />
                     Email Address *
                   </label>
@@ -302,7 +314,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
                       errors.email ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Enter your email address"
@@ -317,7 +329,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Phone Field */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
                     <Phone size={16} className="inline mr-2" />
                     Phone Number *
                   </label>
@@ -327,7 +339,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
                       errors.phone ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Enter your phone number"
@@ -342,7 +354,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
                     <MessageSquare size={16} className="inline mr-2" />
                     Message *
                   </label>
@@ -352,7 +364,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-gray-900 placeholder-gray-500 ${
                       errors.message ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Tell us about your requirements or any questions you have..."

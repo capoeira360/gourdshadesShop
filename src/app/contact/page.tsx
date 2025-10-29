@@ -43,7 +43,7 @@ const ContactPage: React.FC = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/send-enquiry', {
+      const response = await fetch('/api/send-contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,9 +53,6 @@ const ContactPage: React.FC = () => {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          items: [],
-          totalItems: 0,
-          totalValue: 0,
           timestamp: new Date().toISOString(),
         }),
       });
@@ -64,7 +61,8 @@ const ContactPage: React.FC = () => {
         alert('Message sent successfully! We\'ll get back to you within 24 hours.');
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       } else {
-        alert('Failed to send message. Please try again.');
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to send message. Please try again.');
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -183,7 +181,7 @@ const ContactPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
                     placeholder="Your full name"
                   />
                 </motion.div>
@@ -204,7 +202,7 @@ const ContactPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
                     placeholder="your.email@example.com"
                   />
                 </motion.div>
@@ -226,7 +224,7 @@ const ContactPage: React.FC = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
                     placeholder="(555) 123-4567"
                   />
                 </motion.div>
@@ -245,7 +243,7 @@ const ContactPage: React.FC = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
                   >
                     <option value="">Select a community service</option>
                     <option value="consultation">Lighting Consultation</option>
@@ -273,7 +271,7 @@ const ContactPage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors resize-vertical"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors resize-vertical text-black"
                   placeholder="Tell us about your project, space, and lighting needs..."
                 />
               </motion.div>

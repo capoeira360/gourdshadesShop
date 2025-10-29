@@ -214,8 +214,8 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>CONTACT</h3>
             <div className="space-y-4 text-white/85">
               <div>
-                <p className="text-lg" suppressHydrationWarning>gourdshadestz@gmail.com</p>
-                <p className="text-lg">info@gourdshades.com</p>
+                <a href="mailto:gourdshadestz@gmail.com" className="text-lg hover:text-accent transition-colors cursor-pointer block" suppressHydrationWarning>gourdshadestz@gmail.com</a>
+                <a href="mailto:info@gourdshades.com" className="text-lg hover:text-accent transition-colors cursor-pointer block">info@gourdshades.com</a>
                 <p className="text-lg">+255 746 754 878</p>
               </div>
               <div className="mt-6">

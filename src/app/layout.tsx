@@ -11,7 +11,7 @@ import WishlistButton from "@/components/WishlistButton";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "LampCo - Premium Lighting Solutions",
+  title: "Gourdshades - Premium Lighting Solutions",
   description: "Discover our curated collection of premium lighting solutions that transform any environment into something extraordinary.",
 };
 

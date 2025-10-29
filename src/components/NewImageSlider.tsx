@@ -34,7 +34,7 @@ const NewImageSlider: React.FC = () => {
     {
       id: 1,
       image: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
-      author: 'LAMPCO',
+      author: 'GOURDSHADES',
       title: 'PREMIUM LIGHTING',
       topic: 'COLLECTION',
       description: 'Discover our exquisite collection of handcrafted lighting fixtures that blend traditional craftsmanship with modern innovation. Each piece is meticulously designed to transform your space into a sanctuary of elegance and warmth.',
@@ -50,7 +50,7 @@ const NewImageSlider: React.FC = () => {
     {
       id: 2,
       image: '/images/20240612_135238-featured-2.jpg',
-      author: 'LAMPCO',
+      author: 'GOURDSHADES',
       title: 'MODERN DESIGN',
       topic: 'INNOVATION',
       description: 'Experience the perfect fusion of contemporary aesthetics and cutting-edge technology. Our modern lighting solutions are designed to complement today\'s architectural trends while providing exceptional functionality.',
@@ -66,7 +66,7 @@ const NewImageSlider: React.FC = () => {
     {
       id: 3,
       image: '/images/20240614_140014-featured-3.jpg',
-      author: 'LAMPCO',
+      author: 'GOURDSHADES',
       title: 'ARTISAN CRAFT',
       topic: 'HERITAGE',
       description: 'Celebrate the timeless art of traditional craftsmanship with our heritage collection. Each fixture tells a story of skilled artisans who have perfected their craft over generations, creating pieces that stand the test of time.',
@@ -82,7 +82,7 @@ const NewImageSlider: React.FC = () => {
     {
       id: 4,
       image: '/images/20240804_155809-featured-4.jpg',
-      author: 'LAMPCO',
+      author: 'GOURDSHADES',
       title: 'SMART LIGHTING',
       topic: 'TECHNOLOGY',
       description: 'Step into the future with our intelligent lighting systems that adapt to your lifestyle. Control ambiance, energy efficiency, and mood with intuitive smart features that make your home truly responsive to your needs.',

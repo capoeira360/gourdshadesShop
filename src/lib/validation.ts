@@ -7,7 +7,7 @@ export const enquiryItemSchema = z.object({
   price: z.number().positive('Price must be positive').max(10000, 'Price too high'),
   quantity: z.number().int().positive('Quantity must be positive').max(100, 'Quantity too high'),
   category: z.string().optional(),
-  image: z.string().url('Invalid image URL').optional(),
+  image: z.string().optional(), // Removed URL validation to allow relative paths
 });
 
 // Contact Form Schema
@@ -24,11 +24,18 @@ export const contactFormSchema = z.object({
   phone: z.string()
     .min(10, 'Phone number too short')
     .max(20, 'Phone number too long')
-    .regex(/^[\+]?[1-9][\d\s\-\(\)]{9,19}$/, 'Invalid phone number format'),
+    .regex(/^[\+]?[1-9][\d\s\-\(\)]{9,19}$/, 'Invalid phone number format')
+    .optional(),
+  
+  service: z.string()
+    .max(100, 'Service selection too long')
+    .optional(),
   
   message: z.string()
     .min(10, 'Message must be at least 10 characters')
     .max(1000, 'Message must be less than 1000 characters'),
+  
+  timestamp: z.string().datetime().optional(),
 });
 
 // Full Enquiry Schema

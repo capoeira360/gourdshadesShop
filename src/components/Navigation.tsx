@@ -522,7 +522,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                 >
                   {/* Left Corner - Contact Info */}
                   <div className="text-white/60 text-sm">
-                    <p>gourdshadestz@gmail.com</p>
+                    <a href="mailto:gourdshadestz@gmail.com" className="hover:text-white transition-colors cursor-pointer block">gourdshadestz@gmail.com</a>
                     <p>+255 746 754 876</p>
                   </div>
 
