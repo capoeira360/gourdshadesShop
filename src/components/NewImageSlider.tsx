@@ -27,7 +27,7 @@ const NewImageSlider: React.FC = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const autoNextRef = useRef<NodeJS.Timeout | null>(null);
 
-  const timeRunning = 3000;
+  const timeRunning = 1200;
   const timeAutoNext = 7000;
 
   const sliderItems: SliderItem[] = [
@@ -83,25 +83,22 @@ const NewImageSlider: React.FC = () => {
       id: 4,
       image: '/images/IMG-20250307-WA0009-nav-contacts.jpg',
       author: 'GOURDSHADES',
-      title: 'SMART LIGHTING',
-      topic: 'TECHNOLOGY',
-      description: 'Step into the future with our intelligent lighting systems that adapt to your lifestyle. Control ambiance, energy efficiency, and mood with intuitive smart features that make your home truly responsive to your needs.',
+      title: 'HANDCRAFTED GOURD LAMPS',
+      topic: 'PRODUCTS',
+      description: 'Our signature lamps are crafted from natural gourds, precision carved to cast intricate patterns of light. Each piece is unique, delivering warm ambience and artisanal character to living spaces, restaurants, and hospitality interiors.',
       buttons: {
-        primary: 'EXPLORE TECH',
-        secondary: 'SMART DEMO'
+        primary: 'SHOP LAMPS',
+        secondary: 'VIEW DETAILS'
       },
       thumbnail: {
-        title: 'Smart Lighting',
-        description: 'Intelligent systems with advanced technology and intuitive controls'
+        title: 'Gourd Lamps',
+        description: 'Natural gourds, precision-cut patterns, warm ambient glow'
       }
     }
   ];
 
   const showSlider = useCallback((type: 'next' | 'prev') => {
-    if (isAnimating) return;
-    
-    setIsAnimating(true);
-    
+    // Advance index immediately
     if (type === 'next') {
       setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
       carouselRef.current?.classList.add('next');
@@ -110,17 +107,15 @@ const NewImageSlider: React.FC = () => {
       carouselRef.current?.classList.add('prev');
     }
 
-    // Clear existing timeouts
+    // Clear existing timeouts and remove animation classes after a short delay
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (autoNextRef.current) clearTimeout(autoNextRef.current);
 
-    // Remove animation classes after animation completes
     timeoutRef.current = setTimeout(() => {
       carouselRef.current?.classList.remove('next', 'prev');
-      setIsAnimating(false);
     }, timeRunning);
 
-  }, [isAnimating, sliderItems.length, timeRunning]);
+  }, [sliderItems.length, timeRunning]);
 
   const handleNext = () => showSlider('next');
   const handlePrev = () => showSlider('prev');
@@ -131,16 +126,14 @@ const NewImageSlider: React.FC = () => {
       if (autoNextRef.current) clearTimeout(autoNextRef.current);
       
       autoNextRef.current = setTimeout(() => {
-        if (!isAnimating) {
-          setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
-          carouselRef.current?.classList.add('next');
-          
-          setTimeout(() => {
-            carouselRef.current?.classList.remove('next');
-          }, timeRunning);
-          
-          startAutoAdvance(); // Restart the cycle
-        }
+        setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
+        carouselRef.current?.classList.add('next');
+        
+        setTimeout(() => {
+          carouselRef.current?.classList.remove('next');
+        }, timeRunning);
+        
+        startAutoAdvance(); // Restart the cycle
       }, timeAutoNext);
     };
 
@@ -150,7 +143,7 @@ const NewImageSlider: React.FC = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (autoNextRef.current) clearTimeout(autoNextRef.current);
     };
-  }, [timeAutoNext, timeRunning, sliderItems.length, isAnimating]);
+  }, [timeAutoNext, timeRunning, sliderItems.length]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -220,10 +213,10 @@ const NewImageSlider: React.FC = () => {
 
       {/* Navigation arrows */}
       <div className="arrows">
-        <button id="prev" onClick={handlePrev} disabled={isAnimating}>
+        <button id="prev" onClick={handlePrev}>
           &lt;
         </button>
-        <button id="next" onClick={handleNext} disabled={isAnimating}>
+        <button id="next" onClick={handleNext}>
           &gt;
         </button>
       </div>
@@ -307,16 +300,14 @@ const NewImageSlider: React.FC = () => {
 
         .carousel .list .item .content {
           position: absolute;
-          top: 50%;
-          right: 5%;
-          transform: translateY(-50%);
+          bottom: 180px; /* base anchor above thumbnails (bottom: 112px) */
+          left: 50%;
+          transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
           width: auto;
-          max-width: 40%;
+          max-width: 60%;
           padding: 40px 60px;
-          background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
-          backdrop-filter: blur(10px);
-          border-radius: 20px;
-          border: 1px solid rgba(255,255,255,0.1);
+          background: none;
+          border-radius: 0;
           box-sizing: border-box;
           color: #fff;
           text-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -330,10 +321,7 @@ const NewImageSlider: React.FC = () => {
           font-weight: 800;
           line-height: 1.1em;
           margin-bottom: 15px;
-          background: linear-gradient(135deg, #fff 0%, #f1683a 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: #D2CAB3; /* Beige from codebase */
           text-shadow: 0 2px 8px rgba(241,104,58,0.3);
         }
 
@@ -347,30 +335,30 @@ const NewImageSlider: React.FC = () => {
           margin-top: 10px;
         }
 
-        /* Thumbnail styles */
+        /* Thumbnail styles - desktop/tablet: vertical on right */
         .thumbnail {
           position: absolute;
-          bottom: 112px;
-          right: 5%;
-          transform: none;
+          top: 50%;
+          right: calc(2.5% + 1.5in);
+          transform: translateY(calc(-50% + 0.2in));
           width: auto;
-          max-width: 40%;
+          max-height: 70vh;
           z-index: 100;
           display: flex;
-          gap: 15px;
-          flex-direction: row;
-          padding: 20px;
+          gap: 12px;
+          flex-direction: column;
+          padding: 12px;
           background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
           backdrop-filter: blur(15px);
           border-radius: 20px;
           border: 1px solid rgba(255,255,255,0.1);
-          overflow-x: auto;
-          overflow-y: hidden;
+          overflow-y: auto;
+          overflow-x: hidden;
         }
 
         .thumbnail .item {
-          width: 120px;
-          height: 160px;
+          width: 90px;
+          height: 120px;
           flex-shrink: 0;
           position: relative;
           cursor: pointer;
@@ -446,7 +434,7 @@ const NewImageSlider: React.FC = () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          pointer-events: none;
+          pointer-events: auto;
         }
 
         .arrows button {
@@ -548,22 +536,28 @@ const NewImageSlider: React.FC = () => {
           .carousel .list .item .content {
             padding: 30px;
             max-width: 90%;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
           }
 
           .carousel .list .item .content .title {
             font-size: 3.5rem;
           }
 
+          /* Keep vertical thumbnails on tablets */
           .thumbnail {
-            max-width: 85%;
-            bottom: 30px;
-            padding: 15px;
-            right: 5%;
+            top: 50%;
+            right: calc(3% + 1.5in);
+            transform: translateY(calc(-50% + 0.2in));
+            max-height: 60vh;
+            padding: 12px;
+            gap: 12px;
           }
 
           .thumbnail .item {
-            width: 100px;
-            height: 140px;
+            width: 80px;
+            height: 110px;
           }
 
           .arrows {
@@ -584,7 +578,10 @@ const NewImageSlider: React.FC = () => {
           .carousel .list .item .content {
             padding: 20px;
             max-width: 85%;
-            right: 5%;
+            right: auto;
+            left: 50%;
+            bottom: 130px;
+            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
             text-align: center;
           }
 
@@ -598,12 +595,20 @@ const NewImageSlider: React.FC = () => {
             margin-top: 8px;
           }
 
+          /* Phones: vertical thumbnails on right */
           .thumbnail {
-            bottom: 80px;
-            max-width: 90%;
-            padding: 10px 15px;
+            position: absolute;
+            top: 50%;
+            right: 4%;
+            bottom: auto;
+            transform: translateY(-50%);
+            width: auto;
+            max-height: 55vh;
+            padding: 10px 12px;
             gap: 10px;
-            right: 5%;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
           }
 
           .thumbnail .item {
@@ -643,13 +648,22 @@ const NewImageSlider: React.FC = () => {
           }
         }
 
+        /* Show content overlay on phones (small devices) */
+        @media screen and (max-width: 767px) {
+          .carousel .list .item .content {
+            display: block;
+          }
+        }
+
         @media screen and (max-width: 480px) {
           .carousel { height: 60vh; }
           .carousel .list .item :global(.slider-image) { height: 60vh; }
           .carousel .list .item .content {
             padding: 15px;
             max-width: 90%;
-            right: 5%;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
           }
 
           .carousel .list .item .content .title {
@@ -662,16 +676,23 @@ const NewImageSlider: React.FC = () => {
           }
 
           .thumbnail {
-            bottom: 70px;
-            padding: 8px 12px;
+            position: absolute;
+            top: 50%;
+            right: 4.5%;
+            bottom: auto;
+            transform: translateY(-50%);
+            padding: 8px 10px;
             gap: 8px;
-            max-width: 95%;
-            right: 2.5%;
+            max-width: none;
+            max-height: 50vh;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
           }
 
           .thumbnail .item {
-            width: 70px;
-            height: 90px;
+            width: 65px;
+            height: 85px;
           }
 
           .arrows button {
