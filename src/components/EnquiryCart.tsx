@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, X, Trash2, Mail, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, X, Mail, Plus, Minus } from 'lucide-react';
 import { useEnquiry } from '@/contexts/EnquiryContext';
 import { usePanel } from '@/contexts/PanelContext';
 import EnquiryForm from './EnquiryForm';
-import PriceDisplay from './PriceDisplay';
 
 // Removed empty interface - using React.FC without props type
 const EnquiryCart: React.FC = () => {
@@ -15,8 +14,8 @@ const EnquiryCart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Hide cart button when navigation panel is open
-  const isCartButtonHidden = panelState.isNavigationOpen;
+  // Hide cart button when navigation panel is open or user is scrolling down
+  const isCartButtonHidden = panelState.isNavigationOpen || panelState.isScrollingDown;
 
   const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -100,18 +99,18 @@ const EnquiryCart: React.FC = () => {
           setIsOpen(newIsOpen);
           setEnquiryOpen(newIsOpen);
         }}
-        className="fixed top-20 right-6 z-50 bg-primary text-white p-3 rounded-full shadow-lg"
+        className="fixed top-16 right-4 z-50 bg-primary text-white p-2 sm:p-3 rounded-full shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: isCartButtonHidden ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-        style={{ display: isCartButtonHidden ? 'none' : 'block' }}
+        animate={{ opacity: isCartButtonHidden ? 0 : 1, y: isCartButtonHidden ? -40 : 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        style={{ pointerEvents: isCartButtonHidden ? 'none' : 'auto', willChange: 'transform, opacity' }}
       >
-        <ShoppingCart size={24} />
+        <ShoppingCart size={20} />
         {totalItems > 0 && (
           <motion.span
-            className="absolute -top-2 -right-2 bg-accent text-primary text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold"
+            className="absolute -top-2 -right-2 bg-accent text-primary text-[10px] sm:text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             key={totalItems}

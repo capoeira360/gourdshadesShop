@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/api/send-contact/route": "app/api/send-contact/route.js",
+  "/api/send-enquiry/route": "app/api/send-enquiry/route.js",
+  "/contact/page": "app/contact/page.js",
+  "/disclaimer/page": "app/disclaimer/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/products/[id]/page": "app/products/[id]/page.js",
+  "/products/page": "app/products/page.js",
+  "/services/page": "app/services/page.js",
+  "/wishlist/page": "app/wishlist/page.js"
+}

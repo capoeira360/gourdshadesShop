@@ -5,12 +5,14 @@ import React, { createContext, useContext, useState, ReactNode, useCallback } fr
 interface PanelState {
   isNavigationOpen: boolean;
   isEnquiryOpen: boolean;
+  isScrollingDown: boolean;
 }
 
 interface PanelContextType {
   state: PanelState;
   setNavigationOpen: (isOpen: boolean) => void;
   setEnquiryOpen: (isOpen: boolean) => void;
+  setScrollingDown: (isDown: boolean) => void;
 }
 
 const PanelContext = createContext<PanelContextType | undefined>(undefined);
@@ -19,6 +21,7 @@ export function PanelProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<PanelState>({
     isNavigationOpen: false,
     isEnquiryOpen: false,
+    isScrollingDown: false,
   });
 
   const setNavigationOpen = useCallback((isOpen: boolean) => {
@@ -29,12 +32,17 @@ export function PanelProvider({ children }: { children: ReactNode }) {
     setState(prev => ({ ...prev, isEnquiryOpen: isOpen }));
   }, []);
 
+  const setScrollingDown = useCallback((isDown: boolean) => {
+    setState(prev => ({ ...prev, isScrollingDown: isDown }));
+  }, []);
+
   return (
     <PanelContext.Provider
       value={{
         state,
         setNavigationOpen,
         setEnquiryOpen,
+        setScrollingDown,
       }}
     >
       {children}

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import StickyFooterReveal from "@/components/StickyFooterReveal";
+import ScrollWatcher from "@/components/ScrollWatcher";
+import LogoFixed from "@/components/LogoFixed";
+import Footer from "@/components/Footer";
 import { EnquiryProvider } from "@/contexts/EnquiryContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { ViewProvider } from "@/contexts/ViewContext";
@@ -27,21 +29,16 @@ export default function RootLayout({
           <WishlistProvider>
             <ViewProvider>
               <PanelProvider>
-              {/* Standalone Logo - positioned independently */}
-              <div className="fixed top-1 left-6 z-40">
-                <Image 
-                  src="/logo-gourd-shades-square.svg" 
-                  alt="Gourd Shades" 
-                  width={150}
-                  height={150}
-                />
-              </div>
+              {/* Scroll direction watcher and animated fixed logo */}
+              <ScrollWatcher />
+              <LogoFixed />
               <Navigation />
               <EnquiryCart />
               <WishlistButton />
-              <StickyFooterReveal>
+              <main className="relative z-10 bg-white min-h-screen">
                 {children}
-              </StickyFooterReveal>
+              </main>
+              <Footer />
               </PanelProvider>
             </ViewProvider>
           </WishlistProvider>

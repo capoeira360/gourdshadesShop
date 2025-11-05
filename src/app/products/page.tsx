@@ -83,7 +83,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={rowRef}
-          className={`group cursor-pointer py-8 px-6 border-b border-gray-100 transition-all duration-300 ${
+          className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-gray-100 transition-all duration-300 ${
             isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
           }`}
           variants={rowVariants}
@@ -111,7 +111,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
               </span>
             </div>
           </div>
-          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">
             <svg 
               className="w-6 h-6 text-primary" 
               fill="none" 
@@ -153,7 +153,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden group cursor-pointer">
+    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden group cursor-pointer">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -169,7 +169,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
                 className="object-cover"
               />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 sm:p-6">
               <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                 {currentProduct.name}
               </h4>
@@ -662,7 +662,7 @@ const ProductsPage: React.FC = () => {
       {/* Header Section */}
       <motion.div
         ref={headerRef}
-        className="max-w-7xl mx-auto px-6 py-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
         variants={headerVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
@@ -676,7 +676,7 @@ const ProductsPage: React.FC = () => {
 
       {/* Filter and View Toggle Section */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto px-4 sm:px-6 mb-10 sm:mb-12"
         variants={filterVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
@@ -687,7 +687,7 @@ const ProductsPage: React.FC = () => {
             {categories.map((category) => (
               <motion.button
                 key={category}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full font-medium transition-all duration-300 ${
                   filter === category
                     ? 'bg-primary text-white'
                     : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
@@ -734,10 +734,10 @@ const ProductsPage: React.FC = () => {
       </motion.div>
 
       {/* Products Layout */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
         {viewMode === 'list' ? (
           /* List View - Original Split Layout */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Side - Product Names */}
             <div className="space-y-0">
               {filteredProducts.map((product, index) => (
@@ -772,7 +772,7 @@ const ProductsPage: React.FC = () => {
           </div>
         ) : (
           /* Grid View - 4 Products Per Row */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {filteredProducts.map((product, index) => (
               <ProductCard 
                 key={product.id} 

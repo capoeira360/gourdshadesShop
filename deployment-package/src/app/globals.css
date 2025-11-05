@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* Tailwind CSS v4 Custom Theme */
+/* stylelint-disable-next-line at-rule-no-unknown */
+@theme {
+  --color-primary: #1a1a1a;
+  --color-accent: #B59268;
+  --color-light-gray: #f5f5f5;
+  --color-very-light-gray: #fafafa;
+  --color-white: #ffffff;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+}
+
+/* Timeburner Font Face Declarations */
+@font-face {
+  font-family: 'Timeburner';
+  src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Timeburner';
+  src: url('/fonts/TimeburnerBold-peGR.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cremotic Font Face Declarations */
+@font-face {
+  font-family: 'Cremotic';
+  src: url('/fonts/CremoticBold-4B924.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gemsbuck Font Face Declarations */
+@font-face {
+  font-family: 'Gemsbuck';
+  src: url('/fonts/Gemsbuck01Bold-OV33A.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Regen Font Face Declarations */
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regen Font Face Declarations */
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Regen';
+  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --color-primary: #1a1a1a;
+  --color-accent: #B59268;
+  --color-light-gray: #f5f5f5;
+  --color-very-light-gray: #fafafa;
+  --color-white: #ffffff;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --light-gray: #f5f5f5;
+  --very-light-gray: #fafafa;
+  --white: #ffffff;
+  --primary: #1a1a1a;
+  --accent: #B59268;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Timeburner', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Hardware acceleration for animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Font utility classes */
+.text-xs, .text-sm, .text-base, .text-lg, p, span, small, .small-text {
+  font-family: 'Timeburner', sans-serif;
+  font-weight: 800;
+}
+
+/* Override font-light to be bolder */
+.font-light {
+  font-weight: 600 !important;
+}
+
+/* Override font-normal to be bolder */
+.font-normal {
+  font-weight: 700 !important;
+}
+
+/* Override font-medium to be bolder */
+.font-medium {
+  font-weight: 800 !important;
+}
+
+/* Large text styling */
+h1, h2, h3, h4, h5, h6,
+.text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl,
+.large-text {
+  font-family: 'Regen', 'Cremotic', serif;
+  font-weight: 600;
+  color: #91631D;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.force-3d {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Optimize images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

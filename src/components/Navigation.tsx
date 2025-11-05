@@ -13,7 +13,7 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const { setNavigationOpen } = usePanel();
+  const { state: panelState, setNavigationOpen } = usePanel();
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -146,7 +146,13 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   return (
     <>
       {/* Navigation Header */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 p-6 ${className}`}>
+      <motion.nav
+        className={`fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 ${className}`}
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ y: panelState.isScrollingDown ? -80 : 0, opacity: panelState.isScrollingDown ? 0 : 1 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        style={{ pointerEvents: panelState.isScrollingDown ? 'none' : 'auto', willChange: 'transform, opacity' }}
+      >
         <div className="flex justify-between items-center">
           {/* Empty space for logo positioning */}
           <div className="flex items-center">
@@ -156,11 +162,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
           {/* Menu Button */}
           <button
             onClick={toggleMenu}
-            className="relative z-50 flex flex-col justify-center items-center w-12 h-12 bg-transparent border-none cursor-pointer"
+            className="relative z-50 flex flex-col justify-center items-center w-8 h-8 sm:w-10 sm:h-10 bg-transparent border-none cursor-pointer"
             aria-label="Toggle menu"
           >
             <motion.div
-              className="w-6 h-0.5 bg-primary mb-1"
+              className="w-5 sm:w-6 h-0.5 bg-primary mb-1"
               animate={{
                 rotate: isOpen ? 45 : 0,
                 y: isOpen ? 6 : 0,
@@ -168,14 +174,14 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               transition={{ duration: 0.3 }}
             />
             <motion.div
-              className="w-6 h-0.5 bg-primary mb-1"
+              className="w-5 sm:w-6 h-0.5 bg-primary mb-1"
               animate={{
                 opacity: isOpen ? 0 : 1,
               }}
               transition={{ duration: 0.3 }}
             />
             <motion.div
-              className="w-6 h-0.5 bg-primary"
+              className="w-5 sm:w-6 h-0.5 bg-primary"
               animate={{
                 rotate: isOpen ? -45 : 0,
                 y: isOpen ? -6 : 0,
@@ -185,7 +191,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
           </button>
 
           {/* Menu/Close Text */}
-          <div className="absolute right-20 top-1/2 transform -translate-y-1/2">
+          <div className="absolute right-16 sm:right-20 top-1/2 transform -translate-y-1/2 hidden sm:block">
             <AnimatePresence mode="wait">
               {!isOpen && (
                 <motion.span
@@ -202,13 +208,13 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
             </AnimatePresence>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Full Screen Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-40 overflow-y-auto"
             initial="closed"
             animate="open"
             exit="closed"
@@ -221,7 +227,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
             />
 
             {/* Close Button and Text - Positioned in top right */}
-            <div className="absolute top-6 right-6 z-50 flex items-center space-x-4">
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center space-x-3 sm:space-x-4">
               <motion.span
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -233,10 +239,10 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               </motion.span>
               <button
                 onClick={toggleMenu}
-                className="relative flex flex-col justify-center items-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 cursor-pointer hover:bg-white/30 transition-all duration-300 shadow-lg"
+                className="relative flex flex-col justify-center items-center w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 cursor-pointer hover:bg-white/30 transition-all duration-300 shadow-lg"
                 aria-label="Close menu"
               >
-                <div className="relative w-6 h-6 flex items-center justify-center">
+                <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                   <motion.div
                     className="absolute w-4 h-0.5 bg-white shadow-sm"
                     style={{ transformOrigin: 'center' }}
@@ -262,7 +268,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               {/* Main Navigation Area */}
               <div className="flex-1 flex">
                 {/* Left Side - Navigation Links Following Diagonal Flow */}
-                <div className="flex-1 flex flex-col justify-center items-start pl-16 pr-8 pt-24">
+                <div className="flex-1 flex flex-col justify-center items-start pl-4 pr-4 pt-20 sm:pl-10 sm:pr-8 lg:pl-16">
                   <motion.nav className="relative">
                   {/* Home - Top Left */}
                   <motion.div
@@ -280,7 +286,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[0].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[0].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -311,7 +317,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[1].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-8 ml-8"
+                    className="mb-6 sm:mb-8 ml-2 sm:ml-8"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -322,7 +328,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[1].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[1].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -353,7 +359,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[2].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-8 ml-16"
+                    className="mb-6 sm:mb-8 ml-3 sm:ml-16"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -364,7 +370,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[2].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[2].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -395,7 +401,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[3].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-8 ml-24"
+                    className="mb-6 sm:mb-8 ml-4 sm:ml-24"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -406,7 +412,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[3].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[3].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -437,7 +443,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[4].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-16 ml-32"
+                    className="mb-10 sm:mb-16 ml-5 sm:ml-32"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -448,7 +454,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[4].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[4].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -478,7 +484,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                 {/* Vertical Divider Line */}
                 <motion.div
-                  className="w-px bg-white/20 mx-8 my-24"
+                  className="hidden md:block w-px bg-white/20 mx-8 my-24"
                   initial={{ scaleY: 0, opacity: 0 }}
                   animate={{ scaleY: 1, opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
@@ -486,7 +492,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                 />
 
                 {/* Right Side - Image Preview Box */}
-                <div className="flex-1 flex justify-center items-center pr-16">
+                <div className="hidden md:flex flex-1 justify-center items-center md:pr-16">
                   <AnimatePresence mode="wait">
                     {hoveredLink && (
                       <motion.div
@@ -513,9 +519,9 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               </div>
 
               {/* Footer Section - Reorganized Layout */}
-              <div className="absolute bottom-0 left-0 right-0 pb-12 px-16">
+              <div className="absolute bottom-0 left-0 right-0 pb-8 sm:pb-12 px-6 sm:px-16">
                 <motion.div
-                  className="flex justify-between items-end"
+                  className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-0"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
@@ -527,7 +533,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                   </div>
 
                   {/* Center - Social Links */}
-                  <div className="flex space-x-8 text-white/60 text-sm">
+                  <div className="flex space-x-6 sm:space-x-8 text-white/60 text-sm">
                     <a href="https://www.instagram.com/gourdshadestz?igsh=MTZteGx1OXR5Zno1NQ==" className="hover:text-white transition-colors">
                       Instagram
                     </a>

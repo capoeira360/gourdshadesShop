@@ -38,12 +38,15 @@
 .textContent {
   flex: 1;
   max-width: 50%;
-  text-align: left;
+  text-align: center; /* Center hero text in desktop */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center; /* Align text block to center */
   margin-bottom: -2.3in;
+  /* Nudge desktop text upward without affecting layout/padding */
+  transform: translateY(-0.5in);
+  will-change: transform;
 }
 
 .imageContent {
@@ -51,7 +54,7 @@
   max-width: 50%;
   height: calc(100vh + 2.6in);
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* Center image vertically within its column */
   justify-content: center;
   position: relative;
   overflow: visible;
@@ -61,24 +64,26 @@
   position: relative;
   width: calc(100% - 40px);
   height: 60%;
-  transform: translateY(5.2in);
+  transform: translateY(2.7in); /* Move image up an additional ~0.5 inch on desktop */
   border: 12px solid #91631D;
   padding: 8px;
   background: #91631D;
   border-radius: 20px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   z-index: 1;
+  margin: 0 auto; /* Center the frame within its column */
 }
 
 .imageContent img {
   border-radius: 8px;
   object-fit: cover;
+  object-position: center;
 }
 
 
 
 .heroTitle {
-  font-size: clamp(4.5rem, 14vw, 11rem);
+  font-size: clamp(4rem, 12vw, 9rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 0.9;
@@ -93,29 +98,30 @@
 }
 
 .handText {
-  font-size: 1.02em; /* Slightly larger to match MADE dimensions */
+  font-size: inherit; /* Same size as MADE */
   font-weight: inherit;
   letter-spacing: inherit;
   color: inherit;
   text-transform: inherit;
   font-family: inherit;
+  line-height: inherit;
+  display: inline-block;
 }
 
 .underlinedText {
-  text-decoration: underline;
-  text-decoration-color: #000000;
-  text-underline-offset: 0.1em;
-  text-decoration-thickness: 1px;
+  text-decoration: none; /* Remove underline from MADE */
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
   color: inherit;
   text-transform: inherit;
   font-family: inherit;
+  line-height: inherit;
+  display: inline-block;
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
   font-weight: 700; /* Make hero subtitle bold too */
   color: #000000;
   margin: 0;
@@ -132,19 +138,39 @@
     flex-direction: column;
     text-align: center;
     gap: 1.5rem;
+    height: auto;
+    align-items: center;
+    justify-content: center;
   }
   
   .textContent {
     max-width: 100%;
     text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0; /* Remove large negative margin on mobile */
+    order: 1; /* Show text first on small devices */
+    position: relative; /* Create stacking context for safe z-index */
+    z-index: 2; /* Ensure text sits above any overlapping elements */
+    /* Use transform for visual offset without affecting layout/padding */
+    transform: translateY(2.6in);
+    will-change: transform;
+    margin-bottom: 0.75rem; /* Add space before the image */
   }
   
   .imageContent {
     max-width: 100%;
     min-height: 200px;
+    height: auto; /* Let image section size to content on mobile */
+    align-items: center;
+    justify-content: center;
+    overflow: visible; /* Allow image/frame to show fully */
+    order: 2; /* Show image second on small devices */
   }
   .homeHeader {
-    height: 100svh; /* Use svh for better mobile support */
+    height: auto; /* Allow container to fit content on small screens */
+    min-height: 100svh; /* Keep full-screen feel without forcing overflow */
+    overflow: visible; /* Avoid clipping when image is pulled upward */
   }
   
   .intro {
@@ -152,19 +178,134 @@
   }
   
   .heroTitle {
-    font-size: clamp(2rem, 12vw, 4rem);
+    font-size: clamp(1.8rem, 10vw, 3.4rem);
     line-height: 1;
   }
   
   .heroSubtitle {
-    font-size: clamp(0.9rem, 4vw, 1.2rem);
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+  }
+
+  .imageFrame {
+    height: auto; /* Natural height */
+    min-height: 320px; /* Slightly reduce minimum height */
+    aspect-ratio: 3 / 4; /* Deterministic size for fill image */
+    transform: none; /* Center naturally on mobile */
+    border-width: 8px; /* Slightly thinner border on mobile */
+    padding: 6px;
+    width: 100%;
+    max-width: clamp(460px, 92vw, 680px); /* Slightly reduce overall width on mobile */
+    margin: 0 auto; /* Center frame */
+    margin-top: 1.5in; /* Push image downwards ~1.5 inch on mobile */
+  }
+
+  .imageContent img {
+    height: auto; /* Avoid forcing huge image height */
+    object-fit: contain;
+    object-position: center; /* Center the image within its frame */
+    display: block; /* Avoid inline layout quirks */
   }
 }
 
 @media (max-width: 480px) {
+  /* Ensure full stack centers on very small phones */
+  .intro {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
   /* Graceful degradation for mobile */
   .backgroundImage {
     clip-path: none;
+  }
+
+  /* Phones: image first, text second */
+  /* Phones: text first, image second */
+  .textContent {
+    order: 1;
+    position: relative;
+    z-index: 2; /* Ensure text appears above image if overlapping */
+    /* Use transform for visual offset without affecting layout/padding */
+    transform: translateY(2.8in);
+    will-change: transform;
+    margin-bottom: 0.5rem; /* Bring text closer to the image */
+  }
+  .imageContent {
+    order: 2;
+    justify-content: center; /* Reinforce centering */
+    align-items: center;
+    overflow: visible; /* Ensure full image/frame is visible on phones */
+  }
+
+  .imageFrame {
+    aspect-ratio: 4 / 5;
+    min-height: 380px; /* Slightly reduce minimum height on phones */
+    width: 100%;
+    max-width: clamp(440px, 90vw, 640px); /* Slight width reduction on very small phones */
+    margin: 0 auto;
+    transform: none; /* Center naturally on phones */
+    border-width: 6px;
+    border-radius: 16px;
+    margin-top: 1.5in; /* Push image downwards ~1.5 inch on very small phones */
+  }
+
+  .homeHeader {
+    overflow: visible; /* Prevent clipping of upward-shifted image on phones */
+  }
+
+  /* Tighten vertical spacing for hero text on phones */
+  .heroTitle {
+    margin-bottom: 0.5rem;
+  }
+  .heroSubtitle {
+    margin-top: 0;
+  }
+}
+
+/* Tablet layout: center image and increase size */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .intro {
+    flex-direction: column; /* Stack text and image vertically on tablets */
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    height: auto;
+    padding: 1.25rem; /* Slightly relaxed padding for tablet */
+  }
+
+  .textContent {
+    max-width: 100%;
+    text-align: center; /* Center text on tablets */
+    align-items: center; /* Align text block to center */
+    justify-content: center;
+    margin-bottom: 0.75rem; /* Space before image */
+    order: 1; /* Text first */
+    /* Use transform for visual offset without affecting layout/padding */
+    transform: translateY(2.4in);
+    will-change: transform;
+  }
+
+  .imageContent {
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    width: 100%;
+    order: 2; /* Image second */
+  }
+
+  .imageFrame {
+    transform: none; /* Center naturally on tablets */
+    width: 100%;
+    max-width: clamp(500px, 90vw, 860px); /* Slight reduction for tablet sizing */
+    aspect-ratio: 3 / 4;
+    margin: 0 auto; /* Center horizontally */
+    margin-top: 1.5in; /* Push image downwards ~1.5 inch on tablets */
+  }
+
+  .imageContent img {
+    object-fit: contain;
+    object-position: center;
+    display: block;
   }
 }
 

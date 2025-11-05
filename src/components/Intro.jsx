@@ -118,7 +118,7 @@ export default function Intro() {
               src="/images/IMG-20250516-WA0016-hero-replace.jpg"
               alt="Hero Lamp"
               fill
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', objectPosition: 'center center' }}
               priority
               unoptimized
             />

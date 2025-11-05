@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/api/send-contact/route": "/api/send-contact",
+  "/api/send-enquiry/route": "/api/send-enquiry",
+  "/contact/page": "/contact",
+  "/disclaimer/page": "/disclaimer",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/privacy/page": "/privacy",
+  "/products/[id]/page": "/products/[id]",
+  "/products/page": "/products",
+  "/services/page": "/services",
+  "/wishlist/page": "/wishlist"
+}

@@ -185,7 +185,7 @@ const NewImageSlider: React.FC = () => {
               height={0}
               sizes="100vw"
               className="slider-image"
-              style={{ width: 'auto', height: '100vh', maxWidth: '100%' }}
+              style={{ width: 'auto', maxWidth: '100%' }}
               priority={index === 0}
             />
             <div className="content">
@@ -234,7 +234,7 @@ const NewImageSlider: React.FC = () => {
       <style jsx>{`
         .carousel {
           height: 100vh;
-          width: 100vw;
+          width: 100%; /* Avoid horizontal overflow on small devices */
           overflow: hidden;
           position: relative;
           font-family: 'Poppins', sans-serif;
@@ -246,6 +246,8 @@ const NewImageSlider: React.FC = () => {
           position: absolute;
           inset: 0 0 0 0;
           transition: opacity 0.5s ease-in-out;
+          visibility: hidden; /* Hide non-active items to prevent stacking */
+          pointer-events: none;
         }
 
         .carousel .list .item :global(.slider-image) {
@@ -495,6 +497,8 @@ const NewImageSlider: React.FC = () => {
         /* Animation classes */
         .carousel .list .item.active {
           z-index: 1;
+          visibility: visible; /* Only active item visible */
+          pointer-events: auto;
         }
 
         .carousel .list .item.active .content .title {
@@ -539,6 +543,8 @@ const NewImageSlider: React.FC = () => {
 
         /* Responsive design */
         @media screen and (max-width: 1024px) {
+          .carousel { height: 85vh; }
+          .carousel .list .item :global(.slider-image) { height: 85vh; }
           .carousel .list .item .content {
             padding: 30px;
             max-width: 90%;
@@ -573,6 +579,8 @@ const NewImageSlider: React.FC = () => {
         }
 
         @media screen and (max-width: 768px) {
+          .carousel { height: 70vh; }
+          .carousel .list .item :global(.slider-image) { height: 70vh; }
           .carousel .list .item .content {
             padding: 20px;
             max-width: 85%;
@@ -636,6 +644,8 @@ const NewImageSlider: React.FC = () => {
         }
 
         @media screen and (max-width: 480px) {
+          .carousel { height: 60vh; }
+          .carousel .list .item :global(.slider-image) { height: 60vh; }
           .carousel .list .item .content {
             padding: 15px;
             max-width: 90%;

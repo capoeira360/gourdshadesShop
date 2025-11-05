@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 /* Tailwind CSS v4 Custom Theme */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @theme {
   --color-primary: #1a1a1a;
   --color-accent: #B59268;
@@ -12,6 +13,8 @@
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;
 }
+
+/* Custom theme variables are defined in :root for broad tooling support */
 
 /* Timeburner Font Face Declarations */
 @font-face {

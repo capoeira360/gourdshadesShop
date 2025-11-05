@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-[calc(50vh-300px)] h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
+    <div className="sticky top-16 sm:top-24 md:top-[calc(50vh-300px)] h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -154,13 +154,13 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
 
             {/* Content overlay with enhanced styling */}
             <motion.div 
-              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-8"
+              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4 sm:p-8"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.3 }}
             >
               <motion.h4 
-                className="text-white text-2xl font-light mb-3 tracking-wide"
+                className="text-white text-xl sm:text-2xl font-light mb-3 tracking-wide"
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
@@ -170,7 +170,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
               </motion.h4>
               {section.subtitle && (
                 <motion.p 
-                  className="text-white/90 text-base font-medium"
+                  className="text-white/90 text-sm sm:text-base font-medium"
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
@@ -288,7 +288,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   return (
     <motion.div
       ref={sectionRef}
-      className={`h-[600px] flex items-center px-8 mb-8 transition-all duration-500 ${
+      className={`h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
         isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
       }`}
       variants={variants}
