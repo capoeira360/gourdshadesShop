@@ -83,7 +83,7 @@ const NewImageSlider: React.FC = () => {
       id: 4,
       image: '/images/IMG-20250307-WA0009-nav-contacts.jpg',
       author: 'GOURDSHADES',
-      title: 'HANDCRAFTED GOURD LAMPS',
+      title: 'HANDMADE LAMPS',
       topic: 'PRODUCTS',
       description: 'Our signature lamps are crafted from natural gourds, precision carved to cast intricate patterns of light. Each piece is unique, delivering warm ambience and artisanal character to living spaces, restaurants, and hospitality interiors.',
       buttons: {
@@ -340,7 +340,7 @@ const NewImageSlider: React.FC = () => {
           position: absolute;
           top: 50%;
           right: calc(2.5% + 1.5in);
-          transform: translateY(calc(-50% + 0.2in));
+          transform: translateY(calc(-50% - 0.1in));
           width: auto;
           max-height: 70vh;
           z-index: 100;
@@ -538,26 +538,39 @@ const NewImageSlider: React.FC = () => {
             max-width: 90%;
             bottom: 140px;
             left: 50%;
-            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
+            transform: translateX(-50%) translateY(calc(1.6in - 0.2in));
           }
 
           .carousel .list .item .content .title {
-            font-size: 3.5rem;
+            font-size: 2.9rem; /* reduce header size a bit more on medium */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .carousel .list .item .content .description {
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* allow up to two lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.25em;
+            margin-top: 6px; /* closer to header */
           }
 
           /* Keep vertical thumbnails on tablets */
           .thumbnail {
             top: 50%;
             right: calc(3% + 1.5in);
-            transform: translateY(calc(-50% + 0.2in));
+            transform: translateY(calc(-50% - 0.1in));
             max-height: 60vh;
             padding: 12px;
             gap: 12px;
           }
 
           .thumbnail .item {
-            width: 80px;
-            height: 110px;
+            width: 72px; /* reduce thumbnail size on medium */
+            height: 100px;
           }
 
           .arrows {
@@ -581,18 +594,27 @@ const NewImageSlider: React.FC = () => {
             right: auto;
             left: 50%;
             bottom: 130px;
-            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
+            transform: translateX(-50%) translateY(calc(1.6in - 0.2in));
             text-align: center;
           }
 
           .carousel .list .item .content .title {
-            font-size: 2.2rem;
+            font-size: 1.9rem; /* reduce header size a bit more on small tablets */
             line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .carousel .list .item .content .description {
             font-size: 0.9em;
-            margin-top: 8px;
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* allow up to two lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.25em;
+            margin-top: 5px; /* closer to header */
           }
 
           /* Phones: vertical thumbnails on right */
@@ -601,7 +623,7 @@ const NewImageSlider: React.FC = () => {
             top: 50%;
             right: 4%;
             bottom: auto;
-            transform: translateY(-50%);
+            transform: translateY(calc(-50% - 0.3in));
             width: auto;
             max-height: 55vh;
             padding: 10px 12px;
@@ -612,8 +634,8 @@ const NewImageSlider: React.FC = () => {
           }
 
           .thumbnail .item {
-            width: 80px;
-            height: 100px;
+            width: 70px; /* reduce thumbnail size on small devices */
+            height: 92px;
             flex-shrink: 0;
           }
 
@@ -663,16 +685,25 @@ const NewImageSlider: React.FC = () => {
             max-width: 90%;
             left: 50%;
             right: auto;
-            transform: translateX(-50%) translateY(calc(1.6in + 0.3in));
+            transform: translateX(-50%) translateY(calc(1.6in - 0.2in));
           }
 
           .carousel .list .item .content .title {
-            font-size: 1.8rem;
+            font-size: 1.5rem; /* reduce header size a bit more on phones */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .carousel .list .item .content .description {
             font-size: 0.7em;
-            margin: 10px 0;
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* allow up to two lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.25em;
+            margin-top: 4px; /* closer to header */
           }
 
           .thumbnail {
@@ -680,7 +711,7 @@ const NewImageSlider: React.FC = () => {
             top: 50%;
             right: 4.5%;
             bottom: auto;
-            transform: translateY(-50%);
+            transform: translateY(calc(-50% - 0.3in));
             padding: 8px 10px;
             gap: 8px;
             max-width: none;
@@ -691,8 +722,8 @@ const NewImageSlider: React.FC = () => {
           }
 
           .thumbnail .item {
-            width: 65px;
-            height: 85px;
+            width: 58px; /* reduce thumbnail size on very small phones */
+            height: 78px;
           }
 
           .arrows button {
