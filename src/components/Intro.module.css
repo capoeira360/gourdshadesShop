@@ -295,8 +295,9 @@
 
   .imageFrame {
     transform: none; /* Center naturally on tablets */
-    width: 100%;
-    max-width: clamp(500px, 90vw, 860px); /* Slight reduction for tablet sizing */
+    /* Increase hero image size by 0.7in on medium devices without affecting layout paddings */
+    width: calc(100% + 0.7in);
+    max-width: calc(clamp(500px, 90vw, 860px) + 0.7in); /* Allow extra width */
     aspect-ratio: 3 / 4;
     margin: 0 auto; /* Center horizontally */
     margin-top: 1.5in; /* Push image downwards ~1.5 inch on tablets */

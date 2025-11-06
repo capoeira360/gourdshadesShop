@@ -6,6 +6,7 @@ interface PanelState {
   isNavigationOpen: boolean;
   isEnquiryOpen: boolean;
   isScrollingDown: boolean;
+  isUiAutoHidden: boolean;
 }
 
 interface PanelContextType {
@@ -13,6 +14,7 @@ interface PanelContextType {
   setNavigationOpen: (isOpen: boolean) => void;
   setEnquiryOpen: (isOpen: boolean) => void;
   setScrollingDown: (isDown: boolean) => void;
+  setUiAutoHidden: (hidden: boolean) => void;
 }
 
 const PanelContext = createContext<PanelContextType | undefined>(undefined);
@@ -22,6 +24,7 @@ export function PanelProvider({ children }: { children: ReactNode }) {
     isNavigationOpen: false,
     isEnquiryOpen: false,
     isScrollingDown: false,
+    isUiAutoHidden: false,
   });
 
   const setNavigationOpen = useCallback((isOpen: boolean) => {
@@ -36,6 +39,10 @@ export function PanelProvider({ children }: { children: ReactNode }) {
     setState(prev => ({ ...prev, isScrollingDown: isDown }));
   }, []);
 
+  const setUiAutoHidden = useCallback((hidden: boolean) => {
+    setState(prev => ({ ...prev, isUiAutoHidden: hidden }));
+  }, []);
+
   return (
     <PanelContext.Provider
       value={{
@@ -43,6 +50,7 @@ export function PanelProvider({ children }: { children: ReactNode }) {
         setNavigationOpen,
         setEnquiryOpen,
         setScrollingDown,
+        setUiAutoHidden,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import { usePanel } from '@/contexts/PanelContext';
 
 const LogoFixed: React.FC = () => {
   const { state } = usePanel();
-  const hidden = state.isScrollingDown;
+  const hidden = state.isScrollingDown || state.isUiAutoHidden;
 
   return (
     <motion.div

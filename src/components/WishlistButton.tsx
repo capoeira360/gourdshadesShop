@@ -12,7 +12,7 @@ const WishlistButton: React.FC = () => {
   const { state: panelState } = usePanel();
 
   // Hide button when navigation or enquiry panels are open, or when scrolling down
-  const isHidden = panelState.isNavigationOpen || panelState.isEnquiryOpen || panelState.isScrollingDown;
+  const isHidden = panelState.isNavigationOpen || panelState.isEnquiryOpen || panelState.isScrollingDown || panelState.isUiAutoHidden;
 
   const buttonVariants = {
     hover: { 

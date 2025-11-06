@@ -14,8 +14,8 @@ const EnquiryCart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Hide cart button when navigation panel is open or user is scrolling down
-  const isCartButtonHidden = panelState.isNavigationOpen || panelState.isScrollingDown;
+  // Hide cart button when navigation panel is open, user is scrolling down, or after inactivity
+  const isCartButtonHidden = panelState.isNavigationOpen || panelState.isScrollingDown || panelState.isUiAutoHidden;
 
   const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
