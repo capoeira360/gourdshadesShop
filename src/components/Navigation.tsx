@@ -214,11 +214,17 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-40 overflow-y-auto"
+            className="fixed inset-0 z-[60] overflow-y-auto overflow-x-hidden"
             initial="closed"
             animate="open"
             exit="closed"
             variants={menuVariants}
+            style={{
+              paddingTop: 'env(safe-area-inset-top)',
+              paddingRight: 'env(safe-area-inset-right)',
+              paddingBottom: 'env(safe-area-inset-bottom)',
+              paddingLeft: 'env(safe-area-inset-left)'
+            }}
           >
             {/* Sliding Background */}
             <motion.div
@@ -268,7 +274,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               {/* Main Navigation Area */}
               <div className="flex-1 flex">
                 {/* Left Side - Navigation Links Following Diagonal Flow */}
-                <div className="flex-1 flex flex-col justify-center items-start pl-4 pr-4 pt-20 sm:pl-10 sm:pr-8 lg:pl-16">
+                <div className="flex-1 flex flex-col justify-start items-start pl-4 pr-4 pt-8 sm:pl-10 sm:pr-8 lg:pl-16">
                   <motion.nav className="relative">
                   {/* Home - Top Left */}
                   <motion.div
@@ -286,7 +292,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[0].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[0].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -317,7 +323,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[1].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8 ml-2 sm:ml-8"
+                    className="mb-6 sm:mb-8"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -328,7 +334,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[1].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[1].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -359,7 +365,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[2].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8 ml-3 sm:ml-16"
+                    className="mb-6 sm:mb-8"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -370,7 +376,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[2].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[2].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -401,7 +407,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[3].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8 ml-4 sm:ml-24"
+                    className="mb-6 sm:mb-8"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -412,7 +418,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[3].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[3].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -443,7 +449,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[4].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-10 sm:mb-16 ml-5 sm:ml-32"
+                    className="mb-10 sm:mb-16"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -454,7 +460,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[4].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[4].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -480,6 +486,21 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     </Link>
                   </motion.div>
                 </motion.nav>
+                {/* Horizontal divider for small devices, after last navigation item */}
+                <div className="block md:hidden w-full h-px bg-white/20 mt-6 mb-4" />
+                {/* Small devices: image preview after the divider, reduced size */}
+                <div className="block md:hidden w-full flex justify-center mt-2 mb-6">
+                  <div className="w-[280px] h-[238px] bg-white/10 rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-lg">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={(menuItems.find(item => item.name === hoveredLink)?.preview) || menuItems[0].preview}
+                        alt={`${hoveredLink || menuItems[0].name} preview`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
                 </div>
 
                 {/* Vertical Divider Line */}
@@ -501,7 +522,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
-                        className="w-[544px] h-[444px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
+        className="md:w-[380px] md:h-[330px] lg:w-[480px] lg:h-[438px] xl:w-[544px] xl:h-[502px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
                       >
                         {/* Display the actual preview image */}
                         <div className="relative w-full h-full">
