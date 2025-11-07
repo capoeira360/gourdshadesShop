@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-16 sm:top-24 md:top-[calc(50vh-300px)] h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
+    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -235,19 +235,19 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
-    const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.3;
+    const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.45;
     
-    // Enhanced scroll-based trigger similar to products page
-     if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+    // Trigger change when the section is mostly in view (delayed)
+     if (entry.isIntersecting && entry.intersectionRatio >= 0.75) {
        // Clear any existing timeout
        if (timeoutRef.current) {
          clearTimeout(timeoutRef.current);
        }
        
-       // Set a timeout to ensure stable detection
+       // Debounce to allow current card to pass before switching
        timeoutRef.current = setTimeout(() => {
          onScrollIntoView();
-       }, 50);
+       }, 400);
      }
     
     if (newIsVisible !== isVisible) {
@@ -257,8 +257,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.8, 1.0], // More granular thresholds
-      rootMargin: '-20% 0px -20% 0px' // Less restrictive - center 60% of viewport
+      threshold: [0, 0.25, 0.5, 0.75, 1.0],
+      // Focus on the central 30% of viewport to delay switching
+      rootMargin: '-35% 0px -35% 0px'
     });
 
     if (sectionRef.current) {
@@ -288,7 +289,8 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   return (
     <motion.div
       ref={sectionRef}
-      className={`h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
+      data-section-id={section.id}
+      className={`about-section-row h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
         isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
       }`}
       variants={variants}
@@ -342,6 +344,7 @@ const AboutPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<AboutSection | null>(null);
   const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const activeChangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const sections: AboutSection[] = useMemo(() => [
     {
@@ -376,12 +379,12 @@ const AboutPage: React.FC = () => {
     },
     {
       id: 'mission',
-      title: 'Our Mission',
+      title: 'My Mission',
       subtitle: 'Illuminating Lives',
       content: [
-        'We believe that exceptional lighting transforms not just rooms, but lives. Our mission is to create lighting solutions that enhance the way people live, work, and connect.',
-        'Through thoughtful design and meticulous craftsmanship, we aim to bring warmth, beauty, and functionality to every space we illuminate.',
-        'Our commitment extends beyond creating beautiful products – we strive to build lasting relationships with our clients and contribute positively to our communities.'
+        'I believe that exceptional lighting transforms not just rooms, but lives. My mission is to create lighting solutions that enhance the way people live, work, and connect.',
+        'Through thoughtful design and meticulous craftsmanship, I aim to bring warmth, beauty, and functionality to every space I illuminate.',
+        'My commitment extends beyond creating beautiful products – I strive to build lasting relationships with my clients and contribute positively to my communities.'
       ],
       image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGOEY4Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMjAwIDEyMEwyMDAgMjgwTTE0MCAyMDBMMjYwIDIwME0xNTUgMTU1TDI0NSAyNDVNMjQ1IDE1NUwxNTUgMjQ1IiBzdHJva2U9IiNEQkI0MkMiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjMwIiBmaWxsPSIjREJCNDJDIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiNGRkZGRkYiLz4KPHN2Zz4='
     }
@@ -410,6 +413,52 @@ const AboutPage: React.FC = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Global observer to pick the most visible section (works both directions)
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('.about-section-row'));
+    const ratios = new Map<string, number>();
+
+    const globalObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const el = entry.target as HTMLElement;
+        const id = el.dataset.sectionId;
+        if (!id) return;
+        ratios.set(id, entry.intersectionRatio);
+      });
+
+      // Pick the section with highest intersection ratio
+      let bestId: string | null = null;
+      let bestRatio = 0;
+      ratios.forEach((ratio, id) => {
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestId = id;
+        }
+      });
+
+      if (bestId && !isHovering) {
+        if (activeChangeTimeoutRef.current) {
+          clearTimeout(activeChangeTimeoutRef.current);
+        }
+        activeChangeTimeoutRef.current = setTimeout(() => {
+          const next = sections.find((s) => s.id === bestId);
+          if (next && next.id !== activeSection?.id) {
+            setActiveSection(next);
+          }
+        }, 350);
+      }
+    }, { threshold: [0, 0.25, 0.5, 0.75, 0.85, 1], rootMargin: '-30% 0px -30% 0px' });
+
+    elements.forEach((el) => globalObserver.observe(el));
+
+    return () => {
+      globalObserver.disconnect();
+      if (activeChangeTimeoutRef.current) {
+        clearTimeout(activeChangeTimeoutRef.current);
+      }
+    };
+  }, [sections, isHovering, activeSection]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -455,9 +504,36 @@ const AboutPage: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* Split View Layout */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      {/* Mobile/Tablet Layout: Sticky image above scrolling text */}
+      <div className="max-w-7xl mx-auto px-6 pb-24 lg:hidden">
+        <AboutImage section={activeSection} />
+        <div className="space-y-0 mt-6">
+          {sections.map((section, index) => (
+            <SectionRow 
+              key={section.id} 
+              section={section} 
+              index={index}
+              isActive={activeSection?.id === section.id}
+              onEnter={() => {
+                setIsHovering(true);
+                setActiveSection(section);
+              }}
+              onLeave={() => {
+                setIsHovering(false);
+              }}
+              onScrollIntoView={() => {
+                if (!isHovering) {
+                  setActiveSection(section);
+                }
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Layout: Split view with sticky image on right */}
+      <div className="max-w-7xl mx-auto px-6 pb-24 hidden lg:block">
+        <div className="grid grid-cols-2 gap-12">
           {/* Left Side - Content Sections */}
           <div className="space-y-0">
             {sections.map((section, index) => (
@@ -472,7 +548,6 @@ const AboutPage: React.FC = () => {
                 }}
                 onLeave={() => {
                   setIsHovering(false);
-                  // Don't automatically change image when leaving hover
                 }}
                 onScrollIntoView={() => {
                   if (!isHovering) {
@@ -484,7 +559,7 @@ const AboutPage: React.FC = () => {
           </div>
 
           {/* Right Side - Sticky Image */}
-          <div className="lg:block hidden">
+          <div>
             <AboutImage section={activeSection} />
           </div>
         </div>
