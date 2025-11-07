@@ -84,21 +84,21 @@ const ServicesPage: React.FC = () => {
 
       {/* Community Services */}
       <section className="py-24">
-        <div className="max-w-6xl mx-auto px-4" style={{ paddingLeft: '0rem', paddingRight: '0rem' }}>
+        <div className="max-w-6xl mx-auto px-4">
           <div className="space-y-8">
             {/* First Service Card */}
             <motion.div
-              className="bg-white rounded-lg shadow-sm p-8"
+              className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               viewport={{ once: true }}
-              style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}
+              
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
+                  <div className="relative bg-gray-100 rounded-lg overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={outreachImages[outreachImageIndex]}
                       alt="Community Lighting Consultation"
@@ -136,12 +136,12 @@ const ServicesPage: React.FC = () => {
                 </div>
                 
                 {/* Content Section */}
-                <div className="space-y-6" style={{ marginLeft: '-72px' }}>
+                <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                       Outreach
                     </h1>
-                    <div className="text-gray-700 leading-relaxed space-y-4" style={{ marginLeft: '216px', maxWidth: '500px' }}>
+                    <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I am truly grateful for the talent I have been blessed with, and I am passionate about sharing my knowledge with those eager to learn and grow. One of the most rewarding experiences in my journey has been my involvement with <span className="font-semibold text-accent bg-accent/10 px-2 py-1 rounded">The Hidden Hope Foundation</span> in Karatu, an organization dedicated to empowering people with disabilities. As part of a creative development program, I had the privilege of teaching and inspiring this incredible group, unlocking their creative potential and fostering growth.
                       </p>
@@ -159,17 +159,17 @@ const ServicesPage: React.FC = () => {
 
             {/* Second Service Card */}
             <motion.div
-              className="bg-white rounded-lg shadow-sm p-8"
+              className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
-              style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}
+              
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ width: '680px', height: '716px', padding: '20px' }}>
+                  <div className="relative bg-gray-100 rounded-lg overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={exhibitionImages[exhibitionImageIndex]}
                       alt="Community Installation & Support"
@@ -207,12 +207,12 @@ const ServicesPage: React.FC = () => {
                 </div>
                 
                 {/* Content Section */}
-                <div className="space-y-6" style={{ marginLeft: '-72px' }}>
+                <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ marginLeft: '216px', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                       Exhibition
                     </h1>
-                    <div className="text-gray-700 leading-relaxed space-y-4" style={{ marginLeft: '216px', maxWidth: '500px' }}>
+                    <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I have also been fortunate to participate in various exhibitions across Tanzania, with a special focus on Dar es Salaam. For the past three years, I have proudly taken part in the <span className="font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Artisan Market</span>, attending both of their annual events each year. This experience has allowed me to showcase my work to a diverse audience, connect with fellow artisans, and gain valuable exposure in the creative community.
                       </p>

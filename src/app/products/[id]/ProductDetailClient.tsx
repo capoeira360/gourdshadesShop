@@ -85,7 +85,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="bg-gray-50 pt-24 pb-8" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
-      <div className="max-w-6xl mx-auto px-4" style={{ paddingLeft: '0rem', paddingRight: '0rem' }}>
+      <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Link
             href="/products"
@@ -99,11 +99,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </Link>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-8" style={{ width: 'calc(100% + 72px)', height: 'calc(644px + 72px + 64px)' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="space-y-4">
               <div
-                className="relative bg-gray-100 rounded-lg overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-5"
+                className="relative bg-gray-100 rounded-lg overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
                 onClick={() => openModal(currentImageIndex)}
               >
                 <Image
@@ -207,9 +207,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm" style={{ width: 'calc(100% + 72px)' }}>
+        <div className="bg-white rounded-lg shadow-sm h-[55vh] sm:h-[560px] overflow-y-auto">
           <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-8">
+            <nav className="flex space-x-8 px-4 sm:px-6 lg:px-8">
               <button
                 onClick={() => setActiveTab('description')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
@@ -237,7 +237,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </nav>
           </div>
 
-          <div className="p-8 pb-16">
+          <div className="p-4 sm:p-6 lg:p-8 pb-16">
             {activeTab === 'description' && (
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold" style={{ color: '#91631D', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>Product Description</h3>
