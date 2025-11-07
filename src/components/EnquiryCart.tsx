@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, Mail, Plus, Minus } from 'lucide-react';
 import { useEnquiry } from '@/contexts/EnquiryContext';
@@ -13,6 +13,20 @@ const EnquiryCart: React.FC = () => {
   const { setEnquiryOpen, state: panelState } = usePanel();
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerPadding, setFooterPadding] = useState(240);
+
+  // Dynamically pad the scroller bottom to match footer height + safe area
+  useLayoutEffect(() => {
+    const updatePadding = () => {
+      const h = footerRef.current?.offsetHeight ?? 0;
+      // Add a small buffer so content doesn’t sit flush under the footer
+      setFooterPadding(h + 16);
+    };
+    updatePadding();
+    window.addEventListener('resize', updatePadding);
+    return () => window.removeEventListener('resize', updatePadding);
+  }, [state.items.length]);
 
   // Hide cart button when navigation panel is open, user is scrolling down, or after inactivity
   const isCartButtonHidden = panelState.isNavigationOpen || panelState.isScrollingDown || panelState.isUiAutoHidden;
@@ -167,7 +181,7 @@ const EnquiryCart: React.FC = () => {
               </div>
 
               {/* Cart Content */}
-              <div className="flex flex-col h-full">
+              <div className="relative flex flex-col h-full">
                 {state.items.length === 0 ? (
                   <div className="flex-1 flex items-center justify-center text-gray-500">
                     <div className="text-center">
@@ -178,8 +192,8 @@ const EnquiryCart: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Items List */}
-                    <div className="flex-1 overflow-y-auto p-4">
+                    {/* Items List (scroller) */}
+                    <div className="flex-1 overflow-y-auto p-4" style={{ paddingBottom: `calc(${footerPadding}px + env(safe-area-inset-bottom, 0px))` }}>
                       <motion.div 
                         className="space-y-4"
                         initial="hidden"
@@ -256,10 +270,14 @@ const EnquiryCart: React.FC = () => {
                         ))}
                       </AnimatePresence>
                       </motion.div>
+                      
                     </div>
-
-                    {/* Footer */}
-                    <div className="border-t bg-white p-4 space-y-4 shadow-sm">
+                    {/* Footer fixed to viewport, aligned with cart panel */}
+                    <div
+                      ref={footerRef}
+                      className="fixed right-0 z-[60] w-full max-w-md border-t bg-white p-4 space-y-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] pointer-events-auto"
+                      style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)' }}
+                    >
                       {/* Total */}
                       <div className="space-y-3 bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
                         <div className="flex justify-between items-center">

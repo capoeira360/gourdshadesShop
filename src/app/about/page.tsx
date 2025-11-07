@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center">
+    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center z-0">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -236,24 +236,11 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
     const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.45;
-    
-    // Trigger change when the section is mostly in view (delayed)
-     if (entry.isIntersecting && entry.intersectionRatio >= 0.75) {
-       // Clear any existing timeout
-       if (timeoutRef.current) {
-         clearTimeout(timeoutRef.current);
-       }
-       
-       // Debounce to allow current card to pass before switching
-       timeoutRef.current = setTimeout(() => {
-         onScrollIntoView();
-       }, 400);
-     }
-    
+    // We now rely on the global observer for switching to avoid fast changes on up-scroll.
     if (newIsVisible !== isVisible) {
       setIsVisible(newIsVisible);
     }
-  }, [isVisible, onScrollIntoView]);
+  }, [isVisible]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
@@ -290,7 +277,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
     <motion.div
       ref={sectionRef}
       data-section-id={section.id}
-      className={`about-section-row h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
+      className={`about-section-row relative z-10 h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
         isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
       }`}
       variants={variants}
@@ -345,6 +332,8 @@ const AboutPage: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const activeChangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollYRef = useRef(0);
+  const directionRef = useRef<'up' | 'down'>('down');
 
   const sections: AboutSection[] = useMemo(() => [
     {
@@ -416,6 +405,14 @@ const AboutPage: React.FC = () => {
 
   // Global observer to pick the most visible section (works both directions)
   useEffect(() => {
+    // Track scroll direction to apply direction-aware delays
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      directionRef.current = y < scrollYRef.current ? 'up' : 'down';
+      scrollYRef.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     const elements = Array.from(document.querySelectorAll<HTMLElement>('.about-section-row'));
     const ratios = new Map<string, number>();
 
@@ -437,7 +434,13 @@ const AboutPage: React.FC = () => {
         }
       });
 
-      if (bestId && !isHovering) {
+      const currentActiveRatio = activeSection ? (ratios.get(activeSection.id) || 0) : 0;
+      const delay = directionRef.current === 'up' ? 500 : 400;
+
+      // Hysteresis: require dominance before switching to reduce fast toggles
+      const isDominant = bestRatio >= Math.max(0.55, currentActiveRatio + 0.08);
+
+      if (bestId && !isHovering && isDominant) {
         if (activeChangeTimeoutRef.current) {
           clearTimeout(activeChangeTimeoutRef.current);
         }
@@ -446,9 +449,9 @@ const AboutPage: React.FC = () => {
           if (next && next.id !== activeSection?.id) {
             setActiveSection(next);
           }
-        }, 350);
+        }, delay);
       }
-    }, { threshold: [0, 0.25, 0.5, 0.75, 0.85, 1], rootMargin: '-30% 0px -30% 0px' });
+    }, { threshold: [0, 0.3, 0.55, 0.7, 0.85, 1], rootMargin: '-25% 0px -25% 0px' });
 
     elements.forEach((el) => globalObserver.observe(el));
 
@@ -457,6 +460,7 @@ const AboutPage: React.FC = () => {
       if (activeChangeTimeoutRef.current) {
         clearTimeout(activeChangeTimeoutRef.current);
       }
+      window.removeEventListener('scroll', onScroll);
     };
   }, [sections, isHovering, activeSection]);
 
