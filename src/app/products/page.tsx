@@ -79,8 +79,14 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
   };
 
   return (
-    <div className="relative group">
-      <Link href={`/products/${product.id}`}>
+    <div
+      className="relative group"
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onPointerEnter={onHover}
+      onPointerLeave={onLeave}
+    >
+      <Link href={`/products/${product.id}`} onMouseEnter={onHover} onMouseLeave={onLeave} onPointerEnter={onHover} onPointerLeave={onLeave}>
         <motion.div
           ref={rowRef}
           className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-gray-100 transition-all duration-300 ${
@@ -91,6 +97,8 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
           animate={isVisible ? "visible" : "hidden"}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
+          onPointerEnter={onHover}
+          onPointerLeave={onLeave}
         >
         <div className="flex justify-between items-center">
           <div className="flex-1">
@@ -138,14 +146,9 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
 
   useEffect(() => {
     if (product && product.id !== currentProduct?.id) {
-      setIsTransitioning(true);
-      // Small delay to allow for smooth transition
-      const timer = setTimeout(() => {
-        setCurrentProduct(product);
-        setIsTransitioning(false);
-      }, 150);
-      
-      return () => clearTimeout(timer);
+      // Immediate update for responsive hover behavior
+      setCurrentProduct(product);
+      setIsTransitioning(false);
     } else if (!product) {
       setCurrentProduct(null);
       setIsTransitioning(false);
@@ -702,7 +705,7 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* View Toggle */}
-          <div className="flex items-center bg-gray-100 rounded-full p-1">
+          <div className="hidden md:flex items-center bg-gray-100 rounded-full p-1">
             <button
               className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
                 viewMode === 'list'
@@ -735,9 +738,9 @@ const ProductsPage: React.FC = () => {
 
       {/* Products Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
-        {viewMode === 'list' ? (
-          /* List View - Original Split Layout */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* List View - md+ only (hidden on small) */}
+        {viewMode === 'list' && (
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Product Names */}
             <div className="space-y-0">
               {filteredProducts.map((product, index) => (
@@ -766,22 +769,22 @@ const ProductsPage: React.FC = () => {
             </div>
 
             {/* Right Side - Product Image */}
-            <div className="lg:block hidden">
+            <div className="md:block hidden">
               <ProductImage product={activeProduct} />
             </div>
           </div>
-        ) : (
-          /* Grid View - 4 Products Per Row */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
-            {filteredProducts.map((product, index) => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                index={index}
-              />
-            ))}
-          </div>
         )}
+
+        {/* Grid View - always shown on small; shown on md+ when grid selected */}
+        <div className={`${viewMode === 'list' ? 'grid md:hidden' : 'grid'} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8`}>
+          {filteredProducts.map((product, index) => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              index={index}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
