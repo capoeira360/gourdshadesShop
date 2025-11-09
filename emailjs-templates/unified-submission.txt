@@ -1,0 +1,17 @@
+New {{form_type}} Submission
+
+From: {{name}}
+Email: {{email}}
+Phone: {{phone}}
+
+Message:
+{{message}}
+
+Items:
+{{items_summary}}
+
+Total Items: {{total_items}}
+Total Value: {{total_value}}
+
+Submitted at: {{timestamp}}
+Site: {{site_url}}

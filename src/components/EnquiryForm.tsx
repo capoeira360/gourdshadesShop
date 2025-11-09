@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEnquiry } from '@/contexts/EnquiryContext';
 import { X, Mail, User, Phone, MessageSquare, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -37,6 +38,12 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || '/api/send-contact';
+  const ENQUIRY_ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT || '/api/send-enquiry';
+  const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+  const EMAILJS_TEMPLATE_ID_DEFAULT = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID; // unified template ID
 
   const validateForm = (): boolean => {
     const validation = validateContactForm(formData);
@@ -125,8 +132,52 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         timestamp: new Date().toISOString(),
       };
 
-      // Use contact API if no items, otherwise use enquiry API
-      const apiEndpoint = state.items.length === 0 ? '/api/send-contact' : '/api/send-enquiry';
+      // Prefer EmailJS if configured; otherwise fall back to API endpoints
+      const useEmailJS = Boolean(EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_TEMPLATE_ID_DEFAULT);
+
+      if (useEmailJS) {
+        const isContact = state.items.length === 0;
+        const templateId = EMAILJS_TEMPLATE_ID_DEFAULT!;
+
+        const itemsSummary = isContact
+          ? 'No items'
+          : state.items
+              .map((item) => `${item.name} × ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
+              .join('\n');
+
+        const params = {
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone,
+          message: sanitizedData.message,
+          timestamp: sanitizedData.timestamp,
+          site_url: process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : ''),
+          form_type: isContact ? 'Contact' : 'Enquiry',
+          // Enquiry-specific params
+          items_summary: itemsSummary,
+          total_items: String(isContact ? 0 : state.totalItems),
+          total_value: `$${(isContact ? 0 : state.totalValue).toFixed(2)}`,
+        };
+
+        await emailjs.send(
+          EMAILJS_SERVICE_ID!,
+          templateId,
+          params,
+          { publicKey: EMAILJS_PUBLIC_KEY! }
+        );
+
+        setSubmitStatus('success');
+        clearCart();
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus('idle');
+          setFormData({ name: '', email: '', phone: '', message: '' });
+        }, 2000);
+        return;
+      }
+
+      // Fallback to server API endpoints
+      const apiEndpoint = state.items.length === 0 ? CONTACT_ENDPOINT : ENQUIRY_ENDPOINT;
       const requestBody = state.items.length === 0 
         ? {
             name: sanitizedData.name,
@@ -145,13 +196,23 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         body: JSON.stringify(requestBody),
       });
 
-      const result = await response.json();
+      // Try to parse JSON; if not JSON (e.g., static 404 page), fall back to text
+      type ApiError = {
+        error?: string;
+        details?: { field: string; message: string }[];
+      };
+      let result: ApiError = {};
+      try {
+        result = (await response.json()) as ApiError;
+      } catch {
+        const text = await response.text();
+        result = { error: text };
+      }
 
       if (!response.ok) {
         if (response.status === 429) {
           setErrors({ general: 'Too many requests. Please try again later.' });
         } else if (result.details) {
-          // Handle validation errors from server
           const newErrors: FormErrors = {};
           result.details.forEach((detail: { field: string; message: string }) => {
             const field = detail.field.split('.').pop() as keyof FormErrors;
@@ -167,8 +228,6 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
       setSubmitStatus('success');
       clearCart();
-      
-      // Auto-close after success
       setTimeout(() => {
         onClose();
         setSubmitStatus('idle');
@@ -289,8 +348,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.name ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your full name"
                     variants={inputVariants}
@@ -314,8 +373,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.email ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your email address"
                     variants={inputVariants}
@@ -339,8 +398,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.phone ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.phone ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your phone number"
                     variants={inputVariants}
@@ -364,8 +423,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-gray-900 placeholder-gray-500 ${
-                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] resize-none ${
+                      errors.message ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Tell us about your requirements or any questions you have..."
                     variants={inputVariants}

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const ContactPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,11 +40,44 @@ const ContactPage: React.FC = () => {
     }));
   };
 
+  const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || '/api/send-contact';
+  const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID; // unified template ID
+  const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/send-contact', {
+      const timestamp = new Date().toISOString();
+      const useEmailJS = Boolean(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY);
+
+      if (useEmailJS) {
+        const params = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          timestamp,
+          site_url: process.env.NEXT_PUBLIC_SITE_URL || window.location.origin,
+          form_type: 'Contact',
+          items_summary: 'No items',
+          total_items: '0',
+          total_value: '$0.00',
+        };
+        await emailjs.send(
+          EMAILJS_SERVICE_ID!,
+          EMAILJS_TEMPLATE_ID!,
+          params,
+          { publicKey: EMAILJS_PUBLIC_KEY! }
+        );
+        alert('Message sent successfully! We\'ll get back to you within 24 hours.');
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        return;
+      }
+
+      // Fallback to API endpoint for non-static hosting
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +87,7 @@ const ContactPage: React.FC = () => {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          timestamp: new Date().toISOString(),
+          timestamp,
         }),
       });
 
@@ -61,8 +95,15 @@ const ContactPage: React.FC = () => {
         alert('Message sent successfully! We\'ll get back to you within 24 hours.');
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       } else {
-        const errorData = await response.json();
-        alert(errorData.error || 'Failed to send message. Please try again.');
+        let errorText = 'Failed to send message. Please try again.';
+        try {
+          const errorData = await response.json();
+          errorText = errorData.error || errorText;
+        } catch {
+          const text = await response.text();
+          if (text) errorText = text;
+        }
+        alert(errorText);
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -181,7 +222,7 @@ const ContactPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="Your full name"
                   />
                 </motion.div>
@@ -202,7 +243,7 @@ const ContactPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="your.email@example.com"
                   />
                 </motion.div>
@@ -224,7 +265,7 @@ const ContactPage: React.FC = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="(555) 123-4567"
                   />
                 </motion.div>
@@ -243,7 +284,7 @@ const ContactPage: React.FC = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors text-black"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                   >
                     <option value="">Select an interest</option>
                     <option value="consultation">Lighting Consultation</option>
@@ -271,7 +312,7 @@ const ContactPage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent transition-colors resize-vertical text-black"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors resize-vertical"
                   placeholder="Tell us about your project, space, and lighting needs..."
                 />
               </motion.div>
