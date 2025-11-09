@@ -15,6 +15,31 @@ export default function Intro() {
   const heroSubtitle = useRef(null);
 
   useEffect(() => {
+    // Keep subtitle width aligned to header width on small devices only
+    const updateSubtitleWidth = () => {
+      if (!heroTitle.current || !heroSubtitle.current || typeof window === 'undefined') return;
+      const isSmall = window.matchMedia('(max-width: 768px)').matches;
+      if (isSmall) {
+        const titleWidth = heroTitle.current.offsetWidth;
+        heroSubtitle.current.style.width = `${titleWidth}px`;
+      } else {
+        heroSubtitle.current.style.width = '';
+      }
+    };
+
+    // Initial alignment after fonts load and layout settle
+    const raf = requestAnimationFrame(updateSubtitleWidth);
+    window.addEventListener('resize', updateSubtitleWidth);
+    window.addEventListener('orientationchange', updateSubtitleWidth);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', updateSubtitleWidth);
+      window.removeEventListener('orientationchange', updateSubtitleWidth);
+    };
+  }, []);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       // Check if all refs are available before proceeding
       if (!background.current || !homeHeader.current || !heroTitle.current || !heroSubtitle.current) {
@@ -65,6 +90,11 @@ export default function Intro() {
               y: progress * -400,
               opacity: 1 - progress
             });
+            // Re-align subtitle width on small devices as text scales
+            if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
+              const titleWidth = heroTitle.current.offsetWidth;
+              heroSubtitle.current.style.width = `${titleWidth}px`;
+            }
           }
         }
       });
@@ -104,7 +134,7 @@ export default function Intro() {
       <div className={styles.intro}>
         <div className={styles.textContent}>
           <h1 className={styles.heroTitle} ref={heroTitle}>
-            <span className={styles.handText}>HAND</span> <span className={styles.underlinedText}>MADE</span>
+            <span className={styles.handText}>Gourd</span> <span className={styles.underlinedText}>Shades</span>
           </h1>
           
           <p className={styles.heroSubtitle} ref={heroSubtitle}>

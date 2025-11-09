@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +14,34 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const { state: panelState, setNavigationOpen } = usePanel();
+
+  // Refs for each nav link wrapper to support touch sliding detection
+  const linkRefs = useRef<Array<HTMLDivElement | null>>([]);
+
+  // Touch/pointer move handler: map finger Y to the link under it
+  const handleMoveAtClientY = (clientY: number) => {
+    for (let i = 0; i < menuItems.length; i++) {
+      const el = linkRefs.current[i];
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (clientY >= rect.top && clientY <= rect.bottom) {
+        const name = menuItems[i].name;
+        if (hoveredLink !== name) setHoveredLink(name);
+        break;
+      }
+    }
+  };
+
+  const handlePointerMove: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    if (e.pointerType === 'touch') {
+      handleMoveAtClientY(e.clientY);
+    }
+  };
+
+  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const t = e.touches[0];
+    if (t) handleMoveAtClientY(t.clientY);
+  };
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -272,16 +300,21 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
             {/* Menu Content */}
             <div className="relative h-full flex flex-col">
               {/* Main Navigation Area */}
-              <div className="flex-1 flex">
+              <div className="flex-1 flex mt-4 md:mt-0">
                 {/* Left Side - Navigation Links Following Diagonal Flow */}
-                <div className="flex-1 flex flex-col justify-start items-start pl-4 pr-4 pt-8 sm:pl-10 sm:pr-8 lg:pl-16">
+                <div
+                  className="flex-1 flex flex-col justify-start items-start pl-2 pr-2 pt-2 sm:pl-6 sm:pr-5 sm:pt-5 lg:pl-14"
+                  onPointerMove={handlePointerMove}
+                  onTouchMove={handleTouchMove}
+                >
                   <motion.nav className="relative">
                   {/* Home - Top Left */}
                   <motion.div
+                    ref={(el) => { linkRefs.current[0] = el; }}
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[0].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-8"
+                    className="mb-1 sm:mb-4 md:mb-6"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -292,7 +325,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[0].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-4xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[0].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -301,6 +334,20 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           variants={characterVariants}
                           className="inline-block"
                           style={{ transformOrigin: 'center bottom' }}
+                          animate={
+                            hoveredLink === menuItems[0].name
+                              ? {
+                                  rotateY: Math.sin(charIndex * 0.5) * 10,
+                                  scale: 1.1,
+                                  color: '#DBB42C',
+                                }
+                              : { rotateY: 0, scale: 1 }
+                          }
+                          transition={{
+                            delay: charIndex * 0.02,
+                            duration: 0.3,
+                            ease: 'easeOut',
+                          }}
                           whileHover={{
                             rotateY: Math.sin(charIndex * 0.5) * 10,
                             scale: 1.1,
@@ -320,10 +367,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                   {/* Products - Slightly indented */}
                   <motion.div
+                    ref={(el) => { linkRefs.current[1] = el; }}
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[1].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8"
+                    className="mb-1 sm:mb-4 md:mb-6"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -334,7 +382,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[1].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-4xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[1].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -343,8 +391,22 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           variants={characterVariants}
                           className="inline-block"
                           style={{ transformOrigin: 'center bottom' }}
-                          whileHover={{
-                            rotateY: Math.sin(charIndex * 0.5) * -10,
+                          animate={
+                            hoveredLink === menuItems[1].name
+                              ? {
+                                  rotateY: Math.sin(charIndex * 0.5) * -10,
+                                  scale: 1.1,
+                                  color: '#DBB42C',
+                                }
+                              : { rotateY: 0, scale: 1 }
+                          }
+                          transition={{
+                            delay: charIndex * 0.02,
+                            duration: 0.3,
+                            ease: 'easeOut',
+                          }}
+                          whileHover={{ 
+                            rotateY: Math.sin(charIndex * 0.5) * -10, 
                             scale: 1.1,
                             color: "#DBB42C",
                             transition: {
@@ -362,10 +424,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                   {/* About - More indented */}
                   <motion.div
+                    ref={(el) => { linkRefs.current[2] = el; }}
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[2].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8"
+                    className="mb-1 sm:mb-4 md:mb-6"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -376,7 +439,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[2].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-4xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[2].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -385,8 +448,22 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           variants={characterVariants}
                           className="inline-block"
                           style={{ transformOrigin: 'center bottom' }}
-                          whileHover={{
-                            rotateY: Math.sin(charIndex * 0.5) * 10,
+                          animate={
+                            hoveredLink === menuItems[2].name
+                              ? {
+                                  rotateY: Math.sin(charIndex * 0.5) * 10,
+                                  scale: 1.1,
+                                  color: '#DBB42C',
+                                }
+                              : { rotateY: 0, scale: 1 }
+                          }
+                          transition={{
+                            delay: charIndex * 0.02,
+                            duration: 0.3,
+                            ease: 'easeOut',
+                          }}
+                          whileHover={{ 
+                            rotateY: Math.sin(charIndex * 0.5) * 10, 
                             scale: 1.1,
                             color: "#DBB42C",
                             transition: {
@@ -404,10 +481,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                   {/* Community - Even more indented */}
                   <motion.div
+                    ref={(el) => { linkRefs.current[3] = el; }}
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[3].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-6 sm:mb-8"
+                    className="mb-1 sm:mb-4 md:mb-6"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: -5, 
@@ -418,7 +496,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[3].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-4xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[3].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -427,8 +505,22 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           variants={characterVariants}
                           className="inline-block"
                           style={{ transformOrigin: 'center bottom' }}
-                          whileHover={{
-                            rotateY: Math.sin(charIndex * 0.5) * -10,
+                          animate={
+                            hoveredLink === menuItems[3].name
+                              ? {
+                                  rotateY: Math.sin(charIndex * 0.5) * -10,
+                                  scale: 1.1,
+                                  color: '#DBB42C',
+                                }
+                              : { rotateY: 0, scale: 1 }
+                          }
+                          transition={{
+                            delay: charIndex * 0.02,
+                            duration: 0.3,
+                            ease: 'easeOut',
+                          }}
+                          whileHover={{ 
+                            rotateY: Math.sin(charIndex * 0.5) * -10, 
                             scale: 1.1,
                             color: "#DBB42C",
                             transition: {
@@ -446,10 +538,11 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
 
                   {/* Contact - Most indented */}
                   <motion.div
+                    ref={(el) => { linkRefs.current[4] = el; }}
                     variants={linkVariants}
                     onMouseEnter={() => setHoveredLink(menuItems[4].name)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    className="mb-10 sm:mb-16"
+                    className="mb-2 sm:mb-6 md:mb-10"
                     style={{ perspective: 1000 }}
                     whileHover={{ 
                       rotateY: 5, 
@@ -460,7 +553,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <Link
                       href={menuItems[4].href}
                       onClick={() => setIsOpen(false)}
-                      className="block text-3xl sm:text-5xl md:text-5xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
+                      className="block text-3xl sm:text-5xl md:text-4xl lg:text-8xl font-light text-white hover:text-accent transition-colors duration-300"
                     >
                       {menuItems[4].name.split('').map((char, charIndex) => (
                         <motion.span
@@ -469,8 +562,22 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                           variants={characterVariants}
                           className="inline-block"
                           style={{ transformOrigin: 'center bottom' }}
-                          whileHover={{
-                            rotateY: Math.sin(charIndex * 0.5) * 10,
+                          animate={
+                            hoveredLink === menuItems[4].name
+                              ? {
+                                  rotateY: Math.sin(charIndex * 0.5) * 10,
+                                  scale: 1.1,
+                                  color: '#DBB42C',
+                                }
+                              : { rotateY: 0, scale: 1 }
+                          }
+                          transition={{
+                            delay: charIndex * 0.02,
+                            duration: 0.3,
+                            ease: 'easeOut',
+                          }}
+                          whileHover={{ 
+                            rotateY: Math.sin(charIndex * 0.5) * 10, 
                             scale: 1.1,
                             color: "#DBB42C",
                             transition: {
@@ -539,34 +646,34 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                 </div>
               </div>
 
-              {/* Footer Section - Reorganized Layout */}
+              {/* Footer Section - Mobile Left/Right Layout */}
               <div className="absolute bottom-0 left-0 right-0 pb-8 sm:pb-12 px-6 sm:px-16">
                 <motion.div
-                  className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-0"
+                  className="flex justify-between items-end"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
                 >
-                  {/* Left Corner - Contact Info */}
+                  {/* Lower Left - Contact Info */}
                   <div className="text-white/60 text-sm">
                     <a href="mailto:gourdshadestz@gmail.com" className="hover:text-white transition-colors cursor-pointer block">gourdshadestz@gmail.com</a>
                     <p>+255 746 754 876</p>
                   </div>
 
-                  {/* Center - Social Links */}
-                  <div className="flex space-x-6 sm:space-x-8 text-white/60 text-sm">
-                    <a href="https://www.instagram.com/gourdshadestz?igsh=MTZteGx1OXR5Zno1NQ==" className="hover:text-white transition-colors">
-                      Instagram
-                    </a>
-                    <a href="https://www.facebook.com/gourdshadestz" className="hover:text-white transition-colors">
-                      Facebook
-                    </a>
-                  </div>
-
-                  {/* Right Corner - Business Info */}
-                  <div className="text-white/60 text-sm">
-                    <p>Gourd Shades</p>
-                    <p>Handcrafted Lighting</p>
+                  {/* Lower Right - Social + Business Info */}
+                  <div className="flex flex-col items-end text-white/60 text-sm">
+                    <div className="flex flex-wrap justify-end gap-x-6 sm:gap-x-8">
+                      <a href="https://www.instagram.com/gourdshadestz?igsh=MTZteGx1OXR5Zno1NQ==" className="hover:text-white transition-colors">
+                        Instagram
+                      </a>
+                      <a href="https://www.facebook.com/gourdshadestz" className="hover:text-white transition-colors">
+                        Facebook
+                      </a>
+                    </div>
+                    <div className="mt-2 text-right">
+                      <p>Gourd Shades</p>
+                      <p>Handcrafted Lighting</p>
+                    </div>
                   </div>
                 </motion.div>
               </div>

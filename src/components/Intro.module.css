@@ -153,7 +153,7 @@
     position: relative; /* Create stacking context for safe z-index */
     z-index: 2; /* Ensure text sits above any overlapping elements */
     /* Use transform for visual offset without affecting layout/padding */
-    transform: translateY(2.6in);
+    transform: translateY(2.3in);
     will-change: transform;
     margin-bottom: 0.75rem; /* Add space before the image */
   }
@@ -178,19 +178,24 @@
   }
   
   .heroTitle {
-    font-size: clamp(1.8rem, 10vw, 3.4rem);
+    font-size: clamp(2.1rem, 12vw, 3.8rem);
+    display: inline-block; /* Use intrinsic text width so subtitle can match */
     line-height: 1;
   }
   
   .heroSubtitle {
-    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
+    max-width: none; /* Allow JS to set exact width */
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Center the block when width is set */
   }
 
   .imageFrame {
     height: auto; /* Natural height */
     min-height: 320px; /* Slightly reduce minimum height */
     aspect-ratio: 3 / 4; /* Deterministic size for fill image */
-    transform: none; /* Center naturally on mobile */
+    transform: translateY(-0.3in); /* Pull image upward visually without affecting layout */
     border-width: 8px; /* Slightly thinner border on mobile */
     padding: 6px;
     width: 100%;
@@ -226,7 +231,7 @@
     position: relative;
     z-index: 2; /* Ensure text appears above image if overlapping */
     /* Use transform for visual offset without affecting layout/padding */
-    transform: translateY(2.8in);
+    transform: translateY(2.5in);
     will-change: transform;
     margin-bottom: 0.5rem; /* Bring text closer to the image */
   }
@@ -243,7 +248,7 @@
     width: 100%;
     max-width: clamp(440px, 90vw, 640px); /* Slight width reduction on very small phones */
     margin: 0 auto;
-    transform: none; /* Center naturally on phones */
+    transform: translateY(-0.3in); /* Pull image upward visually without affecting layout */
     border-width: 6px;
     border-radius: 16px;
     margin-top: 1.5in; /* Push image downwards ~1.5 inch on very small phones */
@@ -307,6 +312,15 @@
     object-fit: contain;
     object-position: center;
     display: block;
+  }
+
+  /* Increase hero text sizing specifically for tablets/medium devices */
+  .heroTitle {
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1;
+  }
+  .heroSubtitle {
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
   }
 }
 

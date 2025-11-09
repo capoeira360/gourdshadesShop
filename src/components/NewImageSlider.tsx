@@ -22,7 +22,6 @@ interface SliderItem {
 
 const NewImageSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const autoNextRef = useRef<NodeJS.Timeout | null>(null);

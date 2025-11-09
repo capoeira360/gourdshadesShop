@@ -64,6 +64,70 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 NODE_ENV=production
 ```
 
+## ✉️ EmailJS Setup (Static-Friendly Forms)
+
+If deploying to a static host (no server-side API routes), you can enable contact and enquiry forms via EmailJS.
+
+### Required Environment Variables
+
+Add these to `.env.local` (and your hosting dashboard for production):
+
+```env
+# EmailJS Public Key and Service
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your-emailjs-public-key
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=your-emailjs-service-id
+
+# Template IDs
+# Use one template or separate templates for each form
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your-default-template-id
+NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID=optional-contact-template-id
+NEXT_PUBLIC_EMAILJS_ENQUIRY_TEMPLATE_ID=optional-enquiry-template-id
+
+# Site URL used in emails
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+### Template Parameters Used
+
+Your EmailJS templates should reference these variables:
+
+- `name` — sender name
+- `email` — sender email
+- `phone` — sender phone
+- `message` — message content
+- `timestamp` — ISO timestamp
+- `site_url` — site origin or configured URL
+- `items_summary` — newline-separated list of cart items (enquiry form)
+- `total_items` — total count of items (enquiry form)
+- `total_value` — formatted total value like `$123.45` (enquiry form)
+
+Example template body:
+
+```
+New {{#if items_summary}}Enquiry{{else}}Contact{{/if}} from {{name}}
+
+Email: {{email}}
+Phone: {{phone}}
+Message:
+{{message}}
+
+{{#if items_summary}}
+Items:
+{{items_summary}}
+Total Items: {{total_items}}
+Total Value: {{total_value}}
+{{/if}}
+
+Submitted at: {{timestamp}}
+Site: {{site_url}}
+```
+
+### Notes
+
+- When EmailJS variables are set, the app sends messages client-side; otherwise it falls back to Next.js API routes.
+- For static hosting, ensure EmailJS variables are set; API endpoints will 404.
+- Protect your EmailJS account by using the public key (not secret key) on the client.
+
 ## 📋 Pre-Deployment Checklist
 
 - ✅ Production build completed successfully
