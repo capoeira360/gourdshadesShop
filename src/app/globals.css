@@ -12,6 +12,11 @@
   --color-text-secondary: #666666;
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;
+  --color-brand-orange: #E59330;
+  --color-brand-orange-dark: #D98220;
+  --color-brand-dark: #1F1F1F;
+  --color-brand-gray: #F8F8F8;
+  --color-brand-text: #333333;
 }
 
 /* Custom theme variables are defined in :root for broad tooling support */

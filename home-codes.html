@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Artisan Haven</title>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind CSS Custom Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-orange': {
+              'DEFAULT': '#E59330',
+              'dark': '#D98220'
+            },
+            'brand-dark': '#1F1F1F',
+            'brand-gray': '#F8F8F8',
+            'brand-text': '#333333'
+          },
+          fontFamily: {
+            sans: ['"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Custom CSS for specific elements -->
+<style data-purpose="custom-styles">body {
+    font-family: "Montserrat", sans-serif;
+    color: #333
+    }
+.hero-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCDEdPRU5Gz16kDgILqiGJzrLzABWLCBbnjFLjadOrwdkZNYXZ_BkmFlOUh1E0WZOEQyB8jwcGsPhn6bFUAbOrPM_QiArD1siAzvIfX0ArHqfkEWGAH7P8HSoOtZyNxWtToSmCDTlgXlgTHt93pCLRAmumjnmVkylVHwBc_LzL810p-cZ5Lgz1QGYXnL3X1bz3qcR7_Dr83e-iZP71Ohv7EVFnTpzrbfq8TVCz43YUlUuFdLCW2WaqPj2lelLg-x2Pt0YTISNybyyfd);
+    background-size: cover;
+    background-position: center
+    }
+.pottery-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBW1JIf6u1yDHod31otjNchEO5-EsrdYW2_VlrkBHWCeWrNE7xEVrP2wd4PzJL3uHsbEXYfIqvRcaiyGqQEGFjHljeFGpSxqUu57VZee1nEF7OZXLRN6S2BzgxiQUF5xBdG4I8KT6NUGpXjL7aW37z2EmosmwrWaahhgOQhG9JRtaHstGtBzzVy7Th6kp2XhCkDq0Qshi484Et5Q67yTxKNcTSLA8giF7NATv1J8dvDthxXRAz2JUsqrLuYIbOJUSTawrqky1zJwb1d);
+    background-size: cover;
+    background-position: center
+    }
+.textiles-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDwegxkQ-8ip-nJ_Ym5c2IV733NZlrKJ-somy2Pq__G9oOwZMPnz6Nr-4H5tCBi3SeUHKSBGbYqZolX996hm7CutHECUSiESswUT_dikmOX2NipMXmu_Qp4UiY8-vziZz9WbuICCeVsLNQ5_aNdUvXLtPUo9O6UHVbTM2OIx3tF898XmiIN2_QauSNs76SbHC5I9f_LdRcZw09nvNwCgEBH8Yg7GhGQZ5bk_hV2S7hS6OGf-D9YZPSwONKWqeMFebmfhMqvE2OcYHCr);
+    background-size: cover;
+    background-position: center
+    }</style>
+</head>
+<body class="bg-white">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50" data-purpose="site-header">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<!-- Logo -->
+<div class="flex-shrink-0" data-purpose="logo">
+<a class="flex items-center space-x-2" href="#" style="font-size: 24px; font-weight: 700;">
+<span class="">Artisan Haven</span>
+<span class="logo-icon">✨</span> Artisan Haven</a>
+</div>
+<!-- Main Navigation -->
+<nav class="hidden md:flex md:space-x-8" data-purpose="main-navigation">
+<a class="text-brand-dark font-medium hover:text-brand-orange transition-colors flex items-center" href="#">
+            Collections
+            <svg class="w-4 h-4 ml-1 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+<a class="text-brand-dark font-medium hover:text-brand-orange transition-colors" href="#">Artisan Stories</a>
+<a class="text-brand-dark font-medium hover:text-brand-orange transition-colors" href="#">Our Philosophy</a>
+<a class="text-brand-dark font-medium hover:text-brand-orange transition-colors" href="#">Contact</a>
+</nav>
+<!-- Header Actions: Search and Icons -->
+<div class="flex items-center space-x-4" data-purpose="header-actions">
+<!-- Search Form -->
+<div class="relative hidden sm:block">
+<input class="border rounded-md py-1.5 pl-4 pr-10 focus:ring-brand-orange focus:border-brand-orange" placeholder="Search" type="text"/>
+<button class="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-white bg-brand-orange rounded-r-md hover:bg-brand-orange-dark">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div><div class="flex items-center space-x-4"><a class="text-gray-600 hover:text-brand-orange" href="#" style="font-size: 22px; margin-left: 1rem;"><span>👤</span></a><a class="text-gray-600 hover:text-brand-orange" href="#" style="font-size: 22px; margin-left: 1rem;"><span>♥</span></a><a class="text-gray-600 hover:text-brand-orange" href="#" style="font-size: 22px; margin-left: 1rem;"><span>🛒</span></a></div>
+<!-- User, Wishlist, Cart Icons -->
+</div>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<main>
+<!-- BEGIN: HeroSection -->
+<section class="hero-bg relative h-[600px] flex items-center justify-start" data-purpose="hero-section">
+<div class="absolute inset-0 bg-black bg-opacity-30" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="bg-black bg-opacity-75 text-white p-10 rounded-lg max-w-lg">
+<h1 class="text-4xl md:text-5xl font-bold mb-4 md:text-6xl">The Storyteller's Hand</h1>
+<p class="mb-8 text-lg">Every stitch, curve, and brushstroke is a word in a grander narrative. We are a sanctuary for their stories, a platform for their creations, and a home for creations born from passion and heritage.</p>
+<a class="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg" href="#">
+            Discover the Makers
+          </a>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: ArtisanJourneySection -->
+<section class="py-16 sm:py-24" data-purpose="artisan-journey">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<!-- Text Content -->
+<div class="text-center md:text-left">
+<h2 class="text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl mb-4 tracking-widest">THE ARTISAN'S JOURNEY</h2>
+<p class="text-lg text-brand-text mb-8 max-w-xl mx-auto md:mx-0">
+              Every stitch, curve, and brushstroke is a word in a grander narrative. We are a sanctuary for their stories, a platform for their creations, and a home for creations born from passion and heritage.
+            </p>
+<a class="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg" href="#">
+              Meet Our Artisans
+            </a>
+</div>
+<!-- Image -->
+<div class="flex justify-center">
+<img alt="Artisan jewelry" class="rounded-lg shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxy6-jajQCT_6FLDGvwTZqAYQUdT_qkt7zYCXBRdpiQVhAGd8_6Hgnp9EdK0qXDwXvgWWmW0I5OERVHESVzjhgh_pN7UhZWCLSxRHJgMWa3BbUeC1l7j0U1BRp-8EpGkeQox3wIwKWVqnMAKFF_YkbCDsi-tkeJTEl36GGHGVAxHVWcqL6sKRV2UwM2qzpxsH5GsYdOolT6TuFeAt9RGJd-O7Yhl8ytChNNb4QZ6iG7K2rPbVWbtWoG2O-FYiR04kYQcxR9BhM_ja1"/>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ArtisanJourneySection -->
+<!-- BEGIN: FeaturedCreationsSection -->
+<section class="bg-brand-gray py-16 sm:py-24" data-purpose="featured-creations">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl text-center mb-12 tracking-widest">FEATURED CREATIONS</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Product Card 1 -->
+<div class="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+<img alt="Handmade Pottery" class="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeJv8JV11JdYtgCh-Sfoqi1fbrsgKoZHHfAOkPTZwBuy-G76NJfMO-_Lm7SgMloHd3fvpafnX8RSo8KXjyGtioGsTDHy0f9b1xd9ehpwoGa7fP7mhdJwKxl2SW9rLrJjdbyd4JXVEJChSIj1cEPDzihk-DIqQQ2poPftG6lMAYkDd3lpltg03lypToFwibNiI_Er-06rVWekY-kzfqWrW-mdWaEk3ov0swekVZq13Z-TlaXHk05jxi4dJemvYUtKjgUHnmsjbounv4"/>
+<div class="p-6 text-center">
+<h3 class="font-semibold text-lg text-brand-dark">Handmade Pottery</h3>
+<p class="text-gray-500 mb-4">Ceramics</p>
+<a class="text-brand-orange font-medium hover:underline" href="#">Shop the Story - $XX.XX</a>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+<img alt="Handmade Potter" class="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhN-19StFM36YH689hRvXo1mrjQ1VFLQmHrqJ-dZ2BYOcQtLRmly6BqgcxcFIRmgtArRYlx9z27tlIcBD-KjXhpzE6jZ3_U0lp99qsdNzrjwDiO51p7HhV3TwHH7SSafA8yFCb9_FI20e7cWmyt0LtFwontXu1IKm34B4_cW_SarOvNP11KI9hXju5fGC6vOqSiCBRyoy-k77AJlrHTYwWOXvO9sb6jfYhbxwAZMEqbHNwNJ-5hjj6dsUh4zQd_qZ9uuUlBiHpW2cO"/>
+<div class="p-6 text-center">
+<h3 class="font-semibold text-lg text-brand-dark">Handmade Potter</h3>
+<p class="text-gray-500 mb-4">Ceramics</p>
+<a class="text-brand-orange font-medium hover:underline" href="#">Shop the Story - $XX.XX</a>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+<img alt="Handmade Cotam" class="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsIBcfK8Fp-m2dbVJcwbw6bcwolzrD2roJiuYWs2Wkz_vQ3H7SzdoGcrVk7xllkYF3Z2Dldjxey_MbDf5dEL4b6SGTVD1ut_u8cksaIOwYweOfSdluvrs_aVCXnwTuJdfA7ICy-dN3plCp-284zaEGoAYWWVYVNOfjsI_IEaeHgL0NuQdyw2iJDGVyGtVTQ57SFJOhmqEwxXRb-rMUeq9yiEPCEp2bamSdwN5BplZwnEIiPB-GATvdRKdwqr1U5GA7Y3cGKnoZfqss"/>
+<div class="p-6 text-center">
+<h3 class="font-semibold text-lg text-brand-dark">Handmade Cotam</h3>
+<p class="text-gray-500 mb-4">Ceramics</p>
+<a class="text-brand-orange font-medium hover:underline" href="#">Shop the Story - $XX.XX</a>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+<img alt="Handmade Cotten" class="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDze8J6T3-IYtgflxWoz7yCGeu3POCHvZsg8lGpgF8I2OmbaCPJTwCR4Z6CDQgjjKGGwv7AhEYkYpvcqyYeshhRbi8NIjDp8ire8LjC4cFegPkIbC2tEqZW0JoYe_de90fCt2Pp9v4xSFl0XAevJP-7PqVWIcNTudAhzD0f73j_JvQPzTu_qrr68R6rlBluNS1fPVHCLI0FKzkJ4_Smow3uO_L8Jo1JHx0DzJV3YyTGwVSKyi2chZ-MSQa7vv-yf0gzndGiCNI5VE0y"/>
+<div class="p-6 text-center">
+<h3 class="font-semibold text-lg text-brand-dark">Handmade Cotten</h3>
+<p class="text-gray-500 mb-4">Creamics</p>
+<a class="text-brand-orange font-medium hover:underline" href="#">Shop the Story - $XX.XX</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: FeaturedCreationsSection -->
+<!-- BEGIN: CategorySection -->
+<section class="py-16 sm:py-24" data-purpose="category-showcase">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Earthenware & Pottery Category -->
+<div class="pottery-bg relative rounded-lg min-h-[400px] flex items-center justify-center text-white text-center p-8 overflow-hidden">
+<div class="absolute inset-0 bg-black bg-opacity-40" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+<div class="relative z-10">
+<h3 class="text-4xl font-bold mb-6">Earthenware &amp; Pottery</h3>
+<a class="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg" href="#">
+                Explore the Collection
+              </a>
+</div>
+</div>
+<!-- Woven Textiles Category -->
+<div class="textiles-bg relative rounded-lg min-h-[400px] flex items-center justify-center text-white text-center p-8 overflow-hidden">
+<div class="absolute inset-0 bg-black bg-opacity-40" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+<div class="relative z-10">
+<h3 class="text-4xl font-bold mb-6">Woven Textiles</h3>
+<a class="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg" href="#">
+                Explore the Collection
+              </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: CategorySection -->
+</main>
+<!-- BEGIN: MainFooter -->
+<footer class="bg-brand-gray" data-purpose="site-footer">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<!-- About Column -->
+<div class="space-y-4">
+<h4 class="text-lg font-bold text-brand-dark">Artisan Haven</h4>
+<p class="text-brand-text">Artisan Haven is the earthenware contery worts contact or about our community.</p>
+</div>
+<!-- Collections Column -->
+<div class="space-y-4">
+<h4 class="text-lg font-bold text-brand-dark">Collections</h4>
+<ul class="space-y-2">
+<li><a class="text-brand-text hover:text-brand-orange" href="#">About</a></li>
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Products</a></li>
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Facks</a></li>
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Philosophy</a></li>
+</ul>
+</div>
+<!-- Links Column -->
+<div class="space-y-4">
+<h4 class="text-lg font-bold text-brand-dark">Links</h4>
+<ul class="space-y-2">
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Contact Us</a></li>
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Artisan Stories</a></li>
+<li><a class="text-brand-text hover:text-brand-orange" href="#">Contact</a></li>
+</ul>
+</div>
+<!-- Newsletter Column -->
+<div class="space-y-4">
+<h4 class="text-lg font-bold text-brand-dark">Newsletter</h4>
+<p class="text-brand-text">Sign up for subscribe to email address, and previous newsletters.</p>
+<form class="flex">
+<input class="flex-grow border-gray-300 rounded-l-md focus:ring-brand-orange focus:border-brand-orange" placeholder="Your email" required="" type="email"/>
+<button class="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg" type="submit">Subscribe</button>
+</form>
+</div>
+</div>
+</div>
+<!-- Footer Bottom Bar -->
+<div class="border-t border-gray-200">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
+<p>Copyright © 2022 Artisan Haven</p>
+<a class="hover:text-brand-orange mt-2 sm:mt-0" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+</body></html>
