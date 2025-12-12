@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import ProductCard from '@/components/ProductCard';
+import { products } from '@/app/products/data';
 
 export default function Home() {
   return (
@@ -58,58 +59,9 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-widest text-brand-dark sm:text-4xl text-center mb-12">FEATURED CREATIONS</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Product Card 1 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
-              <img 
-                alt="Handmade Pottery" 
-                className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeJv8JV11JdYtgCh-Sfoqi1fbrsgKoZHHfAOkPTZwBuy-G76NJfMO-_Lm7SgMloHd3fvpafnX8RSo8KXjyGtioGsTDHy0f9b1xd9ehpwoGa7fP7mhdJwKxl2SW9rLrJjdbyd4JXVEJChSIj1cEPDzihk-DIqQQ2poPftG6lMAYkDd3lpltg03lypToFwibNiI_Er-06rVWekY-kzfqWrW-mdWaEk3ov0swekVZq13Z-TlaXHk05jxi4dJemvYUtKjgUHnmsjbounv4"
-              />
-              <div className="p-6 text-center">
-                <h3 className="font-semibold text-lg text-brand-dark">Handmade Pottery</h3>
-                <p className="text-gray-500 mb-4">Ceramics</p>
-                <Link href="#" className="text-brand-orange font-medium hover:underline">Shop the Story - $XX.XX</Link>
-              </div>
-            </div>
-            {/* Product Card 2 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
-              <img 
-                alt="Handmade Potter" 
-                className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhN-19StFM36YH689hRvXo1mrjQ1VFLQmHrqJ-dZ2BYOcQtLRmly6BqgcxcFIRmgtArRYlx9z27tlIcBD-KjXhpzE6jZ3_U0lp99qsdNzrjwDiO51p7HhV3TwHH7SSafA8yFCb9_FI20e7cWmyt0LtFwontXu1IKm34B4_cW_SarOvNP11KI9hXju5fGC6vOqSiCBRyoy-k77AJlrHTYwWOXvO9sb6jfYhbxwAZMEqbHNwNJ-5hjj6dsUh4zQd_qZ9uuUlBiHpW2cO"
-              />
-              <div className="p-6 text-center">
-                <h3 className="font-semibold text-lg text-brand-dark">Handmade Potter</h3>
-                <p className="text-gray-500 mb-4">Ceramics</p>
-                <Link href="#" className="text-brand-orange font-medium hover:underline">Shop the Story - $XX.XX</Link>
-              </div>
-            </div>
-            {/* Product Card 3 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
-              <img 
-                alt="Handmade Cotam" 
-                className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsIBcfK8Fp-m2dbVJcwbw6bcwolzrD2roJiuYWs2Wkz_vQ3H7SzdoGcrVk7xllkYF3Z2Dldjxey_MbDf5dEL4b6SGTVD1ut_u8cksaIOwYweOfSdluvrs_aVCXnwTuJdfA7ICy-dN3plCp-284zaEGoAYWWVYVNOfjsI_IEaeHgL0NuQdyw2iJDGVyGtVTQ57SFJOhmqEwxXRb-rMUeq9yiEPCEp2bamSdwN5BplZwnEIiPB-GATvdRKdwqr1U5GA7Y3cGKnoZfqss"
-              />
-              <div className="p-6 text-center">
-                <h3 className="font-semibold text-lg text-brand-dark">Handmade Cotam</h3>
-                <p className="text-gray-500 mb-4">Ceramics</p>
-                <Link href="#" className="text-brand-orange font-medium hover:underline">Shop the Story - $XX.XX</Link>
-              </div>
-            </div>
-            {/* Product Card 4 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
-              <img 
-                alt="Handmade Cotten" 
-                className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDze8J6T3-IYtgflxWoz7yCGeu3POCHvZsg8lGpgF8I2OmbaCPJTwCR4Z6CDQgjjKGGwv7AhEYkYpvcqyYeshhRbi8NIjDp8ire8LjC4cFegPkIbC2tEqZW0JoYe_de90fCt2Pp9v4xSFl0XAevJP-7PqVWIcNTudAhzD0f73j_JvQPzTu_qrr68R6rlBluNS1fPVHCLI0FKzkJ4_Smow3uO_L8Jo1JHx0DzJV3YyTGwVSKyi2chZ-MSQa7vv-yf0gzndGiCNI5VE0y"
-              />
-              <div className="p-6 text-center">
-                <h3 className="font-semibold text-lg text-brand-dark">Handmade Cotten</h3>
-                <p className="text-gray-500 mb-4">Creamics</p>
-                <Link href="#" className="text-brand-orange font-medium hover:underline">Shop the Story - $XX.XX</Link>
-              </div>
-            </div>
+            {products.slice(0, 4).map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} />
+            ))}
           </div>
         </div>
       </section>
