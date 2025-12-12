@@ -138,7 +138,7 @@ const ServicesPage: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                       Outreach
                     </h1>
                     <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
@@ -209,7 +209,7 @@ const ServicesPage: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
                       Exhibition
                     </h1>
                     <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">

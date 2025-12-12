@@ -222,7 +222,7 @@ const EnquiryCart: React.FC = () => {
                             >
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                                <h3 className="font-semibold text-brand-dark">{item.name}</h3>
                                 <p className="text-sm text-gray-600 mt-1">{item.category || 'Lamp'}</p>
                                 <p className="text-lg font-bold text-primary mt-2">${item.price}</p>
                               </div>

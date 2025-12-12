@@ -149,7 +149,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <div className="space-y-6 lg:ml-0">
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>{product.name}</h1>
+                <h1 className="text-3xl font-bold text-brand-dark mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>{product.name}</h1>
                 <PriceDisplay
                   price={product.price}
                   className="text-2xl font-semibold"

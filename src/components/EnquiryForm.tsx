@@ -262,7 +262,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                 exit="hidden"
               >
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Enquiry Sent!</h2>
+                <h2 className="text-2xl font-bold text-brand-dark mb-2">Enquiry Sent!</h2>
                 <p className="text-gray-600">
                   Thank you for your enquiry. We&apos;ll get back to you within 24 hours.
                 </p>
@@ -315,7 +315,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
               {/* Selected Items Summary */}
               <div className="p-6 border-b bg-gray-50">
-                <h3 className="font-semibold text-gray-900 mb-3">Selected Items ({state.totalItems})</h3>
+                <h3 className="font-semibold text-brand-dark mb-3">Selected Items ({state.totalItems})</h3>
                 <div className="space-y-2 max-h-32 overflow-y-auto">
                   {state.items.map((item) => (
                     <div key={item.id} className="flex justify-between items-center text-sm">

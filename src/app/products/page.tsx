@@ -103,7 +103,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
         <div className="flex justify-between items-center">
           <div className="flex-1">
             <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
-              isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
+              isActive ? 'text-primary' : 'text-brand-dark group-hover:text-primary'
             }`} style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>

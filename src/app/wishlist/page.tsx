@@ -45,7 +45,7 @@ const WishlistPage: React.FC = () => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
               <Heart className="text-red-500" size={28} />
-              <h1 className="text-2xl sm:text-4xl font-bold text-gray-900">My Wishlist</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold text-brand-dark">My Wishlist</h1>
               {wishlistState.totalItems > 0 && (
                 <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {wishlistState.totalItems}
@@ -105,7 +105,7 @@ const WishlistPage: React.FC = () => {
             className="text-center py-16"
           >
             <Heart size={64} className="mx-auto mb-6 text-gray-300" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Your wishlist is empty</h2>
+            <h2 className="text-2xl font-bold text-brand-dark mb-4">Your wishlist is empty</h2>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
               Start adding products you love to your wishlist. You can save items for later and easily find them here.
             </p>
@@ -147,7 +147,7 @@ const WishlistPage: React.FC = () => {
                     </span>
                   </div>
                   <Link href={`/products/${item.id}`}>
-                    <h3 className="font-semibold text-gray-900 mb-2 hover:text-gray-700 transition-colors line-clamp-2 text-sm sm:text-base">
+                    <h3 className="font-semibold text-brand-dark mb-2 hover:text-gray-700 transition-colors line-clamp-2 text-sm sm:text-base">
                       {item.name}
                     </h3>
                   </Link>
