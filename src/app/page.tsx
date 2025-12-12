@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="bg-white font-sans text-[#333]">
+    <div className="bg-[#f9fdff] font-sans text-[#333]">
       {/* BEGIN: HeroSection */}
       <section 
         className="relative h-[600px] flex items-center justify-start bg-cover bg-center" 
@@ -16,7 +16,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-black/75 text-white p-10 rounded-lg max-w-lg">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 md:text-6xl">The Storyteller's Hand</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 md:text-6xl">The Storyteller&apos;s Hand</h1>
             <p className="mb-8 text-lg">Every stitch, curve, and brushstroke is a word in a grander narrative. We are a sanctuary for their stories, a platform for their creations, and a home for creations born from passion and heritage.</p>
             <Link href="#" className="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg">
               Discover the Makers
@@ -32,7 +32,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className="text-center md:text-left">
-              <h2 className="text-3xl font-bold tracking-widest text-brand-dark sm:text-4xl mb-4">THE ARTISAN'S JOURNEY</h2>
+              <h2 className="text-3xl font-bold tracking-widest text-brand-dark sm:text-4xl mb-4">THE ARTISAN&apos;S JOURNEY</h2>
               <p className="text-lg text-brand-text mb-8 max-w-xl mx-auto md:mx-0">
                 Every stitch, curve, and brushstroke is a word in a grander narrative. We are a sanctuary for their stories, a platform for their creations, and a home for creations born from passion and heritage.
               </p>
@@ -54,12 +54,12 @@ export default function Home() {
       {/* END: ArtisanJourneySection */}
 
       {/* BEGIN: FeaturedCreationsSection */}
-      <section className="bg-brand-gray py-16 sm:py-24" data-purpose="featured-creations">
+      <section className="bg-[#f9fdff] py-16 sm:py-24" data-purpose="featured-creations">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-widest text-brand-dark sm:text-4xl text-center mb-12">FEATURED CREATIONS</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Product Card 1 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
               <img 
                 alt="Handmade Pottery" 
                 className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
@@ -72,7 +72,7 @@ export default function Home() {
               </div>
             </div>
             {/* Product Card 2 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
               <img 
                 alt="Handmade Potter" 
                 className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
@@ -85,7 +85,7 @@ export default function Home() {
               </div>
             </div>
             {/* Product Card 3 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
               <img 
                 alt="Handmade Cotam" 
                 className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
@@ -98,7 +98,7 @@ export default function Home() {
               </div>
             </div>
             {/* Product Card 4 */}
-            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9f9f9]">
+            <div className="rounded-lg shadow-md overflow-hidden group bg-[#f9fdff]">
               <img 
                 alt="Handmade Cotten" 
                 className="w-full h-64 object-cover group-hover:opacity-90 transition-opacity" 
