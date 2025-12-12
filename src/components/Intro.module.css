@@ -65,9 +65,9 @@
   width: calc(100% - 40px);
   height: 60%;
   transform: translateY(2.7in); /* Move image up an additional ~0.5 inch on desktop */
-  border: 12px solid #91631D;
+  border: 12px solid #f8a888;
   padding: 8px;
-  background: #91631D;
+  background: #f8a888;
   border-radius: 20px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   z-index: 1;
@@ -87,7 +87,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 0.9;
-  color: #91631D;
+  color: #f8a888;
   margin: 0;
   margin-bottom: clamp(1rem, 3vh, 2rem);
   text-transform: uppercase;

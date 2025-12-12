@@ -261,7 +261,7 @@ const EnquiryCart: React.FC = () => {
                               </div>
                               <div className="text-right">
                                 <p className="text-sm text-gray-600">Subtotal</p>
-                                <p className="font-bold" style={{ color: '#91631D' }}>
+                                <p className="font-bold" style={{ color: '#f8a888' }}>
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </p>
                               </div>
@@ -282,11 +282,11 @@ const EnquiryCart: React.FC = () => {
                       <div className="space-y-3 bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
                         <div className="flex justify-between items-center">
                           <span className="text-lg font-semibold text-gray-700">Total Items:</span>
-                          <span className="text-lg font-bold" style={{ color: '#91631D' }}>{state.totalItems}</span>
+                          <span className="text-lg font-bold" style={{ color: '#f8a888' }}>{state.totalItems}</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-lg font-semibold text-gray-700">Total Value:</span>
-                          <span className="text-xl font-bold" style={{ color: '#91631D' }}>${state.totalValue.toFixed(2)}</span>
+                          <span className="text-xl font-bold" style={{ color: '#f8a888' }}>${state.totalValue.toFixed(2)}</span>
                         </div>
                       </div>
 
