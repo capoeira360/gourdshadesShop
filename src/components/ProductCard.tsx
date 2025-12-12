@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={cardRef}
-          className="cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          className="cursor-pointer bg-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           variants={cardVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
@@ -61,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
                 price={product.price}
                 className="text-lg font-semibold"
               />
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
                 {product.category}
               </span>
             </div>

@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden shadow-2xl flex items-center justify-center z-0">
+    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 overflow-hidden shadow-2xl flex items-center justify-center z-0">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -54,13 +54,13 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 <Image
                   src="/images/IMG-20250921-WA0000-nav-about.jpg"
                   alt="Isaac Munis - About"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                  className="w-full h-full object-cover shadow-lg"
                   width={800}
                   height={600}
                   priority
                 />
                 {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+                <div className="absolute inset-0 bg-black/20" />
               </motion.div>
             ) : section.id === 'heritage' ? (
               <motion.div
@@ -72,12 +72,12 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 <Image
                   src="/images/about-image-card2.jpeg"
                   alt="Discovering Gourd Craft"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                  className="w-full h-full object-cover shadow-lg"
                   width={800}
                   height={600}
                 />
                 {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+                <div className="absolute inset-0 bg-black/20" />
               </motion.div>
             ) : section.id === 'values' ? (
               <motion.div
@@ -89,12 +89,12 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 <Image
                   src="/images/about-image-card3.jpeg"
                   alt="Cultural Heritage"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                  className="w-full h-full object-cover shadow-lg"
                   width={800}
                   height={600}
                 />
                 {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20 rounded-lg" />
+                <div className="absolute inset-0 bg-black/20" />
               </motion.div>
             ) : (
               <motion.div
@@ -113,7 +113,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                >
                 {/* Floating geometric shapes */}
                 <motion.div
-                  className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20 rounded-full"
+                  className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20"
                   animate={{ 
                     y: [0, -20, 0],
                     x: [0, 10, 0],
@@ -126,7 +126,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                   }}
                 />
                 <motion.div
-                  className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rounded-lg rotate-45"
+                  className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rotate-45"
                   animate={{ 
                     rotate: [45, 90, 45],
                     y: [0, 15, 0]
@@ -138,7 +138,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                   }}
                 />
                 <motion.div
-                  className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25 rounded-full"
+                  className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25"
                   animate={{ 
                     scale: [1, 1.3, 1],
                     opacity: [0.25, 0.4, 0.25]
@@ -164,7 +164,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
-                style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
+                style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
               >
                 {section.title}
               </motion.h4>
@@ -181,7 +181,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
             </motion.div>
 
             {/* Subtle border glow effect */}
-            <div className="absolute inset-0 rounded-lg ring-1 ring-white/20" />
+            <div className="absolute inset-0 ring-1 ring-white/20" />
           </motion.div>
         ) : (
           <motion.div 
@@ -278,7 +278,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       ref={sectionRef}
       data-section-id={section.id}
       className={`about-section-row relative z-10 h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
-        isActive ? 'bg-white/50 backdrop-blur-sm rounded-lg shadow-lg' : ''
+        isActive ? 'bg-white/50 backdrop-blur-sm shadow-lg' : ''
       }`}
       variants={variants}
       initial="visible"
@@ -292,7 +292,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
             isActive ? 'text-primary transform scale-105' : 'text-gray-900'
           }`}
           layout
-          style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
+          style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
         >
           {section.title}
         </motion.h2>
@@ -300,7 +300,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
           <motion.h3 
             className="text-xl text-gray-600 mb-8 font-medium"
             layout
-            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
+            style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
           >
             {section.subtitle}
           </motion.h3>
@@ -501,7 +501,7 @@ const AboutPage: React.FC = () => {
           <motion.h1
             className="text-2xl md:text-3xl font-light text-primary"
             variants={fadeInUp}
-            style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}
+            style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
           >
             About
           </motion.h1>

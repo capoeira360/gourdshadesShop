@@ -315,7 +315,7 @@ const NewImageSlider: React.FC = () => {
         }
 
         .carousel .list .item .title {
-          font-family: 'Regen', 'Poppins', sans-serif;
+          font-family: var(--font-libre-baskerville), 'Poppins', sans-serif;
           font-size: 2.2em;
           font-weight: 800;
           line-height: 1.1em;
@@ -400,7 +400,7 @@ const NewImageSlider: React.FC = () => {
         }
 
         .thumbnail .item .content .title {
-          font-family: 'Regen', 'Poppins', sans-serif;
+          font-family: var(--font-libre-baskerville), 'Poppins', sans-serif;
           font-weight: 600;
           font-size: 12px;
           margin-bottom: 4px;

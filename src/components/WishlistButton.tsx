@@ -37,7 +37,7 @@ const WishlistButton: React.FC = () => {
     >
       <Link href="/wishlist">
         <motion.button
-          className="bg-accent text-primary p-2 sm:p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+          className="bg-accent text-primary p-2 sm:p-3 shadow-lg hover:shadow-xl transition-shadow duration-300"
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
@@ -50,7 +50,7 @@ const WishlistButton: React.FC = () => {
           />
           {state.totalItems > 0 && (
             <motion.span
-              className="absolute -top-2 -right-2 bg-primary text-white text-[10px] sm:text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-lg"
+              className="absolute -top-2 -right-2 bg-primary text-white text-[10px] sm:text-xs w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-lg"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               key={state.totalItems}

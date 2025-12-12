@@ -205,10 +205,10 @@ const Hero: React.FC = () => {
         </p>
         
         <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6">
-          <button className="px-8 py-4 bg-primary text-white rounded-full hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
+          <button className="px-8 py-4 bg-primary text-white hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
             Explore Collection
           </button>
-          <button className="px-8 py-4 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+          <button className="px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300">
             Learn More
           </button>
         </div>

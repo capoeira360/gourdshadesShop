@@ -113,7 +113,7 @@ const EnquiryCart: React.FC = () => {
           setIsOpen(newIsOpen);
           setEnquiryOpen(newIsOpen);
         }}
-        className="fixed top-16 right-4 z-50 bg-primary text-white p-2 sm:p-3 rounded-full shadow-lg"
+        className="fixed top-16 right-4 z-50 bg-primary text-white p-2 sm:p-3 shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
@@ -124,7 +124,7 @@ const EnquiryCart: React.FC = () => {
         <ShoppingCart size={20} />
         {totalItems > 0 && (
           <motion.span
-            className="absolute -top-2 -right-2 bg-accent text-primary text-[10px] sm:text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold"
+            className="absolute -top-2 -right-2 bg-accent text-primary text-[10px] sm:text-xs w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             key={totalItems}
@@ -174,7 +174,7 @@ const EnquiryCart: React.FC = () => {
                     setIsOpen(false);
                     setEnquiryOpen(false);
                   }}
-                  className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
+                  className="p-1 hover:bg-white hover:bg-opacity-20"
                 >
                   <X size={24} />
                 </button>
@@ -211,7 +211,7 @@ const EnquiryCart: React.FC = () => {
                           {state.items.map((item) => (
                             <motion.div
                               key={item.id}
-                              className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                              className="bg-gray-50 p-4 border border-gray-200"
                               variants={itemVariants}
                               layout
                               transition={{ 
@@ -239,7 +239,7 @@ const EnquiryCart: React.FC = () => {
                               <div className="flex items-center space-x-3">
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
+                                  className="w-8 h-8 bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -251,7 +251,7 @@ const EnquiryCart: React.FC = () => {
                                 </span>
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
+                                  className="w-8 h-8 bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -279,7 +279,7 @@ const EnquiryCart: React.FC = () => {
                       style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)' }}
                     >
                       {/* Total */}
-                      <div className="space-y-3 bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
+                      <div className="space-y-3 bg-white p-4 border-2 border-gray-200 shadow-sm">
                         <div className="flex justify-between items-center">
                           <span className="text-lg font-semibold text-gray-700">Total Items:</span>
                           <span className="text-lg font-bold" style={{ color: '#f8a888' }}>{state.totalItems}</span>
@@ -294,7 +294,7 @@ const EnquiryCart: React.FC = () => {
                       <div className="space-y-2">
                         <motion.button
                           onClick={handleProceedToForm}
-                          className="w-full bg-primary text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:bg-opacity-90"
+                          className="w-full bg-primary text-white py-3 font-semibold flex items-center justify-center space-x-2 hover:bg-opacity-90"
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"
@@ -305,7 +305,7 @@ const EnquiryCart: React.FC = () => {
                         
                         <motion.button
                           onClick={handleClearCart}
-                          className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300"
+                          className="w-full bg-gray-200 text-gray-700 py-2 font-semibold hover:bg-gray-300"
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"

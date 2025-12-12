@@ -40,7 +40,7 @@ const DisclaimerPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+        <div className="bg-white shadow-xl p-8 md:p-12">
           <div className="prose prose-lg max-w-none">
             <motion.div
               initial={{ opacity: 0 }}
@@ -94,7 +94,7 @@ const DisclaimerPage: React.FC = () => {
       {/* Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-orange-200 rounded-full opacity-20"
+          className="absolute top-20 left-10 w-20 h-20 bg-orange-200 opacity-20"
           animate={{
             y: [0, -20, 0],
             rotate: [0, 180, 360],
@@ -106,7 +106,7 @@ const DisclaimerPage: React.FC = () => {
           }}
         />
         <motion.div
-          className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 rounded-full opacity-20"
+          className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 opacity-20"
           animate={{
             y: [0, 20, 0],
             rotate: [0, -180, -360],
@@ -118,7 +118,7 @@ const DisclaimerPage: React.FC = () => {
           }}
         />
         <motion.div
-          className="absolute bottom-20 left-20 w-12 h-12 bg-amber-200 rounded-full opacity-20"
+          className="absolute bottom-20 left-20 w-12 h-12 bg-amber-200 opacity-20"
           animate={{
             y: [0, -15, 0],
             x: [0, 15, 0],

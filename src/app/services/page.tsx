@@ -76,7 +76,7 @@ const ServicesPage: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
             Community
           </h1>
         </div>
@@ -88,7 +88,7 @@ const ServicesPage: React.FC = () => {
           <div className="space-y-8">
             {/* First Service Card */}
             <motion.div
-              className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8"
+              className="bg-white shadow-sm p-4 sm:p-6 lg:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -98,7 +98,7 @@ const ServicesPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 rounded-lg overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative bg-gray-100 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={outreachImages[outreachImageIndex]}
                       alt="Community Lighting Consultation"
@@ -110,7 +110,7 @@ const ServicesPage: React.FC = () => {
                     {/* Navigation Buttons */}
                     <button
                       onClick={prevOutreachImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ const ServicesPage: React.FC = () => {
                     
                     <button
                       onClick={nextOutreachImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@ const ServicesPage: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
                       {outreachImageIndex + 1} / {outreachImages.length}
                     </div>
                   </div>
@@ -138,15 +138,15 @@ const ServicesPage: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Outreach
                     </h1>
                     <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
-                        I am truly grateful for the talent I have been blessed with, and I am passionate about sharing my knowledge with those eager to learn and grow. One of the most rewarding experiences in my journey has been my involvement with <span className="font-semibold text-accent bg-accent/10 px-2 py-1 rounded">The Hidden Hope Foundation</span> in Karatu, an organization dedicated to empowering people with disabilities. As part of a creative development program, I had the privilege of teaching and inspiring this incredible group, unlocking their creative potential and fostering growth.
+                        I am truly grateful for the talent I have been blessed with, and I am passionate about sharing my knowledge with those eager to learn and grow. One of the most rewarding experiences in my journey has been my involvement with <span className="font-semibold text-accent bg-accent/10 px-2 py-1">The Hidden Hope Foundation</span> in Karatu, an organization dedicated to empowering people with disabilities. As part of a creative development program, I had the privilege of teaching and inspiring this incredible group, unlocking their creative potential and fostering growth.
                       </p>
                       <p>
-                        I firmly believe in the transformative power of creativity and education, especially when it reaches communities that face unique challenges. My work with <span className="font-semibold text-accent bg-accent/10 px-2 py-1 rounded">The Hidden Hope Foundation</span> has deepened my commitment to making a positive impact through knowledge sharing and skill-building.
+                        I firmly believe in the transformative power of creativity and education, especially when it reaches communities that face unique challenges. My work with <span className="font-semibold text-accent bg-accent/10 px-2 py-1">The Hidden Hope Foundation</span> has deepened my commitment to making a positive impact through knowledge sharing and skill-building.
                       </p>
                       <p>
                         I am always excited to embark on new adventures and collaborate with organizations that value inclusivity, empowerment, and creativity. It would be an honor to contribute my skills and passion to initiatives that uplift and inspire others, and I look forward to connecting with like-minded groups eager to make a difference.
@@ -159,7 +159,7 @@ const ServicesPage: React.FC = () => {
 
             {/* Second Service Card */}
             <motion.div
-              className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8"
+              className="bg-white shadow-sm p-4 sm:p-6 lg:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -169,7 +169,7 @@ const ServicesPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 rounded-lg overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative bg-gray-100 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={exhibitionImages[exhibitionImageIndex]}
                       alt="Community Installation & Support"
@@ -181,7 +181,7 @@ const ServicesPage: React.FC = () => {
                     {/* Navigation Buttons */}
                     <button
                       onClick={prevExhibitionImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,7 +191,7 @@ const ServicesPage: React.FC = () => {
                     
                     <button
                       onClick={nextExhibitionImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ const ServicesPage: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
                       {exhibitionImageIndex + 1} / {exhibitionImages.length}
                     </div>
                   </div>
@@ -209,12 +209,12 @@ const ServicesPage: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Exhibition
                     </h1>
                     <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
-                        I have also been fortunate to participate in various exhibitions across Tanzania, with a special focus on Dar es Salaam. For the past three years, I have proudly taken part in the <span className="font-semibold text-accent bg-accent/10 px-2 py-1 rounded">Artisan Market</span>, attending both of their annual events each year. This experience has allowed me to showcase my work to a diverse audience, connect with fellow artisans, and gain valuable exposure in the creative community.
+                        I have also been fortunate to participate in various exhibitions across Tanzania, with a special focus on Dar es Salaam. For the past three years, I have proudly taken part in the <span className="font-semibold text-accent bg-accent/10 px-2 py-1">Artisan Market</span>, attending both of their annual events each year. This experience has allowed me to showcase my work to a diverse audience, connect with fellow artisans, and gain valuable exposure in the creative community.
                       </p>
                       <p>
                         Being part of these exhibitions has not only enriched my artistic journey but has also deepened my appreciation for the rich cultural heritage and craftsmanship of Tanzania. I am passionate about contributing to and growing within such vibrant platforms that celebrate creativity, innovation, and local talent.

@@ -47,7 +47,7 @@ const WishlistPage: React.FC = () => {
               <Heart className="text-red-500" size={28} />
               <h1 className="text-2xl sm:text-4xl font-bold text-brand-dark">My Wishlist</h1>
               {wishlistState.totalItems > 0 && (
-                <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-red-500 text-white px-3 py-1 text-sm font-semibold">
                   {wishlistState.totalItems}
                 </span>
               )}
@@ -72,7 +72,7 @@ const WishlistPage: React.FC = () => {
           >
             <Link 
               href="/products" 
-              className="flex items-center bg-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg border border-primary/30 text-primary hover:text-white hover:border-primary hover:bg-primary transition-all duration-300 shadow-sm hover:shadow-md group"
+              className="flex items-center bg-white px-4 py-2 sm:px-6 sm:py-3 border border-primary/30 text-primary hover:text-white hover:border-primary hover:bg-primary transition-all duration-300 shadow-sm hover:shadow-md group"
             >
               <ArrowLeft size={18} className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               <span className="font-medium">Back to Products</span>
@@ -87,7 +87,7 @@ const WishlistPage: React.FC = () => {
                 e.stopPropagation();
                 handleClearWishlist();
               }}
-              className="text-red-600 hover:text-white hover:bg-red-600 transition-all duration-300 flex items-center space-x-2 px-4 py-2 sm:px-6 sm:py-3 rounded-lg border border-red-300 hover:border-red-600 shadow-sm hover:shadow-md"
+              className="text-red-600 hover:text-white hover:bg-red-600 transition-all duration-300 flex items-center space-x-2 px-4 py-2 sm:px-6 sm:py-3 border border-red-300 hover:border-red-600 shadow-sm hover:shadow-md"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -119,7 +119,7 @@ const WishlistPage: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square">
@@ -133,7 +133,7 @@ const WishlistPage: React.FC = () => {
                   </Link>
                   <button
                     onClick={() => handleRemoveItem(item.id)}
-                    className="absolute top-2 right-2 p-2 bg-white/80 rounded-full shadow-md hover:bg-red-50 hover:text-red-600 transition-colors"
+                    className="absolute top-2 right-2 p-2 bg-white/80 shadow-md hover:bg-red-50 hover:text-red-600 transition-colors"
                   >
                     <Heart size={16} className="fill-current text-red-500" />
                   </button>
@@ -159,14 +159,14 @@ const WishlistPage: React.FC = () => {
                   <div className="space-y-2">
                     <button
                       onClick={() => handleAddToEnquiry(item)}
-                      className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center space-x-2"
+                      className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/90 transition-colors flex items-center justify-center space-x-2"
                     >
                       <ShoppingCart size={16} />
                       <span>Add to Enquiry</span>
                     </button>
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className="w-full border border-primary/30 text-primary py-2 px-4 rounded-lg hover:bg-primary/10 transition-colors flex items-center justify-center space-x-2"
+                      className="w-full border border-primary/30 text-primary py-2 px-4 hover:bg-primary/10 transition-colors flex items-center justify-center space-x-2"
                     >
                       <Trash2 size={16} />
                       <span>Remove</span>

@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Privacy Policy
             </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto"></div>
           </motion.div>
 
           {/* Content */}
@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 border border-white/20"
+            className="bg-white/80 backdrop-blur-sm shadow-xl p-8 md:p-12 border border-white/20"
           >
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               <p className="text-lg mb-8 text-gray-600">
@@ -121,7 +121,7 @@ export default function PrivacyPolicy() {
           >
             <Link
               href="/"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-full hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               ← Back to Home
             </Link>

@@ -68,14 +68,12 @@
   border: 12px solid #f8a888;
   padding: 8px;
   background: #f8a888;
-  border-radius: 20px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   z-index: 1;
   margin: 0 auto; /* Center the frame within its column */
 }
 
 .imageContent img {
-  border-radius: 8px;
   object-fit: cover;
   object-position: center;
 }
@@ -94,7 +92,7 @@
   cursor: default;
   opacity: 1 !important;
   filter: none !important;
-  font-family: 'Regen', 'Gemsbuck', 'Cremotic', Arial, Helvetica, sans-serif;
+  font-family: var(--font-libre-baskerville), 'Gemsbuck', 'Cremotic', Arial, Helvetica, sans-serif;
 }
 
 .handText {
@@ -250,7 +248,6 @@
     margin: 0 auto;
     transform: translateY(-0.3in); /* Pull image upward visually without affecting layout */
     border-width: 6px;
-    border-radius: 16px;
     margin-top: 1.5in; /* Push image downwards ~1.5 inch on very small phones */
   }
 

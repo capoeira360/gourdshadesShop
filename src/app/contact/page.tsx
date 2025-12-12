@@ -137,7 +137,7 @@ const ContactPage: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
             Get In Touch
           </h1>
           <p className="text-base text-text-secondary max-w-2xl">
@@ -154,7 +154,7 @@ const ContactPage: React.FC = () => {
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
-                className="bg-white rounded-3xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-500"
+                className="bg-white p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-500"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -162,7 +162,7 @@ const ContactPage: React.FC = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="text-5xl mb-6">{info.icon}</div>
-                <h3 className="text-xl font-medium text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+                <h3 className="text-xl font-medium text-primary mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                   {info.title}
                 </h3>
                 <div className="space-y-2 mb-6">
@@ -173,7 +173,7 @@ const ContactPage: React.FC = () => {
                   ))}
                 </div>
                 <motion.button
-                  className="px-6 py-3 bg-accent text-primary rounded-full font-medium hover:bg-accent/90 transition-colors"
+                  className="px-6 py-3 bg-accent text-primary font-medium hover:bg-accent/90 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -189,14 +189,14 @@ const ContactPage: React.FC = () => {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-lg"
+            className="bg-white p-8 md:p-12 shadow-lg"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-light text-primary mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-light text-primary mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                 Send Us a Message
               </h2>
               <p className="text-text-secondary">
@@ -222,7 +222,7 @@ const ContactPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
+                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="Your full name"
                   />
                 </motion.div>
@@ -243,7 +243,7 @@ const ContactPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
+                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="your.email@example.com"
                   />
                 </motion.div>
@@ -265,7 +265,7 @@ const ContactPage: React.FC = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
+                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                     placeholder="(555) 123-4567"
                   />
                 </motion.div>
@@ -284,7 +284,7 @@ const ContactPage: React.FC = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
+                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
                   >
                     <option value="">Select an interest</option>
                     <option value="consultation">Lighting Consultation</option>
@@ -312,7 +312,7 @@ const ContactPage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors resize-vertical"
+                  className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors resize-vertical"
                   placeholder="Tell us about your project, space, and lighting needs..."
                 />
               </motion.div>
@@ -326,7 +326,7 @@ const ContactPage: React.FC = () => {
               >
                 <motion.button
                   type="submit"
-                  className="px-12 py-4 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-colors"
+                  className="px-12 py-4 bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

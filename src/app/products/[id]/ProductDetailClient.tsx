@@ -99,11 +99,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </Link>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8 mb-8">
+        <div className="bg-white shadow-sm p-4 sm:p-6 lg:p-8 mb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="space-y-4">
               <div
-                className="relative bg-gray-100 rounded-lg overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
+                className="relative bg-gray-100 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
                 onClick={() => openModal(currentImageIndex)}
               >
                 <Image
@@ -119,7 +119,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     e.stopPropagation();
                     prevImage();
                   }}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all border border-gray-200 z-10"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-gray-200 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
                   <svg className="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +132,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     e.stopPropagation();
                     nextImage();
                   }}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all border border-gray-200 z-10"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-gray-200 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
                   <svg className="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,7 +140,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   </svg>
                 </button>
 
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
                   {currentImageIndex + 1} / {product.images.length}
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <div className="space-y-6 lg:ml-0">
               <div>
                 <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
-                <h1 className="text-3xl font-bold text-brand-dark mb-4" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>{product.name}</h1>
+                <h1 className="text-3xl font-bold text-brand-dark mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>{product.name}</h1>
                 <PriceDisplay
                   price={product.price}
                   className="text-2xl font-semibold"
@@ -160,14 +160,14 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <div className="space-y-4">
                 <button
                   onClick={handleAddToEnquiry}
-                  className="text-white py-3 px-6 rounded-lg font-semibold transition-colors hover:opacity-90 w-full sm:w-80"
+                  className="text-white py-3 px-6 font-semibold transition-colors hover:opacity-90 w-full sm:w-80"
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 >
                   Add to Enquiry
                 </button>
                 <button
                   onClick={handleWishlistToggle}
-                  className="border-2 py-3 px-6 rounded-lg font-semibold transition-colors hover:text-white w-full sm:w-80"
+                  className="border-2 py-3 px-6 font-semibold transition-colors hover:text-white w-full sm:w-80"
                   style={{
                     borderColor: 'var(--color-primary)',
                     color: isInWishlist(product.id) ? 'white' : 'var(--color-primary)',
@@ -195,7 +195,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`w-16 h-16 overflow-hidden border-2 transition-all ${
                       currentImageIndex === index ? 'border-gray-800 scale-105 shadow-md' : 'border-gray-200 hover:border-gray-400'
                     }`}
                   >
@@ -207,7 +207,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm h-[55vh] sm:h-[560px] overflow-y-auto">
+        <div className="bg-white shadow-sm h-[55vh] sm:h-[560px] overflow-y-auto">
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-4 sm:px-6 lg:px-8">
               <button
@@ -240,18 +240,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="p-4 sm:p-6 lg:p-8 pb-16">
             {activeTab === 'description' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>Product Description</h3>
+                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Product Description</h3>
                 <p className="text-gray-700 leading-relaxed text-base font-bold">{product.longDescription}</p>
               </div>
             )}
 
             {activeTab === 'specifications' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>Specifications</h3>
+                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Specifications</h3>
                 <ul className="space-y-2">
                   {product.specifications.map((spec, index) => (
                     <li key={index} className="text-gray-700 flex items-start font-bold">
-                      <span className="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
+                      <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
                       {spec}
                     </li>
                   ))}
@@ -261,11 +261,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
             {activeTab === 'features' && (
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>Key Features</h3>
+                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Key Features</h3>
                 <ul className="space-y-2">
                   {product.features.map((feature, index) => (
                     <li key={index} className="text-gray-700 flex items-start font-bold">
-                      <span className="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
+                      <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
                       {feature}
                     </li>
                   ))}
@@ -288,7 +288,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               e.stopPropagation();
               closeModal();
             }}
-            className="absolute bottom-4 right-4 z-20 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
+            className="absolute bottom-4 right-4 z-20 w-10 h-10 bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -300,7 +300,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <>
                 <button
                   onClick={prevModalImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -308,7 +308,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </button>
                 <button
                   onClick={nextModalImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all backdrop-blur-sm border border-white/20"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -316,7 +316,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </button>
               </>
             )}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 text-sm backdrop-blur-sm">
               {modalImageIndex + 1} / {product.images.length}
             </div>
           </div>

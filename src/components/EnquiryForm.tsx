@@ -255,7 +255,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white rounded-lg p-8 max-w-md w-full text-center"
+                className="bg-white p-8 max-w-md w-full text-center"
                 variants={formVariants}
                 initial="hidden"
                 animate="visible"
@@ -290,7 +290,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
           {/* Form Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
-              className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
               variants={formVariants}
               initial="hidden"
               animate="visible"
@@ -298,12 +298,12 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-primary text-white p-6 rounded-t-lg">
+              <div className="bg-primary text-white p-6">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Send Enquiry</h2>
                   <button
                     onClick={onClose}
-                    className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
+                    className="p-1 hover:bg-white hover:bg-opacity-20"
                   >
                     <X size={24} />
                   </button>
@@ -348,7 +348,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
                       errors.name ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your full name"
@@ -373,7 +373,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
                       errors.email ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your email address"
@@ -398,7 +398,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
                       errors.phone ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your phone number"
@@ -423,7 +423,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`w-full px-4 py-3 border-2 rounded-lg bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] resize-none ${
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] resize-none ${
                       errors.message ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Tell us about your requirements or any questions you have..."
@@ -439,7 +439,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                 {/* Error Messages */}
                 {(submitStatus === 'error' || errors.general) && (
                   <motion.div
-                    className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center"
+                    className="bg-red-50 border border-red-200 p-4 flex items-center"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -454,7 +454,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center space-x-2 ${
+                  className={`w-full py-4 font-semibold flex items-center justify-center space-x-2 ${
                     isSubmitting
                       ? 'bg-gray-400 cursor-not-allowed'
                       : 'bg-primary hover:bg-opacity-90 text-white'

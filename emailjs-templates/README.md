@@ -23,3 +23,4 @@ How to use:
    - Business templates → your team inbox (e.g., `hello@gourdshades.com`)
    - Customer templates → `${email}` so the customer receives the confirmation
 5. Optional: set “Reply-To” to `${email}` in the EmailJS template settings so replies go to the sender.
+

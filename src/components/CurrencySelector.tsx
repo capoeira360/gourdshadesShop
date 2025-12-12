@@ -39,7 +39,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
@@ -70,7 +70,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg"
+            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 shadow-lg"
           >
             <ul
               className="py-1 overflow-auto text-base max-h-60 focus:outline-none sm:text-sm"

@@ -273,7 +273,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               </motion.span>
               <button
                 onClick={toggleMenu}
-                className="relative flex flex-col justify-center items-center w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 cursor-pointer hover:bg-white/30 transition-all duration-300 shadow-lg"
+                className="relative flex flex-col justify-center items-center w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm border border-white/30 cursor-pointer hover:bg-white/30 transition-all duration-300 shadow-lg"
                 aria-label="Close menu"
               >
                 <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
@@ -597,7 +597,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                 <div className="block md:hidden w-full h-px bg-white/20 mt-6 mb-4" />
                 {/* Small devices: image preview after the divider, reduced size */}
                 <div className="block md:hidden w-full flex justify-center mt-2 mb-6">
-                  <div className="w-[280px] h-[238px] bg-white/10 rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-lg">
+                  <div className="w-[280px] h-[238px] bg-white/10 overflow-hidden backdrop-blur-sm border border-white/20 shadow-lg">
                     <div className="relative w-full h-full">
                       <Image
                         src={(menuItems.find(item => item.name === hoveredLink)?.preview) || menuItems[0].preview}
@@ -629,7 +629,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
-        className="md:w-[380px] md:h-[330px] lg:w-[480px] lg:h-[438px] xl:w-[544px] xl:h-[502px] bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
+                        className="md:w-[380px] md:h-[330px] lg:w-[480px] lg:h-[438px] xl:w-[544px] xl:h-[502px] bg-white/10 overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl"
                       >
                         {/* Display the actual preview image */}
                         <div className="relative w-full h-full">

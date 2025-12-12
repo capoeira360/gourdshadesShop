@@ -176,7 +176,7 @@ const Footer: React.FC = () => {
           {/* Logo & Description Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-8">
-              <span className="text-4xl font-medium" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>Gourd Shades</span>
+              <span className="text-4xl font-medium" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>Gourd Shades</span>
             </div>
             <p className="text-white/85 leading-relaxed mb-6">
               Crafting unique lighting experiences with artisanal gourd-inspired designs. 
@@ -190,7 +190,7 @@ const Footer: React.FC = () => {
 
           {/* Sitemap Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>SITEMAP</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>SITEMAP</h3>
             <nav className="space-y-4">
               {renderAnimatedLink('Home', '/')}
               {renderAnimatedLink('About', '/about')}
@@ -201,7 +201,7 @@ const Footer: React.FC = () => {
             
             {/* Legal Pages Section */}
             <div className="mt-8 pt-6 border-t border-white/20">
-              <h4 className="text-sm font-medium mb-4" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>LEGAL</h4>
+              <h4 className="text-sm font-medium mb-4" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>LEGAL</h4>
               <nav className="space-y-3">
                 {renderAnimatedLink('Privacy Policy', '/privacy')}
                 {renderAnimatedLink('Disclaimer', '/disclaimer')}
@@ -211,7 +211,7 @@ const Footer: React.FC = () => {
 
           {/* Contact Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>CONTACT</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>CONTACT</h3>
             <div className="space-y-4 text-white/85">
               <div>
                 <a href="mailto:gourdshadestz@gmail.com" className="text-lg hover:text-accent transition-colors cursor-pointer block" suppressHydrationWarning>gourdshadestz@gmail.com</a>
@@ -230,24 +230,24 @@ const Footer: React.FC = () => {
 
           {/* Lighting Gallery Section */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'Regen, Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>OUR CREATIONS</h3>
+            <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>OUR CREATIONS</h3>
             <div className="grid grid-cols-2 gap-3">
               {/* Top Image - Animal-Inspired Designs */}
-              <div className="col-span-2 bg-accent/20 rounded-lg overflow-hidden h-28 border border-accent/30">
+              <div className="col-span-2 bg-accent/20 overflow-hidden h-28 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center">
                   <span className="text-white/90 text-sm font-medium">Animal-Inspired Designs</span>
                 </div>
               </div>
               
               {/* Bottom Left - Nature & Botanical */}
-              <div className="bg-accent/20 rounded-lg overflow-hidden h-24 border border-accent/30">
+              <div className="bg-accent/20 overflow-hidden h-24 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/40 to-accent/20 flex items-center justify-center">
                   <span className="text-white/90 text-xs font-medium">Nature & Botanical</span>
                 </div>
               </div>
               
               {/* Bottom Right - Stand & Floor Lamps */}
-              <div className="bg-accent/20 rounded-lg overflow-hidden h-24 border border-accent/30">
+              <div className="bg-accent/20 overflow-hidden h-24 border border-accent/30">
                 <div className="w-full h-full bg-gradient-to-br from-accent/50 to-accent/30 flex items-center justify-center">
                   <span className="text-white/90 text-xs font-medium">Stand & Floor Lamps</span>
                 </div>

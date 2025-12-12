@@ -104,7 +104,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
           <div className="flex-1">
             <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
               isActive ? 'text-primary' : 'text-brand-dark group-hover:text-primary'
-            }`} style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+            }`} style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-gray-600 mt-2 text-sm md:text-base">
@@ -114,7 +114,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
               <span className="text-lg font-semibold" style={{ color: '#786861' }}>
                 {product.price}
               </span>
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
                 {product.category}
               </span>
             </div>
@@ -156,7 +156,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-gray-50 rounded-lg overflow-hidden group cursor-pointer">
+    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-gray-50 overflow-hidden group cursor-pointer">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -173,7 +173,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
               />
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 sm:p-6">
-              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                 {currentProduct.name}
               </h4>
               <p className="text-sm text-white/80 group-hover:text-[#C8A882]/90 transition-colors duration-300">
@@ -246,7 +246,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={cardRef}
-          className="cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          className="cursor-pointer bg-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           variants={cardVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
@@ -262,7 +262,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
@@ -273,7 +273,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
                 price={product.price}
                 className="text-lg font-semibold"
               />
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
                 {product.category}
               </span>
             </div>
@@ -671,7 +671,7 @@ const ProductsPage: React.FC = () => {
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
             Products
           </h1>
         </div>
@@ -690,7 +690,7 @@ const ProductsPage: React.FC = () => {
             {categories.map((category) => (
               <motion.button
                 key={category}
-                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 font-medium transition-all duration-300 ${
                   filter === category
                     ? 'bg-primary text-white'
                     : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
@@ -705,9 +705,9 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* View Toggle */}
-          <div className="hidden md:flex items-center bg-gray-100 rounded-full p-1">
+          <div className="hidden md:flex items-center bg-gray-100 p-1">
             <button
-              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 ${
                 viewMode === 'list'
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600 hover:text-primary'
@@ -720,7 +720,7 @@ const ProductsPage: React.FC = () => {
               List
             </button>
             <button
-              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 ${
                 viewMode === 'grid'
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600 hover:text-primary'

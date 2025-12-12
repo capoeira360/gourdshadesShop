@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
+import { Libre_Baskerville } from "next/font/google";
 import "./globals.css";
+
+const libreBaskerville = Libre_Baskerville({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-libre-baskerville",
+  display: "swap",
+});
 import Navigation from "@/components/Navigation";
 import ScrollWatcher from "@/components/ScrollWatcher";
 import LogoFixed from "@/components/LogoFixed";
@@ -24,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className={`antialiased ${libreBaskerville.variable}`}>
         <EnquiryProvider>
           <WishlistProvider>
             <ViewProvider>

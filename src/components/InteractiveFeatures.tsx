@@ -148,7 +148,7 @@ const InteractiveFeatures: React.FC = () => {
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.id}
-                  className={`p-6 rounded-2xl cursor-pointer transition-all duration-500 ${
+                  className={`p-6 cursor-pointer transition-all duration-500 ${
                     activeFeature === index
                       ? 'bg-white/20 backdrop-blur-sm border border-white/30'
                       : 'bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10'
@@ -184,7 +184,7 @@ const InteractiveFeatures: React.FC = () => {
             animate={isVisible ? "visible" : "hidden"}
             key={activeFeature}
           >
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm p-8 border border-white/20">
               <div className="text-6xl mb-6 text-center">
                 {features[activeFeature].icon}
               </div>
@@ -195,7 +195,7 @@ const InteractiveFeatures: React.FC = () => {
                 {features[activeFeature].description}
               </p>
               <motion.button
-                className="px-8 py-4 bg-accent text-primary rounded-full font-medium hover:bg-accent/90 transition-colors"
+                className="px-8 py-4 bg-accent text-primary font-medium hover:bg-accent/90 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
