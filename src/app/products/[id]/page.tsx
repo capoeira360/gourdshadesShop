@@ -276,7 +276,7 @@ const products: Product[] = [
     id: 'quantum-line',
     name: 'Fallen leaves 00',
     category: 'collection',
-    price: '$179 - $799',
+    price: '$100 - $150',
     images: [
       '/images/IMG-20250213-WA0011-q1.jpg',
       '/images/IMG-20250213-WA0017-q2.jpg',

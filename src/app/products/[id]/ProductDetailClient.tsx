@@ -20,7 +20,7 @@ type Product = {
 };
 
 export default function ProductDetailClient({ product }: { product: Product }) {
-  const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features'>('description');
+  const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features' | 'shipping'>('description');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
@@ -234,6 +234,14 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               >
                 Features
               </button>
+              <button
+                onClick={() => setActiveTab('shipping')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === 'shipping' ? 'text-[#4f342e] border-[#4f342e]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Shipping
+              </button>
             </nav>
           </div>
 
@@ -269,6 +277,26 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                       {feature}
                     </li>
                   ))}
+                </ul>
+              </div>
+            )}
+
+            {activeTab === 'shipping' && (
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Shipping Information</h3>
+                <ul className="space-y-4">
+                  <li className="text-[#4f342e] flex items-start font-bold">
+                    <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
+                    <span>Send an enquiry to receive a personal quotation.</span>
+                  </li>
+                  <li className="text-[#4f342e] flex items-start font-bold">
+                    <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
+                    <span>We use EMS (Express Mail Service), which usually takes about 2-3 weeks to receive the item depending on the continent.</span>
+                  </li>
+                  <li className="text-[#4f342e] flex items-start font-bold">
+                    <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
+                    <span>Some countries may require importing tax; it is better to check with the authorities.</span>
+                  </li>
                 </ul>
               </div>
             )}

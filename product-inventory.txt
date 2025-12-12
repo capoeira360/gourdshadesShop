@@ -257,7 +257,7 @@ PRODUCT 9:
 ID: quantum-line
 NAME: Fallen leaves 00
 CATEGORY: collection
-PRICE: $179 - $799
+PRICE: $100 - $150
 DESCRIPTION: Contemporary plant-leaves,lighting featuring cosmic designs and celestial aesthetics for modern spaces.
 IMAGES:
   - /images/IMG-20250213-WA0011-q1.jpg
