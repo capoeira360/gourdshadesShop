@@ -97,7 +97,7 @@ const EnquiryCart: React.FC = () => {
   const buttonVariants = {
     hover: { 
       scale: 1.05,
-      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)"
+      boxShadow: "0 8px 25px rgba(79, 52, 46, 0.15)"
     },
     tap: { 
       scale: 0.95
@@ -183,7 +183,7 @@ const EnquiryCart: React.FC = () => {
               {/* Cart Content */}
               <div className="relative flex flex-col h-full">
                 {state.items.length === 0 ? (
-                  <div className="flex-1 flex items-center justify-center text-gray-500">
+                  <div className="flex-1 flex items-center justify-center text-[#4f342e]/60">
                     <div className="text-center">
                       <ShoppingCart size={48} className="mx-auto mb-4 opacity-50" />
                       <p>Your enquiry cart is empty</p>
@@ -211,7 +211,7 @@ const EnquiryCart: React.FC = () => {
                           {state.items.map((item) => (
                             <motion.div
                               key={item.id}
-                              className="bg-gray-50 p-4 border border-gray-200"
+                              className="bg-[#4f342e]/5 p-4 border border-[#4f342e]/20"
                               variants={itemVariants}
                               layout
                               transition={{ 
@@ -223,12 +223,12 @@ const EnquiryCart: React.FC = () => {
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <h3 className="font-semibold text-brand-dark">{item.name}</h3>
-                                <p className="text-sm text-gray-600 mt-1">{item.category || 'Lamp'}</p>
+                                <p className="text-sm text-[#4f342e] mt-1">{item.category || 'Lamp'}</p>
                                 <p className="text-lg font-bold text-primary mt-2">${item.price}</p>
                               </div>
                               <button
                                 onClick={() => handleRemoveItem(item.id)}
-                                className="text-gray-400 hover:text-red-500 p-1"
+                                className="text-[#4f342e]/50 hover:text-red-500 p-1"
                               >
                                 <X size={16} />
                               </button>
@@ -260,7 +260,7 @@ const EnquiryCart: React.FC = () => {
                                 </motion.button>
                               </div>
                               <div className="text-right">
-                                <p className="text-sm text-gray-600">Subtotal</p>
+                                <p className="text-sm text-[#4f342e]">Subtotal</p>
                                 <p className="font-bold" style={{ color: '#f8a888' }}>
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </p>
@@ -279,13 +279,13 @@ const EnquiryCart: React.FC = () => {
                       style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)' }}
                     >
                       {/* Total */}
-                      <div className="space-y-3 bg-white p-4 border-2 border-gray-200 shadow-sm">
+                      <div className="space-y-3 bg-white p-4 border-2 border-[#4f342e]/20 shadow-sm">
                         <div className="flex justify-between items-center">
-                          <span className="text-lg font-semibold text-gray-700">Total Items:</span>
+                          <span className="text-lg font-semibold text-[#4f342e]">Total Items:</span>
                           <span className="text-lg font-bold" style={{ color: '#f8a888' }}>{state.totalItems}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-lg font-semibold text-gray-700">Total Value:</span>
+                          <span className="text-lg font-semibold text-[#4f342e]">Total Value:</span>
                           <span className="text-xl font-bold" style={{ color: '#f8a888' }}>${state.totalValue.toFixed(2)}</span>
                         </div>
                       </div>
@@ -305,7 +305,7 @@ const EnquiryCart: React.FC = () => {
                         
                         <motion.button
                           onClick={handleClearCart}
-                          className="w-full bg-gray-200 text-gray-700 py-2 font-semibold hover:bg-gray-300"
+                          className="w-full bg-[#4f342e]/10 text-[#4f342e] py-2 font-semibold hover:bg-[#4f342e]/20"
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"

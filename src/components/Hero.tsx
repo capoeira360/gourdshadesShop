@@ -178,7 +178,7 @@ const Hero: React.FC = () => {
       {/* Background Layer */}
       <div
         ref={backgroundRef}
-        className="absolute inset-0 bg-gradient-to-br from-light-bluish-gray via-very-light-gray to-slightly-darker-gray"
+        className="absolute inset-0 bg-gradient-to-br from-[#4f342e]/5 via-[#4f342e]/2 to-[#4f342e]/10"
         style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
       />
 
@@ -217,7 +217,7 @@ const Hero: React.FC = () => {
       {/* Overlay Layer */}
       <div
         ref={overlayRef}
-        className="absolute inset-0 bg-black/0 pointer-events-none"
+        className="absolute inset-0 bg-[#4f342e]/0 pointer-events-none"
         style={{ willChange: 'transform' }}
       />
 

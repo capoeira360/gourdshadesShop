@@ -25,11 +25,11 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
       values: 'from-orange-400 via-red-500 to-pink-600',
       mission: 'from-indigo-400 via-blue-500 to-purple-600'
     };
-    return gradients[sectionId as keyof typeof gradients] || 'from-gray-400 to-gray-600';
+    return gradients[sectionId as keyof typeof gradients] || 'from-[#4f342e]/40 to-[#4f342e]/60';
   };
 
   return (
-    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-gray-50 overflow-hidden shadow-2xl flex items-center justify-center z-0">
+    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden shadow-2xl flex items-center justify-center z-0">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -46,7 +46,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
             {/* Display actual images for story, craft, and heritage sections */}
             {section.id === 'story' ? (
               <motion.div
-                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -64,7 +64,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
               </motion.div>
             ) : section.id === 'heritage' ? (
               <motion.div
-                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -81,7 +81,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
               </motion.div>
             ) : section.id === 'values' ? (
               <motion.div
-                className="w-full h-full relative bg-gray-100 flex items-center justify-center p-2"
+                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -186,13 +186,13 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
         ) : (
           <motion.div 
             key="placeholder"
-            className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
+            className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#4f342e]/5 to-[#4f342e]/10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="text-center text-gray-500">
+            <div className="text-center text-[#4f342e]/60">
               <motion.svg 
                 className="w-20 h-20 mx-auto mb-6" 
                 fill="none" 
@@ -289,7 +289,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       <div className="max-w-2xl w-full">
         <motion.h2 
           className={`text-4xl md:text-5xl font-light mb-8 transition-all duration-500 ${
-            isActive ? 'text-primary transform scale-105' : 'text-gray-900'
+            isActive ? 'text-primary transform scale-105' : 'text-[#4f342e]'
           }`}
           layout
           style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
@@ -298,7 +298,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
         </motion.h2>
         {section.subtitle && (
           <motion.h3 
-            className="text-xl text-gray-600 mb-8 font-medium"
+            className="text-xl text-[#4f342e]/80 mb-8 font-medium"
             layout
             style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
           >
@@ -312,7 +312,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
           {section.content.map((paragraph, idx) => (
             <motion.p 
               key={idx} 
-              className="text-lg text-gray-700 leading-relaxed"
+              className="text-lg text-[#4f342e] leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1, duration: 0.6 }}
@@ -488,7 +488,7 @@ const AboutPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-very-light-gray pt-24">
+    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
       {/* Hero Section */}
       <motion.section
         ref={headerRef}

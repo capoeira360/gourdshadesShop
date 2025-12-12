@@ -127,7 +127,7 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-very-light-gray pt-24">
+    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
       {/* Hero Section */}
       <motion.section
         ref={heroRef}

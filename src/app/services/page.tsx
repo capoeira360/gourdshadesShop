@@ -66,7 +66,7 @@ const ServicesPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-very-light-gray pt-24">
+    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
@@ -98,7 +98,7 @@ const ServicesPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative bg-[#4f342e]/5 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={outreachImages[outreachImageIndex]}
                       alt="Community Lighting Consultation"
@@ -110,7 +110,7 @@ const ServicesPage: React.FC = () => {
                     {/* Navigation Buttons */}
                     <button
                       onClick={prevOutreachImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ const ServicesPage: React.FC = () => {
                     
                     <button
                       onClick={nextOutreachImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@ const ServicesPage: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                       {outreachImageIndex + 1} / {outreachImages.length}
                     </div>
                   </div>
@@ -141,7 +141,7 @@ const ServicesPage: React.FC = () => {
                     <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Outreach
                     </h1>
-                    <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
+                    <div className="text-[#4f342e] leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I am truly grateful for the talent I have been blessed with, and I am passionate about sharing my knowledge with those eager to learn and grow. One of the most rewarding experiences in my journey has been my involvement with <span className="font-semibold text-accent bg-accent/10 px-2 py-1">The Hidden Hope Foundation</span> in Karatu, an organization dedicated to empowering people with disabilities. As part of a creative development program, I had the privilege of teaching and inspiring this incredible group, unlocking their creative potential and fostering growth.
                       </p>
@@ -169,7 +169,7 @@ const ServicesPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-gray-100 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative bg-[#4f342e]/5 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={exhibitionImages[exhibitionImageIndex]}
                       alt="Community Installation & Support"
@@ -181,7 +181,7 @@ const ServicesPage: React.FC = () => {
                     {/* Navigation Buttons */}
                     <button
                       onClick={prevExhibitionImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,7 +191,7 @@ const ServicesPage: React.FC = () => {
                     
                     <button
                       onClick={nextExhibitionImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ const ServicesPage: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                       {exhibitionImageIndex + 1} / {exhibitionImages.length}
                     </div>
                   </div>
@@ -212,7 +212,7 @@ const ServicesPage: React.FC = () => {
                     <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Exhibition
                     </h1>
-                    <div className="text-gray-700 leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
+                    <div className="text-[#4f342e] leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I have also been fortunate to participate in various exhibitions across Tanzania, with a special focus on Dar es Salaam. For the past three years, I have proudly taken part in the <span className="font-semibold text-accent bg-accent/10 px-2 py-1">Artisan Market</span>, attending both of their annual events each year. This experience has allowed me to showcase my work to a diverse audience, connect with fellow artisans, and gain valuable exposure in the creative community.
                       </p>

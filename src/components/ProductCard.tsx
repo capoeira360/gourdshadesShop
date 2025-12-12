@@ -40,20 +40,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
           animate={isVisible ? "visible" : "hidden"}
           whileHover={{ y: -5 }}
         >
-          <div className="relative aspect-square bg-gray-50 overflow-hidden">
+          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden">
             <Image
               src={product.images[0]}
               alt={product.name}
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+            <div className="absolute inset-0 bg-[#4f342e]/0 group-hover:bg-[#4f342e]/10 transition-colors duration-300" />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+            <h3 className="text-xl font-light text-[#4f342e] group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
+            <p className="text-[#4f342e] text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
               {product.description}
             </p>
             <div className="flex items-center justify-between">
@@ -61,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
                 price={product.price}
                 className="text-lg font-semibold"
               />
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
+              <span className="text-xs uppercase tracking-wider text-[#4f342e] bg-[#4f342e]/10 px-2 py-1">
                 {product.category}
               </span>
             </div>

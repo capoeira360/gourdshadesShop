@@ -84,12 +84,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   };
 
   return (
-    <div className="bg-gray-50 pt-24 pb-8" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
+    <div className="bg-[#4f342e]/5 pt-24 pb-8" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Link
             href="/products"
-            className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium transition-colors"
+            className="inline-flex items-center text-[#4f342e]/80 hover:text-[#4f342e] font-medium transition-colors"
             prefetch={true}
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="space-y-4">
               <div
-                className="relative bg-gray-100 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
+                className="relative bg-[#4f342e]/10 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
                 onClick={() => openModal(currentImageIndex)}
               >
                 <Image
@@ -119,10 +119,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     e.stopPropagation();
                     prevImage();
                   }}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-gray-200 z-10"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
-                  <svg className="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-[#4f342e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -132,15 +132,15 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     e.stopPropagation();
                     nextImage();
                   }}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-gray-200 z-10"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
-                  <svg className="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-[#4f342e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
 
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 text-sm">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                   {currentImageIndex + 1} / {product.images.length}
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
             <div className="space-y-6 lg:ml-0">
               <div>
-                <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">{product.category}</p>
+                <p className="text-sm text-[#4f342e] mb-2 uppercase tracking-wide">{product.category}</p>
                 <h1 className="text-3xl font-bold text-brand-dark mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>{product.name}</h1>
                 <PriceDisplay
                   price={product.price}
@@ -196,7 +196,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-16 h-16 overflow-hidden border-2 transition-all ${
-                      currentImageIndex === index ? 'border-gray-800 scale-105 shadow-md' : 'border-gray-200 hover:border-gray-400'
+                      currentImageIndex === index ? 'border-[#4f342e] scale-105 shadow-md' : 'border-[#4f342e]/20 hover:border-[#4f342e]/40'
                     }`}
                   >
                     <Image src={image} alt={`${product.name} ${index + 1}`} width={64} height={64} className="w-full h-full object-cover" />
@@ -213,7 +213,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <button
                 onClick={() => setActiveTab('description')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeTab === 'description' ? 'text-gray-900 border-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  activeTab === 'description' ? 'text-[#4f342e] border-[#4f342e]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
                 Description
@@ -221,7 +221,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <button
                 onClick={() => setActiveTab('specifications')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeTab === 'specifications' ? 'text-gray-900 border-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  activeTab === 'specifications' ? 'text-[#4f342e] border-[#4f342e]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
                 Specifications
@@ -229,7 +229,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <button
                 onClick={() => setActiveTab('features')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeTab === 'features' ? 'text-gray-900 border-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  activeTab === 'features' ? 'text-[#4f342e] border-[#4f342e]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
                 Features
@@ -241,7 +241,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             {activeTab === 'description' && (
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Product Description</h3>
-                <p className="text-gray-700 leading-relaxed text-base font-bold">{product.longDescription}</p>
+                <p className="text-[#4f342e] leading-relaxed text-base font-bold">{product.longDescription}</p>
               </div>
             )}
 
@@ -250,7 +250,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Specifications</h3>
                 <ul className="space-y-2">
                   {product.specifications.map((spec, index) => (
-                    <li key={index} className="text-gray-700 flex items-start font-bold">
+                    <li key={index} className="text-[#4f342e] flex items-start font-bold">
                       <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
                       {spec}
                     </li>
@@ -264,7 +264,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 <h3 className="text-xl font-semibold" style={{ color: '#f8a888', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>Key Features</h3>
                 <ul className="space-y-2">
                   {product.features.map((feature, index) => (
-                    <li key={index} className="text-gray-700 flex items-start font-bold">
+                    <li key={index} className="text-[#4f342e] flex items-start font-bold">
                       <span className="w-2 h-2 mt-2 mr-3 flex-shrink-0" style={{ backgroundColor: '#d4af37' }}></span>
                       {feature}
                     </li>
@@ -282,7 +282,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${product.images[modalImageIndex]})`, filter: 'blur(20px)', transform: 'scale(1.1)' }}
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-[#4f342e]/50" />
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -316,7 +316,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </button>
               </>
             )}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 text-sm backdrop-blur-sm">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-4 py-2 text-sm backdrop-blur-sm">
               {modalImageIndex + 1} / {product.images.length}
             </div>
           </div>

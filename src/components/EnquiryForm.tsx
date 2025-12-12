@@ -249,7 +249,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-[#4f342e] bg-opacity-50 z-50 flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -263,7 +263,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               >
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold text-brand-dark mb-2">Enquiry Sent!</h2>
-                <p className="text-gray-600">
+                <p className="text-[#4f342e]/80">
                   Thank you for your enquiry. We&apos;ll get back to you within 24 hours.
                 </p>
               </motion.div>
@@ -280,7 +280,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            className="fixed inset-0 bg-[#4f342e] bg-opacity-50 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -308,18 +308,18 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     <X size={24} />
                   </button>
                 </div>
-                <p className="text-gray-200 mt-2">
+                <p className="text-white/80 mt-2">
                   Complete your details below to send your enquiry
                 </p>
               </div>
 
               {/* Selected Items Summary */}
-              <div className="p-6 border-b bg-gray-50">
+              <div className="p-6 border-b bg-[#4f342e]/5">
                 <h3 className="font-semibold text-brand-dark mb-3">Selected Items ({state.totalItems})</h3>
                 <div className="space-y-2 max-h-32 overflow-y-auto">
                   {state.items.map((item) => (
                     <div key={item.id} className="flex justify-between items-center text-sm">
-                      <span className="text-gray-700">{item.name} × {item.quantity}</span>
+                      <span className="text-[#4f342e]">{item.name} × {item.quantity}</span>
                       <span className="font-semibold text-primary">
                         ${(item.price * item.quantity).toFixed(2)}
                       </span>
@@ -338,7 +338,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <User size={16} className="inline mr-2" />
                     Full Name *
                   </label>
@@ -363,7 +363,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <Mail size={16} className="inline mr-2" />
                     Email Address *
                   </label>
@@ -388,7 +388,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Phone Field */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <Phone size={16} className="inline mr-2" />
                     Phone Number *
                   </label>
@@ -413,7 +413,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <MessageSquare size={16} className="inline mr-2" />
                     Message *
                   </label>
@@ -456,7 +456,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                   disabled={isSubmitting}
                   className={`w-full py-4 font-semibold flex items-center justify-center space-x-2 ${
                     isSubmitting
-                      ? 'bg-gray-400 cursor-not-allowed'
+                      ? 'bg-[#4f342e]/50 cursor-not-allowed'
                       : 'bg-primary hover:bg-opacity-90 text-white'
                   }`}
                   variants={buttonVariants}

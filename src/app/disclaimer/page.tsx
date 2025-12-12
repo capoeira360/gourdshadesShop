@@ -23,7 +23,7 @@ const DisclaimerPage: React.FC = () => {
             Disclaimer
           </motion.h1>
           <motion.p
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-[#4f342e]/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -46,7 +46,7 @@ const DisclaimerPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="space-y-6 text-gray-700 leading-relaxed"
+              className="space-y-6 text-[#4f342e] leading-relaxed"
             >
               <p>
                 The information provided on this website is intended for general informational purposes only. While we make every effort to ensure the accuracy, completeness, and reliability of the content presented, we do not guarantee that the information, including product descriptions, images, availability, or prices, is error-free or up-to-date. All content on this site is provided &ldquo;as is,&rdquo; and we are not responsible for any inaccuracies, errors, or omissions.
@@ -77,12 +77,12 @@ const DisclaimerPage: React.FC = () => {
               </p>
 
               <motion.div
-                className="mt-8 pt-6 border-t border-gray-200"
+                className="mt-8 pt-6 border-t border-[#4f342e]/20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                <p className="text-sm text-gray-500 font-medium">
+                <p className="text-sm text-[#4f342e]/60 font-medium">
                   <strong>Last updated:</strong> October, 2025
                 </p>
               </motion.div>

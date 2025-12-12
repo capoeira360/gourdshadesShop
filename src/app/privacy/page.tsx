@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#4f342e] mb-4">
               Privacy Policy
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto"></div>
@@ -33,13 +33,13 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="bg-white/80 backdrop-blur-sm shadow-xl p-8 md:p-12 border border-white/20"
           >
-            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-              <p className="text-lg mb-8 text-gray-600">
+            <div className="prose prose-lg max-w-none text-[#4f342e] leading-relaxed">
+              <p className="text-lg mb-8 text-[#4f342e]/80">
                 We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard the information you provide when purchasing products on our website.
               </p>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Information We Collect
                 </h2>
                 <p className="mb-4">
@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   How We Use Your Information
                 </h2>
                 <p className="mb-4">
@@ -57,7 +57,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Sharing Your Information
                 </h2>
                 <p className="mb-4">
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Data Security
                 </h2>
                 <p className="mb-4">
@@ -75,7 +75,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Your Rights
                 </h2>
                 <p className="mb-4">
@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Cookies
                 </h2>
                 <p className="mb-4">
@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-amber-200 pb-2">
+                <h2 className="text-2xl font-semibold text-[#4f342e] mb-4 border-b-2 border-amber-200 pb-2">
                   Changes to This Policy
                 </h2>
                 <p className="mb-4">
@@ -101,11 +101,11 @@ export default function PrivacyPolicy() {
                 </p>
               </section>
 
-              <div className="mt-12 pt-8 border-t border-gray-200">
-                <p className="text-gray-600 mb-4">
+              <div className="mt-12 pt-8 border-t border-[#4f342e]/20">
+                <p className="text-[#4f342e]/80 mb-4">
                   If you have any questions or concerns about this Privacy Policy, please contact us.
                 </p>
-                <p className="text-sm text-gray-500 font-medium">
+                <p className="text-sm text-[#4f342e]/60 font-medium">
                   Last updated: March 25th, 2025
                 </p>
               </div>

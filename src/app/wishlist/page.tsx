@@ -40,7 +40,7 @@ const WishlistPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-gray-50 border-b">
+      <div className="bg-[#4f342e]/5 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
@@ -52,7 +52,7 @@ const WishlistPage: React.FC = () => {
                 </span>
               )}
             </div>
-            <p className="text-gray-600 text-sm sm:text-base">
+            <p className="text-[#4f342e]/80 text-sm sm:text-base">
               {wishlistState.totalItems === 0 
                 ? "Your wishlist is empty" 
                 : `${wishlistState.totalItems} ${wishlistState.totalItems === 1 ? 'item' : 'items'} in your wishlist`
@@ -104,9 +104,9 @@ const WishlistPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-16"
           >
-            <Heart size={64} className="mx-auto mb-6 text-gray-300" />
+            <Heart size={64} className="mx-auto mb-6 text-[#4f342e]/20" />
             <h2 className="text-2xl font-bold text-brand-dark mb-4">Your wishlist is empty</h2>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+            <p className="text-[#4f342e]/60 mb-8 max-w-md mx-auto">
               Start adding products you love to your wishlist. You can save items for later and easily find them here.
             </p>
           </motion.div>
@@ -119,7 +119,7 @@ const WishlistPage: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white border border-[#4f342e]/20 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square">
@@ -142,12 +142,12 @@ const WishlistPage: React.FC = () => {
                 {/* Product Info */}
                 <div className="p-3 sm:p-4">
                   <div className="mb-2">
-                    <span className="text-xs text-gray-500 uppercase tracking-wide">
+                    <span className="text-xs text-[#4f342e]/70 uppercase tracking-wide">
                       {item.category}
                     </span>
                   </div>
                   <Link href={`/products/${item.id}`}>
-                    <h3 className="font-semibold text-brand-dark mb-2 hover:text-gray-700 transition-colors line-clamp-2 text-sm sm:text-base">
+                    <h3 className="font-semibold text-brand-dark mb-2 hover:text-[#4f342e]/80 transition-colors line-clamp-2 text-sm sm:text-base">
                       {item.name}
                     </h3>
                   </Link>

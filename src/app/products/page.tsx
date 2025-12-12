@@ -89,8 +89,8 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
       <Link href={`/products/${product.id}`} onMouseEnter={onHover} onMouseLeave={onLeave} onPointerEnter={onHover} onPointerLeave={onLeave}>
         <motion.div
           ref={rowRef}
-          className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-gray-100 transition-all duration-300 ${
-            isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
+          className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-[#4f342e]/10 transition-all duration-300 ${
+            isActive ? 'bg-[#4f342e]/5' : 'hover:bg-[#4f342e]/5'
           }`}
           variants={rowVariants}
           initial="hidden"
@@ -107,14 +107,14 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
             }`} style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
-            <p className="text-gray-600 mt-2 text-sm md:text-base">
+            <p className="text-[#4f342e]/80 mt-2 text-sm md:text-base">
               {product.description}
             </p>
             <div className="flex items-center mt-4 space-x-4">
               <span className="text-lg font-semibold" style={{ color: '#786861' }}>
                 {product.price}
               </span>
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
+              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
                 {product.category}
               </span>
             </div>
@@ -156,7 +156,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-gray-50 overflow-hidden group cursor-pointer">
+    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden group cursor-pointer">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -184,10 +184,10 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
         </div>
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center text-gray-400">
+          <div className="text-center text-[#4f342e]/30">
             <svg 
               className="w-16 h-16 mx-auto mb-4" 
-              fill="none" 
+              fill="none"  
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
@@ -252,7 +252,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
           animate={isVisible ? "visible" : "hidden"}
           whileHover={{ y: -5 }}
         >
-          <div className="relative aspect-square bg-gray-50 overflow-hidden">
+          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden">
             <Image
               src={product.images[0]}
               alt={product.name}
@@ -262,10 +262,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+            <h3 className="text-xl font-light text-[#4f342e] group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
+            <p className="text-[#4f342e]/80 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
               {product.description}
             </p>
             <div className="flex items-center justify-between">
@@ -273,7 +273,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
                 price={product.price}
                 className="text-lg font-semibold"
               />
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1">
+              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
                 {product.category}
               </span>
             </div>
