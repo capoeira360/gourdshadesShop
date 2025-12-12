@@ -63,6 +63,14 @@ export default function Home() {
               <ProductCard key={product.id} product={product} index={index} />
             ))}
           </div>
+          <div className="mt-12 text-center">
+            <Link 
+              href="/products" 
+              className="inline-block bg-brand-orange text-white font-bold py-3 px-8 rounded-md hover:bg-brand-orange-dark transition-colors text-lg"
+            >
+              View All Products
+            </Link>
+          </div>
         </div>
       </section>
       {/* END: FeaturedCreationsSection */}
