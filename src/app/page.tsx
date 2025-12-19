@@ -1,19 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/app/products/data';
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5;
-    }
-  }, []);
-
   return (
     <div className="bg-very-light-gray font-sans text-primary">
       {/* BEGIN: HeroSection */}
@@ -21,14 +14,9 @@ export default function Home() {
         className="relative h-[500px] sm:h-[600px] flex items-center justify-start overflow-hidden" 
         data-purpose="hero-section"
       >
-        <video 
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/hero-video-2.webm"
-          autoPlay
-          loop
-          muted
-          playsInline
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/images/top-intro.jpg)' }}
         />
         {/* Overlay removed for natural video color */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -59,10 +47,13 @@ export default function Home() {
               {/* Image */}
               <div className="flex justify-center w-full">
                 <div className="relative shadow-lg rounded-lg overflow-hidden w-full max-w-[384px] mx-auto">
-                  <img 
+                  <Image 
                     alt="The Mission" 
                     className="w-full h-auto object-cover" 
                     src="/images/the-mission.jpg"
+                    width={384}
+                    height={384}
+                    unoptimized
                   />
                 </div>
               </div>

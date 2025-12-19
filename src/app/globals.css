@@ -27,7 +27,7 @@
   src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 @font-face {
@@ -35,7 +35,7 @@
   src: url('/fonts/TimeburnerBold-peGR.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 /* Cremotic Font Face Declarations */
@@ -44,7 +44,7 @@
   src: url('/fonts/CremoticBold-4B924.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 /* Gemsbuck Font Face Declarations */
@@ -53,7 +53,7 @@
   src: url('/fonts/Gemsbuck01Bold-OV33A.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 

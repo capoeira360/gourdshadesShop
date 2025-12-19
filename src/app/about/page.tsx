@@ -225,10 +225,9 @@ interface SectionRowProps {
   isActive: boolean;
   onEnter: () => void;
   onLeave: () => void;
-  onScrollIntoView: () => void;
 }
 
-const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave, onScrollIntoView }) => {
+const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -255,8 +254,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
 
     return () => {
       observer.disconnect();
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      const currentTimeout = timeoutRef.current;
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
       }
     };
   }, [handleIntersection]);
@@ -525,11 +525,6 @@ const AboutPage: React.FC = () => {
               onLeave={() => {
                 setIsHovering(false);
               }}
-              onScrollIntoView={() => {
-                if (!isHovering) {
-                  setActiveSection(section);
-                }
-              }}
             />
           ))}
         </div>
@@ -552,11 +547,6 @@ const AboutPage: React.FC = () => {
                 }}
                 onLeave={() => {
                   setIsHovering(false);
-                }}
-                onScrollIntoView={() => {
-                  if (!isHovering) {
-                    setActiveSection(section);
-                  }
                 }}
               />
             ))}

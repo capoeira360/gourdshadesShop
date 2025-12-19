@@ -19,21 +19,16 @@ import { ViewProvider } from "@/contexts/ViewContext";
 import { PanelProvider } from "@/contexts/PanelContext";
 import EnquiryCart from "@/components/EnquiryCart";
 import WishlistButton from "@/components/WishlistButton";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Gourdshades | Handmade Lamps",
   description: "Discover our curated collection of premium lighting solutions that transform any environment into something extraordinary.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`antialiased ${libreBaskerville.variable}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`antialiased ${libreBaskerville.variable}`} suppressHydrationWarning>
         <EnquiryProvider>
           <WishlistProvider>
             <ViewProvider>
