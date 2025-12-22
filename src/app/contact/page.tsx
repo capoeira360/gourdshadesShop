@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 
 const ContactPage: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,24 +13,6 @@ const ContactPage: React.FC = () => {
     subject: '',
     message: '',
   });
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -133,10 +115,12 @@ const ContactPage: React.FC = () => {
         <div className="w-full lg:w-5/12 flex flex-col border-r border-gray-100">
           {/* Top Image */}
           <div className="h-64 lg:h-80 w-full relative">
-             <img 
+             <Image 
                src="/images/IMG-20250307-WA0009-nav-contacts.jpg" 
                alt="Contact" 
-               className="w-full h-full object-cover"
+               fill
+               className="object-cover"
+               priority
              />
           </div>
           
