@@ -7,10 +7,10 @@ import emailjs from '@emailjs/browser';
 const ContactPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    phone: '',
-    service: '',
+    subject: '',
     message: '',
   });
   const heroRef = useRef<HTMLDivElement>(null);
@@ -54,9 +54,9 @@ const ContactPage: React.FC = () => {
 
       if (useEmailJS) {
         const params = {
-          name: formData.name,
+          name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
-          phone: formData.phone,
+          subject: formData.subject,
           message: formData.message,
           timestamp,
           site_url: process.env.NEXT_PUBLIC_SITE_URL || window.location.origin,
@@ -72,7 +72,7 @@ const ContactPage: React.FC = () => {
           { publicKey: EMAILJS_PUBLIC_KEY! }
         );
         alert('Message sent successfully! We\'ll get back to you within 24 hours.');
-        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', subject: '', message: '' });
         return;
       }
 
@@ -83,9 +83,9 @@ const ContactPage: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
+          name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
-          phone: formData.phone,
+          subject: formData.subject,
           message: formData.message,
           timestamp,
         }),
@@ -93,7 +93,7 @@ const ContactPage: React.FC = () => {
 
       if (response.ok) {
         alert('Message sent successfully! We\'ll get back to you within 24 hours.');
-        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', subject: '', message: '' });
       } else {
         let errorText = 'Failed to send message. Please try again.';
         try {
@@ -111,237 +111,151 @@ const ContactPage: React.FC = () => {
     }
   };
 
-  const contactInfo = [
-    {
-      icon: '📞',
-      title: 'Call Us',
-      details: ['+255 746 754 878', 'Mon-Sat: 9am-5pm'],
-      action: 'Call Now',
-    },
-    {
-      icon: '✉️',
-      title: 'Email Us',
-      details: ['gourdshadestz@gmail.com', 'info@gourdshades.com', 'We respond within 24 hours'],
-      action: 'Send Email',
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
-      {/* Hero Section */}
-      <motion.section
-        ref={heroRef}
-        className="max-w-7xl mx-auto px-6 py-16"
+    <div className="min-h-screen pt-24 font-sans text-primary flex items-center justify-center p-4">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
+      
+      {/* Main Card */}
+      <motion.div 
+        className="bg-white rounded-lg shadow-2xl overflow-hidden max-w-6xl w-full flex flex-col lg:flex-row min-h-[700px]"
         initial={{ opacity: 0, y: 30 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-            Get In Touch
-          </h1>
-          <p className="text-base text-text-secondary max-w-2xl">
-            Ready to illuminate your space? Contact us today for a consultation 
-            and let&apos;s bring your lighting vision to life.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* Contact Info Cards */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.title}
-                className="bg-white p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-500"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-5xl mb-6">{info.icon}</div>
-                <h3 className="text-xl font-medium text-primary mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-                  {info.title}
-                </h3>
-                <div className="space-y-2 mb-6">
-                  {info.details.map((detail, detailIndex) => (
-                    <p key={detailIndex} className="text-text-secondary">
-                      {detail}
-                    </p>
-                  ))}
-                </div>
-                <motion.button
-                  className="px-6 py-3 bg-accent text-primary font-medium hover:bg-accent/90 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {info.action}
-                </motion.button>
-              </motion.div>
-            ))}
+        {/* Left Column - Profile/Info */}
+        <div className="w-full lg:w-5/12 flex flex-col border-r border-gray-100">
+          {/* Top Image */}
+          <div className="h-64 lg:h-80 w-full relative">
+             <img 
+               src="/images/IMG-20250307-WA0009-nav-contacts.jpg" 
+               alt="Contact" 
+               className="w-full h-full object-cover"
+             />
+          </div>
+          
+          {/* Info Block */}
+          <div className="p-10 flex-1 flex flex-col justify-center bg-white">
+            <h2 className="text-3xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-libre-baskerville), serif' }}>
+              Gourd Shades
+            </h2>
+            
+            <div className="space-y-6 text-text-secondary text-sm">
+              <div className="leading-relaxed">
+                <p>Arusha, Tanzania</p>
+                <p>East Africa</p>
+              </div>
+              
+              <div className="h-4"></div> {/* Blank line */}
+              
+              <p className="block hover:text-accent transition-colors">
+                gourdshadestz@gmail.com
+              </p>
+              
+              <div className="space-y-1">
+                <p>Tel: +255 746 754 878</p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-
-      {/* Contact Form */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-6">
-          <motion.div
-            className="bg-white p-8 md:p-12 shadow-lg"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-light text-primary mb-4" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-                Send Us a Message
-              </h2>
-              <p className="text-text-secondary">
-                Fill out the form below and we&apos;ll get back to you within 24 hours.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
-                    placeholder="Your full name"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
-                    placeholder="your.email@example.com"
-                  />
-                </motion.div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <label htmlFor="phone" className="block text-sm font-medium text-primary mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
-                    placeholder="(555) 123-4567"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
-                >
-                  <label htmlFor="service" className="block text-sm font-medium text-primary mb-2">
-                    Interest
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors"
-                  >
-                    <option value="">Select an interest</option>
-                    <option value="consultation">Lighting Consultation</option>
-                    <option value="installation">Professional Installation</option>
-                    <option value="maintenance">Maintenance & Repair</option>
-                    <option value="custom">Custom Design</option>
-                    <option value="other">Other</option>
-                  </select>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
-                  Message *
+        
+        {/* Right Column - Form */}
+        <div className="w-full lg:w-7/12 p-8 lg:p-12 bg-white">
+          <div className="flex justify-between items-center mb-8">
+             <h3 className="text-xl font-light text-primary">Say hello :)</h3>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="firstName" className="block text-xs uppercase tracking-wider text-gray-500 font-medium">
+                  First Name *
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleInputChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 border-2 border-[#3A332C] bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:ring-2 focus:ring-[#3A332C] focus:border-[#3A332C] transition-colors resize-vertical"
-                  placeholder="Tell us about your project, space, and lighting needs..."
+                  className="w-full border-b border-gray-300 py-2 focus:border-accent focus:outline-none transition-colors bg-transparent"
                 />
-              </motion.div>
-
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="lastName" className="block text-xs uppercase tracking-wider text-gray-500 font-medium">
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full border-b border-gray-300 py-2 focus:border-accent focus:outline-none transition-colors bg-transparent"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-xs uppercase tracking-wider text-gray-500 font-medium">
+                Email *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full border-b border-gray-300 py-2 focus:border-accent focus:outline-none transition-colors bg-transparent"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="subject" className="block text-xs uppercase tracking-wider text-gray-500 font-medium">
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleInputChange}
+                className="w-full border-b border-gray-300 py-2 focus:border-accent focus:outline-none transition-colors bg-transparent"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="message" className="block text-xs uppercase tracking-wider text-gray-500 font-medium">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                rows={4}
+                className="w-full border-b border-gray-300 py-2 focus:border-accent focus:outline-none transition-colors bg-transparent resize-none"
+              />
+            </div>
+            
+            <div className="pt-6">
+              <motion.button
+                type="submit"
+                className="w-full bg-[#DBB42C] text-white font-medium py-4 rounded hover:bg-[#c9a528] transition-colors shadow-md"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
               >
-                <motion.button
-                  type="submit"
-                  className="px-12 py-4 bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Send Message
-                </motion.button>
-                <p className="text-sm text-text-secondary mt-4">
-                  We&apos;ll respond to your inquiry within 24 hours.
-                </p>
-              </motion.div>
-            </form>
-          </motion.div>
+                Submit
+              </motion.button>
+            </div>
+          </form>
         </div>
-      </section>
-
-
+      </motion.div>
     </div>
   );
 };

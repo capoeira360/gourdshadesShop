@@ -273,7 +273,7 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       ref={sectionRef}
       data-section-id={section.id}
       className={`about-section-row relative z-10 h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
-        isActive ? 'bg-white/50 backdrop-blur-sm shadow-lg' : ''
+        isActive ? 'bg-white/85 backdrop-blur-sm shadow-lg' : 'bg-white/40 backdrop-blur-sm'
       }`}
       variants={variants}
       initial="visible"
@@ -483,7 +483,12 @@ const AboutPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
+    <div className="min-h-screen pt-24 font-sans text-primary">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       {/* Hero Section */}
       <motion.section
         ref={headerRef}

@@ -66,7 +66,12 @@ const ServicesPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#4f342e]/5 pt-24">
+    <div className="min-h-screen pt-24 font-sans text-primary">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
