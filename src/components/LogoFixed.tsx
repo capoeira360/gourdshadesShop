@@ -22,7 +22,7 @@ const LogoFixed: React.FC = () => {
         alt="Gourd Shades" 
         width={96}
         height={96}
-        className="sm:w-[130px] sm:h-[130px]"
+        className="sm:w-[130px] sm:h-[130px] invert"
       />
     </motion.div>
   );

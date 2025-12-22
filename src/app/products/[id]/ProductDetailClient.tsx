@@ -84,12 +84,16 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   };
 
   return (
-    <div className="bg-[#4f342e]/5 pt-24 pb-8" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
+    <div className="pt-24 pb-8 relative" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Link
             href="/products"
-            className="inline-flex items-center text-[#4f342e]/80 hover:text-[#4f342e] font-medium transition-colors"
+            className="inline-flex items-center text-[#4f342e] hover:text-[#4f342e] font-medium transition-colors bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm hover:bg-white/60"
             prefetch={true}
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

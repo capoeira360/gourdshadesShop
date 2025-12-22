@@ -5,7 +5,12 @@ import React from 'react';
 
 const DisclaimerPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen relative">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       {/* Header Section */}
       <motion.div
         className="relative py-20 px-4 sm:px-6 lg:px-8"
@@ -40,7 +45,7 @@ const DisclaimerPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <div className="bg-white shadow-xl p-8 md:p-12">
+        <div className="bg-white/90 backdrop-blur-sm shadow-xl p-8 md:p-12">
           <div className="prose prose-lg max-w-none">
             <motion.div
               initial={{ opacity: 0 }}
@@ -90,46 +95,6 @@ const DisclaimerPage: React.FC = () => {
           </div>
         </div>
       </motion.div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-orange-200 opacity-20"
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 opacity-20"
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -180, -360],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-20 w-12 h-12 bg-amber-200 opacity-20"
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 15, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
     </div>
   );
 };

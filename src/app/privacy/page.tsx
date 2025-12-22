@@ -5,7 +5,11 @@ import Link from 'next/link';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+    <div className="min-h-screen relative">
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,7 +35,7 @@ export default function PrivacyPolicy() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-white/80 backdrop-blur-sm shadow-xl p-8 md:p-12 border border-white/20"
+            className="bg-white/90 backdrop-blur-sm shadow-xl p-8 md:p-12 border border-white/20"
           >
             <div className="prose prose-lg max-w-none text-[#4f342e] leading-relaxed">
               <p className="text-lg mb-8 text-[#4f342e]/80">

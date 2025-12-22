@@ -194,7 +194,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
             aria-label="Toggle menu"
           >
             <motion.div
-              className="w-5 sm:w-6 h-0.5 bg-primary mb-1"
+              className="w-5 sm:w-6 h-0.5 bg-white mb-1"
               animate={{
                 rotate: isOpen ? 45 : 0,
                 y: isOpen ? 6 : 0,
@@ -202,14 +202,14 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
               transition={{ duration: 0.3 }}
             />
             <motion.div
-              className="w-5 sm:w-6 h-0.5 bg-primary mb-1"
+              className="w-5 sm:w-6 h-0.5 bg-white mb-1"
               animate={{
                 opacity: isOpen ? 0 : 1,
               }}
               transition={{ duration: 0.3 }}
             />
             <motion.div
-              className="w-5 sm:w-6 h-0.5 bg-primary"
+              className="w-5 sm:w-6 h-0.5 bg-white"
               animate={{
                 rotate: isOpen ? -45 : 0,
                 y: isOpen ? -6 : 0,
@@ -228,7 +228,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="text-sm font-medium text-primary"
+                  className="text-sm font-medium text-white"
                 >
                   Menu
                 </motion.span>

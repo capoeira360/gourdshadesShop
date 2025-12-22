@@ -242,17 +242,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
   };
 
   return (
-    <div className="relative group">
-      <Link href={`/products/${product.id}`}>
+    <div className="relative group h-full">
+      <Link href={`/products/${product.id}`} className="h-full block">
         <motion.div
           ref={cardRef}
-          className="cursor-pointer bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          className="cursor-pointer bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col"
           variants={cardVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           whileHover={{ y: -5 }}
         >
-          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden">
+          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden flex-shrink-0">
             <Image
               src={product.images[0]}
               alt={product.name}
@@ -261,14 +261,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
-          <div className="p-6">
+          <div className="p-6 flex flex-col flex-grow">
             <h3 className="text-xl font-light text-[#4f342e] group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
             <p className="text-[#4f342e]/80 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
               {product.description}
             </p>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-auto">
               <PriceDisplay 
                 price={product.price}
                 className="text-lg font-semibold"
