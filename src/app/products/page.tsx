@@ -90,7 +90,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
         <motion.div
           ref={rowRef}
           className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-[#4f342e]/10 transition-all duration-300 ${
-            isActive ? 'bg-[#4f342e]/5' : 'hover:bg-[#4f342e]/5'
+            isActive ? 'bg-white/85 backdrop-blur-sm shadow-lg' : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
           }`}
           variants={rowVariants}
           initial="hidden"
@@ -156,7 +156,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden group cursor-pointer">
+    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-white/90 backdrop-blur-sm overflow-hidden group cursor-pointer shadow-lg">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -246,7 +246,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
       <Link href={`/products/${product.id}`}>
         <motion.div
           ref={cardRef}
-          className="cursor-pointer bg-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          className="cursor-pointer bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           variants={cardVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
@@ -661,7 +661,12 @@ const ProductsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen pt-24 font-sans text-primary">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
       {/* Header Section */}
       <motion.div
         ref={headerRef}
@@ -693,7 +698,7 @@ const ProductsPage: React.FC = () => {
                 className={`px-4 py-2 sm:px-6 sm:py-3 font-medium transition-all duration-300 ${
                   filter === category
                     ? 'bg-primary text-white'
-                    : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
+                    : 'bg-white/90 backdrop-blur-sm text-primary hover:bg-primary hover:text-white border border-gray-200/50'
                 }`}
                 onClick={() => setFilter(category)}
                 whileHover={{ scale: 1.05 }}
@@ -705,12 +710,12 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* View Toggle */}
-          <div className="hidden md:flex items-center bg-gray-100 p-1">
+          <div className="hidden md:flex items-center bg-white/40 backdrop-blur-sm p-1 rounded">
             <button
-              className={`flex items-center px-4 py-2 transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
                 viewMode === 'list'
-                  ? 'bg-white text-primary shadow-sm'
-                  : 'text-gray-600 hover:text-primary'
+                  ? 'bg-white/90 shadow-sm text-primary'
+                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
               }`}
               onClick={() => setViewMode('list')}
             >
@@ -720,10 +725,10 @@ const ProductsPage: React.FC = () => {
               List
             </button>
             <button
-              className={`flex items-center px-4 py-2 transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
                 viewMode === 'grid'
-                  ? 'bg-white text-primary shadow-sm'
-                  : 'text-gray-600 hover:text-primary'
+                  ? 'bg-white/90 shadow-sm text-primary'
+                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
               }`}
               onClick={() => setViewMode('grid')}
             >
