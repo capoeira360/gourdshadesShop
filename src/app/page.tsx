@@ -11,8 +11,11 @@ export default function Home() {
     <div className="font-sans text-primary">
       {/* Fixed Background Image */}
       <div 
-        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
+          transform: 'translate3d(0, 0, 0)'
+        }}
       />
 
       {/* BEGIN: HeroSection */}
@@ -21,7 +24,7 @@ export default function Home() {
         data-purpose="hero-section"
       >
         {/* Overlay removed for natural video color */}
-        <div className="w-full relative z-10 h-full flex flex-col justify-end items-end pb-8 sm:pb-12 px-4 sm:px-6">
+        <div className="w-full relative z-10 h-full flex flex-col justify-end items-end pb-32 sm:pb-12 px-4 sm:px-6">
           <div className="bg-black/50 text-white p-6 sm:p-10 max-w-lg rounded-sm">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:text-7xl">Gourd Shades</h1>
             <p className="mb-6 sm:mb-8 text-base sm:text-lg">We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape. This allows the lampshade to display exceptionally beautiful patterns and shades of light to its surrounding.</p>
@@ -100,9 +103,8 @@ export default function Home() {
               className="relative min-h-[300px] sm:min-h-[400px] flex items-center justify-center text-white text-center p-8 overflow-hidden bg-cover bg-center"
               style={{ backgroundImage: 'url(/images/20240405_131741-a1.jpg)' }}
             >
-              <div className="absolute inset-0 bg-[#4f342e]/50"></div>
-              <div className="relative z-10">
-                <h3 className="text-3xl sm:text-4xl font-bold mb-6">Handcrafted Excellence</h3>
+              <div className="relative z-10 bg-black/40 p-4 rounded-lg backdrop-blur-[2px]">
+                <h3 className="text-3xl sm:text-4xl font-bold">Handcrafted Excellence</h3>
               </div>
             </div>
             {/* Personalized Creations Category */}
@@ -110,9 +112,8 @@ export default function Home() {
               className="relative min-h-[300px] sm:min-h-[400px] flex items-center justify-center text-white text-center p-8 overflow-hidden bg-cover bg-center"
               style={{ backgroundImage: 'url(/images/20240508_141055-b1.jpg)' }}
             >
-              <div className="absolute inset-0 bg-[#4f342e]/50"></div>
-              <div className="relative z-10">
-                <h3 className="text-3xl sm:text-4xl font-bold mb-6">Personalized Creations</h3>
+              <div className="relative z-10 bg-black/40 p-4 rounded-lg backdrop-blur-[2px]">
+                <h3 className="text-3xl sm:text-4xl font-bold">Personalized Creations</h3>
               </div>
             </div>
           </div>

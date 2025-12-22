@@ -8,8 +8,11 @@ const DisclaimerPage: React.FC = () => {
     <div className="min-h-screen relative">
       {/* Fixed Background Image */}
       <div 
-        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
+          transform: 'translate3d(0, 0, 0)'
+        }}
       />
       {/* Header Section */}
       <motion.div
