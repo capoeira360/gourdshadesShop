@@ -163,7 +163,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer ref={footerRef} className="text-white pt-24 pb-48" style={{ minHeight: '616px', backgroundColor: '#4f342e' }}>
+      <footer ref={footerRef} className="text-white pt-24 pb-48 relative z-20" style={{ minHeight: '616px', backgroundColor: '#4f342e' }}>
         <div className="max-w-7xl mx-auto px-6 h-full">
           {/* Main Content Grid */}
           <motion.div

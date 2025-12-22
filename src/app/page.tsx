@@ -8,22 +8,24 @@ import { products } from '@/app/products/data';
 
 export default function Home() {
   return (
-    <div className="bg-very-light-gray font-sans text-primary">
+    <div className="font-sans text-primary">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)' }}
+      />
+
       {/* BEGIN: HeroSection */}
       <section 
-        className="relative h-[500px] sm:h-[600px] flex items-center justify-start overflow-hidden" 
+        className="relative h-screen overflow-hidden" 
         data-purpose="hero-section"
       >
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/images/top-intro.jpg)' }}
-        />
         {/* Overlay removed for natural video color */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-[#4f342e]/75 text-white p-6 sm:p-10 max-w-lg rounded-sm">
+        <div className="w-full relative z-10 h-full flex flex-col justify-end items-end pb-8 sm:pb-12 px-4 sm:px-6">
+          <div className="bg-black/50 text-white p-6 sm:p-10 max-w-lg rounded-sm">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:text-7xl">Gourd Shades</h1>
             <p className="mb-6 sm:mb-8 text-base sm:text-lg">We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape. This allows the lampshade to display exceptionally beautiful patterns and shades of light to its surrounding.</p>
-            <Link href="/about" className="inline-block bg-brand-orange text-white font-bold py-3 px-8 hover:bg-brand-orange-dark transition-colors text-base sm:text-lg">
+            <Link href="/about" className="inline-block bg-brand-orange text-white font-bold py-2 px-6 hover:bg-brand-orange-dark transition-colors text-sm sm:text-base">
               Discover the maker
             </Link>
           </div>
@@ -34,7 +36,7 @@ export default function Home() {
       {/* BEGIN: ArtisanJourneySection */}
       <section className="py-16 sm:py-24" data-purpose="artisan-journey">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#4f342e] rounded-3xl shadow-2xl p-6 sm:p-8 md:p-12 max-w-5xl mx-auto">
+          <div className="bg-[#4f342e] rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Text Content */}
               <div className="text-center md:text-left">
@@ -46,7 +48,7 @@ export default function Home() {
               </div>
               {/* Image */}
               <div className="flex justify-center w-full">
-                <div className="relative shadow-lg rounded-lg overflow-hidden w-full max-w-[384px] mx-auto">
+                <div className="relative rounded-lg overflow-hidden w-full max-w-[384px] mx-auto">
                   <Image 
                     alt="The Mission" 
                     className="w-full h-auto object-cover" 
@@ -64,7 +66,7 @@ export default function Home() {
       {/* END: ArtisanJourneySection */}
 
       {/* BEGIN: FeaturedCreationsSection */}
-      <section className="bg-[#4f342e]/5 py-16 sm:py-24" data-purpose="featured-creations">
+      <section className="py-16 sm:py-24" data-purpose="featured-creations">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mt-12">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-8">

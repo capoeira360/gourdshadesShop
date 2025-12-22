@@ -230,7 +230,6 @@ interface SectionRowProps {
 const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnter, onLeave }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
@@ -254,10 +253,6 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
 
     return () => {
       observer.disconnect();
-      const currentTimeout = timeoutRef.current;
-      if (currentTimeout) {
-        clearTimeout(currentTimeout);
-      }
     };
   }, [handleIntersection]);
 

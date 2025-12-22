@@ -636,7 +636,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'vintage-v-series',
+    id: 'handmade-gourd-lamp',
     name: 'Posing Zebra',
     category: 'piece',
     price: '$100 - $160',
@@ -647,8 +647,8 @@ export const products: Product[] = [
       '/images/20240122_160137_IMG_1512-v4.jpg',
       '/images/20240122_160320_IMG_1517-v5.jpg'
     ],
-    description: 'The silly zebra trying to show that he got some moves. Creative craftsmanship combining different styles for the same results.',
-    longDescription: 'The Posing Zebra piece captures the playful and spirited nature of zebras through whimsical artistic interpretation. This charming lamp showcases a zebra in various poses, each demonstrating the animal\'s personality and grace. The creative craftsmanship combines different artistic styles to achieve a cohesive yet dynamic result that brings joy and character to any space.',
+    description: 'Handcrafted gourd lamp featuring a playful zebra design. This handmade lamp combines artistic craftsmanship with functional lighting.',
+    longDescription: 'The Posing Zebra is a unique handmade gourd lamp that captures the playful and spirited nature of zebras through whimsical artistic interpretation. This handcrafted lamp showcases a zebra in various poses, illuminated by the warm glow of the dried calabash shell. Perfect for those seeking a one-of-a-kind artisan lighting piece, this gourd lamp brings joy, character, and organic beauty to any space.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",

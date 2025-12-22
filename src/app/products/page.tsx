@@ -575,7 +575,7 @@ const ProductsPage: React.FC = () => {
       description: 'Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.',
     },
     {
-      id: 'vintage-v-series',
+      id: 'handmade-gourd-lamp',
       name: 'Posing Zebra',
       category: 'piece',
       price: '$100 - $160',
