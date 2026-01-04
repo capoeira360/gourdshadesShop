@@ -111,42 +111,15 @@ const ContactPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Left Column - Profile/Info */}
-        <div className="w-full lg:w-5/12 flex flex-col border-r border-gray-100">
-          {/* Top Image */}
-          <div className="h-64 lg:h-80 w-full relative">
-             <Image 
-               src="/images/IMG-20250307-WA0009-nav-contacts.jpg" 
-               alt="Contact" 
-               fill
-               className="object-cover"
-               priority
-             />
-          </div>
-          
-          {/* Info Block */}
-          <div className="p-10 flex-1 flex flex-col justify-center bg-white">
-            <h2 className="text-3xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-libre-baskerville), serif' }}>
-              Gourd Shades
-            </h2>
-            
-            <div className="space-y-6 text-text-secondary text-sm">
-              <div className="leading-relaxed">
-                <p>Arusha, Tanzania</p>
-                <p>East Africa</p>
-              </div>
-              
-              <div className="h-4"></div> {/* Blank line */}
-              
-              <p className="block hover:text-accent transition-colors">
-                gourdshadestz@gmail.com
-              </p>
-              
-              <div className="space-y-1">
-                <p>Tel: +255 746 754 878</p>
-              </div>
-            </div>
-          </div>
+        {/* Left Column - Image Only */}
+        <div className="w-full lg:w-5/12 relative min-h-[300px] lg:min-h-auto">
+          <Image 
+            src="/images/IMG-20250307-WA0009-nav-contacts.jpg" 
+            alt="Contact" 
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
         
         {/* Right Column - Form */}

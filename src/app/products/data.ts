@@ -147,7 +147,7 @@ export const products: Product[] = [
       '/images/20240612_135043-e1.jpg',
       '/images/20240612_135118-e2.jpg',
       '/images/20240612_135256-e3.jpg',
-      '/images/20240612_135313-e4.jpg',
+      '/images/20240612_135313-e4-.jpg',
       '/images/20240612_140355-e5.jpg'
     ],
     description: 'A giraffe shown on three different perspectives. Minimalist to Art Deco inspired lighting with clean and architectural presence for contemporary spaces.',
@@ -179,7 +179,7 @@ export const products: Product[] = [
       '/images/20240614_140159-f3.jpg',
       '/images/20240614_140218-f4.jpg',
       '/images/20240614_135944-f5.jpg',
-      '/images/20240614_140121-f5.jpg'
+      '/images/20240614_140121-f5-.jpg'
     ],
     description: 'The mix of all the animals herbivores and carnivores on a beautiful sunset of the savanna. The design includes large to small animals.',
     longDescription: 'The wild sunset piece captures the dramatic beauty of an African savanna at golden hour, featuring a comprehensive ecosystem of both herbivores and carnivores in their natural habitat. This intricate design showcases animals of all sizes, from the mighty elephant to the smallest antelope, all set against the backdrop of a stunning savanna sunset. The piece tells the complete story of African wildlife in perfect harmony.',

@@ -49,7 +49,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 2,
-      image: '/images/20240612_135238-featured-2.jpg',
+      image: '/images/20240612_135238-featured-2-.jpg',
       author: 'GOURDSHADES',
       title: 'MODERN DESIGN',
       topic: 'INNOVATION',
@@ -65,7 +65,7 @@ const NewImageSlider: React.FC = () => {
     },
     {
       id: 3,
-      image: '/images/20240614_140014-featured-3.jpg',
+      image: '/images/20240614_140014-featured-3-.jpg',
       author: 'GOURDSHADES',
       title: 'ARTISAN CRAFT',
       topic: 'HERITAGE',

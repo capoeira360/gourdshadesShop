@@ -14,17 +14,17 @@ const ServicesPage: React.FC = () => {
 
   // Image arrays for galleries
   const outreachImages = [
-    '/images/20241018_094717-reach-1.jpg',
-    '/images/20240913_145501-reach-2.jpg',
-    '/images/20240906_130827-reach-3.jpg',
+    '/images/20241018_094717-reach-1-.jpg',
+    '/images/20240913_145501-reach-2-.jpg',
+    '/images/20240906_130827-reach-3-.jpg',
     '/images/20240828_101915-reach-4.jpg',
-    '/images/20240913_142936-reach-5.jpg'
+    '/images/20240913_142936-reach-5-.jpg'
   ];
 
   const exhibitionImages = [
     '/images/IMG-20250601-WA0002-exhibition-1.jpg',
-    '/images/20240525_105359-exhibition-2.jpg',
-    '/images/20240525_105410-exhibition-3.jpg',
+    '/images/20240525_105359-exhibition-2-.jpg',
+    '/images/20240525_105410-exhibition-3-.jpg',
     '/images/IMG-20250601-WA0008-exhibition-4.jpg',
     '/images/IMG-20250601-WA0006-exhibition-5.jpg'
   ];
