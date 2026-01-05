@@ -1,10 +1,22 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/app/products/data';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Gourd Shades | Handmade Calabash Lamps',
+  description: 'Handmade Calabash Lampshades. We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape.',
+  openGraph: {
+    title: 'Gourd Shades | Handmade Calabash Lamps',
+    description: 'Unique handmade lampshades crafted from dried Calabash shells, featuring intricate perforated patterns.',
+    images: ['/images/the-mission.jpg'],
+  },
+  alternates: {
+    canonical: 'https://gourdshades.com/',
+  },
+};
 
 export default function Home() {
   return (

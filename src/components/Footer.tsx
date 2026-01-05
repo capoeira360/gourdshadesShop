@@ -2,42 +2,10 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useRef } from 'react';
 
 const Footer: React.FC = () => {
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [isClient, setIsClient] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const footerRef = useRef<HTMLElement>(null);
-  const navigationRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  // Ensure animations only run on client side to prevent hydration errors
-  useEffect(() => {
-    setIsClient(true);
-
-    // Throttled mouse tracking for better performance
-    let animationFrameId: number;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      
-      animationFrameId = requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      });
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-        }
-      };
-    }
-  }, []);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -62,104 +30,18 @@ const Footer: React.FC = () => {
     },
   };
 
-  // Calculate distance between mouse and element
-  const calculateDistance = useCallback((element: HTMLElement | null) => {
-    if (!element) return Infinity;
-    
-    const rect = element.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const dx = mousePosition.x - centerX;
-    const dy = mousePosition.y - centerY;
-    
-    return Math.sqrt(dx * dx + dy * dy);
-  }, [mousePosition]);
-
-  // Calculate scale based on proximity (closer = larger)
-  const calculateProximityScale = useCallback((distance: number) => {
-    const maxDistance = 200; // Maximum distance for effect
-    const minScale = 1; // Minimum scale
-    const maxScale = 1.3; // Maximum scale when very close
-    
-    if (distance > maxDistance) return minScale;
-    
-    const normalizedDistance = 1 - (distance / maxDistance);
-    return minScale + (maxScale - minScale) * normalizedDistance;
-  }, []);
-
-  // Character animation variants from Navigation component
-  const characterHoverVariants = {
-    rest: {
-      rotateY: 0,
-      scale: 1,
-      color: "#ffffffd9", // white/85 equivalent - brighter
-    },
-    hover: (i: number) => ({
-      rotateY: Math.sin(i * 0.5) * 10,
-      scale: 1.1,
-      color: "#DBB42C", // accent color
-      transition: {
-        delay: i * 0.02,
-        duration: 0.3,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    }),
-  } as const;
-
-  // Render a navigation link with character animations and proximity expansion
-  const renderAnimatedLink = (text: string, href: string) => {
-    if (!isClient) {
-      // Server-side rendering: render static link
-      return (
-        <Link href={href} className="block text-white/85 hover:text-accent transition-colors text-lg">
-          {text}
-        </Link>
-      );
-    }
-
-    // Calculate proximity scale for this link
-    const linkElement = navigationRefs.current[text];
-    const distance = calculateDistance(linkElement);
-    const proximityScale = calculateProximityScale(distance);
-
-    // Client-side rendering: render animated link with proximity expansion
-    return (
-      <motion.div
-        ref={(el) => { navigationRefs.current[text] = el; }}
-        onMouseEnter={() => setHoveredLink(text)}
-        onMouseLeave={() => setHoveredLink(null)}
-        style={{ perspective: 1000 }}
-        animate={{
-          scale: proximityScale,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        }}
+  // Simple animated link component
+  const renderLink = (text: string, href: string) => (
+    <Link href={href} className="block w-fit group">
+      <motion.span 
+        className="block text-white/85 text-lg group-hover:text-[#DBB42C] transition-colors"
+        whileHover={{ x: 5 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
-        <Link href={href} className="block text-white/85 hover:text-accent transition-colors text-lg">
-          {Array.from(text).map((char, i) => (
-            <motion.span
-              key={`${text}-${i}`}
-              custom={i}
-              variants={characterHoverVariants}
-              initial="rest"
-              animate={hoveredLink === text ? "hover" : "rest"}
-              style={{ 
-                display: 'inline-block',
-                transformOrigin: 'center',
-                minWidth: char === ' ' ? '0.25em' : 'auto'
-              }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </motion.span>
-          ))}
-        </Link>
-      </motion.div>
-    );
-  };
+        {text}
+      </motion.span>
+    </Link>
+  );
 
   return (
     <>
@@ -192,19 +74,19 @@ const Footer: React.FC = () => {
           <motion.div variants={fadeInUp} className="lg:col-span-1">
             <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>SITEMAP</h3>
             <nav className="space-y-4">
-              {renderAnimatedLink('Home', '/')}
-              {renderAnimatedLink('About', '/about')}
-              {renderAnimatedLink('Community', '/services')}
-              {renderAnimatedLink('Products', '/products')}
-              {renderAnimatedLink('Contact', '/contact')}
+              {renderLink('Home', '/')}
+              {renderLink('About', '/about')}
+              {renderLink('Community', '/services')}
+              {renderLink('Products', '/products')}
+              {renderLink('Contact', '/contact')}
             </nav>
             
             {/* Legal Pages Section */}
             <div className="mt-8 pt-6 border-t border-white/20">
               <h4 className="text-sm font-medium mb-4" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>LEGAL</h4>
               <nav className="space-y-3">
-                {renderAnimatedLink('Privacy Policy', '/privacy')}
-                {renderAnimatedLink('Disclaimer', '/disclaimer')}
+                {renderLink('Privacy Policy', '/privacy')}
+                {renderLink('Disclaimer', '/disclaimer')}
               </nav>
             </div>
           </motion.div>
@@ -214,9 +96,31 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>CONTACT</h3>
             <div className="space-y-4 text-white/85">
               <div>
-                <a href="mailto:gourdshadestz@gmail.com" className="text-lg hover:text-accent transition-colors cursor-pointer block" suppressHydrationWarning>gourdshadestz@gmail.com</a>
-                <a href="mailto:info@gourdshades.com" className="text-lg hover:text-accent transition-colors cursor-pointer block">info@gourdshades.com</a>
-                <p className="text-lg">+255 746 754 878</p>
+                <motion.a 
+                  href="mailto:gourdshadestz@gmail.com" 
+                  className="text-lg block w-fit hover:text-[#DBB42C] transition-colors cursor-pointer" 
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  suppressHydrationWarning
+                >
+                  gourdshadestz@gmail.com
+                </motion.a>
+                <motion.a 
+                  href="mailto:info@gourdshades.com" 
+                  className="text-lg block w-fit hover:text-[#DBB42C] transition-colors cursor-pointer"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  info@gourdshades.com
+                </motion.a>
+                <motion.a 
+                  href="tel:+255746754878" 
+                  className="text-lg block w-fit hover:text-[#DBB42C] transition-colors cursor-pointer"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  +255 746 754 878
+                </motion.a>
               </div>
               <div className="mt-6">
                 <p className="text-base">Arusha, Tanzania</p>

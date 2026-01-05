@@ -84,12 +84,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
           <Image
             src="/images/site-background-e4.jpg"
-            alt="Hero Background"
+            alt=""
             fill
             priority
             className="object-cover"
             sizes="100vw"
             quality={85}
+            aria-hidden
+            role="presentation"
           />
         </div>
         <script

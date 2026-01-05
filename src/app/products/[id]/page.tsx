@@ -34,6 +34,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       images: product.images.length > 0 ? [product.images[0]] : [],
       url: `https://gourdshades.com/products/${product.id}`,
     },
+    alternates: {
+      canonical: `https://gourdshades.com/products/${product.id}`,
+    },
   };
 }
 
