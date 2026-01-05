@@ -68,7 +68,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
   const menuItems = [
     { name: 'Home', href: '/', preview: '/images/IMG-20250516-WA0016-hero-replace.jpg' },
     { name: 'Products', href: '/products', preview: '/images/IMG-20250401-WA0006-feature-replace1.jpg' },
-    { name: 'About', href: '/about', preview: '/images/IMG-20250921-WA0000-nav-about.jpg' },
+    { name: 'About', href: '/about', preview: '/images/image-wm-about-nav.jpg' },
     { name: 'Community', href: '/services', preview: '/images/IMG-20250301-WA0010-nav-services.jpg' },
     { name: 'Contact', href: '/contact', preview: '/images/IMG-20250307-WA0009-nav-contacts.jpg' },
   ];

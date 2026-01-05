@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, Mail, Plus, Minus } from 'lucide-react';
 import { useEnquiry } from '@/contexts/EnquiryContext';
@@ -13,9 +13,23 @@ const EnquiryCart: React.FC = () => {
   const { setEnquiryOpen, state: panelState } = usePanel();
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerPadding, setFooterPadding] = useState(240);
 
-  // Hide cart button when navigation panel is open
-  const isCartButtonHidden = panelState.isNavigationOpen;
+  // Dynamically pad the scroller bottom to match footer height + safe area
+  useLayoutEffect(() => {
+    const updatePadding = () => {
+      const h = footerRef.current?.offsetHeight ?? 0;
+      // Add a small buffer so content doesn’t sit flush under the footer
+      setFooterPadding(h + 16);
+    };
+    updatePadding();
+    window.addEventListener('resize', updatePadding);
+    return () => window.removeEventListener('resize', updatePadding);
+  }, [state.items.length]);
+
+  // Hide cart button when navigation panel is open, user is scrolling down, or after inactivity
+  const isCartButtonHidden = panelState.isNavigationOpen || panelState.isScrollingDown || panelState.isUiAutoHidden;
 
   const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -83,7 +97,7 @@ const EnquiryCart: React.FC = () => {
   const buttonVariants = {
     hover: { 
       scale: 1.05,
-      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)"
+      boxShadow: "0 8px 25px rgba(79, 52, 46, 0.15)"
     },
     tap: { 
       scale: 0.95
@@ -99,18 +113,18 @@ const EnquiryCart: React.FC = () => {
           setIsOpen(newIsOpen);
           setEnquiryOpen(newIsOpen);
         }}
-        className="fixed top-20 right-6 z-50 bg-primary text-white p-3 rounded-full shadow-lg"
+        className="fixed top-16 right-4 z-50 bg-primary text-white p-2 sm:p-3 shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: isCartButtonHidden ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-        style={{ display: isCartButtonHidden ? 'none' : 'block' }}
+        animate={{ opacity: isCartButtonHidden ? 0 : 1, y: isCartButtonHidden ? -40 : 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        style={{ pointerEvents: isCartButtonHidden ? 'none' : 'auto', willChange: 'transform, opacity' }}
       >
-        <ShoppingCart size={24} />
+        <ShoppingCart size={20} />
         {totalItems > 0 && (
           <motion.span
-            className="absolute -top-2 -right-2 bg-accent text-primary text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold"
+            className="absolute -top-2 -right-2 bg-accent text-primary text-[10px] sm:text-xs w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             key={totalItems}
@@ -160,16 +174,16 @@ const EnquiryCart: React.FC = () => {
                     setIsOpen(false);
                     setEnquiryOpen(false);
                   }}
-                  className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
+                  className="p-1 hover:bg-white hover:bg-opacity-20"
                 >
                   <X size={24} />
                 </button>
               </div>
 
               {/* Cart Content */}
-              <div className="flex flex-col h-full">
+              <div className="relative flex flex-col h-full">
                 {state.items.length === 0 ? (
-                  <div className="flex-1 flex items-center justify-center text-gray-500">
+                  <div className="flex-1 flex items-center justify-center text-[#4f342e]/60">
                     <div className="text-center">
                       <ShoppingCart size={48} className="mx-auto mb-4 opacity-50" />
                       <p>Your enquiry cart is empty</p>
@@ -178,8 +192,8 @@ const EnquiryCart: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Items List */}
-                    <div className="flex-1 overflow-y-auto p-4">
+                    {/* Items List (scroller) */}
+                    <div className="flex-1 overflow-y-auto p-4" style={{ paddingBottom: `calc(${footerPadding}px + env(safe-area-inset-bottom, 0px))` }}>
                       <motion.div 
                         className="space-y-4"
                         initial="hidden"
@@ -197,7 +211,7 @@ const EnquiryCart: React.FC = () => {
                           {state.items.map((item) => (
                             <motion.div
                               key={item.id}
-                              className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                              className="bg-[#4f342e]/5 p-4 border border-[#4f342e]/20"
                               variants={itemVariants}
                               layout
                               transition={{ 
@@ -208,13 +222,13 @@ const EnquiryCart: React.FC = () => {
                             >
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <h3 className="font-semibold text-gray-900">{item.name}</h3>
-                                <p className="text-sm text-gray-600 mt-1">{item.category || 'Lamp'}</p>
+                                <h3 className="font-semibold text-brand-dark">{item.name}</h3>
+                                <p className="text-sm text-[#4f342e] mt-1">{item.category || 'Lamp'}</p>
                                 <p className="text-lg font-bold text-primary mt-2">${item.price}</p>
                               </div>
                               <button
                                 onClick={() => handleRemoveItem(item.id)}
-                                className="text-gray-400 hover:text-red-500 p-1"
+                                className="text-[#4f342e]/50 hover:text-red-500 p-1"
                               >
                                 <X size={16} />
                               </button>
@@ -225,7 +239,7 @@ const EnquiryCart: React.FC = () => {
                               <div className="flex items-center space-x-3">
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
+                                  className="w-8 h-8 bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -237,7 +251,7 @@ const EnquiryCart: React.FC = () => {
                                 </span>
                                 <motion.button
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
+                                  className="w-8 h-8 bg-primary text-white flex items-center justify-center hover:bg-opacity-80 shadow-sm"
                                   variants={buttonVariants}
                                   whileHover="hover"
                                   whileTap="tap"
@@ -246,8 +260,8 @@ const EnquiryCart: React.FC = () => {
                                 </motion.button>
                               </div>
                               <div className="text-right">
-                                <p className="text-sm text-gray-600">Subtotal</p>
-                                <p className="font-bold" style={{ color: '#91631D' }}>
+                                <p className="text-sm text-[#4f342e]">Subtotal</p>
+                                <p className="font-bold" style={{ color: '#f8a888' }}>
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </p>
                               </div>
@@ -256,19 +270,23 @@ const EnquiryCart: React.FC = () => {
                         ))}
                       </AnimatePresence>
                       </motion.div>
+                      
                     </div>
-
-                    {/* Footer */}
-                    <div className="border-t bg-white p-4 space-y-4 shadow-sm">
+                    {/* Footer fixed to viewport, aligned with cart panel */}
+                    <div
+                      ref={footerRef}
+                      className="fixed right-0 z-[60] w-full max-w-md border-t bg-white p-4 space-y-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] pointer-events-auto"
+                      style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)' }}
+                    >
                       {/* Total */}
-                      <div className="space-y-3 bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
+                      <div className="space-y-3 bg-white p-4 border-2 border-[#4f342e]/20 shadow-sm">
                         <div className="flex justify-between items-center">
-                          <span className="text-lg font-semibold text-gray-700">Total Items:</span>
-                          <span className="text-lg font-bold" style={{ color: '#91631D' }}>{state.totalItems}</span>
+                          <span className="text-lg font-semibold text-[#4f342e]">Total Items:</span>
+                          <span className="text-lg font-bold" style={{ color: '#f8a888' }}>{state.totalItems}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-lg font-semibold text-gray-700">Total Value:</span>
-                          <span className="text-xl font-bold" style={{ color: '#91631D' }}>${state.totalValue.toFixed(2)}</span>
+                          <span className="text-lg font-semibold text-[#4f342e]">Total Value:</span>
+                          <span className="text-xl font-bold" style={{ color: '#f8a888' }}>${state.totalValue.toFixed(2)}</span>
                         </div>
                       </div>
 
@@ -276,7 +294,7 @@ const EnquiryCart: React.FC = () => {
                       <div className="space-y-2">
                         <motion.button
                           onClick={handleProceedToForm}
-                          className="w-full bg-primary text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:bg-opacity-90"
+                          className="w-full bg-primary text-white py-3 font-semibold flex items-center justify-center space-x-2 hover:bg-opacity-90"
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"
@@ -287,7 +305,7 @@ const EnquiryCart: React.FC = () => {
                         
                         <motion.button
                           onClick={handleClearCart}
-                          className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300"
+                          className="w-full bg-[#4f342e]/10 text-[#4f342e] py-2 font-semibold hover:bg-[#4f342e]/20"
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"

@@ -27,7 +27,7 @@
   src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: block; /* changed from swap to block */
+  font-display: swap; /* changed from block to swap for performance */
 }
 
 @font-face {

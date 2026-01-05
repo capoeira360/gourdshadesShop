@@ -1,1 +1,1 @@
-self.__NEXT_FONT_MANIFEST="{\n  \"app\": {},\n  \"appUsingSizeAdjust\": false,\n  \"pages\": {},\n  \"pagesUsingSizeAdjust\": false\n}"
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/Users/apple/gourdshadesShop/lamp-business/src/app/layout\":[\"static/media/782fd72d8ca20ddd-s.p.woff2\",\"static/media/cccb76cee38030ea-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"

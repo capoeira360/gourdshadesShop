@@ -39,7 +39,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-[#4f342e] bg-white border border-[#4f342e]/30 shadow-sm hover:bg-[#4f342e]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
@@ -70,7 +70,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg"
+            className="absolute z-10 w-full mt-1 bg-white border border-[#4f342e]/30 shadow-lg"
           >
             <ul
               className="py-1 overflow-auto text-base max-h-60 focus:outline-none sm:text-sm"
@@ -80,10 +80,10 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
                 <li key={currency.code}>
                   <button
                     onClick={() => handleCurrencySelect(currency)}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ${
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-[#4f342e]/10 focus:bg-[#4f342e]/10 focus:outline-none ${
                       selectedCurrency.code === currency.code
                         ? 'bg-indigo-50 text-indigo-900'
-                        : 'text-gray-900'
+                        : 'text-[#4f342e]'
                     }`}
                     role="option"
                     aria-selected={selectedCurrency.code === currency.code}
@@ -93,7 +93,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ className = '' }) =
                         <span className="mr-3 font-medium">{currency.symbol}</span>
                         <div>
                           <div className="font-medium">{currency.code}</div>
-                          <div className="text-xs text-gray-500">{currency.name}</div>
+                          <div className="text-xs text-[#4f342e]/70">{currency.name}</div>
                         </div>
                       </div>
                       {selectedCurrency.code === currency.code && (

@@ -10,9 +10,10 @@ import { Product } from '@/app/products/data';
 interface ProductCardProps {
   product: Product;
   index: number;
+  priority?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, index, priority = false }) => {
   const [isVisible] = useState(true);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
               src={product.images[0]}
               alt={product.name}
               fill
+              priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-[#4f342e]/0 group-hover:bg-[#4f342e]/10 transition-colors duration-300" />

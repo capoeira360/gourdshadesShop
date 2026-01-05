@@ -6,14 +6,6 @@ import React from 'react';
 const DisclaimerPage: React.FC = () => {
   return (
     <div className="min-h-screen relative">
-      {/* Fixed Background Image */}
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
       {/* Header Section */}
       <motion.div
         className="relative py-20 px-4 sm:px-6 lg:px-8"

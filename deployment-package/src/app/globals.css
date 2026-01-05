@@ -3,16 +3,23 @@
 /* Tailwind CSS v4 Custom Theme */
 /* stylelint-disable-next-line at-rule-no-unknown */
 @theme {
-  --color-primary: #1a1a1a;
+  --color-primary: #4f342e;
   --color-accent: #B59268;
-  --color-light-gray: #f5f5f5;
-  --color-very-light-gray: #fafafa;
+  --color-light-gray: #F6F4F4;
+  --color-very-light-gray: #FBF9FA;
   --color-white: #ffffff;
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #666666;
+  --color-text-primary: #4f342e;
+  --color-text-secondary: #83706C;
   --color-background: #ffffff;
-  --color-foreground: #1a1a1a;
+  --color-foreground: #4f342e;
+  --color-brand-orange: #E59330;
+  --color-brand-orange-dark: #D98220;
+  --color-brand-dark: #f8a888;
+  --color-brand-gray: #F6F4F4;
+  --color-brand-text: #333333;
 }
+
+/* Custom theme variables are defined in :root for broad tooling support */
 
 /* Timeburner Font Face Declarations */
 @font-face {
@@ -20,7 +27,7 @@
   src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: swap; /* changed from block to swap for performance */
 }
 
 @font-face {
@@ -28,7 +35,7 @@
   src: url('/fonts/TimeburnerBold-peGR.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 /* Cremotic Font Face Declarations */
@@ -37,7 +44,7 @@
   src: url('/fonts/CremoticBold-4B924.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
 /* Gemsbuck Font Face Declarations */
@@ -46,94 +53,30 @@
   src: url('/fonts/Gemsbuck01Bold-OV33A.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block; /* changed from swap to block */
 }
 
-/* Regen Font Face Declarations */
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* Regen Font Face Declarations */
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/Regen-18J0.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenItalic-8w1M.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenBold-ReEV.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Regen';
-  src: url('/fonts/regen-font/RegenBoldItalic-B9wB.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
 
 :root {
-  --color-primary: #1a1a1a;
+  --color-primary: #4f342e;
   --color-accent: #B59268;
-  --color-light-gray: #f5f5f5;
-  --color-very-light-gray: #fafafa;
+  --color-light-gray: #F6F4F4;
+  --color-very-light-gray: #FBF9FA;
   --color-white: #ffffff;
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #666666;
+  --color-text-primary: #4f342e;
+  --color-text-secondary: #83706C;
   --color-background: #ffffff;
-  --color-foreground: #1a1a1a;
+  --color-foreground: #4f342e;
   --background: #ffffff;
-  --foreground: #1a1a1a;
-  --light-gray: #f5f5f5;
-  --very-light-gray: #fafafa;
+  --foreground: #4f342e;
+  --light-gray: #F6F4F4;
+  --very-light-gray: #FBF9FA;
   --white: #ffffff;
-  --primary: #1a1a1a;
+  --primary: #4f342e;
   --accent: #B59268;
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
+  --text-primary: #4f342e;
+  --text-secondary: #83706C;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -193,9 +136,9 @@ body {
 h1, h2, h3, h4, h5, h6,
 .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl,
 .large-text {
-  font-family: 'Regen', 'Cremotic', serif;
+  font-family: var(--font-libre-baskerville), 'Cremotic', serif;
   font-weight: 600;
-  color: #91631D;
+  color: #f8a888;
 }
 
 .will-change-opacity {

@@ -23,7 +23,7 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
       style={{ 
         fontFamily: 'Timeburner, Arial, Helvetica, sans-serif',
         fontWeight: '700',
-        color: '#91631D',
+        color: '#f8a888',
         ...style 
       }}
     >

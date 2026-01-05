@@ -204,9 +204,10 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
 interface ProductCardProps {
   product: Product;
   index: number;
+  priority?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, index, priority = false }) => {
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -257,6 +258,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
               src={product.images[0]}
               alt={product.name}
               fill
+              priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
@@ -662,14 +664,6 @@ const ProductsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen pt-24 font-sans text-primary">
-      {/* Fixed Background Image */}
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
       {/* Header Section */}
       <motion.div
         ref={headerRef}
@@ -787,10 +781,11 @@ const ProductsPage: React.FC = () => {
         <div className={`${viewMode === 'list' ? 'grid md:hidden' : 'grid'} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8`}>
           {filteredProducts.map((product, index) => (
             <ProductCard 
-              key={product.id} 
-              product={product} 
-              index={index}
-            />
+                  key={product.id} 
+                  product={product} 
+                  index={index} 
+                  priority={index < 4}
+                />
           ))}
         </div>
       </div>

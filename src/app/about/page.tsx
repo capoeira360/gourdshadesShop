@@ -52,7 +52,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
                 transition={{ duration: 0.5 }}
               >
                 <Image
-                  src="/images/IMG-20250921-WA0000-nav-about.jpg"
+                  src="/images/image-wm-about.jpg"
                   alt="Isaac Munis - About"
                   className="w-full h-full object-cover shadow-lg"
                   width={800}
@@ -484,14 +484,6 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="min-h-screen pt-24 font-sans text-primary">
-      {/* Fixed Background Image */}
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
       {/* Hero Section */}
       <motion.section
         ref={headerRef}

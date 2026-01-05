@@ -5,7 +5,15 @@ import React from 'react';
 
 const DisclaimerPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen relative">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
+          transform: 'translate3d(0, 0, 0)'
+        }}
+      />
       {/* Header Section */}
       <motion.div
         className="relative py-20 px-4 sm:px-6 lg:px-8"
@@ -15,7 +23,7 @@ const DisclaimerPage: React.FC = () => {
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-dark mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -23,7 +31,7 @@ const DisclaimerPage: React.FC = () => {
             Disclaimer
           </motion.h1>
           <motion.p
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-[#4f342e]/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -40,13 +48,13 @@ const DisclaimerPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+        <div className="bg-white/90 backdrop-blur-sm shadow-xl p-8 md:p-12">
           <div className="prose prose-lg max-w-none">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="space-y-6 text-gray-700 leading-relaxed"
+              className="space-y-6 text-[#4f342e] leading-relaxed"
             >
               <p>
                 The information provided on this website is intended for general informational purposes only. While we make every effort to ensure the accuracy, completeness, and reliability of the content presented, we do not guarantee that the information, including product descriptions, images, availability, or prices, is error-free or up-to-date. All content on this site is provided &ldquo;as is,&rdquo; and we are not responsible for any inaccuracies, errors, or omissions.
@@ -77,12 +85,12 @@ const DisclaimerPage: React.FC = () => {
               </p>
 
               <motion.div
-                className="mt-8 pt-6 border-t border-gray-200"
+                className="mt-8 pt-6 border-t border-[#4f342e]/20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                <p className="text-sm text-gray-500 font-medium">
+                <p className="text-sm text-[#4f342e]/60 font-medium">
                   <strong>Last updated:</strong> October, 2025
                 </p>
               </motion.div>
@@ -90,46 +98,6 @@ const DisclaimerPage: React.FC = () => {
           </div>
         </div>
       </motion.div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-orange-200 rounded-full opacity-20"
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 rounded-full opacity-20"
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -180, -360],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-20 w-12 h-12 bg-amber-200 rounded-full opacity-20"
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 15, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
     </div>
   );
 };

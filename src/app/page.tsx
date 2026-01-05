@@ -9,15 +9,6 @@ import { products } from '@/app/products/data';
 export default function Home() {
   return (
     <div className="font-sans text-primary">
-      {/* Fixed Background Image */}
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
-
       {/* BEGIN: HeroSection */}
       <section 
         className="relative h-screen overflow-hidden" 
@@ -58,7 +49,6 @@ export default function Home() {
                     src="/images/the-mission.jpg"
                     width={384}
                     height={384}
-                    unoptimized
                   />
                 </div>
               </div>
@@ -86,7 +76,7 @@ export default function Home() {
                 ...products.slice(0, 3),
                 products.find(p => p.name === 'Toto Tundu') || products[3]
               ].map((product, index) => (
-                <ProductCard key={product.id} product={product} index={index} />
+                <ProductCard key={product.id} product={product} index={index} priority={index < 2} />
               ))}
             </div>
           </div>

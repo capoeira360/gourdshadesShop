@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEnquiry } from '@/contexts/EnquiryContext';
 import { X, Mail, User, Phone, MessageSquare, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -37,6 +38,12 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || '/api/send-contact';
+  const ENQUIRY_ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT || '/api/send-enquiry';
+  const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+  const EMAILJS_TEMPLATE_ID_DEFAULT = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID; // unified template ID
 
   const validateForm = (): boolean => {
     const validation = validateContactForm(formData);
@@ -125,8 +132,52 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         timestamp: new Date().toISOString(),
       };
 
-      // Use contact API if no items, otherwise use enquiry API
-      const apiEndpoint = state.items.length === 0 ? '/api/send-contact' : '/api/send-enquiry';
+      // Prefer EmailJS if configured; otherwise fall back to API endpoints
+      const useEmailJS = Boolean(EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_TEMPLATE_ID_DEFAULT);
+
+      if (useEmailJS) {
+        const isContact = state.items.length === 0;
+        const templateId = EMAILJS_TEMPLATE_ID_DEFAULT!;
+
+        const itemsSummary = isContact
+          ? 'No items'
+          : state.items
+              .map((item) => `${item.name} × ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
+              .join('\n');
+
+        const params = {
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone,
+          message: sanitizedData.message,
+          timestamp: sanitizedData.timestamp,
+          site_url: process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : ''),
+          form_type: isContact ? 'Contact' : 'Enquiry',
+          // Enquiry-specific params
+          items_summary: itemsSummary,
+          total_items: String(isContact ? 0 : state.totalItems),
+          total_value: `$${(isContact ? 0 : state.totalValue).toFixed(2)}`,
+        };
+
+        await emailjs.send(
+          EMAILJS_SERVICE_ID!,
+          templateId,
+          params,
+          { publicKey: EMAILJS_PUBLIC_KEY! }
+        );
+
+        setSubmitStatus('success');
+        clearCart();
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus('idle');
+          setFormData({ name: '', email: '', phone: '', message: '' });
+        }, 2000);
+        return;
+      }
+
+      // Fallback to server API endpoints
+      const apiEndpoint = state.items.length === 0 ? CONTACT_ENDPOINT : ENQUIRY_ENDPOINT;
       const requestBody = state.items.length === 0 
         ? {
             name: sanitizedData.name,
@@ -145,13 +196,23 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         body: JSON.stringify(requestBody),
       });
 
-      const result = await response.json();
+      // Try to parse JSON; if not JSON (e.g., static 404 page), fall back to text
+      type ApiError = {
+        error?: string;
+        details?: { field: string; message: string }[];
+      };
+      let result: ApiError = {};
+      try {
+        result = (await response.json()) as ApiError;
+      } catch {
+        const text = await response.text();
+        result = { error: text };
+      }
 
       if (!response.ok) {
         if (response.status === 429) {
           setErrors({ general: 'Too many requests. Please try again later.' });
         } else if (result.details) {
-          // Handle validation errors from server
           const newErrors: FormErrors = {};
           result.details.forEach((detail: { field: string; message: string }) => {
             const field = detail.field.split('.').pop() as keyof FormErrors;
@@ -167,8 +228,6 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
       setSubmitStatus('success');
       clearCart();
-      
-      // Auto-close after success
       setTimeout(() => {
         onClose();
         setSubmitStatus('idle');
@@ -190,21 +249,21 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-[#4f342e] bg-opacity-50 z-50 flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white rounded-lg p-8 max-w-md w-full text-center"
+                className="bg-white p-8 max-w-md w-full text-center"
                 variants={formVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
               >
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Enquiry Sent!</h2>
-                <p className="text-gray-600">
+                <h2 className="text-2xl font-bold text-brand-dark mb-2">Enquiry Sent!</h2>
+                <p className="text-[#4f342e]/80">
                   Thank you for your enquiry. We&apos;ll get back to you within 24 hours.
                 </p>
               </motion.div>
@@ -221,7 +280,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            className="fixed inset-0 bg-[#4f342e] bg-opacity-50 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -231,7 +290,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
           {/* Form Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
-              className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
               variants={formVariants}
               initial="hidden"
               animate="visible"
@@ -239,28 +298,28 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-primary text-white p-6 rounded-t-lg">
+              <div className="bg-primary text-white p-6">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Send Enquiry</h2>
                   <button
                     onClick={onClose}
-                    className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
+                    className="p-1 hover:bg-white hover:bg-opacity-20"
                   >
                     <X size={24} />
                   </button>
                 </div>
-                <p className="text-gray-200 mt-2">
+                <p className="text-white/80 mt-2">
                   Complete your details below to send your enquiry
                 </p>
               </div>
 
               {/* Selected Items Summary */}
-              <div className="p-6 border-b bg-gray-50">
-                <h3 className="font-semibold text-gray-900 mb-3">Selected Items ({state.totalItems})</h3>
+              <div className="p-6 border-b bg-[#4f342e]/5">
+                <h3 className="font-semibold text-brand-dark mb-3">Selected Items ({state.totalItems})</h3>
                 <div className="space-y-2 max-h-32 overflow-y-auto">
                   {state.items.map((item) => (
                     <div key={item.id} className="flex justify-between items-center text-sm">
-                      <span className="text-gray-700">{item.name} × {item.quantity}</span>
+                      <span className="text-[#4f342e]">{item.name} × {item.quantity}</span>
                       <span className="font-semibold text-primary">
                         ${(item.price * item.quantity).toFixed(2)}
                       </span>
@@ -279,7 +338,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <User size={16} className="inline mr-2" />
                     Full Name *
                   </label>
@@ -289,8 +348,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.name ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your full name"
                     variants={inputVariants}
@@ -304,7 +363,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <Mail size={16} className="inline mr-2" />
                     Email Address *
                   </label>
@@ -314,8 +373,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.email ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your email address"
                     variants={inputVariants}
@@ -329,7 +388,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Phone Field */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <Phone size={16} className="inline mr-2" />
                     Phone Number *
                   </label>
@@ -339,8 +398,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500 ${
-                      errors.phone ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] ${
+                      errors.phone ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Enter your phone number"
                     variants={inputVariants}
@@ -354,7 +413,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-[#4f342e] mb-2">
                     <MessageSquare size={16} className="inline mr-2" />
                     Message *
                   </label>
@@ -364,8 +423,8 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-gray-900 placeholder-gray-500 ${
-                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border-2 bg-[#F5EFE6] text-[#1A1815] placeholder-[#7A6E5A] focus:outline-none focus:ring-2 focus:ring-[#3A332C] resize-none ${
+                      errors.message ? 'border-red-500' : 'border-[#3A332C]'
                     }`}
                     placeholder="Tell us about your requirements or any questions you have..."
                     variants={inputVariants}
@@ -380,7 +439,7 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                 {/* Error Messages */}
                 {(submitStatus === 'error' || errors.general) && (
                   <motion.div
-                    className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center"
+                    className="bg-red-50 border border-red-200 p-4 flex items-center"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -395,9 +454,9 @@ const EnquiryForm: React.FC<EnquiryFormProps> = ({ isOpen, onClose }) => {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center space-x-2 ${
+                  className={`w-full py-4 font-semibold flex items-center justify-center space-x-2 ${
                     isSubmitting
-                      ? 'bg-gray-400 cursor-not-allowed'
+                      ? 'bg-[#4f342e]/50 cursor-not-allowed'
                       : 'bg-primary hover:bg-opacity-90 text-white'
                   }`}
                   variants={buttonVariants}

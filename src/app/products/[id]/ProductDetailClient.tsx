@@ -85,13 +85,17 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="pt-24 pb-8 relative" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
+      <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
+        <Image
+          src="/images/20240612_135238-featured-2-min.jpg"
+          alt="Hero Background"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+          quality={85}
+        />
+      </div>
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Link
@@ -118,6 +122,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   alt={product.name}
                   width={640}
                   height={676}
+                  priority
                   className="w-full h-full object-contain"
                 />
 

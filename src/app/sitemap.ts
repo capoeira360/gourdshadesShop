@@ -4,7 +4,6 @@ import { products } from './products/data';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // TODO: Update this to your actual production domain
   const baseUrl = 'https://gourdshades.com';
 
   // Static routes

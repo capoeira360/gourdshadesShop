@@ -79,39 +79,47 @@ const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHov
   };
 
   return (
-    <div className="relative group">
-      <Link href={`/products/${product.id}`}>
+    <div
+      className="relative group"
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onPointerEnter={onHover}
+      onPointerLeave={onLeave}
+    >
+      <Link href={`/products/${product.id}`} onMouseEnter={onHover} onMouseLeave={onLeave} onPointerEnter={onHover} onPointerLeave={onLeave}>
         <motion.div
           ref={rowRef}
-          className={`group cursor-pointer py-8 px-6 border-b border-gray-100 transition-all duration-300 ${
-            isActive ? 'bg-gray-50' : 'hover:bg-gray-50'
+          className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-[#4f342e]/10 transition-all duration-300 ${
+            isActive ? 'bg-white/85 backdrop-blur-sm shadow-lg' : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
           }`}
           variants={rowVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
+          onPointerEnter={onHover}
+          onPointerLeave={onLeave}
         >
         <div className="flex justify-between items-center">
           <div className="flex-1">
             <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
-              isActive ? 'text-primary' : 'text-gray-900 group-hover:text-primary'
-            }`} style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+              isActive ? 'text-primary' : 'text-brand-dark group-hover:text-primary'
+            }`} style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
-            <p className="text-gray-600 mt-2 text-sm md:text-base">
+            <p className="text-[#4f342e]/80 mt-2 text-sm md:text-base">
               {product.description}
             </p>
             <div className="flex items-center mt-4 space-x-4">
               <span className="text-lg font-semibold" style={{ color: '#786861' }}>
                 {product.price}
               </span>
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
                 {product.category}
               </span>
             </div>
           </div>
-          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">
             <svg 
               className="w-6 h-6 text-primary" 
               fill="none" 
@@ -138,14 +146,9 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
 
   useEffect(() => {
     if (product && product.id !== currentProduct?.id) {
-      setIsTransitioning(true);
-      // Small delay to allow for smooth transition
-      const timer = setTimeout(() => {
-        setCurrentProduct(product);
-        setIsTransitioning(false);
-      }, 150);
-      
-      return () => clearTimeout(timer);
+      // Immediate update for responsive hover behavior
+      setCurrentProduct(product);
+      setIsTransitioning(false);
     } else if (!product) {
       setCurrentProduct(null);
       setIsTransitioning(false);
@@ -153,7 +156,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   }, [product, currentProduct?.id]);
 
   return (
-    <div className="sticky top-32 h-[600px] bg-gray-50 rounded-lg overflow-hidden group cursor-pointer">
+    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-white/90 backdrop-blur-sm overflow-hidden group cursor-pointer shadow-lg">
       {currentProduct ? (
         <div className="w-full h-full relative">
           <div 
@@ -169,8 +172,8 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
                 className="object-cover"
               />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 sm:p-6">
+              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                 {currentProduct.name}
               </h4>
               <p className="text-sm text-white/80 group-hover:text-[#C8A882]/90 transition-colors duration-300">
@@ -181,10 +184,10 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
         </div>
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center text-gray-400">
+          <div className="text-center text-[#4f342e]/30">
             <svg 
               className="w-16 h-16 mx-auto mb-4" 
-              fill="none" 
+              fill="none"  
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
@@ -201,9 +204,10 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
 interface ProductCardProps {
   product: Product;
   index: number;
+  priority?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, index, priority = false }) => {
   const [isVisible] = useState(true); // Changed to true for instant visibility
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -239,38 +243,39 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
   };
 
   return (
-    <div className="relative group">
-      <Link href={`/products/${product.id}`}>
+    <div className="relative group h-full">
+      <Link href={`/products/${product.id}`} className="h-full block">
         <motion.div
           ref={cardRef}
-          className="cursor-pointer bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          className="cursor-pointer bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col"
           variants={cardVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           whileHover={{ y: -5 }}
         >
-          <div className="relative aspect-square bg-gray-50 overflow-hidden">
+          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden flex-shrink-0">
             <Image
               src={product.images[0]}
               alt={product.name}
               fill
+              priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
-          <div className="p-6">
-            <h3 className="text-xl font-light text-gray-900 group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+          <div className="p-6 flex flex-col flex-grow">
+            <h3 className="text-xl font-light text-[#4f342e] group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
               {product.name}
             </h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
+            <p className="text-[#4f342e]/80 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
               {product.description}
             </p>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-auto">
               <PriceDisplay 
                 price={product.price}
                 className="text-lg font-semibold"
               />
-              <span className="text-xs uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
                 {product.category}
               </span>
             </div>
@@ -407,7 +412,7 @@ const ProductsPage: React.FC = () => {
       id: 'quantum-line',
       name: 'Fallen leaves 00',
       category: 'collection',
-      price: '$179 - $799',
+      price: '$100 - $150',
       images: [
         '/images/IMG-20250213-WA0011-q1.jpg',
         '/images/IMG-20250213-WA0017-q2.jpg',
@@ -572,7 +577,7 @@ const ProductsPage: React.FC = () => {
       description: 'Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.',
     },
     {
-      id: 'vintage-v-series',
+      id: 'handmade-gourd-lamp',
       name: 'Posing Zebra',
       category: 'piece',
       price: '$100 - $160',
@@ -658,17 +663,25 @@ const ProductsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen pt-24 font-sans text-primary">
+      {/* Fixed Background Image */}
+      <div 
+        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
+          transform: 'translate3d(0, 0, 0)'
+        }}
+      />
       {/* Header Section */}
       <motion.div
         ref={headerRef}
-        className="max-w-7xl mx-auto px-6 py-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
         variants={headerVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'Regen, Arial, Helvetica, sans-serif' }}>
+          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
             Products
           </h1>
         </div>
@@ -676,7 +689,7 @@ const ProductsPage: React.FC = () => {
 
       {/* Filter and View Toggle Section */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto px-4 sm:px-6 mb-10 sm:mb-12"
         variants={filterVariants}
         initial="hidden"
         animate={isHeaderVisible ? "visible" : "hidden"}
@@ -687,10 +700,10 @@ const ProductsPage: React.FC = () => {
             {categories.map((category) => (
               <motion.button
                 key={category}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 font-medium transition-all duration-300 ${
                   filter === category
                     ? 'bg-primary text-white'
-                    : 'bg-white text-primary hover:bg-primary hover:text-white border border-gray-200'
+                    : 'bg-white/90 backdrop-blur-sm text-primary hover:bg-primary hover:text-white border border-gray-200/50'
                 }`}
                 onClick={() => setFilter(category)}
                 whileHover={{ scale: 1.05 }}
@@ -702,12 +715,12 @@ const ProductsPage: React.FC = () => {
           </div>
 
           {/* View Toggle */}
-          <div className="flex items-center bg-gray-100 rounded-full p-1">
+          <div className="hidden md:flex items-center bg-white/40 backdrop-blur-sm p-1 rounded">
             <button
-              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
                 viewMode === 'list'
-                  ? 'bg-white text-primary shadow-sm'
-                  : 'text-gray-600 hover:text-primary'
+                  ? 'bg-white/90 shadow-sm text-primary'
+                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
               }`}
               onClick={() => setViewMode('list')}
             >
@@ -717,10 +730,10 @@ const ProductsPage: React.FC = () => {
               List
             </button>
             <button
-              className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
                 viewMode === 'grid'
-                  ? 'bg-white text-primary shadow-sm'
-                  : 'text-gray-600 hover:text-primary'
+                  ? 'bg-white/90 shadow-sm text-primary'
+                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
               }`}
               onClick={() => setViewMode('grid')}
             >
@@ -734,10 +747,10 @@ const ProductsPage: React.FC = () => {
       </motion.div>
 
       {/* Products Layout */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
-        {viewMode === 'list' ? (
-          /* List View - Original Split Layout */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
+        {/* List View - md+ only (hidden on small) */}
+        {viewMode === 'list' && (
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Product Names */}
             <div className="space-y-0">
               {filteredProducts.map((product, index) => (
@@ -766,22 +779,23 @@ const ProductsPage: React.FC = () => {
             </div>
 
             {/* Right Side - Product Image */}
-            <div className="lg:block hidden">
+            <div className="md:block hidden">
               <ProductImage product={activeProduct} />
             </div>
           </div>
-        ) : (
-          /* Grid View - 4 Products Per Row */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredProducts.map((product, index) => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                index={index}
-              />
-            ))}
-          </div>
         )}
+
+        {/* Grid View - always shown on small; shown on md+ when grid selected */}
+        <div className={`${viewMode === 'list' ? 'grid md:hidden' : 'grid'} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8`}>
+          {filteredProducts.map((product, index) => (
+            <ProductCard 
+                  key={product.id} 
+                  product={product} 
+                  index={index} 
+                  priority={index < 4}
+                />
+          ))}
+        </div>
       </div>
     </div>
   );

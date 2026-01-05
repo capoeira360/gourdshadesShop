@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 
 const libreBaskerville = Libre_Baskerville({
@@ -62,12 +63,35 @@ export const metadata: Metadata = {
     description: "Discover stunning handcrafted lampshades made from dried calabash shells.",
     images: ["/images/top-intro.jpg"],
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased ${libreBaskerville.variable}`} suppressHydrationWarning>
+        {/* Fixed Background Image */}
+        <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
+          <Image
+            src="/images/site-background-e4.jpg"
+            alt="Hero Background"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+            quality={85}
+          />
+        </div>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
