@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="sticky top-16 sm:top-24 h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden shadow-2xl flex items-center justify-center z-0">
+    <div className="h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden shadow-2xl flex items-center justify-center z-0 relative rounded-2xl">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -43,145 +43,55 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
               ease: [0.4, 0, 0.2, 1]
             }}
           >
-            {/* Display actual images for story, craft, and heritage sections */}
-            {section.id === 'story' ? (
-              <motion.div
-                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+            {/* Display actual images for all sections */}
+            <motion.div
+              className="w-full h-[calc(100%-16px)] mt-4 relative flex items-center justify-center rounded-t-2xl overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {section.id === 'story' ? (
                 <Image
                   src="/images/image-wm-about.jpg"
                   alt="Isaac Munis - About"
-                  className="w-full h-full object-cover shadow-lg"
-                  width={800}
-                  height={600}
+                  className="object-cover object-top"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   priority
                 />
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20" />
-              </motion.div>
-            ) : section.id === 'heritage' ? (
-              <motion.div
-                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              ) : section.id === 'heritage' ? (
                 <Image
                   src="/images/about-image-card2.jpeg"
                   alt="Discovering Gourd Craft"
-                  className="w-full h-full object-cover shadow-lg"
-                  width={800}
-                  height={600}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20" />
-              </motion.div>
-            ) : section.id === 'values' ? (
-              <motion.div
-                className="w-full h-full relative bg-[#4f342e]/5 flex items-center justify-center p-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              ) : section.id === 'values' ? (
                 <Image
                   src="/images/about-image-card3.jpeg"
                   alt="Cultural Heritage"
-                  className="w-full h-full object-cover shadow-lg"
-                  width={800}
-                  height={600}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/20" />
-              </motion.div>
-            ) : (
-              <motion.div
-                 className={`w-full h-full bg-gradient-to-br ${getGradientForSection(section.id)} relative`}
-                 initial={{ backgroundPosition: '0% 50%' }}
-                 animate={{ backgroundPosition: '100% 50%' }}
-                 transition={{ 
-                   duration: 8, 
-                   repeat: Infinity, 
-                   repeatType: "reverse",
-                   ease: "linear"
-                 }}
-                 style={{
-                   backgroundSize: '200% 200%'
-                 }}
-               >
-                {/* Floating geometric shapes */}
-                <motion.div
-                  className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/20"
-                  animate={{ 
-                    y: [0, -20, 0],
-                    x: [0, 10, 0],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    ease: "easeInOut"
-                  }}
+              ) : section.id === 'mission' ? (
+                <Image
+                  src="/images/the-mission.jpg"
+                  alt="My Mission"
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <motion.div
-                  className="absolute top-3/4 right-1/4 w-12 h-12 bg-white/15 rotate-45"
-                  animate={{ 
-                    rotate: [45, 90, 45],
-                    y: [0, 15, 0]
-                  }}
-                  transition={{ 
-                    duration: 5, 
-                    repeat: Infinity, 
-                    ease: "easeInOut"
-                  }}
-                />
-                <motion.div
-                  className="absolute top-1/2 right-1/3 w-8 h-8 bg-white/25"
-                  animate={{ 
-                    scale: [1, 1.3, 1],
-                    opacity: [0.25, 0.4, 0.25]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
-            )}
-
-            {/* Content overlay with enhanced styling */}
-            <motion.div 
-              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4 sm:p-8"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-            >
-              <motion.h4 
-                className="text-white text-xl sm:text-2xl font-light mb-3 tracking-wide"
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.3 }}
-                style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
-              >
-                {section.title}
-              </motion.h4>
-              {section.subtitle && (
-                <motion.p 
-                  className="text-white/90 text-sm sm:text-base font-medium"
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.3 }}
-                >
-                  {section.subtitle}
-                </motion.p>
+              ) : (
+                <div className="w-full h-full bg-[#4f342e]/10 flex items-center justify-center">
+                   {/* Fallback for unknown sections */}
+                </div>
               )}
             </motion.div>
 
             {/* Subtle border glow effect */}
-            <div className="absolute inset-0 ring-1 ring-white/20" />
+            <div className="absolute inset-0 ring-1 ring-black/5 rounded-2xl pointer-events-none" />
           </motion.div>
         ) : (
           <motion.div 
@@ -272,8 +182,8 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
     <motion.div
       ref={sectionRef}
       data-section-id={section.id}
-      className={`about-section-row relative z-10 h-auto min-h-[360px] md:h-[520px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 ${
-        isActive ? 'bg-white/85 backdrop-blur-sm shadow-lg' : 'bg-white/40 backdrop-blur-sm'
+      className={`about-section-row relative z-10 h-auto min-h-[360px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 rounded-2xl ${
+        isActive ? 'bg-white/95 backdrop-blur-md shadow-xl scale-[1.02] border-l-4 border-primary' : 'bg-white/40 backdrop-blur-sm scale-95 opacity-60 grayscale-[0.5]'
       }`}
       variants={variants}
       initial="visible"
@@ -281,10 +191,14 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <div className="max-w-2xl w-full">
+      <div className="max-w-2xl w-full py-8 sm:py-0">
+        {/* Mobile/Tablet Image */}
+        <div className="lg:hidden mb-8 w-full">
+          <AboutImage section={section} />
+        </div>
         <motion.h2 
           className={`text-4xl md:text-5xl font-light mb-8 transition-all duration-500 ${
-            isActive ? 'text-primary transform scale-105' : 'text-[#4f342e]'
+            isActive ? 'text-primary transform translate-x-2' : 'text-[#4f342e]'
           }`}
           layout
           style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
@@ -293,7 +207,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
         </motion.h2>
         {section.subtitle && (
           <motion.h3 
-            className="text-xl text-[#4f342e]/80 mb-8 font-medium"
+            className={`text-xl mb-8 font-medium transition-all duration-500 ${
+              isActive ? 'text-[#4f342e] translate-x-2' : 'text-[#4f342e]/60'
+            }`}
             layout
             style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
           >
@@ -307,7 +223,9 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
           {section.content.map((paragraph, idx) => (
             <motion.p 
               key={idx} 
-              className="text-lg text-[#4f342e] leading-relaxed"
+              className={`text-lg leading-relaxed transition-all duration-500 ${
+                isActive ? 'text-black/90' : 'text-[#4f342e]/70'
+              }`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1, duration: 0.6 }}
@@ -429,24 +347,24 @@ const AboutClient: React.FC = () => {
         }
       });
 
-      const currentActiveRatio = activeSection ? (ratios.get(activeSection.id) || 0) : 0;
-      const delay = directionRef.current === 'up' ? 500 : 400;
-
-      // Hysteresis: require dominance before switching to reduce fast toggles
-      const isDominant = bestRatio >= Math.max(0.55, currentActiveRatio + 0.08);
-
-      if (bestId && !isHovering && isDominant) {
-        if (activeChangeTimeoutRef.current) {
-          clearTimeout(activeChangeTimeoutRef.current);
-        }
-        activeChangeTimeoutRef.current = setTimeout(() => {
+      // Immediate switch logic: As soon as another card becomes more visible, switch to it.
+      if (bestId && bestId !== activeSection?.id) {
+        const currentRatio = activeSection ? (ratios.get(activeSection.id) || 0) : 0;
+        
+        // Switch if the new best is strictly more visible than the current one
+        if (bestRatio > currentRatio) {
           const next = sections.find((s) => s.id === bestId);
-          if (next && next.id !== activeSection?.id) {
+          if (next) {
             setActiveSection(next);
           }
-        }, delay);
+        }
       }
-    }, { threshold: [0, 0.3, 0.55, 0.7, 0.85, 1], rootMargin: '-25% 0px -25% 0px' });
+    }, { 
+      // More granular thresholds for smoother updates
+      threshold: Array.from({ length: 21 }, (_, i) => i * 0.05), 
+      // Wider active zone to catch transitions earlier
+      rootMargin: '-10% 0px -10% 0px' 
+    });
 
     elements.forEach((el) => globalObserver.observe(el));
 
@@ -504,10 +422,10 @@ const AboutClient: React.FC = () => {
       </motion.section>
 
       {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="max-w-7xl mx-auto px-6 relative pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
           {/* Left Column: Text Content */}
-          <div className="order-2 lg:order-1 pb-32">
+          <div className="order-2 lg:order-1 pb-0">
             <div className="space-y-0">
               {sections.map((section, index) => (
                 <SectionRow
@@ -515,7 +433,10 @@ const AboutClient: React.FC = () => {
                   section={section}
                   index={index}
                   isActive={activeSection?.id === section.id}
-                  onEnter={() => setIsHovering(true)}
+                  onEnter={() => {
+                    setIsHovering(true);
+                    setActiveSection(section);
+                  }}
                   onLeave={() => setIsHovering(false)}
                 />
               ))}
@@ -524,7 +445,7 @@ const AboutClient: React.FC = () => {
 
           {/* Right Column: Sticky Image */}
           <div className="order-1 lg:order-2 hidden lg:block relative">
-            <div className="sticky top-24 h-[600px] flex items-start justify-center">
+            <div className="sticky top-20 h-[600px] flex items-start justify-center">
               <AboutImage section={activeSection} />
             </div>
           </div>
