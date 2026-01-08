@@ -43,7 +43,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'spackle-blue-red-crystal-lamp',
+    id: 'sophisticated-abstract-crystal-lighting',
     name: 'Spackle blue/red',
     category: 'piece',
     price: '$120 - $150',
@@ -75,7 +75,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'natural-african-woman-lamp',
+    id: 'african-woman-crystal-prismatic-lamp',
     name: 'Natural African woman',
     category: 'piece',
     price: '$150 - $180',
@@ -170,7 +170,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'wild-sunset-savanna-lamp',
+    id: 'savanna-sunset-ecosystem-lamp',
     name: 'The wild sunset',
     category: 'piece',
     price: '$100 - $150',
@@ -232,7 +232,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'the-five-mugshots-big-five-lamp',
+    id: 'big-five-animal-faces-lamp',
     name: 'The five mugshots',
     category: 'piece',
     price: '$200 - $250',
@@ -325,7 +325,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'young-roar-lion-lamp',
+    id: 'young-lion-roar-duality-lamp',
     name: 'The young roar',
     category: 'piece',
     price: '$100 - $150',
@@ -481,7 +481,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'cool-king-lion-lamp',
+    id: 'lion-king-artisanal-styles-lamp',
     name: 'Cool King',
     category: 'piece',
     price: '$100 - $150',
@@ -512,7 +512,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'chilly-cheetah-lamp',
+    id: 'cheetah-grace-speed-artistry-lamp',
     name: 'Chilly Cheetah',
     category: 'piece',
     price: '$100 - $150',
@@ -543,7 +543,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'bibi-baobab-tree-lamp',
+    id: 'baobab-tree-of-life-earth-lamp',
     name: 'Bibi Baobab',
     category: 'piece',
     price: '$100 - $150',
@@ -667,7 +667,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'toto-tundu-lamp',
+    id: 'harmonious-balanced-design-lamp',
     name: 'Toto Tundu',
     category: 'piece',
     price: '$100 - $150',

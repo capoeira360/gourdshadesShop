@@ -17,16 +17,7 @@ interface AboutImageProps {
 }
 
 const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
-  // Define gradient colors for each section
-  const getGradientForSection = (sectionId: string) => {
-    const gradients = {
-      story: 'from-blue-400 via-purple-500 to-pink-500',
-      heritage: 'from-emerald-400 via-teal-500 to-cyan-600',
-      values: 'from-orange-400 via-red-500 to-pink-600',
-      mission: 'from-indigo-400 via-blue-500 to-purple-600'
-    };
-    return gradients[sectionId as keyof typeof gradients] || 'from-[#4f342e]/40 to-[#4f342e]/60';
-  };
+
 
   return (
     <div className="h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden flex items-center justify-center z-0 relative rounded-2xl">
@@ -246,7 +237,6 @@ const AboutClient: React.FC = () => {
   const [activeSection, setActiveSection] = useState<AboutSection | null>(null);
   const [isHovering, setIsHovering] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  const activeChangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollYRef = useRef(0);
   const directionRef = useRef<'up' | 'down'>('down');
 
@@ -372,9 +362,6 @@ const AboutClient: React.FC = () => {
 
     return () => {
       globalObserver.disconnect();
-      if (activeChangeTimeoutRef.current) {
-        clearTimeout(activeChangeTimeoutRef.current);
-      }
       window.removeEventListener('scroll', onScroll);
     };
   }, [sections, isHovering, activeSection]);
