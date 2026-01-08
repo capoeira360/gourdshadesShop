@@ -12,7 +12,7 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    id: 'artisan-series',
+    id: 'african-wild-life-lamps',
     name: 'Tembo/Twiga savana',
     category: 'piece',
     price: '$100 - $150',
@@ -43,7 +43,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'bronze-collection',
+    id: 'spackle-blue-red-crystal-lamp',
     name: 'Spackle blue/red',
     category: 'piece',
     price: '$120 - $150',
@@ -75,7 +75,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'crystal-line',
+    id: 'natural-african-woman-lamp',
     name: 'Natural African woman',
     category: 'piece',
     price: '$150 - $180',
@@ -107,7 +107,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'designer-collection',
+    id: 'trees-for-life-lamp',
     name: 'Trees for life',
     category: 'piece',
     price: '$100 - $150',
@@ -139,7 +139,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'essence-series',
+    id: 'twiga-mugshot-giraffe-lamp',
     name: 'Twiga mugshot',
     category: 'piece',
     price: '$100 - $150',
@@ -170,7 +170,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'fusion-line',
+    id: 'wild-sunset-savanna-lamp',
     name: 'The wild sunset',
     category: 'piece',
     price: '$100 - $150',
@@ -201,7 +201,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'stellar-series',
+    id: 'fallen-leaves-2-0-lamp',
     name: 'Fallen leaves 2.0',
     category: 'piece',
     price: '$100 - $150',
@@ -232,7 +232,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'radiance-collection',
+    id: 'the-five-mugshots-big-five-lamp',
     name: 'The five mugshots',
     category: 'piece',
     price: '$200 - $250',
@@ -263,7 +263,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'quantum-line',
+    id: 'fallen-leaves-00-lamp',
     name: 'Fallen leaves 00',
     category: 'collection',
     price: '$100 - $150',
@@ -294,7 +294,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'prism-series',
+    id: 'family-tree-stand-lamp',
     name: 'Family tree',
     category: 'piece',
     price: '$250 - $350',
@@ -325,7 +325,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'orbit-collection',
+    id: 'young-roar-lion-lamp',
     name: 'The young roar',
     category: 'piece',
     price: '$100 - $150',
@@ -356,7 +356,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'nova-line',
+    id: 'butterfly-effects-crystal-lamp',
     name: 'Butterfly effects',
     category: 'piece',
     price: '$100 - $150',
@@ -388,7 +388,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'meridian-series',
+    id: 'wild-sere-lamp',
     name: 'The wild sere',
     category: 'piece',
     price: '$100 - $150',
@@ -419,7 +419,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'lumina-collection',
+    id: 'humming-bird-lamp',
     name: 'The humming',
     category: 'collection',
     price: '$100 - $150',
@@ -450,7 +450,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'heritage-k-series',
+    id: 'african-rhinoceros-lamp',
     name: 'African Rhinoceros',
     category: 'piece',
     price: '$100 - $150',
@@ -481,7 +481,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'artisan-j-series',
+    id: 'cool-king-lion-lamp',
     name: 'Cool King',
     category: 'piece',
     price: '$100 - $150',
@@ -512,7 +512,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'illumina-i-series',
+    id: 'chilly-cheetah-lamp',
     name: 'Chilly Cheetah',
     category: 'piece',
     price: '$100 - $150',
@@ -543,7 +543,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'terra-t-series',
+    id: 'bibi-baobab-tree-lamp',
     name: 'Bibi Baobab',
     category: 'piece',
     price: '$100 - $150',
@@ -574,7 +574,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'urban-u-series',
+    id: 'brother-buffalo-lamp',
     name: 'Brother Buffalo',
     category: 'piece',
     price: '$120 - $150',
@@ -605,7 +605,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'golden-g-series',
+    id: 'tied-wave-abstract-lamp',
     name: 'Tied Wave',
     category: 'piece',
     price: '$100 - $150',
@@ -636,7 +636,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'handmade-gourd-lamp',
+    id: 'posing-zebra-gourd-lamp',
     name: 'Posing Zebra',
     category: 'piece',
     price: '$100 - $160',
@@ -667,7 +667,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'harmony-h-series',
+    id: 'toto-tundu-lamp',
     name: 'Toto Tundu',
     category: 'piece',
     price: '$100 - $150',
