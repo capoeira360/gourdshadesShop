@@ -168,7 +168,7 @@ const ServicesClient: React.FC = () => {
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
-                <div className="space-y-4">
+                <div className="space-y-4 lg:order-2">
                   <div className="relative bg-[#4f342e]/5 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={exhibitionImages[exhibitionImageIndex]}
@@ -207,7 +207,7 @@ const ServicesClient: React.FC = () => {
                 </div>
                 
                 {/* Content Section */}
-                <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
+                <div className="space-y-6 pt-4 lg:pt-0 lg:order-1">
                   <div>
                     <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Exhibition

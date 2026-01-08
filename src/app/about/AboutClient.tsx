@@ -29,7 +29,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ section }) => {
   };
 
   return (
-    <div className="h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden shadow-2xl flex items-center justify-center z-0 relative rounded-2xl">
+    <div className="h-[350px] sm:h-[500px] lg:h-[600px] bg-[#4f342e]/5 overflow-hidden flex items-center justify-center z-0 relative rounded-2xl">
       <AnimatePresence mode="wait">
         {section ? (
           <motion.div
@@ -144,7 +144,6 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
     const newIsVisible = entry.isIntersecting && entry.intersectionRatio > 0.45;
-    // We now rely on the global observer for switching to avoid fast changes on up-scroll.
     if (newIsVisible !== isVisible) {
       setIsVisible(newIsVisible);
     }
@@ -153,7 +152,6 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: [0, 0.25, 0.5, 0.75, 1.0],
-      // Focus on the central 30% of viewport to delay switching
       rootMargin: '-35% 0px -35% 0px'
     });
 
@@ -182,8 +180,8 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
     <motion.div
       ref={sectionRef}
       data-section-id={section.id}
-      className={`about-section-row relative z-10 h-auto min-h-[360px] lg:h-[600px] flex items-center px-4 sm:px-8 mb-8 transition-all duration-500 rounded-2xl ${
-        isActive ? 'bg-white/95 backdrop-blur-md shadow-xl scale-[1.02] border-l-4 border-primary' : 'bg-white/40 backdrop-blur-sm scale-95 opacity-60 grayscale-[0.5]'
+      className={`about-section-row relative z-10 w-full min-h-[600px] flex items-center p-6 sm:p-12 mb-16 transition-all duration-500 rounded-3xl overflow-hidden ${
+        isActive ? 'bg-white/95 backdrop-blur-md shadow-xl scale-[1.01] border border-primary/10' : 'bg-white/40 backdrop-blur-sm scale-[0.98] opacity-80 grayscale-[0.2]'
       }`}
       variants={variants}
       initial="visible"
@@ -191,49 +189,53 @@ const SectionRow: React.FC<SectionRowProps> = ({ section, index, isActive, onEnt
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <div className="max-w-2xl w-full py-8 sm:py-0">
-        {/* Mobile/Tablet Image */}
-        <div className="lg:hidden mb-8 w-full">
-          <AboutImage section={section} />
-        </div>
-        <motion.h2 
-          className={`text-4xl md:text-5xl font-light mb-8 transition-all duration-500 ${
-            isActive ? 'text-primary transform translate-x-2' : 'text-[#4f342e]'
-          }`}
-          layout
-          style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
-        >
-          {section.title}
-        </motion.h2>
-        {section.subtitle && (
-          <motion.h3 
-            className={`text-xl mb-8 font-medium transition-all duration-500 ${
-              isActive ? 'text-[#4f342e] translate-x-2' : 'text-[#4f342e]/60'
+      <div className={`flex flex-col md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} items-center gap-8 md:gap-16 w-full`}>
+        {/* Text Side */}
+        <div className="flex-1 w-full text-left order-2 md:order-1">
+          <motion.h2 
+            className={`text-3xl md:text-5xl font-light mb-6 transition-all duration-500 ${
+              isActive ? 'text-primary transform translate-x-2' : 'text-[#4f342e]'
             }`}
             layout
             style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
           >
-            {section.subtitle}
-          </motion.h3>
-        )}
-        <motion.div 
-          className="space-y-6"
-          layout
-        >
-          {section.content.map((paragraph, idx) => (
-            <motion.p 
-              key={idx} 
-              className={`text-lg leading-relaxed transition-all duration-500 ${
-                isActive ? 'text-black/90' : 'text-[#4f342e]/70'
+            {section.title}
+          </motion.h2>
+          {section.subtitle && (
+            <motion.h3 
+              className={`text-lg md:text-xl mb-6 font-medium transition-all duration-500 ${
+                isActive ? 'text-[#4f342e] translate-x-2' : 'text-[#4f342e]/60'
               }`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.6 }}
+              layout
+              style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
             >
-              {paragraph}
-            </motion.p>
-          ))}
-        </motion.div>
+              {section.subtitle}
+            </motion.h3>
+          )}
+          <motion.div 
+            className="space-y-6"
+            layout
+          >
+            {section.content.map((paragraph, idx) => (
+              <motion.p 
+                key={idx} 
+                className={`text-base md:text-lg leading-relaxed transition-all duration-500 ${
+                  isActive ? 'text-black/90' : 'text-[#4f342e]/70'
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.6 }}
+              >
+                {paragraph}
+              </motion.p>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Image Side */}
+        <div className="flex-1 w-full order-1 md:order-2">
+          <AboutImage section={section} />
+        </div>
       </div>
     </motion.div>
   );
@@ -423,32 +425,20 @@ const AboutClient: React.FC = () => {
 
       {/* Main Content Grid */}
       <div className="max-w-7xl mx-auto px-6 relative pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-          {/* Left Column: Text Content */}
-          <div className="order-2 lg:order-1 pb-0">
-            <div className="space-y-0">
-              {sections.map((section, index) => (
-                <SectionRow
-                  key={section.id}
-                  section={section}
-                  index={index}
-                  isActive={activeSection?.id === section.id}
-                  onEnter={() => {
-                    setIsHovering(true);
-                    setActiveSection(section);
-                  }}
-                  onLeave={() => setIsHovering(false)}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Sticky Image */}
-          <div className="order-1 lg:order-2 hidden lg:block relative">
-            <div className="sticky top-20 h-[600px] flex items-start justify-center">
-              <AboutImage section={activeSection} />
-            </div>
-          </div>
+        <div className="space-y-0">
+          {sections.map((section, index) => (
+            <SectionRow
+              key={section.id}
+              section={section}
+              index={index}
+              isActive={activeSection?.id === section.id}
+              onEnter={() => {
+                setIsHovering(true);
+                setActiveSection(section);
+              }}
+              onLeave={() => setIsHovering(false)}
+            />
+          ))}
         </div>
       </div>
     </div>

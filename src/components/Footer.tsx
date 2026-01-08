@@ -75,9 +75,9 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-medium mb-8" style={{ color: '#D2CAB3', fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif', fontWeight: 'normal' }}>SITEMAP</h3>
             <nav className="space-y-4">
               {renderLink('Home', '/')}
+              {renderLink('Products', '/products')}
               {renderLink('About', '/about')}
               {renderLink('Community', '/services')}
-              {renderLink('Products', '/products')}
               {renderLink('Contact', '/contact')}
             </nav>
             
