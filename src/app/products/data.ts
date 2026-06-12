@@ -388,7 +388,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'wild-sere-lamp',
+    id: 'wild-linear-directional-lighting',
     name: 'The wild sere',
     category: 'piece',
     price: '$100 - $150',
@@ -419,7 +419,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'humming-bird-lamp',
+    id: 'hummingbird-elegant-artisanal-lighting',
     name: 'The humming',
     category: 'collection',
     price: '$100 - $150',
@@ -450,7 +450,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'african-rhinoceros-lamp',
+    id: 'african-rhino-heritage-carving-lamp',
     name: 'African Rhinoceros',
     category: 'piece',
     price: '$100 - $150',
@@ -481,7 +481,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'lion-king-artisanal-styles-lamp',
+    id: 'lion-king-majestic-artisanal-lamp',
     name: 'Cool King',
     category: 'piece',
     price: '$100 - $150',
@@ -512,7 +512,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'cheetah-grace-speed-artistry-lamp',
+    id: 'cheetah-speed-modern-artistry-lamp',
     name: 'Chilly Cheetah',
     category: 'piece',
     price: '$100 - $150',
@@ -543,7 +543,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'baobab-tree-of-life-earth-lamp',
+    id: 'baobab-tree-of-life-earth-design',
     name: 'Bibi Baobab',
     category: 'piece',
     price: '$100 - $150',
@@ -574,7 +574,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'brother-buffalo-lamp',
+    id: 'buffalo-metropolitan-modern-lamp',
     name: 'Brother Buffalo',
     category: 'piece',
     price: '$120 - $150',
@@ -667,7 +667,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 'harmonious-balanced-design-lamp',
+    id: 'harmonious-balanced-serene-lighting',
     name: 'Toto Tundu',
     category: 'piece',
     price: '$100 - $150',

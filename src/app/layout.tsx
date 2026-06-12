@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Fixed Background Image */}
         <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
           <Image
-            src="/images/site-background-e4.jpg"
+            src="/background-change.jpeg"
             alt=""
             fill
             priority

@@ -1,457 +1,218 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useView } from '@/contexts/ViewContext';
+import { products } from './data';
 
-import PriceDisplay from '@/components/PriceDisplay';
-import { products, Product } from './data';
+export default function ProductsClient() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
-interface ProductRowProps {
-  product: Product;
-  index: number;
-  isActive: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  onScrollIntoView: () => void;
-}
+  const SLIDE_DURATION = 6000;
+  const TRANSITION_DURATION = 800;
 
-const ProductRow: React.FC<ProductRowProps> = ({ product, index, isActive, onHover, onLeave, onScrollIntoView }) => {
-  const [isVisible] = useState(true); // Changed to true for instant visibility
-  const rowRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const slides = products.map(product => ({
+    title: product.name,
+    price: product.price,
+    description: product.description,
+    accent: '#C4956A',
+    imageUrl: product.images[0],
+    id: product.id
+  }));
+
+  const goToSlide = useCallback(
+    (index: number, dir?: 'next' | 'prev') => {
+      if (isTransitioning || index === currentIndex) return;
+      setIsTransitioning(true);
+      setProgress(0);
+
+      setTimeout(() => {
+        setCurrentIndex(index);
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 50);
+      }, TRANSITION_DURATION / 2);
+    },
+    [isTransitioning, currentIndex]
+  );
+
+  const goNext = useCallback(() => {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    goToSlide(nextIndex, 'next');
+  }, [currentIndex, goToSlide]);
+
+  const goPrev = useCallback(() => {
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    goToSlide(prevIndex, 'prev');
+  }, [currentIndex, goToSlide]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Only trigger when the element is intersecting AND reaches the center area of viewport
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.8) {
-          // Clear any existing timeout
-          if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current);
-          }
-          
-          // Set a timeout to ensure stable detection
-          scrollTimeoutRef.current = setTimeout(() => {
-            onScrollIntoView();
-          }, 100);
-        }
-      },
-      { 
-        threshold: [0, 0.5, 0.8, 1.0], // Multiple thresholds for precise detection
-        rootMargin: '-40% 0px -40% 0px' // Only trigger when element is in center 20% of viewport
-      }
-    );
+    if (isPaused) return;
 
-    if (rowRef.current) {
-      observer.observe(rowRef.current);
-    }
+    progressRef.current = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 100;
+        return prev + 100 / (SLIDE_DURATION / 50);
+      });
+    }, 50);
+
+    intervalRef.current = setInterval(() => {
+      goNext();
+    }, SLIDE_DURATION);
 
     return () => {
-      observer.disconnect();
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (progressRef.current) clearInterval(progressRef.current);
     };
-  }, [onScrollIntoView]);
+  }, [currentIndex, isPaused, goNext]);
 
-  const rowVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    },
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
   };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 60) {
+      if (diff > 0) goNext();
+      else goPrev();
+    }
+  };
+
+  const currentSlide = slides[currentIndex];
 
   return (
     <div
-      className="relative group"
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onPointerEnter={onHover}
-      onPointerLeave={onLeave}
+      className="carousel-wrapper"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
-      <Link href={`/products/${product.id}`} onMouseEnter={onHover} onMouseLeave={onLeave} onPointerEnter={onHover} onPointerLeave={onLeave}>
-        <motion.div
-          ref={rowRef}
-          className={`group cursor-pointer py-6 px-4 sm:px-6 border-b border-[#4f342e]/10 transition-all duration-300 ${
-            isActive ? 'bg-white/85 backdrop-blur-sm shadow-lg' : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
-          }`}
-          variants={rowVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          onMouseEnter={onHover}
-          onMouseLeave={onLeave}
-          onPointerEnter={onHover}
-          onPointerLeave={onLeave}
-        >
-        <div className="flex justify-between items-center">
-          <div className="flex-1">
-            <h3 className={`text-2xl md:text-3xl font-light transition-colors duration-300 ${
-              isActive ? 'text-primary' : 'text-brand-dark group-hover:text-primary'
-            }`} style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-              {product.name}
-            </h3>
-            <p className="text-[#4f342e]/80 mt-2 text-sm md:text-base">
-              {product.description}
-            </p>
-            <div className="flex items-center mt-4 space-x-4">
-              <span className="text-lg font-semibold" style={{ color: '#786861' }}>
-                {product.price}
-              </span>
-              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
-                {product.category}
-              </span>
-            </div>
-          </div>
-          <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">
-            <svg 
-              className="w-6 h-6 text-primary" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+      {/* Background accent wash */}
+      <div
+        className="carousel-bg-wash"
+        style={{
+          background: `radial-gradient(ellipse at 70% 50%, ${currentSlide.accent}18 0%, transparent 70%)`,
+        }}
+      />
+
+      <div className="carousel-inner">
+        <div className="carousel-content">
+          <div className="carousel-content-inner">
+            <div
+              className={`carousel-collection-num ${isTransitioning ? 'transitioning' : 'visible'}`}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
-        </motion.div>
-      </Link>
-    </div>
-  );
-};
-
-interface ProductImageProps {
-  product: Product | null;
-}
-
-const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
-  const [currentProduct, setCurrentProduct] = useState<Product | null>(product);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  useEffect(() => {
-    if (product && product.id !== currentProduct?.id) {
-      // Immediate update for responsive hover behavior
-      setCurrentProduct(product);
-      setIsTransitioning(false);
-    } else if (!product) {
-      setCurrentProduct(null);
-      setIsTransitioning(false);
-    }
-  }, [product, currentProduct?.id]);
-
-  return (
-    <div className="sticky top-24 sm:top-28 h-[400px] sm:h-[500px] lg:h-[600px] bg-white/90 backdrop-blur-sm overflow-hidden group cursor-pointer shadow-lg">
-      {currentProduct ? (
-        <div className="w-full h-full relative">
-          <div 
-            className={`absolute inset-0 transition-opacity duration-300 ${
-              isTransitioning ? 'opacity-70' : 'opacity-100'
-            }`}
-          >
-            <div className="relative w-full h-full">
-              <Image
-                src={currentProduct.images[0]}
-                alt={currentProduct.name}
-                fill
-                className="object-cover"
-              />
+              <span className="carousel-num-line" />
+              <span className="carousel-kicker">Handcrafted collection</span>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 sm:p-6">
-              <h4 className="text-xl font-light mb-2 text-white group-hover:text-[#C8A882] transition-colors duration-300" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-                {currentProduct.name}
-              </h4>
-              <p className="text-sm text-white/80 group-hover:text-[#C8A882]/90 transition-colors duration-300">
-                {currentProduct.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center text-[#4f342e]/30">
-            <svg 
-              className="w-16 h-16 mx-auto mb-4" 
-              fill="none"  
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <p className="text-sm">Hover over a product to see preview</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
 
-interface ProductCardProps {
-  product: Product;
-  index: number;
-  priority?: boolean;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product, index, priority = false }) => {
-  const [isVisible] = useState(true); // Changed to true for instant visibility
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    },
-  };
-
-  return (
-    <div className="relative group h-full">
-      <Link href={`/products/${product.id}`} className="h-full block">
-        <motion.div
-          ref={cardRef}
-          className="cursor-pointer bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col"
-          variants={cardVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          whileHover={{ y: -5 }}
-        >
-          <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden flex-shrink-0">
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              fill
-              priority={priority}
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          </div>
-          <div className="p-6 flex flex-col flex-grow">
-            <h3 className="text-xl font-light text-[#4f342e] group-hover:text-[#C8A882] transition-colors duration-300 mb-2" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-              {product.name}
-            </h3>
-            <p className="text-[#4f342e]/80 text-sm mb-4 line-clamp-2 group-hover:text-[#C8A882] transition-colors duration-300">
-              {product.description}
+            <p className="carousel-meta">
+                {String(currentIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
             </p>
-            <div className="flex items-center justify-between mt-auto">
-              <PriceDisplay 
-                price={product.price}
-                className="text-lg font-semibold"
-              />
-              <span className="text-xs uppercase tracking-wider text-[#4f342e]/60 bg-[#4f342e]/5 px-2 py-1">
-                {product.category}
-              </span>
-            </div>
-          </div>
-        </motion.div>
-      </Link>
-    </div>
-  );
-};
 
-export default function ProductsClient() {
-  const [filter, setFilter] = useState<string>('all');
-  const { viewMode, setViewMode } = useView();
-  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const lastScrollProductRef = useRef<string | null>(null);
+            <h2
+              className={`carousel-title ${isTransitioning ? 'transitioning' : 'visible'}`}
+            >
+              Discover statement lighting made from carved gourds.
+            </h2>
 
-  const categories = ['all', 'collection'];
+            <p
+              className={`carousel-description ${isTransitioning ? 'transitioning' : 'visible'}`}
+            >
+              Browse the collection and open each piece to see its full gallery, details, and enquiry options.
+            </p>
 
-  const filteredProducts = filter === 'all' 
-    ? products 
-    : products.filter(product => product.category === filter);
-
-  // Only set initial active product when page loads, not on filter changes
-  useEffect(() => {
-    // Only set initial product if no product is currently active
-    if (!activeProduct && filteredProducts.length > 0) {
-      setActiveProduct(filteredProducts[0]);
-    }
-  }, [activeProduct, filteredProducts]); // Added missing dependencies
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsHeaderVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    },
-  };
-
-  const filterVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: 0.3,
-        ease: [0.76, 0, 0.24, 1] as const,
-      },
-    },
-  };
-
-  return (
-    <div className="min-h-screen pt-24 font-sans text-primary">
-      {/* Header Section */}
-      <motion.div
-        ref={headerRef}
-        className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
-        variants={headerVariants}
-        initial="hidden"
-        animate={isHeaderVisible ? "visible" : "hidden"}
-      >
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
-            Products
-          </h1>
-        </div>
-      </motion.div>
-
-      {/* Filter and View Toggle Section */}
-      <motion.div
-        className="max-w-7xl mx-auto px-4 sm:px-6 mb-10 sm:mb-12"
-        variants={filterVariants}
-        initial="hidden"
-        animate={isHeaderVisible ? "visible" : "hidden"}
-      >
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                className={`px-4 py-2 sm:px-6 sm:py-3 font-medium transition-all duration-300 ${
-                  filter === category
-                    ? 'bg-primary text-white'
-                    : 'bg-white/90 backdrop-blur-sm text-primary hover:bg-primary hover:text-white border border-gray-200/50'
-                }`}
-                onClick={() => setFilter(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <div className={`carousel-nav-arrows ${isTransitioning ? 'transitioning' : 'visible'}`}>
+              <button
+                onClick={goPrev}
+                className="carousel-arrow-btn"
+                aria-label="Previous slide"
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </motion.button>
-            ))}
-          </div>
-
-          {/* View Toggle */}
-          <div className="hidden md:flex items-center bg-white/40 backdrop-blur-sm p-1 rounded">
-            <button
-              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
-                viewMode === 'list'
-                  ? 'bg-white/90 shadow-sm text-primary'
-                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
-              }`}
-              onClick={() => setViewMode('list')}
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-              </svg>
-              List
-            </button>
-            <button
-              className={`flex items-center px-4 py-2 transition-all duration-300 rounded ${
-                viewMode === 'grid'
-                  ? 'bg-white/90 shadow-sm text-primary'
-                  : 'text-primary/70 hover:text-primary hover:bg-white/40'
-              }`}
-              onClick={() => setViewMode('grid')}
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
-              </svg>
-              Grid
-            </button>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Products Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
-        {/* List View - md+ only (hidden on small) */}
-        {viewMode === 'list' && (
-          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {/* Left Side - Product Names */}
-            <div className="space-y-0">
-              {filteredProducts.map((product, index) => (
-                <ProductRow 
-                  key={product.id} 
-                  product={product} 
-                  index={index}
-                  isActive={activeProduct?.id === product.id}
-                  onHover={() => {
-                    setIsHovering(true);
-                    setActiveProduct(product);
-                  }}
-                  onLeave={() => {
-                    setIsHovering(false);
-                    // Don't automatically change image when leaving hover
-                  }}
-                  onScrollIntoView={() => {
-                    // Only change image when scrolling (not hovering) and product is different
-                    if (!isHovering && lastScrollProductRef.current !== product.id) {
-                      lastScrollProductRef.current = product.id;
-                      setActiveProduct(product);
-                    }
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Right Side - Product Image */}
-            <div className="md:block hidden">
-              <ProductImage product={activeProduct} />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <Link href={`/products/${products[currentIndex].id}`} className="carousel-view-link">
+                View Product
+              </Link>
+              <button
+                onClick={goNext}
+                className="carousel-arrow-btn"
+                aria-label="Next slide"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
-        )}
-
-        {/* Grid View - always shown on small; shown on md+ when grid selected */}
-        <div className={`${viewMode === 'list' ? 'grid md:hidden' : 'grid'} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8`}>
-          {filteredProducts.map((product, index) => (
-            <ProductCard 
-                  key={product.id} 
-                  product={product} 
-                  index={index} 
-                  priority={index < 4}
-                />
-          ))}
         </div>
+
+        <div className="carousel-image-container">
+          <Link
+            href={`/products/${products[currentIndex].id}`}
+            className={`carousel-image-frame ${isTransitioning ? 'transitioning' : 'visible'}`}
+          >
+            <div className="carousel-card-shell">
+              <div className="carousel-card-media">
+                <Image
+                  src={currentSlide.imageUrl}
+                  alt={currentSlide.title}
+                  fill
+                  className="carousel-image object-cover"
+                  sizes="(max-width: 1024px) 100vw, 380px"
+                />
+                <div
+                  className="carousel-image-overlay"
+                  style={{
+                    background: `linear-gradient(180deg, transparent 0%, rgba(17, 24, 39, 0.08) 100%)`,
+                  }}
+                />
+              </div>
+              <div className="carousel-card-body">
+                <p className="carousel-card-name">{currentSlide.title}</p>
+                <p className="carousel-card-price">{currentSlide.price}</p>
+              </div>
+            </div>
+          </Link>
+
+          <div className="carousel-frame-corner carousel-frame-corner--tl" style={{ borderColor: '#e6dccf' }} />
+          <div className="carousel-frame-corner carousel-frame-corner--br" style={{ borderColor: '#e6dccf' }} />
+        </div>
+      </div>
+
+      <div className="carousel-progress-bar">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.id}
+            onClick={() => goToSlide(index)}
+            className={`carousel-progress-item ${index === currentIndex ? 'active' : ''}`}
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            <div className="carousel-progress-track">
+              <div
+                className="carousel-progress-fill"
+                style={{
+                  width: index === currentIndex ? `${progress}%` : index < currentIndex ? '100%' : '0%',
+                  backgroundColor: index === currentIndex ? currentSlide.accent : undefined,
+                }}
+              />
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   );
-};
+}
