@@ -85,17 +85,6 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="pt-24 pb-8 relative" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
-      <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
-        <Image
-          src="/images/20240612_135238-featured-2-min.jpg"
-          alt="Hero Background"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-          quality={85}
-        />
-      </div>
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Link
@@ -114,7 +103,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="space-y-4">
               <div
-                className="relative bg-[#4f342e]/10 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
+                className="group relative bg-[#4f342e]/10 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
                 onClick={() => openModal(currentImageIndex)}
               >
                 <Image
@@ -125,6 +114,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   priority
                   className="w-full h-full object-contain"
                 />
+
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="bg-white/90 px-4 py-2 text-sm font-medium uppercase tracking-[0.18em] text-[#4f342e] shadow-sm">
+                    Click to view full image
+                  </span>
+                </div>
 
                 <button
                   onClick={(e) => {
@@ -152,7 +147,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   </svg>
                 </button>
 
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
+                <div className="absolute bottom-4 left-1/2 z-10 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                   {currentImageIndex + 1} / {product.images.length}
                 </div>
               </div>
