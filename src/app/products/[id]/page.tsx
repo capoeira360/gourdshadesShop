@@ -1,6 +1,7 @@
 // server component wrapper for static export
 
 // server wrapper: only import server-safe modules
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import ProductDetailClient from './ProductDetailClient';
@@ -103,7 +104,9 @@ export default async function ProductPage(props: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductDetailClient product={product} />
+      <Suspense fallback={null}>
+        <ProductDetailClient product={product} />
+      </Suspense>
     </>
   );
 }

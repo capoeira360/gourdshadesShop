@@ -36,6 +36,7 @@ export default function ProductsClient() {
     imageUrl: product.images[0],
     id: product.id
   }));
+  const slideCount = slides.length;
   const effectiveViewMode = isPhone ? 'grid' : viewMode;
 
   const getShortDescription = (description: string) => {
@@ -62,7 +63,7 @@ export default function ProductsClient() {
   };
 
   const goToSlide = useCallback(
-    (index: number, dir?: 'next' | 'prev') => {
+    (index: number) => {
       if (isTransitioning || index === currentIndex) return;
       setIsTransitioning(true);
       setProgress(0);
@@ -78,14 +79,14 @@ export default function ProductsClient() {
   );
 
   const goNext = useCallback(() => {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    goToSlide(nextIndex, 'next');
-  }, [currentIndex, goToSlide]);
+    const nextIndex = (currentIndex + 1) % slideCount;
+    goToSlide(nextIndex);
+  }, [currentIndex, goToSlide, slideCount]);
 
   const goPrev = useCallback(() => {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    goToSlide(prevIndex, 'prev');
-  }, [currentIndex, goToSlide]);
+    const prevIndex = (currentIndex - 1 + slideCount) % slideCount;
+    goToSlide(prevIndex);
+  }, [currentIndex, goToSlide, slideCount]);
 
   useEffect(() => {
     if (isPaused || effectiveViewMode !== 'list') return;

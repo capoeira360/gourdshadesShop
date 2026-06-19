@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import ProductsClient from './ProductsClient';
 import { products } from './data';
@@ -53,7 +54,9 @@ export default function ProductsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductsClient />
+      <Suspense fallback={null}>
+        <ProductsClient />
+      </Suspense>
     </>
   );
 }
