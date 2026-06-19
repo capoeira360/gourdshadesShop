@@ -11,6 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/private/', '/wishlist'],
     },
+    host: baseUrl,
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

@@ -601,9 +601,10 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                     <div className="relative w-full h-full">
                       <Image
                         src={(menuItems.find(item => item.name === hoveredLink)?.preview) || menuItems[0].preview}
-                        alt={`${hoveredLink || menuItems[0].name} preview`}
+                        alt={`Preview image for the ${hoveredLink || menuItems[0].name} page`}
                         fill
                         className="object-cover"
+                        sizes="280px"
                       />
                     </div>
                   </div>
@@ -635,9 +636,10 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
                         <div className="relative w-full h-full">
                           <Image
                             src={menuItems.find(item => item.name === hoveredLink)?.preview || ''}
-                            alt={`${hoveredLink} preview`}
+                            alt={`Preview image for the ${hoveredLink} page`}
                             fill
                             className="object-cover"
+                            sizes="(max-width: 1280px) 380px, (max-width: 1536px) 480px, 544px"
                           />
                         </div>
                       </motion.div>

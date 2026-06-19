@@ -44,10 +44,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index, priority = fa
           <div className="relative aspect-square bg-[#4f342e]/5 overflow-hidden">
             <Image
               src={product.images[0]}
-              alt={product.name}
+              alt={`${product.name} handmade calabash lamp by Gourd Shades`}
               fill
               priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             />
             <div className="absolute inset-0 bg-[#4f342e]/0 group-hover:bg-[#4f342e]/10 transition-colors duration-300" />
           </div>

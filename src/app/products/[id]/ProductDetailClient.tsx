@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import PriceDisplay from '@/components/PriceDisplay';
 import { useEnquiry } from '@/contexts/EnquiryContext';
 import { useWishlist } from '@/contexts/WishlistContext';
@@ -20,6 +21,8 @@ type Product = {
 };
 
 export default function ProductDetailClient({ product }: { product: Product }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'features' | 'shipping'>('description');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,32 +86,55 @@ export default function ProductDetailClient({ product }: { product: Product }) {
     setModalImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
   };
 
+  const fallbackParams = new URLSearchParams();
+  const fromView = searchParams.get('fromView') === 'grid' ? 'grid' : 'list';
+  const fromSlide = searchParams.get('fromSlide');
+  fallbackParams.set('view', fromView);
+
+  if (fromView === 'list' && fromSlide && !Number.isNaN(Number(fromSlide))) {
+    fallbackParams.set('slide', fromSlide);
+  }
+
+  const fallbackProductsHref = `/products?${fallbackParams.toString()}`;
+
+  const getProductImageAlt = (imageIndex: number) =>
+    `${product.name} handmade calabash lamp view ${imageIndex + 1}`;
+
+  const handleBackToProducts = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push(fallbackProductsHref);
+  };
+
   return (
     <div className="pt-24 pb-8 relative" style={{ minHeight: 'calc(100vh + var(--footer-height, 200px))' }}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
-          <Link
-            href="/products"
+          <button
+            type="button"
+            onClick={handleBackToProducts}
             className="inline-flex items-center text-[#4f342e] hover:text-[#4f342e] font-medium transition-colors bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm hover:bg-white/60"
-            prefetch={true}
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Products
-          </Link>
+          </button>
         </div>
 
         <div className="bg-white shadow-sm p-4 sm:p-6 lg:p-8 mb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="space-y-4">
               <div
-                className="group relative bg-[#4f342e]/10 overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px] p-3 sm:p-5"
+                className="group relative flex items-center justify-center overflow-hidden cursor-pointer w-full h-[55vh] sm:h-[560px]"
                 onClick={() => openModal(currentImageIndex)}
               >
                 <Image
                   src={product.images[currentImageIndex]}
-                  alt={product.name}
+                  alt={getProductImageAlt(currentImageIndex)}
                   width={640}
                   height={676}
                   priority
@@ -122,11 +148,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </div>
 
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     prevImage();
                   }}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
+                  className="absolute bottom-4 left-4 lg:left-8 xl:left-10 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
                   <svg className="w-8 h-8 text-[#4f342e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,11 +162,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </button>
 
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     nextImage();
                   }}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
+                  className="absolute bottom-4 right-4 lg:right-8 xl:right-10 bg-white/90 hover:bg-white shadow-lg transition-all border border-[#4f342e]/20 z-10"
                   style={{ width: '48px', height: '48px', padding: '8px' }}
                 >
                   <svg className="w-8 h-8 text-[#4f342e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +175,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   </svg>
                 </button>
 
-                <div className="absolute bottom-4 left-1/2 z-10 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
+                <div className="absolute bottom-5 left-1/2 z-10 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                   {currentImageIndex + 1} / {product.images.length}
                 </div>
               </div>
@@ -162,6 +190,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   className="text-2xl font-semibold"
                   style={{ color: '#786861' }}
                 />
+                <p className="mt-4 text-sm leading-7 text-[#4f342e]/75">
+                  Explore more in the <Link href="/products" className="underline underline-offset-4 hover:text-[#8f735f]">full collection</Link>,
+                  learn <Link href="/about" className="underline underline-offset-4 hover:text-[#8f735f]">about the maker</Link>,
+                  or <Link href="/contact" className="underline underline-offset-4 hover:text-[#8f735f]">contact us</Link> for custom enquiries and availability.
+                </p>
               </div>
 
               <div className="space-y-4">
@@ -206,7 +239,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                       currentImageIndex === index ? 'border-[#4f342e] scale-105 shadow-md' : 'border-[#4f342e]/20 hover:border-[#4f342e]/40'
                     }`}
                   >
-                    <Image src={image} alt={`${product.name} ${index + 1}`} width={64} height={64} className="w-full h-full object-cover" />
+                    <Image src={image} alt={getProductImageAlt(index)} width={64} height={64} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -330,7 +363,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </svg>
           </button>
           <div className="relative z-10 max-w-full max-h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
-            <Image src={product.images[modalImageIndex]} alt={product.name} width={1200} height={1200} className="max-w-full max-h-[90vh] object-contain" />
+            <Image src={product.images[modalImageIndex]} alt={getProductImageAlt(modalImageIndex)} width={1200} height={1200} className="max-w-full max-h-[90vh] object-contain" />
             {product.images.length > 1 && (
               <>
                 <button

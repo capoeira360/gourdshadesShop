@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ServicesClient: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -76,7 +77,7 @@ const ServicesClient: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <h1 className="text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+          <h1 className="page-heading-surface text-2xl md:text-3xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
             Community
           </h1>
         </div>
@@ -98,10 +99,10 @@ const ServicesClient: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4">
-                  <div className="relative bg-[#4f342e]/5 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative flex items-center justify-center overflow-hidden h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={outreachImages[outreachImageIndex]}
-                      alt="Community Lighting Consultation"
+                      alt={`Gourd Shades community outreach workshop image ${outreachImageIndex + 1}`}
                       width={640}
                       height={676}
                       className="w-full h-full object-contain transition-opacity duration-300"
@@ -109,8 +110,9 @@ const ServicesClient: React.FC = () => {
                     
                     {/* Navigation Buttons */}
                     <button
+                      type="button"
                       onClick={prevOutreachImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute bottom-4 left-4 lg:left-8 xl:left-10 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,8 +121,9 @@ const ServicesClient: React.FC = () => {
                     </button>
                     
                     <button
+                      type="button"
                       onClick={nextOutreachImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute bottom-4 right-4 lg:right-8 xl:right-10 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +132,7 @@ const ServicesClient: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
+                    <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                       {outreachImageIndex + 1} / {outreachImages.length}
                     </div>
                   </div>
@@ -138,9 +141,9 @@ const ServicesClient: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:pl-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+                    <h2 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Outreach
-                    </h1>
+                    </h2>
                     <div className="text-[#4f342e] leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I am truly grateful for the talent I have been blessed with, and I am passionate about sharing my knowledge with those eager to learn and grow. One of the most rewarding experiences in my journey has been my involvement with <span className="font-semibold text-accent bg-accent/10 px-2 py-1">The Hidden Hope Foundation</span> in Karatu, an organization dedicated to empowering people with disabilities. As part of a creative development program, I had the privilege of teaching and inspiring this incredible group, unlocking their creative potential and fostering growth.
@@ -150,6 +153,9 @@ const ServicesClient: React.FC = () => {
                       </p>
                       <p>
                         I am always excited to embark on new adventures and collaborate with organizations that value inclusivity, empowerment, and creativity. It would be an honor to contribute my skills and passion to initiatives that uplift and inspire others, and I look forward to connecting with like-minded groups eager to make a difference.
+                      </p>
+                      <p>
+                        Explore the <Link href="/products" className="underline underline-offset-4 hover:text-[#8f735f]">lamp collection</Link> or <Link href="/contact" className="underline underline-offset-4 hover:text-[#8f735f]">contact Gourd Shades</Link> if you would like to collaborate on workshops, exhibitions, or artisan-led creative programs.
                       </p>
                     </div>
                   </div>
@@ -169,10 +175,10 @@ const ServicesClient: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Image Section */}
                 <div className="space-y-4 lg:order-2">
-                  <div className="relative bg-[#4f342e]/5 overflow-hidden p-4 sm:p-6 h-[50vh] sm:h-[520px] lg:h-[560px]">
+                  <div className="relative flex items-center justify-center overflow-hidden h-[50vh] sm:h-[520px] lg:h-[560px]">
                     <Image
                       src={exhibitionImages[exhibitionImageIndex]}
-                      alt="Community Installation & Support"
+                      alt={`Gourd Shades exhibition showcase image ${exhibitionImageIndex + 1}`}
                       width={640}
                       height={676}
                       className="w-full h-full object-contain transition-opacity duration-300"
@@ -180,8 +186,9 @@ const ServicesClient: React.FC = () => {
                     
                     {/* Navigation Buttons */}
                     <button
+                      type="button"
                       onClick={prevExhibitionImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute bottom-4 left-4 lg:left-8 xl:left-10 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Previous image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,8 +197,9 @@ const ServicesClient: React.FC = () => {
                     </button>
                     
                     <button
+                      type="button"
                       onClick={nextExhibitionImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                      className="absolute bottom-4 right-4 lg:right-8 xl:right-10 bg-white/80 hover:bg-white text-[#4f342e] p-2 shadow-lg transition-all duration-200 hover:scale-110"
                       aria-label="Next image"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +208,7 @@ const ServicesClient: React.FC = () => {
                     </button>
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
+                    <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-[#4f342e]/50 text-white px-3 py-1 text-sm">
                       {exhibitionImageIndex + 1} / {exhibitionImages.length}
                     </div>
                   </div>
@@ -209,9 +217,9 @@ const ServicesClient: React.FC = () => {
                 {/* Content Section */}
                 <div className="space-y-6 pt-4 lg:pt-0 lg:order-1">
                   <div>
-                    <h1 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+                    <h2 className="text-3xl font-bold text-brand-dark mb-4 text-center lg:text-left" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
                       Exhibition
-                    </h1>
+                    </h2>
                     <div className="text-[#4f342e] leading-relaxed space-y-4 max-w-prose mx-auto lg:mx-0">
                       <p>
                         I have also been fortunate to participate in various exhibitions across Tanzania, with a special focus on Dar es Salaam. For the past three years, I have proudly taken part in the <span className="font-semibold text-accent bg-accent/10 px-2 py-1">Artisan Market</span>, attending both of their annual events each year. This experience has allowed me to showcase my work to a diverse audience, connect with fellow artisans, and gain valuable exposure in the creative community.

@@ -1,12 +1,27 @@
 import { Metadata } from 'next';
 import HomeClient from './HomeClient';
+import { products } from './products/data';
 
 export const metadata: Metadata = {
-  title: 'Gourd Shades | Handmade Calabash Lamps',
-  description: 'Handmade Calabash Lampshades. We use dried shells of Calabash to create stunning lampshades by drilling perforated patterns on them to let the light escape.',
+  title: 'Handmade Calabash Lamps From Tanzania',
+  description: 'Shop handmade calabash lamps from Tanzania by Gourd Shades. Discover carved gourd lampshades with wildlife, abstract, and contemporary designs for warm statement lighting.',
+  keywords: [
+    'handmade calabash lamps',
+    'Tanzanian lampshades',
+    'carved gourd lighting',
+    'artisan home lighting',
+    'African handmade decor',
+  ],
   openGraph: {
-    title: 'Gourd Shades | Handmade Calabash Lamps',
-    description: 'Unique handmade lampshades crafted from dried Calabash shells, featuring intricate perforated patterns.',
+    title: 'Handmade Calabash Lamps From Tanzania | Gourd Shades',
+    description: 'Unique handmade lampshades crafted from dried calabash shells with intricate perforated patterns.',
+    images: ['/images/the-mission.jpg'],
+    url: 'https://gourdshades.com/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Handmade Calabash Lamps From Tanzania | Gourd Shades',
+    description: 'Explore handmade gourd lampshades with wildlife, abstract, and modern designs.',
     images: ['/images/the-mission.jpg'],
   },
   alternates: {
@@ -15,5 +30,35 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <HomeClient />;
+  const featuredProducts = [
+    ...products.slice(0, 3),
+    products.find((product) => product.id === 'aura-new-design-lamp'),
+  ].filter(Boolean);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Gourd Shades Home',
+    url: 'https://gourdshades.com/',
+    description: 'Handmade calabash lamps and artisan gourd lighting crafted in Tanzania.',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: featuredProducts.map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `https://gourdshades.com/products/${product!.id}`,
+        name: product!.name,
+      })),
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HomeClient />
+    </>
+  );
 }

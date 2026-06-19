@@ -24,12 +24,28 @@ import WishlistButton from "@/components/WishlistButton";
 export const metadata: Metadata = {
   metadataBase: new URL('https://gourdshades.com'),
   title: {
-    default: "Gourd Shades | Handmade Calabash Lamps",
+    default: "Handmade Calabash Lamps & Gourd Lighting | Gourd Shades",
     template: "%s | Gourd Shades",
   },
-  description: "Discover stunning handcrafted lampshades made from dried calabash shells. Our artisan lighting solutions transform any environment with beautiful shadow patterns.",
-  keywords: ["gourd lamps", "calabash lampshades", "handmade lighting", "African craftsmanship", "sustainable lighting", "artisan lamps", "unique home decor"],
+  description: "Discover handmade calabash lamps and artisan gourd lighting by Isaac Munis in Tanzania. Shop sculptural lampshades with carved patterns, warm light, and authentic African craftsmanship.",
+  keywords: [
+    "handmade calabash lamps",
+    "gourd lamps",
+    "calabash lampshades",
+    "artisan lighting",
+    "African handcrafted lamps",
+    "Tanzanian home decor",
+    "sustainable lighting",
+    "statement lampshades",
+    "unique home decor",
+  ],
   authors: [{ name: "Gourd Shades" }],
+  creator: "Gourd Shades",
+  publisher: "Gourd Shades",
+  category: "Home Decor",
+  alternates: {
+    canonical: "https://gourdshades.com",
+  },
   robots: {
     index: true,
     follow: true,
@@ -45,8 +61,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://gourdshades.com",
-    title: "Gourd Shades | Handmade Calabash Lamps",
-    description: "Discover stunning handcrafted lampshades made from dried calabash shells. Our artisan lighting solutions transform any environment with beautiful shadow patterns.",
+    title: "Handmade Calabash Lamps & Gourd Lighting | Gourd Shades",
+    description: "Discover handmade calabash lamps and artisan gourd lighting with carved patterns, warm light, and authentic African craftsmanship.",
     siteName: "Gourd Shades",
     images: [
       {
@@ -59,8 +75,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gourd Shades | Handmade Calabash Lamps",
-    description: "Discover stunning handcrafted lampshades made from dried calabash shells.",
+    title: "Handmade Calabash Lamps & Gourd Lighting | Gourd Shades",
+    description: "Discover handmade calabash lamps and artisan gourd lighting from Tanzania.",
     images: ["/images/top-intro.jpg"],
   },
   icons: {
@@ -78,19 +94,56 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Gourd Shades",
+      "url": "https://gourdshades.com",
+      "logo": "https://gourdshades.com/logo-gourd-shades-square.svg",
+      "description": "Handmade calabash lamps and artisan gourd lighting crafted in Tanzania.",
+      "founder": {
+        "@type": "Person",
+        "name": "Isaac Munis"
+      },
+      "sameAs": [
+        "https://www.facebook.com/gourdshades",
+        "https://www.instagram.com/gourdshades"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Gourd Shades",
+      "url": "https://gourdshades.com",
+      "description": "Explore handmade calabash lamps, sculptural lighting, and artisan-crafted home decor."
+    }
+  ];
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased ${libreBaskerville.variable}`} suppressHydrationWarning>
-        {/* Fixed Background Image */}
-        <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none">
+        {/* Use a dedicated background image for iPads and smaller screens. */}
+        <div className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none min-[1025px]:hidden">
           <Image
-            src="/background-change.jpeg"
+            src="/media-background.jpeg"
             alt=""
             fill
-            priority
             className="object-cover"
             sizes="100vw"
-            quality={85}
+            quality={80}
+            aria-hidden
+            role="presentation"
+          />
+        </div>
+        <div className="fixed top-0 left-0 hidden w-full h-[120vh] sm:h-screen z-[-1] pointer-events-none min-[1025px]:block">
+          <Image
+            src="/background-replace.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+            quality={80}
             aria-hidden
             role="presentation"
           />
@@ -98,18 +151,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "Gourd Shades",
-              "url": "https://gourdshades.com",
-              "logo": "https://gourdshades.com/logo-gourd-shades-square.svg",
-              "description": "Handcrafted lampshades made from dried calabash shells.",
-              "sameAs": [
-                "https://www.facebook.com/gourdshades",
-                "https://www.instagram.com/gourdshades"
-              ]
-            })
+            __html: JSON.stringify(structuredData)
           }}
         />
         <EnquiryProvider>

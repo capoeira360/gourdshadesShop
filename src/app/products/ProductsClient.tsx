@@ -3,14 +3,23 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { products } from './data';
+import PriceDisplay from '@/components/PriceDisplay';
 
 export default function ProductsClient() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const searchParams = useSearchParams();
+  const MOBILE_BREAKPOINT = 768;
+  const initialView = searchParams.get('view') === 'grid' ? 'grid' : 'list';
+  const initialSlide = Number.parseInt(searchParams.get('slide') ?? '0', 10);
+  const [currentIndex, setCurrentIndex] = useState(() => (
+    Number.isNaN(initialSlide) ? 0 : Math.max(0, Math.min(initialSlide, products.length - 1))
+  ));
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>(initialView);
+  const [isPhone, setIsPhone] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchStartX = useRef(0);
@@ -27,6 +36,7 @@ export default function ProductsClient() {
     imageUrl: product.images[0],
     id: product.id
   }));
+  const effectiveViewMode = isPhone ? 'grid' : viewMode;
 
   const getShortDescription = (description: string) => {
     if (description.length <= 190) {
@@ -36,6 +46,19 @@ export default function ProductsClient() {
     const trimmed = description.slice(0, 187);
     const lastSpace = trimmed.lastIndexOf(' ');
     return `${trimmed.slice(0, lastSpace > 0 ? lastSpace : trimmed.length)}...`;
+  };
+
+  const getProductImageAlt = (name: string) => `${name} handmade calabash lamp by Gourd Shades`;
+
+  const getProductHref = (productId: string, sourceIndex?: number) => {
+    const params = new URLSearchParams();
+    params.set('fromView', viewMode);
+
+    if (viewMode === 'list') {
+      params.set('fromSlide', String(sourceIndex ?? currentIndex));
+    }
+
+    return `/products/${productId}?${params.toString()}`;
   };
 
   const goToSlide = useCallback(
@@ -65,7 +88,7 @@ export default function ProductsClient() {
   }, [currentIndex, goToSlide]);
 
   useEffect(() => {
-    if (isPaused || viewMode !== 'list') return;
+    if (isPaused || effectiveViewMode !== 'list') return;
 
     progressRef.current = setInterval(() => {
       setProgress((prev) => {
@@ -82,7 +105,55 @@ export default function ProductsClient() {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (progressRef.current) clearInterval(progressRef.current);
     };
-  }, [currentIndex, isPaused, goNext, viewMode]);
+  }, [currentIndex, isPaused, goNext, effectiveViewMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const updateViewportState = (event?: MediaQueryListEvent) => {
+      const matches = event ? event.matches : mediaQuery.matches;
+      setIsPhone(matches);
+    };
+
+    updateViewportState();
+    mediaQuery.addEventListener('change', updateViewportState);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateViewportState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isPhone && viewMode === 'list') {
+      setViewMode('grid');
+    }
+  }, [isPhone, viewMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    params.set('view', effectiveViewMode);
+
+    if (effectiveViewMode === 'list') {
+      params.set('slide', String(currentIndex));
+    } else {
+      params.delete('slide');
+    }
+
+    const nextQuery = params.toString();
+    const nextUrl = nextQuery ? `${window.location.pathname}?${nextQuery}` : window.location.pathname;
+    const currentUrl = `${window.location.pathname}${window.location.search}`;
+
+    if (nextUrl !== currentUrl) {
+      window.history.replaceState(window.history.state, '', nextUrl);
+    }
+  }, [currentIndex, effectiveViewMode]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
@@ -93,6 +164,10 @@ export default function ProductsClient() {
   };
 
   const handleTouchEnd = () => {
+    if (effectiveViewMode !== 'list') {
+      return;
+    }
+
     const diff = touchStartX.current - touchEndX.current;
     if (Math.abs(diff) > 60) {
       if (diff > 0) goNext();
@@ -105,12 +180,32 @@ export default function ProductsClient() {
   return (
     <div
       className="carousel-wrapper"
-      onMouseEnter={() => viewMode === 'list' && setIsPaused(true)}
+      onMouseEnter={() => effectiveViewMode === 'list' && setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      <section className="mx-auto max-w-4xl px-4 pb-8 text-center text-primary">
+        <h1
+          className="text-3xl sm:text-4xl font-light"
+          style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}
+        >
+          Handmade Calabash Lamps Collection
+        </h1>
+        <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[#4f342e]/80 sm:text-base">
+          Explore handcrafted gourd lamps by Gourd Shades, including wildlife-inspired, abstract,
+          and new design pieces created to bring warm sculptural light into homes, hotels, and
+          statement interiors.
+        </p>
+        <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[#4f342e]/75">
+          Learn more <Link href="/about" className="underline underline-offset-4 hover:text-[#8f735f]">about the maker</Link>,
+          see our <Link href="/services" className="underline underline-offset-4 hover:text-[#8f735f]">community work</Link>,
+          or <Link href="/contact" className="underline underline-offset-4 hover:text-[#8f735f]">contact us</Link> for pricing,
+          custom ideas, and product enquiries.
+        </p>
+      </section>
+
       {/* Background accent wash */}
       <div
         className="carousel-bg-wash"
@@ -121,25 +216,27 @@ export default function ProductsClient() {
 
       <div className="carousel-shell">
         <div className="carousel-toolbar">
-          <div className="carousel-view-toggle" aria-label="Choose products view">
-            <button
-              type="button"
-              className={`carousel-view-button ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={() => setViewMode('list')}
-            >
-              List
-            </button>
-            <button
-              type="button"
-              className={`carousel-view-button ${viewMode === 'grid' ? 'active' : ''}`}
-              onClick={() => setViewMode('grid')}
-            >
-              Grid
-            </button>
-          </div>
+          {!isPhone && (
+            <div className="carousel-view-toggle" aria-label="Choose products view">
+              <button
+                type="button"
+                className={`carousel-view-button ${effectiveViewMode === 'list' ? 'active' : ''}`}
+                onClick={() => setViewMode('list')}
+              >
+                List
+              </button>
+              <button
+                type="button"
+                className={`carousel-view-button ${effectiveViewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                Grid
+              </button>
+            </div>
+          )}
         </div>
 
-        {viewMode === 'list' ? (
+        {effectiveViewMode === 'list' ? (
           <>
             <div className="carousel-inner">
               <div className="carousel-content">
@@ -177,7 +274,7 @@ export default function ProductsClient() {
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                       </svg>
                     </button>
-                    <Link href={`/products/${products[currentIndex].id}`} className="carousel-view-link">
+                    <Link href={getProductHref(products[currentIndex].id)} className="carousel-view-link">
                       View Product
                     </Link>
                     <button
@@ -195,34 +292,25 @@ export default function ProductsClient() {
 
               <div className="carousel-image-container">
                 <Link
-                  href={`/products/${products[currentIndex].id}`}
-                  className={`carousel-image-frame ${isTransitioning ? 'transitioning' : 'visible'}`}
+                  href={getProductHref(products[currentIndex].id)}
+                  className={`carousel-image-frame products-grid-card carousel-list-card ${isTransitioning ? 'transitioning' : 'visible'}`}
                 >
-                  <div className="carousel-card-shell">
-                    <div className="carousel-card-media">
-                      <Image
-                        src={currentSlide.imageUrl}
-                        alt={currentSlide.title}
-                        fill
-                        className="carousel-image object-cover"
-                        sizes="(max-width: 1024px) 100vw, 380px"
-                      />
-                      <div
-                        className="carousel-image-overlay"
-                        style={{
-                          background: 'linear-gradient(180deg, transparent 0%, rgba(17, 24, 39, 0.08) 100%)',
-                        }}
-                      />
-                    </div>
-                    <div className="carousel-card-body">
-                      <p className="carousel-card-name">{currentSlide.title}</p>
-                      <p className="carousel-card-price">{currentSlide.price}</p>
-                    </div>
+                  <div className="products-grid-media carousel-list-card-media">
+                    <Image
+                      src={currentSlide.imageUrl}
+                      alt={getProductImageAlt(currentSlide.title)}
+                      fill
+                      className="products-grid-image object-cover"
+                      sizes="(max-width: 1024px) 100vw, 380px"
+                    />
+                    <div className="products-grid-overlay" />
+                    <span className="products-grid-cta">View lamp</span>
+                  </div>
+                  <div className="products-grid-body carousel-list-card-body">
+                    <p className="products-grid-name carousel-list-card-name">{currentSlide.title}</p>
+                    <p className="products-grid-price carousel-list-card-price">{currentSlide.price}</p>
                   </div>
                 </Link>
-
-                <div className="carousel-frame-corner carousel-frame-corner--tl" style={{ borderColor: '#e6dccf' }} />
-                <div className="carousel-frame-corner carousel-frame-corner--br" style={{ borderColor: '#e6dccf' }} />
               </div>
             </div>
 
@@ -250,21 +338,23 @@ export default function ProductsClient() {
         ) : (
           <div className="products-grid-panel">
             <div className="products-grid">
-              {products.map((product) => (
-                <Link key={product.id} href={`/products/${product.id}`} className="products-grid-card">
+              {products.map((product, index) => (
+                <Link key={product.id} href={getProductHref(product.id, index)} className="products-grid-card">
                   <div className="products-grid-media">
                     <Image
                       src={product.images[0]}
-                      alt={product.name}
+                      alt={getProductImageAlt(product.name)}
                       fill
-                      className="object-cover"
+                      className="products-grid-image object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     />
+                    <div className="products-grid-overlay" />
+                    <span className="products-grid-cta">View lamp</span>
                   </div>
                   <div className="products-grid-body">
                     <p className="products-grid-name">{product.name}</p>
-                    <p className="products-grid-price">{product.price}</p>
                     <p className="products-grid-description">{getShortDescription(product.description)}</p>
+                    <PriceDisplay price={product.price} className="products-grid-price inline-flex text-lg mt-4" />
                   </div>
                 </Link>
               ))}

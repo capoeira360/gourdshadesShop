@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import emailjs from '@emailjs/browser';
 
 const ContactClient: React.FC = () => {
@@ -107,7 +108,7 @@ const ContactClient: React.FC = () => {
         <div className="w-full lg:w-5/12 relative min-h-[300px] lg:min-h-auto">
           <Image 
             src="/images/IMG-20250307-WA0009-nav-contacts.jpg" 
-            alt="Contact" 
+            alt="Gourd Shades contact page image for handmade calabash lamp enquiries" 
             fill
             className="object-cover"
             priority
@@ -116,8 +117,17 @@ const ContactClient: React.FC = () => {
         
         {/* Right Column - Form */}
         <div className="w-full lg:w-7/12 p-8 lg:p-12 bg-white">
-          <div className="flex justify-between items-center mb-8">
-             <h3 className="text-xl font-light text-primary">Say hello :)</h3>
+          <div className="mb-8">
+             <h1 className="text-2xl font-light text-primary" style={{ fontFamily: 'var(--font-libre-baskerville), Arial, Helvetica, sans-serif' }}>
+               Contact Gourd Shades
+             </h1>
+             <p className="mt-3 text-sm leading-7 text-[#4f342e]/80">
+               Say hello :) Ask about handmade calabash lamps, custom lighting ideas, pricing, or product availability.
+             </p>
+             <p className="mt-3 text-sm leading-7 text-[#4f342e]/75">
+               You can browse the <Link href="/products" className="underline underline-offset-4 hover:text-[#8f735f]">collection</Link> first,
+               or read <Link href="/about" className="underline underline-offset-4 hover:text-[#8f735f]">the maker&apos;s story</Link> before sending your message.
+             </p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
