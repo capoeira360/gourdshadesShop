@@ -6,13 +6,6 @@ import Link from 'next/link';
 export default function PrivacyClient() {
   return (
     <div className="min-h-screen relative">
-      <div 
-        className="fixed top-0 left-0 w-full h-[120vh] sm:h-screen z-[-1] bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ 
-          backgroundImage: 'url(/images/20240612_135238-featured-2-min.jpg)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,7 +20,7 @@ export default function PrivacyClient() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-[#4f342e] mb-4">
+            <h1 className="page-heading-surface text-4xl md:text-5xl font-bold text-[#4f342e] mb-4">
               Privacy Policy
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto"></div>

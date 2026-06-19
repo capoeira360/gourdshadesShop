@@ -696,5 +696,129 @@ export const products: Product[] = [
       "Multiple size options available",
       "Energy-efficient LED bulbs"
     ]
+  },
+  {
+    id: 'aura-new-design-lamp',
+    name: 'Aura',
+    category: 'new design',
+    price: '$100 - $150',
+    images: [
+      '/new-designs/aura-1.jpg',
+      '/new-designs/aura-2.jpg',
+      '/new-designs/aura-3.jpg',
+      '/new-designs/aura-4.jpg',
+      '/new-designs/aura-5.jpg'
+    ],
+    description: 'Circular ring patterns with soft wave-like edges, creating warm balanced illumination and a calm visual rhythm.',
+    longDescription: 'The Aura piece features circular ring patterns that draw the eye toward the center of the lamp, while soft wave-like edges add movement around the sides. The careful perforation work creates a warm, balanced glow that feels calm, decorative, and easy to place in different interiors.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'comfort-new-design-lamp',
+    name: 'Comfort',
+    category: 'new design',
+    price: '$100 - $150',
+    images: [
+      '/new-designs/comfort-1.jpg',
+      '/new-designs/comfort-2.jpg',
+      '/new-designs/comfort-3.jpg',
+      '/new-designs/comfort-4.jpg',
+      '/new-designs/comfort-5.jpg'
+    ],
+    description: 'Mixed circular perforations and woven-style patterns, giving a cozy glow with rich texture and soft shadows.',
+    longDescription: 'The Comfort piece combines rounded perforations with woven-style patterned sections to create a soft and cozy lighting effect. Its mix of textures gives the lamp a warm handmade character, while the light escapes in a way that produces rich shadows and a welcoming atmosphere.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'luster-new-design-lamp',
+    name: 'Luster',
+    category: 'new design',
+    price: '$100 - $150',
+    images: [
+      '/new-designs/luster-1.jpg',
+      '/new-designs/luster-2.jpg',
+      '/new-designs/luster-3.jpg',
+      '/new-designs/luster-4.jpg',
+      '/new-designs/luster-5.jpg'
+    ],
+    description: 'Bold geometric panels and dotted paths, creating striking contrast and dramatic shadow patterns when illuminated.',
+    longDescription: 'The Luster piece stands out through bold geometric panels connected by lines of perforated dots and larger openings. This arrangement gives the lamp a strong visual contrast and produces dramatic shadow patterns, making it a simple but eye-catching statement design.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'pembe-tatu-new-design-lamp',
+    name: 'Pembe Tatu',
+    category: 'new design',
+    price: '$100 - $150',
+    images: [
+      '/new-designs/pembe-tatu-1.jpg',
+      '/new-designs/pembe-tatu-2.jpg',
+      '/new-designs/pembe-tatu-3.jpg',
+      '/new-designs/pembe-tatu-4.jpg',
+      '/new-designs/pembe-tatu-5.jpg'
+    ],
+    description: 'Three horn-like shapes around the lamp with dotted patterns, creating warm light and distinctive organic shadows.',
+    longDescription: 'The Pembe Tatu piece takes its name from the three horn-like shapes that define the design around the lamp body. Combined with carefully spaced dotted perforations, these shapes create a warm glow and distinctive organic shadow patterns that make the piece feel both simple and unique.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: gourd(calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted artisanal construction",
+      "Premium material selection",
+      "Traditional craftsmanship techniques",
+      "Contemporary design integration",
+      "Multiple size options available",
+      "Energy-efficient LED bulbs"
+    ]
   }
 ];

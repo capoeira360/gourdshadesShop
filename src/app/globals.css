@@ -106,6 +106,14 @@ body {
   overflow-x: hidden;
 }
 
+.page-heading-surface {
+  display: inline-block;
+  padding: 0.6rem 1.15rem;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 24px rgba(34, 28, 23, 0.06);
+}
+
 /* Hardware acceleration for animations */
 .will-change-transform {
   will-change: transform;
@@ -260,6 +268,10 @@ img {
 .carousel-content-inner {
   position: relative;
   max-width: 34rem;
+  min-height: 35.5rem;
+  display: grid;
+  grid-template-rows: auto auto 13.5rem 10.5rem 1fr;
+  align-content: start;
 }
 
 .carousel-collection-num {
@@ -310,6 +322,7 @@ img {
   font-weight: 700;
   color: #111827;
   margin-bottom: 1.25rem;
+  min-height: 13.5rem;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s;
@@ -332,6 +345,7 @@ img {
   color: #6b675f;
   margin-bottom: 2rem;
   max-width: 31rem;
+  min-height: 10.5rem;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
@@ -351,6 +365,7 @@ img {
   display: flex;
   gap: 0.9rem;
   align-items: center;
+  margin-top: auto;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s;
@@ -417,7 +432,7 @@ img {
 
 .carousel-image-frame {
   position: relative;
-  width: min(100%, 26rem);
+  width: min(100%, 29rem);
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -433,51 +448,6 @@ img {
   transform: translateX(-20px);
 }
 
-.carousel-card-shell {
-  position: relative;
-  background: #fff;
-  border: 1px solid rgba(79, 52, 46, 0.12);
-  box-shadow: 0 16px 42px rgba(79, 52, 46, 0.08);
-  padding: 0.9rem;
-}
-
-.carousel-card-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 0.95 / 1.15;
-  overflow: hidden;
-  background: rgba(79, 52, 46, 0.06);
-}
-
-.carousel-card-body {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0.15rem 0.15rem;
-}
-
-.carousel-card-name,
-.carousel-card-price {
-  margin: 0;
-  color: #221c17;
-}
-
-.carousel-card-name {
-  font-size: 1.1rem;
-  line-height: 1.35;
-  font-weight: 600;
-  max-width: 14rem;
-}
-
-.carousel-card-price {
-  font-size: 0.92rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #8f735f;
-  white-space: nowrap;
-}
-
 .carousel-image {
   width: 100%;
   height: 100%;
@@ -490,25 +460,31 @@ img {
   transition: background 0.8s ease-in-out;
 }
 
-.carousel-frame-corner {
-  position: absolute;
-  width: 3.5rem;
-  height: 3.5rem;
-  border: 1px solid;
+.carousel-list-card {
+  box-shadow: 0 16px 34px rgba(79, 52, 46, 0.1);
 }
 
-.carousel-frame-corner--tl {
-  top: -0.7rem;
-  left: -0.7rem;
-  border-right: none;
-  border-bottom: none;
+.carousel-list-card-media {
+  aspect-ratio: 0.95 / 1.15;
 }
 
-.carousel-frame-corner--br {
-  right: -0.7rem;
-  bottom: -0.7rem;
-  border-left: none;
-  border-top: none;
+.carousel-list-card-body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.carousel-list-card-name {
+  max-width: 14rem;
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.carousel-list-card-price {
+  margin-top: 0;
+  white-space: nowrap;
+  font-size: 0.92rem;
 }
 
 .carousel-progress-bar {
@@ -567,12 +543,14 @@ img {
   background: #fff;
   border: 1px solid rgba(79, 52, 46, 0.1);
   box-shadow: 0 12px 28px rgba(79, 52, 46, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .products-grid-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 34px rgba(79, 52, 46, 0.1);
+  transform: translateY(-6px);
+  border-color: rgba(143, 115, 95, 0.35);
+  box-shadow: 0 22px 40px rgba(79, 52, 46, 0.14);
 }
 
 .products-grid-media {
@@ -582,8 +560,54 @@ img {
   background: rgba(79, 52, 46, 0.06);
 }
 
+.products-grid-image {
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.products-grid-card:hover .products-grid-image {
+  transform: scale(1.06);
+  filter: saturate(1.05);
+}
+
+.products-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.02) 0%, rgba(79, 52, 46, 0.45) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.products-grid-card:hover .products-grid-overlay {
+  opacity: 1;
+}
+
+.products-grid-cta {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  padding: 0.55rem 0.85rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #3c3026;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.products-grid-card:hover .products-grid-cta {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .products-grid-body {
   padding: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.products-grid-card:hover .products-grid-body {
+  background: #fcfaf7;
 }
 
 .products-grid-name,
@@ -596,6 +620,11 @@ img {
   font-size: 1rem;
   font-weight: 600;
   color: #221c17;
+  transition: color 0.3s ease;
+}
+
+.products-grid-card:hover .products-grid-name {
+  color: #8f735f;
 }
 
 .products-grid-price {
@@ -623,6 +652,9 @@ img {
 
   .carousel-content-inner {
     max-width: none;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .carousel-content {
@@ -638,7 +670,7 @@ img {
   }
 
   .carousel-image-frame {
-    width: min(100%, 24rem);
+    width: min(100%, 26rem);
   }
 
   .carousel-progress-bar {
@@ -657,6 +689,7 @@ img {
 
   .carousel-title {
     font-size: 2.15rem;
+    min-height: auto;
   }
 
   .carousel-inner {
@@ -665,6 +698,7 @@ img {
 
   .carousel-description {
     font-size: 0.98rem;
+    min-height: auto;
   }
 
   .carousel-nav-arrows {
@@ -672,10 +706,10 @@ img {
   }
 
   .carousel-image-frame {
-    width: min(100%, 21rem);
+    width: min(100%, 23rem);
   }
 
-  .carousel-card-body {
+  .carousel-list-card-body {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.35rem;

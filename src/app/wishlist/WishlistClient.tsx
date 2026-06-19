@@ -45,7 +45,7 @@ const WishlistClient: React.FC = () => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
               <Heart className="text-red-500" size={28} />
-              <h1 className="text-2xl sm:text-4xl font-bold text-brand-dark">My Wishlist</h1>
+              <h1 className="page-heading-surface text-2xl sm:text-4xl font-bold text-brand-dark">My Wishlist</h1>
               {wishlistState.totalItems > 0 && (
                 <span className="bg-red-500 text-white px-3 py-1 text-sm font-semibold">
                   {wishlistState.totalItems}
