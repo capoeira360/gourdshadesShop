@@ -908,18 +908,7 @@ function About() {
         </div>
       </section>
 
-      <section className="about-cta">
-        <MaskedHeading
-          as="p"
-          lines={[
-            <>Ready to bring bespoke warmth home?</>,
-          ]}
-          stagger={0.12}
-        />
-        <Link to="/products" className="button-dark" style={{ marginTop: '24px' }}>
-          Explore the collection <ArrowUpRight size={19} />
-        </Link>
-      </section>
+
     </main>
   )
 }
@@ -1203,40 +1192,7 @@ function Community() {
         </ScrollFadeReveal>
       </section>
 
-      {/* Community Collaboration CTA */}
-      <section className="community-cta">
-        <ScrollEyebrowReveal withLine>WORK WITH US</ScrollEyebrowReveal>
-        <MaskedHeading
-          as="h2"
-          lines={[
-            <>Let's create something</>,
-            <>meaningful <em>together.</em></>,
-          ]}
-          stagger={0.12}
-        />
-        <MaskedParagraph
-          delay={0.2}
-          stagger={0.12}
-          lines={[
-            "Whether you represent an NGO, educational institution, gallery, or cultural festival —",
-            "we are always excited to collaborate on workshops, live demonstrations, and creative programs."
-          ]}
-        />
-        <div className="community-cta-btns">
-          <Link to="/contact" className="button-dark">
-            Propose a Collaboration <ArrowUpRight size={19} />
-          </Link>
-          <a
-            href="https://wa.me/255746754878?text=Hello%20Gourd%20Shades,%20I%20would%20like%20to%20discuss%20a%20community%20collaboration%20or%20workshop."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="button-whatsapp"
-            style={{ width: 'auto', minWidth: '240px' }}
-          >
-            <MessageCircle size={18} /> Chat via WhatsApp
-          </a>
-        </div>
-      </section>
+
     </main>
   )
 }
