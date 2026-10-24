@@ -1,0 +1,64 @@
+<svg width="600" height="800" viewBox="0 0 600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for lamp elements -->
+    <linearGradient id="lampShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#F8F9FA"/>
+      <stop offset="100%" stop-color="#F0F1F3"/>
+    </linearGradient>
+    
+    <linearGradient id="lampBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E9ECEF"/>
+      <stop offset="50%" stop-color="#DEE2E6"/>
+      <stop offset="100%" stop-color="#CED4DA"/>
+    </linearGradient>
+    
+    <linearGradient id="lampPole" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F9FA"/>
+      <stop offset="50%" stop-color="#E9ECEF"/>
+      <stop offset="100%" stop-color="#DEE2E6"/>
+    </linearGradient>
+    
+    <!-- Shadow filters -->
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+    
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Lamp Base -->
+  <ellipse cx="300" cy="720" rx="80" ry="20" fill="url(#lampBase)" filter="url(#dropShadow)"/>
+  <rect x="250" y="700" width="100" height="40" rx="10" fill="url(#lampBase)" filter="url(#dropShadow)"/>
+  
+  <!-- Lamp Pole -->
+  <rect x="290" y="200" width="20" height="500" fill="url(#lampPole)" filter="url(#dropShadow)"/>
+  
+  <!-- Lamp Shade -->
+  <path d="M150 200 Q300 120 450 200 L420 280 Q300 220 180 280 Z" fill="url(#lampShade)" filter="url(#dropShadow)"/>
+  
+  <!-- Lamp Shade Bottom -->
+  <ellipse cx="300" cy="280" rx="120" ry="15" fill="#E9ECEF" opacity="0.8"/>
+  
+  <!-- Light Glow Effect -->
+  <ellipse cx="300" cy="250" rx="100" ry="30" fill="#FFFEF7" opacity="0.6" filter="url(#softGlow)"/>
+  <ellipse cx="300" cy="240" rx="80" ry="20" fill="#FFFDF5" opacity="0.4" filter="url(#softGlow)"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="300" cy="190" r="8" fill="url(#lampBase)"/>
+  <rect x="296" y="180" width="8" height="20" fill="url(#lampPole)"/>
+  
+  <!-- Subtle Highlights -->
+  <path d="M180 220 Q300 160 420 220 Q300 180 180 220" fill="#FFFFFF" opacity="0.3"/>
+  <rect x="292" y="200" width="4" height="480" fill="#FFFFFF" opacity="0.2"/>
+  
+  <!-- Base Details -->
+  <ellipse cx="300" cy="710" rx="60" ry="8" fill="#CED4DA"/>
+  <ellipse cx="300" cy="715" rx="40" ry="5" fill="#ADB5BD"/>
+</svg>

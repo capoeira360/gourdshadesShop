@@ -1,0 +1,31 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="backgroundGradient" cx="0.5" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#FCFCFC" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#F8F9FA" stop-opacity="0.9"/>
+    </radialGradient>
+    <pattern id="noisePattern" patternUnits="userSpaceOnUse" width="100" height="100">
+      <circle cx="20" cy="20" r="1" fill="#F0F0F0" opacity="0.3"/>
+      <circle cx="80" cy="40" r="0.8" fill="#EEEEEE" opacity="0.2"/>
+      <circle cx="50" cy="70" r="1.2" fill="#F2F2F2" opacity="0.25"/>
+      <circle cx="10" cy="90" r="0.6" fill="#EDEDED" opacity="0.15"/>
+      <circle cx="90" cy="10" r="0.9" fill="#F1F1F1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base gradient background -->
+  <rect width="1920" height="1080" fill="url(#backgroundGradient)"/>
+  
+  <!-- Subtle texture overlay -->
+  <rect width="1920" height="1080" fill="url(#noisePattern)" opacity="0.4"/>
+  
+  <!-- Soft geometric shapes for depth -->
+  <ellipse cx="1600" cy="200" rx="300" ry="150" fill="#F9F9F9" opacity="0.6"/>
+  <ellipse cx="300" cy="800" rx="200" ry="100" fill="#FAFAFA" opacity="0.5"/>
+  <ellipse cx="1000" cy="100" rx="150" ry="75" fill="#FBFBFB" opacity="0.4"/>
+  
+  <!-- Subtle light rays -->
+  <path d="M960 0 L980 300 L940 300 Z" fill="url(#backgroundGradient)" opacity="0.3"/>
+  <path d="M960 1080 L980 780 L940 780 Z" fill="url(#backgroundGradient)" opacity="0.2"/>
+</svg>
