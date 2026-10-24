@@ -922,6 +922,18 @@ img,
   transform: scale(1.045);
 }
 
+.about-hero-image .parallax-container {
+  height: 100%;
+}
+
+.about-hero-image .parallax-img {
+  object-position: center 50%;
+}
+
+.about-image-overlay {
+  z-index: 2;
+}
+
 .product-card-image:hover img {
   transform: scale(1.045);
 }

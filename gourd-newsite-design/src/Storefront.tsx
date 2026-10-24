@@ -794,9 +794,12 @@ function About() {
       </section>
 
       <section className="about-hero-image">
-        <img
+        <ParallaxImage
           src="/images/image-wm-about.jpg"
           alt="Hands sculpting patterns on a natural calabash lamp"
+          loading="lazy"
+          offset={['start end', 'end start']}
+          yRange={['-10%', '10%']}
         />
         <div className="about-image-overlay">
           <span>THE MAKING OF SOMETHING AUTHENTIC</span>
