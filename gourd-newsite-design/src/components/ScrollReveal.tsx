@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 
 /** Consistent luxury editorial transition curve & viewport trigger */
 const LUXURY_EASE = [0.22, 1, 0.36, 1] as const
@@ -299,5 +299,68 @@ export function ScrollFadeReveal({
     >
       {children}
     </motion.div>
+  )
+}
+
+/**
+ * ParallaxImage: Smooth scroll-driven parallax for editorial imagery.
+ * Image stays 100% visible immediately (no reveal animation on images)
+ * and glides vertically with depth as the user scrolls through the page.
+ */
+export function ParallaxImage({
+  src,
+  alt,
+  className = '',
+  containerClassName = '',
+  offset = ['start end', 'end start'],
+  yRange = ['-8%', '8%'],
+  style,
+  loading = 'lazy',
+  ...props
+}: {
+  src: string
+  alt: string
+  className?: string
+  containerClassName?: string
+  offset?: any
+  yRange?: [string, string]
+  style?: React.CSSProperties
+  loading?: 'lazy' | 'eager'
+  [key: string]: any
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: offset,
+  })
+
+  // Map 0 -> 1 scroll progress to vertical offset
+  const y = useTransform(scrollYProgress, [0, 1], yRange)
+
+  return (
+    <div
+      ref={containerRef}
+      className={`parallax-container ${containerClassName}`.trim()}
+      style={{ overflow: 'hidden', position: 'relative', width: '100%', height: '100%', ...style }}
+    >
+      <motion.img
+        src={src}
+        alt={alt}
+        loading={loading}
+        className={`parallax-img ${className}`.trim()}
+        style={{
+          y: shouldReduceMotion ? undefined : y,
+          scale: shouldReduceMotion ? 1 : 1.15,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+          willChange: 'transform',
+        }}
+        {...props}
+      />
+    </div>
   )
 }

@@ -29,6 +29,7 @@ import {
   ScrollEyebrowReveal,
   ScrollSpinStar,
   ScrollFadeReveal,
+  ParallaxImage,
 } from './components/ScrollReveal'
 import './storefront.css'
 
@@ -56,7 +57,15 @@ function ScrollToTop() {
   return null
 }
 
-function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+function ProductCard({
+  product,
+  index = 0,
+  parallax = false,
+}: {
+  product: Product
+  index?: number
+  parallax?: boolean
+}) {
   const primaryImage = product.images?.[0] || '/images/hero-editorial.png'
   return (
     <article className="product-card">
@@ -65,11 +74,21 @@ function ProductCard({ product, index = 0 }: { product: Product; index?: number 
         className="product-card-image"
         aria-label={`View ${product.name} handcrafted lamp`}
       >
-        <img
-          src={primaryImage}
-          alt={`${product.name} handmade calabash lamp`}
-          loading="lazy"
-        />
+        {parallax ? (
+          <ParallaxImage
+            src={primaryImage}
+            alt={`${product.name} handmade calabash lamp`}
+            loading="lazy"
+            offset={['start end', 'end start']}
+            yRange={['-7%', '7%']}
+          />
+        ) : (
+          <img
+            src={primaryImage}
+            alt={`${product.name} handmade calabash lamp`}
+            loading="lazy"
+          />
+        )}
         <span className="round-arrow">
           <ArrowUpRight size={21} strokeWidth={1.5} />
         </span>
@@ -276,9 +295,12 @@ function Home() {
           </div>
         </div>
         <div className="hero-visual">
-          <img
+          <ParallaxImage
             src="/images/hero-top.jpg"
             alt="Handmade calabash lamp casting ambient warm glow in darkness"
+            loading="eager"
+            offset={['start start', 'end start']}
+            yRange={['-4%', '14%']}
           />
           <div className="hero-image-label">
             <span>AURA GOURD LAMP</span>
@@ -329,17 +351,19 @@ function Home() {
         </div>
         <div className="product-grid">
           {featuredLamps.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+            <ProductCard key={product.id} product={product} index={index} parallax />
           ))}
         </div>
       </section>
 
       <section className="story-preview">
         <div className="story-image">
-          <img
+          <ParallaxImage
             src="/images/workshop.jpeg"
             alt="Master artisan carving calabash lamp in Gourd Shades workshop"
             loading="lazy"
+            offset={['start end', 'end start']}
+            yRange={['-10%', '10%']}
           />
           <span className="image-caption">INSIDE THE ARUSHA WORKSHOP</span>
         </div>
