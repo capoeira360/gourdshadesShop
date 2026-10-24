@@ -56,32 +56,10 @@ function ScrollToTop() {
   return null
 }
 
-function Reveal({
-  children,
-  className = '',
-  delay = 0,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-}) {
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const primaryImage = product.images?.[0] || '/images/hero-editorial.png'
   return (
-    <Reveal className="product-card" delay={(index % 6) * 0.06}>
+    <article className="product-card">
       <Link
         to={`/products/${product.id}`}
         className="product-card-image"
@@ -108,7 +86,7 @@ function ProductCard({ product, index = 0 }: { product: Product; index?: number 
         </div>
         <span className="price">{product.price}</span>
       </div>
-    </Reveal>
+    </article>
   )
 }
 
@@ -392,39 +370,39 @@ function Home() {
       </section>
 
       <section className="values-strip">
-        <ScrollFadeReveal delay={0.05}>
+        <ScrollFadeReveal delay={0.1}>
           <span className="value-num">01</span>
           <strong>Thoughtful by design</strong>
           <MaskedParagraph
             className="values-copy"
-            delay={0.1}
-            stagger={0.08}
+            delay={0.15}
+            stagger={0.13}
             lines={[
               "Intricate carving and crystal glass beadwork",
               "that casts kaleidoscopic ambient patterns."
             ]}
           />
         </ScrollFadeReveal>
-        <ScrollFadeReveal delay={0.15}>
+        <ScrollFadeReveal delay={0.2}>
           <span className="value-num">02</span>
           <strong>Handcrafted in small batches</strong>
           <MaskedParagraph
             className="values-copy"
-            delay={0.15}
-            stagger={0.08}
+            delay={0.2}
+            stagger={0.13}
             lines={[
               "Never mass-manufactured.",
               "Every single gourd carries its own organic silhouette."
             ]}
           />
         </ScrollFadeReveal>
-        <ScrollFadeReveal delay={0.25}>
+        <ScrollFadeReveal delay={0.3}>
           <span className="value-num">03</span>
           <strong>For everyday living</strong>
           <MaskedParagraph
             className="values-copy"
-            delay={0.2}
-            stagger={0.08}
+            delay={0.25}
+            stagger={0.13}
             lines={[
               "Fitted with standard E27 fixtures",
               "and low-energy warm LED bulbs for longevity."
@@ -864,8 +842,8 @@ function About() {
               <MaskedParagraph
                 as="p"
                 className="beliefs-copy"
-                delay={0.1}
-                stagger={0.08}
+                delay={0.15}
+                stagger={0.13}
                 lines={[
                   "100% biodegradable organic calabashes harvested sustainably in Tanzania,",
                   "paired with durable electrical fittings."
@@ -880,8 +858,8 @@ function About() {
               <MaskedParagraph
                 as="p"
                 className="beliefs-copy"
-                delay={0.15}
-                stagger={0.08}
+                delay={0.2}
+                stagger={0.13}
                 lines={[
                   "Each lamp takes days of careful hand-carving and crystal bead setting.",
                   "We never rush the creative process."
@@ -896,8 +874,8 @@ function About() {
               <MaskedParagraph
                 as="p"
                 className="beliefs-copy"
-                delay={0.2}
-                stagger={0.08}
+                delay={0.25}
+                stagger={0.13}
                 lines={[
                   "Our lamps do not just brighten a room — they create an atmosphere,",
                   "casting delicate shadows across your living space."
@@ -1154,36 +1132,36 @@ function Community() {
 
       {/* Values Strip */}
       <section className="values-strip">
-        <ScrollFadeReveal delay={0.05}>
+        <ScrollFadeReveal delay={0.1}>
           <span>01</span>
           <strong>Inclusive Mentorship</strong>
           <MaskedParagraph
-            delay={0.1}
-            stagger={0.08}
+            delay={0.15}
+            stagger={0.13}
             lines={[
               "Teaching sustainable craft techniques to marginalized groups",
               "and people with disabilities."
             ]}
           />
         </ScrollFadeReveal>
-        <ScrollFadeReveal delay={0.15}>
+        <ScrollFadeReveal delay={0.2}>
           <span>02</span>
           <strong>Cultural Preservation</strong>
           <MaskedParagraph
-            delay={0.15}
-            stagger={0.08}
+            delay={0.2}
+            stagger={0.13}
             lines={[
               "Preserving ancestral East African calabash traditions",
               "through contemporary functional lighting."
             ]}
           />
         </ScrollFadeReveal>
-        <ScrollFadeReveal delay={0.25}>
+        <ScrollFadeReveal delay={0.3}>
           <span>03</span>
           <strong>Local Sourcing & Growth</strong>
           <MaskedParagraph
-            delay={0.2}
-            stagger={0.08}
+            delay={0.25}
+            stagger={0.13}
             lines={[
               "Sourcing dried gourds directly from regional Tanzanian farmers,",
               "supporting local rural families."

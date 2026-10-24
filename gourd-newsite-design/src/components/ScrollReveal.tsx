@@ -1,11 +1,15 @@
 import React, { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
+/** Consistent luxury editorial transition curve & viewport trigger */
+const LUXURY_EASE = [0.22, 1, 0.36, 1] as const
+const VIEWPORT_MARGIN = '0px 0px -50px 0px' as const
+
 function MaskedLineItem({
   line,
   idx,
   delay = 0,
-  stagger = 0.12,
+  stagger = 0.13,
   isInView,
   className = '',
 }: {
@@ -22,12 +26,12 @@ function MaskedLineItem({
     <span className={`reveal-line-mask ${isRevealed ? 'is-revealed' : ''} ${className}`.trim()}>
       <motion.span
         className="reveal-line-inner"
-        initial={{ y: '120%', opacity: 0 }}
-        animate={isInView ? { y: '0%', opacity: 1 } : { y: '120%', opacity: 0 }}
+        initial={{ y: '105%', opacity: 0 }}
+        animate={isInView ? { y: '0%', opacity: 1 } : { y: '105%', opacity: 0 }}
         transition={{
-          duration: 0.8,
+          duration: 0.95,
           delay: delay + idx * stagger,
-          ease: [0.16, 1, 0.3, 1],
+          ease: LUXURY_EASE,
         }}
         onAnimationComplete={() => {
           if (isInView) {
@@ -50,7 +54,7 @@ export function MaskedHeading({
   as: Component = 'h2',
   className = '',
   delay = 0,
-  stagger = 0.12,
+  stagger = 0.13,
   style,
 }: {
   lines: React.ReactNode[]
@@ -63,7 +67,7 @@ export function MaskedHeading({
   const containerRef = useRef<HTMLElement>(null)
   const isInView = useInView(containerRef, {
     once: true,
-    margin: '80px 0px -30px 0px',
+    margin: VIEWPORT_MARGIN,
   })
 
   return (
@@ -96,7 +100,7 @@ export function MaskedParagraph({
   text,
   className = '',
   delay = 0.15,
-  stagger = 0.12,
+  stagger = 0.13,
   style,
   as: Component = 'p',
 }: {
@@ -112,7 +116,7 @@ export function MaskedParagraph({
   const containerRef = useRef<HTMLElement>(null)
   const isInView = useInView(containerRef, {
     once: true,
-    margin: '80px 0px -30px 0px',
+    margin: VIEWPORT_MARGIN,
   })
 
   // Resolve lines: explicit lines -> text split by sentence -> string children split -> raw children
@@ -171,7 +175,7 @@ export function RevealLine({
   style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '80px 0px -30px 0px' })
+  const isInView = useInView(ref, { once: true, margin: VIEWPORT_MARGIN })
   const [isRevealed, setIsRevealed] = React.useState(false)
 
   return (
@@ -182,9 +186,9 @@ export function RevealLine({
     >
       <motion.span
         className="reveal-line-inner"
-        initial={{ y: '120%', opacity: 0 }}
-        animate={isInView ? { y: '0%', opacity: 1 } : { y: '120%', opacity: 0 }}
-        transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ y: '105%', opacity: 0 }}
+        animate={isInView ? { y: '0%', opacity: 1 } : { y: '105%', opacity: 0 }}
+        transition={{ duration: 0.95, delay, ease: LUXURY_EASE }}
         onAnimationComplete={() => {
           if (isInView) setIsRevealed(true)
         }}
@@ -212,7 +216,7 @@ export function ScrollEyebrowReveal({
   style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '80px 0px -30px 0px' })
+  const isInView = useInView(ref, { once: true, margin: VIEWPORT_MARGIN })
 
   return (
     <div ref={ref} className={`reveal-eyebrow-container ${className}`.trim()} style={style}>
@@ -220,7 +224,7 @@ export function ScrollEyebrowReveal({
         className="eyebrow reveal-eyebrow"
         initial={{ opacity: 0, y: 10, letterSpacing: '0.08em' }}
         animate={isInView ? { opacity: 1, y: 0, letterSpacing: '0.16em' } : { opacity: 0, y: 10, letterSpacing: '0.08em' }}
-        transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, delay, ease: LUXURY_EASE }}
       >
         {children}
       </motion.div>
@@ -229,7 +233,7 @@ export function ScrollEyebrowReveal({
           className="reveal-eyebrow-line"
           initial={{ scaleX: 0, opacity: 0 }}
           animate={isInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-          transition={{ duration: 0.8, delay: delay + 0.12, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.95, delay: delay + 0.14, ease: LUXURY_EASE }}
         />
       )}
     </div>
@@ -249,15 +253,15 @@ export function ScrollSpinStar({
   style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '80px 0px -30px 0px' })
+  const isInView = useInView(ref, { once: true, margin: VIEWPORT_MARGIN })
 
   return (
     <motion.span
       ref={ref}
       className={`scroll-spin-star ${className}`.trim()}
-      initial={{ opacity: 0, scale: 0.5, rotate: -75 }}
-      animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.5, rotate: -75 }}
-      transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ opacity: 0, scale: 0.6, rotate: -60 }}
+      animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.6, rotate: -60 }}
+      transition={{ duration: 0.95, delay, ease: LUXURY_EASE }}
       style={{ display: 'inline-block', ...style }}
     >
       ✳
@@ -266,13 +270,13 @@ export function ScrollSpinStar({
 }
 
 /**
- * ScrollFadeReveal: Smooth container fade/glide for cards, articles, and boxes.
+ * ScrollFadeReveal: Smooth container fade/glide for text blocks, articles, and values.
  */
 export function ScrollFadeReveal({
   children,
   className = '',
   delay = 0,
-  yOffset = 24,
+  yOffset = 20,
   style,
 }: {
   children: React.ReactNode
@@ -282,7 +286,7 @@ export function ScrollFadeReveal({
   style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '80px 0px -30px 0px' })
+  const isInView = useInView(ref, { once: true, margin: VIEWPORT_MARGIN })
 
   return (
     <motion.div
@@ -291,7 +295,7 @@ export function ScrollFadeReveal({
       style={style}
       initial={{ opacity: 0, y: yOffset }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: yOffset }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.9, delay, ease: LUXURY_EASE }}
     >
       {children}
     </motion.div>

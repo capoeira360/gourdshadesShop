@@ -868,25 +868,22 @@
   transform-origin: center center;
 }
 
-/* Native CSS Scroll-Driven Progressive Enhancement for supporting browsers */
-@media (prefers-reduced-motion: no-preference) {
-  @supports ((animation-timeline: view()) and (animation-range: entry)) {
-    @keyframes scrollFadeUp {
-      from {
-        opacity: 0.15;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .css-scroll-reveal {
-      animation: scrollFadeUp linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 35%;
-    }
-  }
+/* === REVEAL ANIMATIONS ONLY FOR TEXTS, NOT IMAGES === */
+img,
+.hero-visual img,
+.product-card-image img,
+.story-image img,
+.detail-image img,
+.detail-thumb img,
+.about-hero-image img,
+.community-visual img,
+.community-thumb img {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+.product-card-image:hover img {
+  transform: scale(1.045) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
