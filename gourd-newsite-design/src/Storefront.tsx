@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -60,50 +60,84 @@ function ScrollToTop() {
 function ProductCard({
   product,
   index = 0,
-  parallax = false,
 }: {
   product: Product
   index?: number
-  parallax?: boolean
 }) {
+  const cardRef = useRef<HTMLElement>(null)
+  const [scrollState, setScrollState] = useState<'in-view' | 'below' | 'above'>('below')
   const primaryImage = product.images?.[0] || '/images/hero-editorial.png'
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setScrollState('in-view')
+      return
+    }
+
+    const rect = el.getBoundingClientRect()
+    const vh = window.innerHeight || document.documentElement.clientHeight
+    if (rect.top < vh * 0.92 && rect.bottom > vh * 0.08) {
+      setScrollState('in-view')
+    } else if (rect.bottom <= vh * 0.08) {
+      setScrollState('above')
+    } else {
+      setScrollState('below')
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+            setScrollState('in-view')
+          } else if (!entry.isIntersecting) {
+            if (entry.boundingClientRect.top < 0) {
+              setScrollState('above')
+            } else {
+              setScrollState('below')
+            }
+          }
+        }
+      },
+      {
+        threshold: [0, 0.12, 0.25],
+      }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <article className="product-card">
-      <Link
-        to={`/products/${product.id}`}
-        className="product-card-image"
-        aria-label={`View ${product.name} handcrafted lamp`}
-      >
-        {parallax ? (
-          <ParallaxImage
-            src={primaryImage}
-            alt={`${product.name} handmade calabash lamp`}
-            loading="lazy"
-            offset={['start end', 'end start']}
-            yRange={['-7%', '7%']}
-          />
-        ) : (
+    <article ref={cardRef} className="product-card" data-scroll-state={scrollState}>
+      <div className="product-card-inner">
+        <Link
+          to={`/products/${product.id}`}
+          className="product-card-image"
+          aria-label={`View ${product.name} handcrafted lamp`}
+        >
           <img
             src={primaryImage}
             alt={`${product.name} handmade calabash lamp`}
             loading="lazy"
           />
-        )}
-        <span className="round-arrow">
-          <ArrowUpRight size={21} strokeWidth={1.5} />
-        </span>
-      </Link>
-      <div className="product-card-info">
-        <div>
-          <span className="eyebrow muted">
-            {formatCategory(product.category)} / 0{index + 1}
+          <span className="round-arrow">
+            <ArrowUpRight size={21} strokeWidth={1.5} />
           </span>
-          <h3>
-            <Link to={`/products/${product.id}`}>{product.name}</Link>
-          </h3>
-          <p>{product.description}</p>
+        </Link>
+        <div className="product-card-info">
+          <div>
+            <span className="eyebrow muted">
+              {formatCategory(product.category)} / 0{index + 1}
+            </span>
+            <h3>
+              <Link to={`/products/${product.id}`}>{product.name}</Link>
+            </h3>
+            <p>{product.description}</p>
+          </div>
+          <span className="price">{product.price}</span>
         </div>
-        <span className="price">{product.price}</span>
       </div>
     </article>
   )
@@ -296,7 +330,7 @@ function Home() {
         </div>
         <div className="hero-visual">
           <ParallaxImage
-            src="/images/hero-top.jpg"
+            src="/images/Cinematic nature-inspired community spotlight.jpeg"
             alt="Handmade calabash lamp casting ambient warm glow in darkness"
             loading="eager"
             offset={['start start', 'end start']}
@@ -351,7 +385,7 @@ function Home() {
         </div>
         <div className="product-grid">
           {featuredLamps.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} parallax />
+            <ProductCard key={product.id} product={product} index={index} />
           ))}
         </div>
       </section>
@@ -359,11 +393,12 @@ function Home() {
       <section className="story-preview">
         <div className="story-image">
           <ParallaxImage
-            src="/images/workshop.jpeg"
+            src="/images/background-replace.jpg"
             alt="Master artisan carving calabash lamp in Gourd Shades workshop"
             loading="lazy"
             offset={['start end', 'end start']}
-            yRange={['-10%', '10%']}
+            yRange={['-22%', '22%']}
+            scale={1.02}
           />
           <span className="image-caption">INSIDE THE ARUSHA WORKSHOP</span>
         </div>

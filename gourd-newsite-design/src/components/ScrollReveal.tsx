@@ -314,7 +314,9 @@ export function ParallaxImage({
   containerClassName = '',
   offset = ['start end', 'end start'],
   yRange = ['-8%', '8%'],
+  scale = 1.15,
   style,
+  imgStyle,
   loading = 'lazy',
   ...props
 }: {
@@ -324,7 +326,9 @@ export function ParallaxImage({
   containerClassName?: string
   offset?: any
   yRange?: [string, string]
+  scale?: number
   style?: React.CSSProperties
+  imgStyle?: React.CSSProperties
   loading?: 'lazy' | 'eager'
   [key: string]: any
 }) {
@@ -352,12 +356,13 @@ export function ParallaxImage({
         className={`parallax-img ${className}`.trim()}
         style={{
           y: shouldReduceMotion ? undefined : y,
-          scale: shouldReduceMotion ? 1 : 1.15,
+          scale: shouldReduceMotion ? 1 : scale,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           display: 'block',
           willChange: 'transform',
+          ...imgStyle,
         }}
         {...props}
       />
