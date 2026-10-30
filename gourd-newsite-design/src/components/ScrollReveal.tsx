@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 
 /** Consistent luxury editorial transition curve & viewport trigger */
 const LUXURY_EASE = [0.22, 1, 0.36, 1] as const
@@ -315,6 +315,7 @@ export function ParallaxImage({
   offset = ['start end', 'end start'],
   yRange = ['-8%', '8%'],
   scale = 1.15,
+  fixed = false,
   style,
   imgStyle,
   loading = 'lazy',
@@ -327,6 +328,7 @@ export function ParallaxImage({
   offset?: any
   yRange?: [string, string]
   scale?: number
+  fixed?: boolean
   style?: React.CSSProperties
   imgStyle?: React.CSSProperties
   loading?: 'lazy' | 'eager'
@@ -340,32 +342,41 @@ export function ParallaxImage({
     offset: offset,
   })
 
-  // Map 0 -> 1 scroll progress to vertical offset
-  const y = useTransform(scrollYProgress, [0, 1], yRange)
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 110,
+    damping: 30,
+    mass: 0.35,
+    restDelta: 0.0005,
+  })
+
+  // Map 0 -> 1 smoothed scroll progress to vertical offset
+  const y = useTransform(smoothProgress, [0, 1], yRange)
 
   return (
     <div
       ref={containerRef}
-      className={`parallax-container ${containerClassName}`.trim()}
+      className={`parallax-container ${fixed ? 'parallax-fixed-clip' : ''} ${containerClassName}`.trim()}
       style={{ overflow: 'hidden', position: 'relative', width: '100%', height: '100%', ...style }}
     >
-      <motion.img
-        src={src}
-        alt={alt}
-        loading={loading}
-        className={`parallax-img ${className}`.trim()}
-        style={{
-          y: shouldReduceMotion ? undefined : y,
-          scale: shouldReduceMotion ? 1 : scale,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          willChange: 'transform',
-          ...imgStyle,
-        }}
-        {...props}
-      />
+      <div className={fixed ? 'parallax-fixed-viewport' : 'parallax-inner-fill'}>
+        <motion.img
+          src={src}
+          alt={alt}
+          loading={loading}
+          className={`parallax-img ${className}`.trim()}
+          style={{
+            y: shouldReduceMotion || fixed ? undefined : y,
+            scale: shouldReduceMotion || fixed ? 1 : scale,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            willChange: fixed ? undefined : 'transform',
+            ...imgStyle,
+          }}
+          {...props}
+        />
+      </div>
     </div>
   )
 }

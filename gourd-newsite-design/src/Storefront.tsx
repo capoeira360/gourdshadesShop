@@ -15,7 +15,9 @@ import {
   Menu,
   MessageCircle,
   Minus,
+  Pause,
   Phone,
+  Play,
   Plus,
   Search,
   ShoppingBag,
@@ -145,11 +147,51 @@ function ProductCard({
 
 function Header({ count, openCart }: { count: number; openCart: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
     setMenuOpen(false)
   }, [location])
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let ticking = false
+
+    const updateHeader = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY > 30) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+        setVisible(true)
+      }
+
+      // Scrolling down past threshold -> hide
+      if (currentScrollY > 80 && currentScrollY > lastScrollY && currentScrollY - lastScrollY > 4) {
+        setVisible(false)
+      }
+      // Scrolling up -> reveal
+      else if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > 4) {
+        setVisible(true)
+      }
+
+      lastScrollY = currentScrollY
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader)
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <>
@@ -157,7 +199,11 @@ function Header({ count, openCart }: { count: number; openCart: () => void }) {
         HANDCRAFTED IN ARUSHA, TANZANIA <span>✳</span> NATURAL CALABASH & GOURD ARTISAN LIGHTING{' '}
         <span>✳</span> WORLDWIDE INQUIRIES & CUSTOM COMMISSIONS
       </div>
-      <header className="header">
+      <header
+        className={`header ${visible ? 'header-visible' : 'header-hidden'} ${
+          scrolled ? 'header-scrolled' : ''
+        }`}
+      >
         <Link className="wordmark" to="/" aria-label="Gourd Shades Home">
           gourd shades<span className="wordmark-dot">.</span>
           <small>STUDIO</small>
@@ -220,7 +266,7 @@ function Footer() {
           <Link className="footer-logo" to="/">
             gourd shades<span>.</span>
           </Link>
-          <p style={{ fontSize: '13px', color: '#a4a39b', marginTop: '16px', maxWidth: '300px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '13px', color: 'var(--color-apricot)', marginTop: '16px', maxWidth: '300px', lineHeight: 1.6 }}>
             Crafting unique lighting experiences with artisanal gourd-inspired designs. Handcrafted excellence from raw calabashes.
           </p>
           <div className="social-icons-row">
@@ -277,6 +323,30 @@ function Footer() {
 }
 
 function Home() {
+  const heroVideoRef = useRef<HTMLVideoElement>(null)
+  const [videoPaused, setVideoPaused] = useState(false)
+
+  useEffect(() => {
+    const video = heroVideoRef.current
+    if (!video) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause()
+      setVideoPaused(true)
+    }
+  }, [])
+
+  function toggleHeroVideo() {
+    const video = heroVideoRef.current
+    if (!video) return
+    if (video.paused) {
+      video.play()
+      setVideoPaused(false)
+    } else {
+      video.pause()
+      setVideoPaused(true)
+    }
+  }
+
   const featuredLamps = useMemo(() => {
     const special = products.find(p => p.id === 'aura-new-design-lamp')
     const wildlife = products.find(p => p.id === 'african-wild-life-lamps')
@@ -329,13 +399,27 @@ function Home() {
           </div>
         </div>
         <div className="hero-visual">
-          <ParallaxImage
-            src="/images/Cinematic nature-inspired community spotlight.jpeg"
-            alt="Handmade calabash lamp casting ambient warm glow in darkness"
-            loading="eager"
-            offset={['start start', 'end start']}
-            yRange={['-4%', '14%']}
+          <video
+            ref={heroVideoRef}
+            className="hero-video"
+            src="/Artisan glow studio showcase.mp4"
+            poster="/images/hero-video-poster.jpg"
+            width={960}
+            height={960}
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
           />
+          <button
+            type="button"
+            className="hero-video-toggle"
+            onClick={toggleHeroVideo}
+            aria-label={videoPaused ? 'Play showcase video' : 'Pause showcase video'}
+          >
+            {videoPaused ? <Play size={14} /> : <Pause size={14} />}
+          </button>
           <div className="hero-image-label">
             <span>AURA GOURD LAMP</span>
             <span>HANDMADE IN TANZANIA</span>
@@ -396,9 +480,10 @@ function Home() {
             src="/images/background-replace.jpg"
             alt="Master artisan carving calabash lamp in Gourd Shades workshop"
             loading="lazy"
+            fixed
             offset={['start end', 'end start']}
-            yRange={['-22%', '22%']}
-            scale={1.02}
+            yRange={['-2%', '2%']}
+            scale={1.04}
           />
           <span className="image-caption">INSIDE THE ARUSHA WORKSHOP</span>
         </div>
@@ -556,7 +641,7 @@ function ProductsPage() {
 
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-            <p style={{ fontSize: '18px', color: '#6d6c65' }}>No lamps found matching your search.</p>
+            <p style={{ fontSize: '18px', color: 'var(--color-earth)' }}>No lamps found matching your search.</p>
             <button className="button-dark" onClick={() => { setSearchQuery(''); setFilter('All lamps'); }}>
               Reset filters
             </button>
@@ -568,21 +653,6 @@ function ProductsPage() {
             ))}
           </div>
         )}
-      </section>
-
-      <section className="catalog-note">
-        <ScrollSpinStar style={{ fontSize: '70px', lineHeight: 1 }} />
-        <MaskedHeading
-          as="p"
-          lines={[
-            <>No two gourds are shaped the same.</>,
-            <>That's where the magic begins.</>,
-          ]}
-          stagger={0.14}
-        />
-        <Link to="/about" className="text-link">
-          Why we make this way <ArrowUpRight size={18} />
-        </Link>
       </section>
     </main>
   )
@@ -831,13 +901,15 @@ function About() {
       <section className="about-hero-image">
         <ParallaxImage
           src="/images/image-wm-about.jpg"
-          alt="Hands sculpting patterns on a natural calabash lamp"
+          alt="Portrait of Isaac Munis, founder and artisan of Gourd Shades in Arusha, Tanzania"
           loading="lazy"
+          fixed
           offset={['start end', 'end start']}
-          yRange={['-10%', '10%']}
+          yRange={['-2%', '2%']}
+          scale={1.04}
         />
         <div className="about-image-overlay">
-          <span>THE MAKING OF SOMETHING AUTHENTIC</span>
+          <span>ISAAC MUNIS &nbsp;•&nbsp; FOUNDER & MASTER ARTISAN</span>
           <span>GOURD SHADES / ARUSHA, TANZANIA</span>
         </div>
       </section>
@@ -853,99 +925,156 @@ function About() {
             ]}
             stagger={0.12}
           />
+          <ScrollFadeReveal className="about-maker-meta" delay={0.2}>
+            <strong>Isaac Munis</strong>
+            <span>Founder &amp; Artisan &nbsp;•&nbsp; Arusha, Tanzania &nbsp;•&nbsp; Est. 2020</span>
+          </ScrollFadeReveal>
         </div>
         <div className="about-paragraphs">
           <MaskedParagraph
             delay={0.1}
             stagger={0.12}
             lines={[
-              "Gourd Shades was born from a deep admiration for African heritage, traditional craft, and the organic elegance of calabashes (gourds).",
-              "For centuries, dried gourds have served as vessels in East African culture; we give them a second life as ambient lighting."
+              "My name is Isaac Munis, born and raised in Arusha, Tanzania.",
+              "From a very young age, I have been deeply passionate about handcraft — building and shaping new creations out of discarded materials and whatever I could gather from the streets around me."
             ]}
           />
           <MaskedParagraph
             delay={0.2}
             stagger={0.12}
             lines={[
-              "Each piece begins with selecting the ideal dried gourd from local farmers.",
-              "The hard shell is carefully cleaned, sanded, and hand-carved with detailed wildlife silhouettes, botanical vines, or contemporary geometric patterns.",
-              "Tiny perforations and vibrant crystal glass beads are meticulously set so that when the lamp is lit, it casts mesmerizing shadows and prismatic reflections."
+              "I began carving gourd lamps in 2020 as a part-time pursuit, and six years later it has grown into my full-time studio and life’s work.",
+              "While every calabash still teaches me something new, my ambition is unwavering: to refine this craft every day and stand among the finest gourd lighting artisans in the world."
             ]}
           />
           <MaskedParagraph
             delay={0.3}
             stagger={0.12}
             lines={[
-              "No two gourds grow identically, and no two carvings are ever the same.",
-              "That organic singularity is what makes each lamp yours alone."
+              "I believe exceptional lighting transforms not just rooms, but the way people live, work, and connect.",
+              "Through thoughtful design, intricate hand-perforations, and crystal glass beadwork, my mission is to bring warmth, beauty, and lasting character to every space we illuminate."
             ]}
           />
-          <span className="signature">With warmth & light, &nbsp; Gourd Shades Studio</span>
+          <span className="signature">With warmth &amp; light, &nbsp; Isaac Munis — Gourd Shades Studio</span>
         </div>
       </section>
 
-      <section className="about-values">
-        <div>
-          <ScrollEyebrowReveal withLine>WHAT WE STAND FOR</ScrollEyebrowReveal>
+      <section className="about-origin-extension">
+        <div className="about-origin-gallery">
+          <ScrollFadeReveal delay={0.15}>
+            <figure className="about-origin-figure">
+              <div className="about-origin-img-wrap">
+                <img
+                  src="/images/about-gourd-in a farm3.jpeg"
+                  alt="Natural calabash gourd growing on a farm in Tanzania"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption className="about-origin-caption">
+                <span>01 / IN THE FIELD</span>
+                <strong>Organic gourd growing on the farm</strong>
+              </figcaption>
+            </figure>
+          </ScrollFadeReveal>
+
+          <ScrollFadeReveal delay={0.28}>
+            <figure className="about-origin-figure">
+              <div className="about-origin-img-wrap">
+                <img
+                  src="/images/about-first-lamp.jpeg"
+                  alt="The very first handcrafted gourd lampshade created by Isaac Munis"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption className="about-origin-caption">
+                <span>02 / THE FIRST LAMP</span>
+                <strong>The friend’s lampshade that started it all</strong>
+              </figcaption>
+            </figure>
+          </ScrollFadeReveal>
+        </div>
+
+        <div className="about-origin-copy">
+          <ScrollEyebrowReveal withLine>ROOTS &amp; THE FIRST SPARK</ScrollEyebrowReveal>
           <MaskedHeading
             as="h2"
             lines={[
-              <>Rooted in nature,</>,
-              <><em>made by hand.</em></>,
+              <>From the farm to</>,
+              <>the <em>first glow.</em></>,
             ]}
             stagger={0.12}
           />
-        </div>
-        <div className="beliefs">
-          <ScrollFadeReveal delay={0.1}>
-            <article>
-              <span>01 /</span>
-              <h3>Natural materials.</h3>
+          <div className="about-origin-notes">
+            <ScrollFadeReveal className="about-origin-note" delay={0.1}>
+              <span className="eyebrow">01 / CULTURAL HERITAGE</span>
+              <h3>Reimagining the traditional calabash.</h3>
               <MaskedParagraph
-                as="p"
-                className="beliefs-copy"
                 delay={0.15}
-                stagger={0.13}
+                stagger={0.12}
                 lines={[
-                  "100% biodegradable organic calabashes harvested sustainably in Tanzania,",
-                  "paired with durable electrical fittings."
+                  "For generations across Tanzania, natural calabashes and gourds have been cherished in daily life as vessels for storing water, seeds, and fresh milk.",
+                  "A core objective of my work is to awaken a new appreciation across my country and beyond for what this humble organic material can become when sculpted with light."
                 ]}
               />
-            </article>
-          </ScrollFadeReveal>
-          <ScrollFadeReveal delay={0.2}>
-            <article>
-              <span>02 /</span>
-              <h3>Artisanal patience.</h3>
+            </ScrollFadeReveal>
+
+            <ScrollFadeReveal className="about-origin-note" delay={0.2}>
+              <span className="eyebrow">02 / DISCOVERING GOURD CRAFT</span>
+              <h3>The first lampshade for a friend.</h3>
               <MaskedParagraph
-                as="p"
-                className="beliefs-copy"
                 delay={0.2}
-                stagger={0.13}
+                stagger={0.12}
                 lines={[
-                  "Each lamp takes days of careful hand-carving and crystal bead setting.",
-                  "We never rush the creative process."
+                  "I discovered gourd artistry while experimenting with different handcraft ideas, carving my very first calabash lampshade as a commission for a friend.",
+                  "Seeing the warm, perforated glow of that first piece — and the overwhelming joy and encouragement from everyone who saw it — sparked the journey that became Gourd Shades."
                 ]}
               />
-            </article>
-          </ScrollFadeReveal>
-          <ScrollFadeReveal delay={0.3}>
-            <article>
-              <span>03 /</span>
-              <h3>Living ambient art.</h3>
-              <MaskedParagraph
-                as="p"
-                className="beliefs-copy"
-                delay={0.25}
-                stagger={0.13}
-                lines={[
-                  "Our lamps do not just brighten a room — they create an atmosphere,",
-                  "casting delicate shadows across your living space."
-                ]}
-              />
-            </article>
-          </ScrollFadeReveal>
+            </ScrollFadeReveal>
+          </div>
         </div>
+      </section>
+
+      {/* Values Strip */}
+      <section className="values-strip about-values-strip">
+        <ScrollFadeReveal delay={0.1}>
+          <span className="value-num">01 /</span>
+          <strong>Natural materials.</strong>
+          <MaskedParagraph
+            className="values-copy"
+            delay={0.15}
+            stagger={0.13}
+            lines={[
+              "100% biodegradable organic calabashes harvested sustainably in Tanzania,",
+              "paired with durable electrical fittings."
+            ]}
+          />
+        </ScrollFadeReveal>
+        <ScrollFadeReveal delay={0.2}>
+          <span className="value-num">02 /</span>
+          <strong>Artisanal patience.</strong>
+          <MaskedParagraph
+            className="values-copy"
+            delay={0.2}
+            stagger={0.13}
+            lines={[
+              "Each lamp takes days of careful hand-carving and crystal bead setting.",
+              "We never rush the creative process."
+            ]}
+          />
+        </ScrollFadeReveal>
+        <ScrollFadeReveal delay={0.3}>
+          <span className="value-num">03 /</span>
+          <strong>Living ambient art.</strong>
+          <MaskedParagraph
+            className="values-copy"
+            delay={0.25}
+            stagger={0.13}
+            lines={[
+              "Our lamps do not just brighten a room — they create an atmosphere,",
+              "casting delicate shadows across your living space."
+            ]}
+          />
+        </ScrollFadeReveal>
       </section>
 
 
@@ -1239,17 +1368,18 @@ function Community() {
 
 function Contact() {
   const [sent, setSent] = useState(false)
-  const [name, setName] = useState('')
-  const [from, setFrom] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [subject, setSubject] = useState('Product Purchase & Availability')
   const [message, setMessage] = useState('')
 
   function send(e: React.FormEvent) {
     e.preventDefault()
-    const body = `Hello Gourd Shades,\n\n${message}\n\nFrom: ${name}\nEmail: ${from}\nPhone/WhatsApp: ${phone || 'Not provided'}\n\nSent via gourdshades.com`
+    const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'Website Visitor'
+    const body = `Hello Gourd Shades,\n\n${message}\n\nFrom: ${fullName}\nEmail: ${email}\nPhone/WhatsApp: ${phone || 'Not provided'}\n\nSent via gourdshades.com`
     window.location.href = `mailto:${STUDIO_EMAIL}?subject=${encodeURIComponent(
-      `Gourd Shades Inquiry: ${subject}`
+      `Gourd Shades Inquiry from ${fullName}`
     )}&body=${encodeURIComponent(body)}`
     setSent(true)
   }
@@ -1278,126 +1408,106 @@ function Contact() {
         </div>
       </section>
 
-      <section className="contact-layout">
-        <div className="contact-left">
-          <ScrollEyebrowReveal withLine>DIRECT STUDIO CONTACT</ScrollEyebrowReveal>
-          <MaskedHeading
-            as="h2"
-            lines={[
-              <>Good conversations</>,
-              <>start <em>here.</em></>,
-            ]}
-            stagger={0.12}
-          />
-          <MaskedParagraph
-            delay={0.2}
-            stagger={0.12}
-            lines={[
-              "Reach out via the form, or message us directly on WhatsApp for real-time consultation and custom orders.",
-              "We typically respond within 24 hours."
-            ]}
-          />
-
-          <div className="contact-info" style={{ marginTop: '50px' }}>
-            <span className="eyebrow">STUDIO DETAILS</span>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Phone size={18} color="#ad9878" />
-                <a href={`tel:${STUDIO_PHONE}`} style={{ fontSize: '18px', fontWeight: 600 }}>
-                  {STUDIO_PHONE}
-                </a>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <MessageCircle size={18} color="#255d31" />
-                <a
-                  href={`https://wa.me/${STUDIO_PHONE_RAW}?text=Hello%20Gourd%20Shades,%20I%20would%20like%20to%20inquire%20about%20your%20lamps.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ fontSize: '18px', fontWeight: 600, color: '#255d31' }}
-                >
-                  Chat on WhatsApp
-                </a>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Mail size={18} color="#ad9878" />
-                <a href={`mailto:${STUDIO_EMAIL}`} style={{ fontSize: '16px' }}>
-                  {STUDIO_EMAIL}
-                </a>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <MapPin size={18} color="#ad9878" />
-                <span style={{ fontSize: '15px' }}>{STUDIO_LOCATION}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Clock size={18} color="#ad9878" />
-                <span style={{ fontSize: '15px' }}>{STUDIO_HOURS}</span>
-              </div>
+      {/* Redesigned Contact Form Section (Split Editorial Style) */}
+      <section className="contact-editorial-section">
+        <div className="contact-editorial-container">
+          {/* Left Column: Artisan Craft Visual */}
+          <div className="contact-editorial-visual-wrap">
+            <div className="contact-editorial-visual">
+              <img
+                src="/images/IMG-20250529-WA0007-nav-contacts.jpg"
+                alt="Artisan handcrafting calabash gourd lamp"
+              />
             </div>
           </div>
 
-          <div className="contact-smallprint">
-            HANDCRAFTED IN ARUSHA &nbsp; ✳ &nbsp; WORLDWIDE DELIVERY
+          {/* Right Column: Form Area */}
+          <div className="contact-editorial-form-wrap">
+            <h2 className="contact-editorial-title">GET IN TOUCH</h2>
+            <p className="contact-editorial-subtitle">
+              For inquiries, bespoke commissions, or collaborations, feel free to reach out to discuss your lighting vision.
+            </p>
+
+            <form className="contact-editorial-form" onSubmit={send}>
+              <div className="contact-name-row">
+                <div className="contact-field-group">
+                  <label htmlFor="contact-first-name">
+                    First name <span>*</span>
+                  </label>
+                  <input
+                    id="contact-first-name"
+                    type="text"
+                    required
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                    placeholder="e.g. Sarah"
+                  />
+                </div>
+                <div className="contact-field-group">
+                  <label htmlFor="contact-last-name">Last name</label>
+                  <input
+                    id="contact-last-name"
+                    type="text"
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                    placeholder="e.g. Jenkins"
+                  />
+                </div>
+              </div>
+
+              <div className="contact-field-group">
+                <label htmlFor="contact-email">
+                  Email <span>*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div className="contact-field-group">
+                <label htmlFor="contact-phone">Phone / WhatsApp (Optional)</label>
+                <input
+                  id="contact-phone"
+                  type="tel"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  placeholder="+255 754 570 491"
+                />
+              </div>
+
+              <div className="contact-field-group">
+                <label htmlFor="contact-message">
+                  Write a message <span>*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  required
+                  rows={4}
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                  placeholder="Tell us about the lamp you're interested in or the space you're looking to illuminate..."
+                />
+              </div>
+
+              <div className="contact-form-actions">
+                <button type="submit" className="contact-pill-btn">
+                  Submit
+                </button>
+              </div>
+
+              {sent && (
+                <p className="contact-form-success">
+                  ✓ Your email client should open with your inquiry ready to send. If not, email us directly at {STUDIO_EMAIL}.
+                </p>
+              )}
+            </form>
           </div>
         </div>
-
-        <form className="contact-form" onSubmit={send}>
-          <label>
-            Your Name <span>*</span>
-            <input
-              required
-              value={name}
-              onChange={e => setName(e.target.value)}
-              placeholder="e.g. Sarah Jenkins"
-            />
-          </label>
-          <label>
-            Email Address <span>*</span>
-            <input
-              type="email"
-              required
-              value={from}
-              onChange={e => setFrom(e.target.value)}
-              placeholder="you@example.com"
-            />
-          </label>
-          <label>
-            Phone / WhatsApp (Optional)
-            <input
-              type="tel"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              placeholder="+1 (555) 000-0000"
-            />
-          </label>
-          <label>
-            What's on your mind?
-            <select value={subject} onChange={e => setSubject(e.target.value)}>
-              <option>Product Purchase & Availability</option>
-              <option>Custom Bespoke Commission</option>
-              <option>Worldwide Shipping Inquiry</option>
-              <option>Exhibition or Collaboration</option>
-              <option>General Question</option>
-            </select>
-          </label>
-          <label>
-            Your Message <span>*</span>
-            <textarea
-              required
-              rows={5}
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-              placeholder="Tell us about the lamp you're interested in or the space you're looking to illuminate..."
-            />
-          </label>
-          <button type="submit" className="button-dark">
-            Send Inquiry Email <ArrowUpRight size={19} />
-          </button>
-          {sent && (
-            <p className="form-note">
-              Your email client should open with your inquiry ready to send. If not, email us directly at {STUDIO_EMAIL}.
-            </p>
-          )}
-        </form>
       </section>
     </main>
   )
