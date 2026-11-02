@@ -1965,7 +1965,7 @@ main,
 .announcement {
   background: var(--color-apricot);
   color: var(--color-alabaster);
-  border-bottom: 1px solid var(--border-on-earth);
+  border-bottom: none !important;
 }
 
 .announcement span {
@@ -1975,7 +1975,7 @@ main,
 .header {
   background: transparent;
   color: var(--color-earth);
-  border-bottom: none;
+  border-bottom: none !important;
   height: 84px;
   padding: 0 3.8%;
   display: flex;
@@ -2425,8 +2425,9 @@ main,
 .intro-band {
   background: var(--color-pink);
   color: var(--color-apricot);
-  border-top: 1px solid var(--border-pink);
-  border-bottom: 1px solid var(--border-pink);
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .intro-band p,
@@ -2455,10 +2456,12 @@ main,
 .related-section {
   background: var(--color-alabaster);
   color: var(--color-earth);
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .related-section {
-  border-top-color: var(--border-earth-soft);
+  border-top: none !important;
 }
 
 .product-card-inner {
@@ -2516,11 +2519,8 @@ main,
 
 .story-copy {
   background: var(--color-pink);
-  border: 1px solid var(--border-pink);
+  border: none !important;
   color: var(--color-apricot);
-  box-shadow:
-    0 12px 28px color-mix(in oklab, var(--color-apricot) 10%, transparent),
-    0 32px 64px color-mix(in oklab, var(--color-apricot) 14%, transparent);
 }
 
 .story-copy h2,
@@ -2548,12 +2548,13 @@ main,
 .values-strip {
   background: var(--color-pink);
   color: var(--color-apricot);
-  border-top: 1px solid var(--border-pink);
-  border-bottom: 1px solid var(--border-pink);
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .values-strip > div {
-  border-right-color: var(--border-pink);
+  border-right: none !important;
 }
 
 .values-strip .value-num,
@@ -2677,8 +2678,9 @@ strong,
 
 .about-origin-extension {
   background: var(--color-pink);
-  border-top: 1px solid var(--border-pink);
-  border-bottom: 1px solid var(--border-pink);
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .about-origin-extension h2,
@@ -2691,7 +2693,7 @@ strong,
 }
 
 .about-origin-note {
-  border-top-color: var(--border-pink) !important;
+  border-top: none !important;
 }
 
 .about-origin-img-wrap {
@@ -3106,8 +3108,9 @@ strong,
   color: var(--color-earth);
   position: relative;
   overflow: hidden;
-  border-top: 1px solid var(--border-earth-soft);
-  border-bottom: 1px solid var(--border-earth-soft);
+  border-top: none !important;
+  border-bottom: none !important;
+  border: none !important;
   padding: 60px 0;
 }
 
@@ -3330,8 +3333,9 @@ strong,
 .values-strip.about-values-strip {
   background: var(--color-pink);
   padding: 70px 5.2% 80px;
-  border-top: 1px solid var(--border-pink);
-  border-bottom: 1px solid var(--border-pink);
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .about-values-strip > div {
@@ -3471,4 +3475,32 @@ em,
 .signature,
 .detail-subtitle {
   font-family: var(--font-serif);
+}
+
+/* === SEAMLESS ORGANIC TRANSITIONS BETWEEN SECTIONS === */
+.section,
+.hero,
+.intro-band,
+.featured-section,
+.story-preview,
+.values-strip,
+.about-origin-extension,
+.about-values,
+.about-values-strip,
+.related-section,
+.contact-editorial-section,
+.footer,
+.page-intro,
+.catalog {
+  border-top: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+}
+
+@media (max-width: 700px) {
+  .values-strip > div,
+  .about-values-strip > div {
+    border-bottom: none !important;
+    border-right: none !important;
+  }
 }
