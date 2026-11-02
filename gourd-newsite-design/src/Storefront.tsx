@@ -710,7 +710,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   return (
     <main className="detail-page">
       <div className="detail-breadcrumb">
-        <Link to="/products">
+        <Link to="/products" className="detail-back-link">
           <ArrowLeft size={16} /> Back to all lamps
         </Link>
         <span>

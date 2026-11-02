@@ -2291,14 +2291,23 @@ main,
   background: var(--color-alabaster) !important;
   color: var(--color-apricot) !important;
   border: 1.5px solid var(--color-alabaster) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.hero .button-dark svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero .button-dark:hover {
-  background: var(--color-pink) !important;
-  color: var(--color-apricot) !important;
-  border-color: var(--color-pink) !important;
+  background: transparent !important;
+  color: var(--color-alabaster) !important;
+  border-color: var(--color-alabaster) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot) 35%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hero .button-dark:hover svg {
+  transform: translate(3px, -3px);
 }
 
 .hero-bottom a {
@@ -2346,6 +2355,11 @@ main,
   border-color: var(--color-apricot);
   border-radius: 999px;
   padding: 0 28px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.button-dark svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .button-dark:hover {
@@ -2356,6 +2370,10 @@ main,
   box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot) 25%, transparent);
 }
 
+.button-dark:hover svg {
+  transform: translate(3px, -3px);
+}
+
 .button-outline,
 .button-secondary-outline {
   background: transparent;
@@ -2363,6 +2381,12 @@ main,
   border: 1.5px solid var(--color-apricot);
   border-radius: 999px;
   padding: 0 28px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.button-outline svg,
+.button-secondary-outline svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .button-outline:hover,
@@ -2370,6 +2394,13 @@ main,
   background: var(--color-apricot);
   color: var(--color-alabaster);
   border-color: var(--color-apricot);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot) 25%, transparent);
+}
+
+.button-outline:hover svg,
+.button-secondary-outline:hover svg {
+  transform: translate(3px, -3px);
 }
 
 .button-whatsapp {
@@ -2594,7 +2625,6 @@ strong,
 .contact-form textarea,
 .form-note,
 .detail-breadcrumb,
-.detail-breadcrumb a,
 .detail-copy h1,
 .detail-copy h1 span,
 .detail-subtitle,
@@ -2723,6 +2753,52 @@ strong,
 .catalog-note .scroll-spin-star {
   color: var(--color-alabaster) !important;
   border-bottom-color: var(--color-alabaster);
+}
+
+/* Detail Breadcrumb "Back to all lamps" Button (Matching reference & brand pills) */
+.detail-breadcrumb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 5.2% 16px;
+}
+
+.detail-breadcrumb a,
+.detail-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-apricot);
+  background: transparent;
+  color: var(--color-apricot) !important;
+  font-family: var(--font-small);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-decoration: none;
+}
+
+.detail-breadcrumb a svg,
+.detail-back-link svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detail-breadcrumb a:hover,
+.detail-back-link:hover {
+  background: var(--color-apricot) !important;
+  color: var(--color-alabaster) !important;
+  border-color: var(--color-apricot) !important;
+  transform: translateX(-3px);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--color-apricot) 25%, transparent);
+}
+
+.detail-breadcrumb a:hover svg,
+.detail-back-link:hover svg {
+  transform: translateX(-3px);
 }
 
 .detail-gallery .detail-image,
