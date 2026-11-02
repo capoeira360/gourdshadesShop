@@ -12,12 +12,11 @@ import {
   Clock,
   Mail,
   MapPin,
+  Maximize2,
   Menu,
   MessageCircle,
   Minus,
-  Pause,
   Phone,
-  Play,
   Plus,
   Search,
   ShoppingBag,
@@ -31,8 +30,11 @@ import {
   ScrollEyebrowReveal,
   ScrollSpinStar,
   ScrollFadeReveal,
+  ScrollImageReveal,
+  SlideMaskCard,
   ParallaxImage,
 } from './components/ScrollReveal'
+import { GourdLogo } from './components/GourdLogo'
 import './storefront.css'
 
 const STUDIO_EMAIL = 'gourdshadestz@gmail.com'
@@ -80,30 +82,25 @@ function ProductCard({
 
     const rect = el.getBoundingClientRect()
     const vh = window.innerHeight || document.documentElement.clientHeight
-    if (rect.top < vh * 0.92 && rect.bottom > vh * 0.08) {
+    if (rect.top < vh * 0.92) {
       setScrollState('in-view')
-    } else if (rect.bottom <= vh * 0.08) {
-      setScrollState('above')
-    } else {
-      setScrollState('below')
+      return
     }
+
+    setScrollState('below')
 
     const observer = new IntersectionObserver(
       entries => {
         for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+          if (entry.isIntersecting) {
             setScrollState('in-view')
-          } else if (!entry.isIntersecting) {
-            if (entry.boundingClientRect.top < 0) {
-              setScrollState('above')
-            } else {
-              setScrollState('below')
-            }
+            observer.unobserve(el)
           }
         }
       },
       {
-        threshold: [0, 0.12, 0.25],
+        threshold: [0, 0.08, 0.2],
+        rootMargin: '0px 0px -150px 0px',
       }
     )
 
@@ -205,8 +202,7 @@ function Header({ count, openCart }: { count: number; openCart: () => void }) {
         }`}
       >
         <Link className="wordmark" to="/" aria-label="Gourd Shades Home">
-          gourd shades<span className="wordmark-dot">.</span>
-          <small>STUDIO</small>
+          <GourdLogo iconSize={52} />
         </Link>
         <nav
           className={menuOpen ? 'navigation is-open' : 'navigation'}
@@ -263,10 +259,10 @@ function Footer() {
       </div>
       <div className="footer-bottom">
         <div>
-          <Link className="footer-logo" to="/">
-            gourd shades<span>.</span>
+          <Link className="footer-logo" to="/" aria-label="Gourd Shades Home">
+            <GourdLogo iconSize={64} />
           </Link>
-          <p style={{ fontSize: '13px', color: 'var(--color-apricot)', marginTop: '16px', maxWidth: '300px', lineHeight: 1.6 }}>
+          <p className="footer-logo-note">
             Crafting unique lighting experiences with artisanal gourd-inspired designs. Handcrafted excellence from raw calabashes.
           </p>
           <div className="social-icons-row">
@@ -324,28 +320,14 @@ function Footer() {
 
 function Home() {
   const heroVideoRef = useRef<HTMLVideoElement>(null)
-  const [videoPaused, setVideoPaused] = useState(false)
 
   useEffect(() => {
     const video = heroVideoRef.current
     if (!video) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.pause()
-      setVideoPaused(true)
-    }
+    video.play().catch(() => {
+      // Autoplay with muted is allowed in modern browsers
+    })
   }, [])
-
-  function toggleHeroVideo() {
-    const video = heroVideoRef.current
-    if (!video) return
-    if (video.paused) {
-      video.play()
-      setVideoPaused(false)
-    } else {
-      video.pause()
-      setVideoPaused(true)
-    }
-  }
 
   const featuredLamps = useMemo(() => {
     const special = products.find(p => p.id === 'aura-new-design-lamp')
@@ -412,14 +394,6 @@ function Home() {
             playsInline
             aria-hidden="true"
           />
-          <button
-            type="button"
-            className="hero-video-toggle"
-            onClick={toggleHeroVideo}
-            aria-label={videoPaused ? 'Play showcase video' : 'Pause showcase video'}
-          >
-            {videoPaused ? <Play size={14} /> : <Pause size={14} />}
-          </button>
           <div className="hero-image-label">
             <span>AURA GOURD LAMP</span>
             <span>HANDMADE IN TANZANIA</span>
@@ -663,10 +637,12 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const product = products.find(p => p.id === id)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [added, setAdded] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   // Reset active image when id changes
   useEffect(() => {
     setActiveImageIndex(0)
+    setIsFullscreen(false)
   }, [id])
 
   if (!product) {
@@ -684,6 +660,30 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const activeImage = galleryImages[activeImageIndex] || galleryImages[0]
   const related = products.filter(p => p.id !== id && p.category === product.category).slice(0, 2)
   const fallbackRelated = related.length >= 2 ? related : products.filter(p => p.id !== id).slice(0, 2)
+
+  // Keyboard navigation & body lock for fullscreen lightbox
+  useEffect(() => {
+    if (!isFullscreen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsFullscreen(false)
+      } else if (e.key === 'ArrowLeft') {
+        setActiveImageIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1))
+      } else if (e.key === 'ArrowRight') {
+        setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
+      }
+    }
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isFullscreen, galleryImages.length])
 
   const whatsappMessage = encodeURIComponent(
     `Hello Gourd Shades,\nI am interested in inquiring about the "${product.name}" lamp (ID: ${product.id}).\nPrice: ${product.price}\nPlease let me know about availability and order steps.`
@@ -720,18 +720,36 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
 
       <div className="detail-layout">
         <div className="detail-gallery">
-          <div className="detail-image">
-            <img
-              key={activeImage}
-              src={activeImage}
-              alt={`${product.name} view ${activeImageIndex + 1}`}
-            />
-            {galleryImages.length > 1 && (
-              <span className="detail-image-badge">
-                VIEW {activeImageIndex + 1} OF {galleryImages.length}
+          <SlideMaskCard direction="left" delay={0.1}>
+            <div
+              className="detail-image"
+              role="button"
+              tabIndex={0}
+              onClick={() => setIsFullscreen(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setIsFullscreen(true)
+                }
+              }}
+              aria-label={`View ${product.name} image full screen`}
+              title="Click to view full screen"
+            >
+              <img
+                key={activeImage}
+                src={activeImage}
+                alt={`${product.name} view ${activeImageIndex + 1}`}
+              />
+              <span className="detail-expand-hint">
+                <Maximize2 size={12} /> View Fullscreen
               </span>
-            )}
-          </div>
+              {galleryImages.length > 1 && (
+                <span className="detail-image-badge">
+                  VIEW {activeImageIndex + 1} OF {galleryImages.length}
+                </span>
+              )}
+            </div>
+          </SlideMaskCard>
 
           {galleryImages.length > 1 && (
             <div className="detail-thumbnails" aria-label="Product image thumbnails">
@@ -869,6 +887,112 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           ))}
         </div>
       </section>
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {isFullscreen && (
+          <motion.div
+            className="fullscreen-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.16, 0.65, 0.3, 1] }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${product.name} full screen view`}
+            onClick={() => setIsFullscreen(false)}
+          >
+            {/* Top Bar */}
+            <div className="fullscreen-lightbox-bar" onClick={e => e.stopPropagation()}>
+              <div className="fullscreen-lightbox-title">
+                <span className="eyebrow muted">{formatCategory(product.category)}</span>
+                <strong>{product.name}</strong>
+              </div>
+
+              {galleryImages.length > 1 && (
+                <span className="fullscreen-lightbox-counter">
+                  {activeImageIndex + 1} / {galleryImages.length}
+                </span>
+              )}
+
+              <button
+                type="button"
+                className="fullscreen-lightbox-close"
+                onClick={() => setIsFullscreen(false)}
+                aria-label="Close full screen view"
+              >
+                <X size={18} />
+                <span>CLOSE [ESC]</span>
+              </button>
+            </div>
+
+            {/* Main Stage */}
+            <div className="fullscreen-lightbox-stage" onClick={e => e.stopPropagation()}>
+              {galleryImages.length > 1 && (
+                <button
+                  type="button"
+                  className="fullscreen-lightbox-nav prev"
+                  onClick={e => {
+                    e.stopPropagation()
+                    setActiveImageIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1))
+                  }}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={28} />
+                </button>
+              )}
+
+              <motion.div
+                key={activeImage}
+                className="fullscreen-lightbox-image-wrap"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.25, ease: [0.16, 0.65, 0.3, 1] }}
+                onClick={() => setIsFullscreen(false)}
+              >
+                <img
+                  src={activeImage}
+                  alt={`${product.name} large view ${activeImageIndex + 1}`}
+                  className="fullscreen-lightbox-img"
+                  onClick={e => e.stopPropagation()}
+                />
+              </motion.div>
+
+              {galleryImages.length > 1 && (
+                <button
+                  type="button"
+                  className="fullscreen-lightbox-nav next"
+                  onClick={e => {
+                    e.stopPropagation()
+                    setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
+                  }}
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={28} />
+                </button>
+              )}
+            </div>
+
+            {/* Bottom Thumbnail Strip */}
+            {galleryImages.length > 1 && (
+              <div className="fullscreen-lightbox-strip" onClick={e => e.stopPropagation()}>
+                {galleryImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`fullscreen-lightbox-thumb ${activeImageIndex === idx ? 'thumb-active' : ''}`}
+                    onClick={() => setActiveImageIndex(idx)}
+                    aria-label={`View photo ${idx + 1}`}
+                  >
+                    <img src={img} alt={`Thumbnail ${idx + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }
@@ -961,7 +1085,7 @@ function About() {
 
       <section className="about-origin-extension">
         <div className="about-origin-gallery">
-          <ScrollFadeReveal delay={0.15}>
+          <SlideMaskCard direction="left" delay={0.1}>
             <figure className="about-origin-figure">
               <div className="about-origin-img-wrap">
                 <img
@@ -975,9 +1099,9 @@ function About() {
                 <strong>Organic gourd growing on the farm</strong>
               </figcaption>
             </figure>
-          </ScrollFadeReveal>
+          </SlideMaskCard>
 
-          <ScrollFadeReveal delay={0.28}>
+          <SlideMaskCard direction="right" delay={0.2}>
             <figure className="about-origin-figure">
               <div className="about-origin-img-wrap">
                 <img
@@ -991,7 +1115,7 @@ function About() {
                 <strong>The friend’s lampshade that started it all</strong>
               </figcaption>
             </figure>
-          </ScrollFadeReveal>
+          </SlideMaskCard>
         </div>
 
         <div className="about-origin-copy">
@@ -1135,49 +1259,51 @@ function Community() {
       {/* Chapter 01: Outreach */}
       <section className="community-section">
         <div className="community-grid">
-          <div className="community-visual">
-            <img
-              key={outreachImages[outreachIndex]}
-              src={outreachImages[outreachIndex]}
-              alt={`Gourd Shades community outreach workshop image ${outreachIndex + 1}`}
-            />
-            <div className="community-gallery-nav">
-              <div className="community-nav-btns">
-                <button
-                  type="button"
-                  className="community-nav-btn"
-                  onClick={prevOutreach}
-                  aria-label="Previous outreach photo"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  type="button"
-                  className="community-nav-btn"
-                  onClick={nextOutreach}
-                  aria-label="Next outreach photo"
-                >
-                  <ChevronRight size={20} />
-                </button>
+          <SlideMaskCard direction="left" delay={0.15} className="community-slide-card">
+            <div className="community-visual">
+              <img
+                key={outreachImages[outreachIndex]}
+                src={outreachImages[outreachIndex]}
+                alt={`Gourd Shades community outreach workshop image ${outreachIndex + 1}`}
+              />
+              <div className="community-gallery-nav">
+                <div className="community-nav-btns">
+                  <button
+                    type="button"
+                    className="community-nav-btn"
+                    onClick={prevOutreach}
+                    aria-label="Previous outreach photo"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    className="community-nav-btn"
+                    onClick={nextOutreach}
+                    aria-label="Next outreach photo"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+                <span className="community-gallery-counter">
+                  WORKSHOP {outreachIndex + 1} / {outreachImages.length}
+                </span>
               </div>
-              <span className="community-gallery-counter">
-                WORKSHOP {outreachIndex + 1} / {outreachImages.length}
-              </span>
-            </div>
 
-            <div className="community-thumbnails">
-              {outreachImages.map((src, i) => (
-                <button
-                  key={i}
-                  className={`community-thumb ${outreachIndex === i ? 'thumb-active' : ''}`}
-                  onClick={() => setOutreachIndex(i)}
-                  aria-label={`View outreach photo ${i + 1}`}
-                >
-                  <img src={src} alt={`Thumbnail ${i + 1}`} />
-                </button>
-              ))}
+              <div className="community-thumbnails">
+                {outreachImages.map((src, i) => (
+                  <button
+                    key={i}
+                    className={`community-thumb ${outreachIndex === i ? 'thumb-active' : ''}`}
+                    onClick={() => setOutreachIndex(i)}
+                    aria-label={`View outreach photo ${i + 1}`}
+                  >
+                    <img src={src} alt={`Thumbnail ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </SlideMaskCard>
 
           <div className="community-copy">
             <span className="community-tag">COMMUNITY OUTREACH & INCLUSION</span>
@@ -1233,49 +1359,51 @@ function Community() {
       {/* Chapter 02: Exhibitions */}
       <section className="community-section">
         <div className="community-grid reversed">
-          <div className="community-visual">
-            <img
-              key={exhibitionImages[exhibitionIndex]}
-              src={exhibitionImages[exhibitionIndex]}
-              alt={`Gourd Shades exhibition showcase image ${exhibitionIndex + 1}`}
-            />
-            <div className="community-gallery-nav">
-              <div className="community-nav-btns">
-                <button
-                  type="button"
-                  className="community-nav-btn"
-                  onClick={prevExhibition}
-                  aria-label="Previous exhibition photo"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  type="button"
-                  className="community-nav-btn"
-                  onClick={nextExhibition}
-                  aria-label="Next exhibition photo"
-                >
-                  <ChevronRight size={20} />
-                </button>
+          <SlideMaskCard direction="right" delay={0.15} className="community-slide-card">
+            <div className="community-visual">
+              <img
+                key={exhibitionImages[exhibitionIndex]}
+                src={exhibitionImages[exhibitionIndex]}
+                alt={`Gourd Shades exhibition showcase image ${exhibitionIndex + 1}`}
+              />
+              <div className="community-gallery-nav">
+                <div className="community-nav-btns">
+                  <button
+                    type="button"
+                    className="community-nav-btn"
+                    onClick={prevExhibition}
+                    aria-label="Previous exhibition photo"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    className="community-nav-btn"
+                    onClick={nextExhibition}
+                    aria-label="Next exhibition photo"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+                <span className="community-gallery-counter">
+                  EXHIBITION {exhibitionIndex + 1} / {exhibitionImages.length}
+                </span>
               </div>
-              <span className="community-gallery-counter">
-                EXHIBITION {exhibitionIndex + 1} / {exhibitionImages.length}
-              </span>
-            </div>
 
-            <div className="community-thumbnails">
-              {exhibitionImages.map((src, i) => (
-                <button
-                  key={i}
-                  className={`community-thumb ${exhibitionIndex === i ? 'thumb-active' : ''}`}
-                  onClick={() => setExhibitionIndex(i)}
-                  aria-label={`View exhibition photo ${i + 1}`}
-                >
-                  <img src={src} alt={`Thumbnail ${i + 1}`} />
-                </button>
-              ))}
+              <div className="community-thumbnails">
+                {exhibitionImages.map((src, i) => (
+                  <button
+                    key={i}
+                    className={`community-thumb ${exhibitionIndex === i ? 'thumb-active' : ''}`}
+                    onClick={() => setExhibitionIndex(i)}
+                    aria-label={`View exhibition photo ${i + 1}`}
+                  >
+                    <img src={src} alt={`Thumbnail ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </SlideMaskCard>
 
           <div className="community-copy">
             <span className="community-tag">CULTURAL SHOWCASE & HERITAGE</span>
@@ -1413,12 +1541,14 @@ function Contact() {
         <div className="contact-editorial-container">
           {/* Left Column: Artisan Craft Visual */}
           <div className="contact-editorial-visual-wrap">
-            <div className="contact-editorial-visual">
-              <img
-                src="/images/IMG-20250529-WA0007-nav-contacts.jpg"
-                alt="Artisan handcrafting calabash gourd lamp"
-              />
-            </div>
+            <SlideMaskCard direction="left" delay={0.15}>
+              <div className="contact-editorial-visual">
+                <img
+                  src="/images/IMG-20250529-WA0007-nav-contacts.jpg"
+                  alt="Artisan handcrafting calabash gourd lamp"
+                />
+              </div>
+            </SlideMaskCard>
           </div>
 
           {/* Right Column: Form Area */}
