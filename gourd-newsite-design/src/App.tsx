@@ -1,7 +1,13 @@
 import Storefront from './Storefront'
+import { SiteIntro } from './components/SiteIntro'
 
 function App() {
-  return <Storefront />
+  return (
+    <>
+      <SiteIntro />
+      <Storefront />
+    </>
+  )
 }
 
 export default App
