@@ -35,6 +35,7 @@ import {
   ParallaxImage,
 } from './components/ScrollReveal'
 import { GourdLogo } from './components/GourdLogo'
+import { KineticNav } from './components/KineticNav'
 import './storefront.css'
 
 const STUDIO_EMAIL = 'gourdshadestz@gmail.com'
@@ -143,97 +144,13 @@ function ProductCard({
 }
 
 function Header({ count, openCart }: { count: number; openCart: () => void }) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [visible, setVisible] = useState(true)
-  const [scrolled, setScrolled] = useState(false)
-  const location = useLocation()
-
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location])
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY
-    let ticking = false
-
-    const updateHeader = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY > 30) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-        setVisible(true)
-      }
-
-      // Scrolling down past threshold -> hide
-      if (currentScrollY > 80 && currentScrollY > lastScrollY && currentScrollY - lastScrollY > 4) {
-        setVisible(false)
-      }
-      // Scrolling up -> reveal
-      else if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > 4) {
-        setVisible(true)
-      }
-
-      lastScrollY = currentScrollY
-      ticking = false
-    }
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateHeader)
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
     <>
       <div className="announcement">
         HANDCRAFTED IN ARUSHA, TANZANIA <span>✳</span> NATURAL CALABASH & GOURD ARTISAN LIGHTING{' '}
         <span>✳</span> WORLDWIDE INQUIRIES & CUSTOM COMMISSIONS
       </div>
-      <header
-        className={`header ${visible ? 'header-visible' : 'header-hidden'} ${
-          scrolled ? 'header-scrolled' : ''
-        }`}
-      >
-        <Link className="wordmark" to="/" aria-label="Gourd Shades Home">
-          <GourdLogo iconSize={52} />
-        </Link>
-        <nav
-          className={menuOpen ? 'navigation is-open' : 'navigation'}
-          aria-label="Main navigation"
-        >
-          <NavLink to="/" end>
-            Home
-          </NavLink>
-          <NavLink to="/products">Lamps Collection</NavLink>
-          <NavLink to="/community">Community</NavLink>
-          <NavLink to="/about">Our Story</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
-        </nav>
-        <div className="header-actions">
-          <button
-            className="bag-button"
-            onClick={openCart}
-            aria-label={`Open inquiry bag with ${count} items`}
-          >
-            <ShoppingBag size={20} strokeWidth={1.6} />
-            <span>Inquiry Bag ({count})</span>
-          </button>
-          <button
-            className="mobile-menu"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </header>
+      <KineticNav cartCount={count} onOpenCart={openCart} />
     </>
   )
 }

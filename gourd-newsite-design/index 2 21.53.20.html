@@ -1,0 +1,816 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourd Shades | Handcrafted Botanical Lighting</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cormorant Garamond & Syne -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amberGlow: '#FF9E44',
+                        warmGold: '#E5A95A',
+                        sandSoft: '#F6F1EA',
+                        obsidian: '#0B0907',
+                        lampDark: '#14110E',
+                        clay: '#B86B4B'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --glow-color: rgba(243, 169, 90, 0.45);
+        }
+
+        body {
+            background-color: #0B0907;
+            color: #F6F1EA;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        /* Custom radial warm backdrop */
+        .ambient-glow {
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                        rgba(229, 169, 90, 0.15) 0%, 
+                        rgba(184, 107, 75, 0.06) 35%, 
+                        rgba(11, 9, 7, 0.98) 70%);
+            transition: background 0.15s ease-out;
+        }
+
+        /* Scramble Text Styles */
+        .scramble-letter {
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+        }
+        .scramble-letter.locked {
+            color: #F6F1EA;
+            text-shadow: 0 0 25px rgba(245, 179, 96, 0.7), 0 0 50px rgba(229, 169, 90, 0.3);
+            animation: pulseSoft 4s infinite alternate ease-in-out;
+        }
+        .scramble-letter.scrambling {
+            color: #E5A95A;
+            opacity: 0.75;
+            filter: blur(0.4px);
+        }
+
+        @keyframes pulseSoft {
+            0% { text-shadow: 0 0 20px rgba(245, 179, 96, 0.6); }
+            100% { text-shadow: 0 0 38px rgba(245, 179, 96, 0.95), 0 0 70px rgba(200, 109, 81, 0.4); }
+        }
+
+        /* Perforated Shadow Mask Simulation */
+        .perforation-layer {
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        /* Luxury Grain Overlay */
+        .grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Torch Light Aura */
+        .cursor-torch {
+            pointer-events: none;
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 170, 75, 0.08) 0%, rgba(255, 170, 75, 0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: 40;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* Image Mask Reveal */
+        .image-card-reveal {
+            clip-path: inset(100% 0 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .image-card-reveal.active {
+            clip-path: inset(0 0 0 0);
+            transform: scale(1);
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-obsidian text-sandSoft font-sans antialiased overflow-hidden min-h-screen">
+
+    <!-- Ambient Cursor Torch Follower -->
+    <div id="cursorTorch" class="cursor-torch hidden md:block"></div>
+
+    <!-- Grain Texture Overlay -->
+    <div class="fixed inset-0 grain pointer-events-none z-50"></div>
+
+    <!-- Canvas for Perforated Gourd Light Projections & Floating Embers -->
+    <canvas id="lightCanvas" class="fixed inset-0 pointer-events-none z-10 opacity-75"></canvas>
+
+    <!-- INTRO LOADING VIEW CONTAINER -->
+    <div id="introContainer" class="fixed inset-0 z-30 flex flex-col justify-between p-6 sm:p-10 md:p-16 ambient-glow transition-all duration-1000">
+        
+        <!-- Top Bar: Brand Meta & Sound Control -->
+        <header class="flex items-center justify-between w-full z-20">
+            <div class="flex items-center space-x-3">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-warmGold animate-ping"></span>
+                <span class="text-xs tracking-[0.3em] uppercase text-warmGold/80 font-medium font-sans">
+                    Artisan Luminary No. 08
+                </span>
+            </div>
+
+            <!-- Audio Toggle & Skip -->
+            <div class="flex items-center space-x-6">
+                <button id="soundToggleBtn" class="group flex items-center space-x-2 text-xs tracking-widest text-sandSoft/60 hover:text-warmGold transition-colors">
+                    <svg id="soundIcon" class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span id="soundLabel" class="uppercase text-[10px] tracking-[0.25em]">Atmosphere Off</span>
+                </button>
+                <button id="skipBtn" class="text-xs uppercase tracking-[0.25em] text-sandSoft/40 hover:text-sandSoft transition-colors py-1 px-3 rounded border border-sandSoft/10 hover:border-warmGold/40">
+                    Skip
+                </button>
+            </div>
+        </header>
+
+        <!-- Center: Interactive Scrambler & Image Flash Gallery -->
+        <main class="flex flex-col items-center justify-center my-auto w-full z-20 text-center relative py-8">
+            
+            <!-- Curated Handcrafted Gourd Lamp Preview Panels (Fade in as countdown advances) -->
+            <div class="relative w-64 h-80 sm:w-72 sm:h-96 md:w-80 md:h-[400px] mb-8 mx-auto flex items-center justify-center">
+                <!-- Background Glow Ring -->
+                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-amberGlow/20 via-warmGold/10 to-transparent blur-3xl scale-125 pointer-events-none"></div>
+                
+                <!-- Slide Images: Real Calabash Gourd Hand-Carved Perforated Lamps -->
+                <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-warmGold/20 bg-lampDark/90 backdrop-blur-sm">
+                    <img id="lampImage0" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 scale-105" 
+                         src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Handcrafted Calabash Gourd Lamp with floral perforations">
+                    <img id="lampImage1" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 scale-105" 
+                         src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Perforated gourd lamp casting intricate night shadows">
+                    <img id="lampImage2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 scale-105" 
+                         src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Warm amber illumination artisan wooden lamp">
+                    
+                    <!-- Lamp Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-black/30 pointer-events-none"></div>
+
+                    <!-- Organic Silhouette Watermark Pattern -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                        <svg class="w-48 h-48 animate-[spin_60s_linear_infinite]" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="46" stroke="#E5A95A" stroke-width="0.8" fill="none" stroke-dasharray="3 3"/>
+                            <circle cx="50" cy="50" r="32" stroke="#E5A95A" stroke-width="0.5" fill="none"/>
+                            <circle cx="50" cy="50" r="18" stroke="#E5A95A" stroke-width="0.5" fill="none" stroke-dasharray="2 4"/>
+                        </svg>
+                    </div>
+
+                    <!-- Dynamic Badge on Image -->
+                    <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center z-10 px-2">
+                        <span id="lampCaption" class="text-[11px] tracking-widest uppercase font-serif text-sandSoft/90">Calabash Sculpture • Series I</span>
+                        <span id="lampCarve" class="text-[9px] font-mono tracking-tighter text-warmGold px-2 py-0.5 rounded border border-warmGold/30 bg-black/40 backdrop-blur-md">1,420 DRILLS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Micro Tagline -->
+            <p class="text-xs sm:text-sm font-sans tracking-[0.4em] uppercase text-warmGold/70 mb-3 transition-opacity duration-500">
+                Light • Earth • Shadow
+            </p>
+
+            <!-- Main Title With Random Letter Scramble -->
+            <h1 class="relative text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light tracking-wide md:tracking-[0.08em] uppercase select-none min-h-[1.2em] flex items-center justify-center">
+                <span id="scrambleDisplay" class="inline-flex flex-wrap justify-center items-center gap-x-2 md:gap-x-4">
+                    <!-- Populated dynamically via JS -->
+                </span>
+            </h1>
+
+            <p class="max-w-md mx-auto text-xs sm:text-sm font-sans font-light text-sandSoft/60 mt-4 leading-relaxed">
+                Carving luminous stories from organic dried gourds. Every hole cast as starlight upon your living sanctuary.
+            </p>
+        </main>
+
+        <!-- Bottom Controls & Smooth Counter / Progress Bar -->
+        <footer class="w-full z-20 flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 border-t border-sandSoft/10">
+            <!-- Progress Counter -->
+            <div class="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-start">
+                <div class="flex items-baseline space-x-1">
+                    <span id="counterNumber" class="text-3xl sm:text-4xl font-serif text-warmGold font-light tracking-wider">00</span>
+                    <span class="text-xs font-mono text-sandSoft/40 tracking-widest">%</span>
+                </div>
+                <div class="text-[10px] tracking-[0.25em] uppercase text-sandSoft/50 font-sans border-l border-sandSoft/15 pl-4">
+                    <span id="loadingStep">Illuminating Filament</span>
+                </div>
+            </div>
+
+            <!-- Custom Modern Progress Line -->
+            <div class="w-full sm:max-w-xs md:max-w-md bg-white/5 h-[2px] relative overflow-hidden rounded-full">
+                <div id="loadingBar" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-clay via-warmGold to-amberGlow w-0 transition-all duration-150 ease-out shadow-[0_0_12px_rgba(229,169,90,0.8)]"></div>
+            </div>
+
+            <!-- Enter Button (Revealed at 100%) -->
+            <div class="flex items-center space-x-4">
+                <button id="enterSiteBtn" class="opacity-0 pointer-events-none translate-y-2 transition-all duration-500 group relative inline-flex items-center gap-3 px-7 py-3 rounded-full bg-gradient-to-r from-warmGold to-clay text-obsidian font-sans text-xs tracking-[0.2em] uppercase font-semibold hover:shadow-[0_0_30px_rgba(229,169,90,0.5)] transform hover:scale-105 active:scale-95">
+                    <span>Explore Collection</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MAIN IMMERSIVE SITE EXPERIENCE (Revealed after intro) -->
+    <div id="mainSite" class="opacity-0 transition-opacity duration-1000 min-h-screen bg-obsidian text-sandSoft relative z-20 hidden">
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 z-40 bg-obsidian/80 backdrop-blur-md border-b border-white/5 px-6 sm:px-12 py-5 flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl tracking-widest uppercase text-sandSoft flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-warmGold shadow-[0_0_8px_#E5A95A]"></span>
+                Gourd Shades
+            </a>
+            <div class="hidden md:flex items-center space-x-10 text-xs tracking-[0.25em] uppercase text-sandSoft/70">
+                <a href="#lamps" class="hover:text-warmGold transition-colors">Creations</a>
+                <a href="#craft" class="hover:text-warmGold transition-colors">The Craft</a>
+                <a href="#shadows" class="hover:text-warmGold transition-colors">Shadow Art</a>
+                <a href="#custom" class="hover:text-warmGold transition-colors">Custom Orders</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="replayIntroBtn" class="text-xs uppercase tracking-widest px-4 py-2 rounded-full border border-warmGold/40 text-warmGold hover:bg-warmGold hover:text-obsidian transition-all">
+                    Replay Intro
+                </button>
+                <button class="bg-warmGold text-obsidian text-xs font-semibold uppercase tracking-widest px-5 py-2.5 rounded-full hover:bg-white transition-colors">
+                    Cart (0)
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="pt-36 pb-20 px-6 sm:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="max-w-xl text-left space-y-6">
+                <div class="inline-flex items-center space-x-3 px-3 py-1 rounded-full bg-warmGold/10 border border-warmGold/20 text-warmGold text-xs tracking-widest uppercase">
+                    <span>Nature’s geometry • Electrified</span>
+                </div>
+                <h2 class="text-5xl sm:text-7xl font-serif font-light leading-tight">
+                    Where darkness meets <span class="italic font-normal text-warmGold">perforated poetry.</span>
+                </h2>
+                <p class="text-sandSoft/70 text-sm sm:text-base font-light leading-relaxed">
+                    Sustainably grown hard-shell gourds, air-cured for six months, hollowed, polished, and pierced with thousands of microscopic perforations to radiate mandala shadow tapestries.
+                </p>
+                <div class="flex flex-wrap items-center gap-4 pt-4">
+                    <a href="#lamps" class="px-8 py-3.5 bg-warmGold text-obsidian rounded-full font-semibold text-xs tracking-widest uppercase hover:bg-white transition-all shadow-lg hover:shadow-warmGold/30">
+                        View 2025 Catalog
+                    </a>
+                    <button id="toggleRoomLightBtn" class="px-6 py-3.5 border border-sandSoft/20 rounded-full font-light text-xs tracking-widest uppercase hover:border-warmGold hover:text-warmGold transition-colors flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amberGlow"></span>
+                        Test Ambience Mode
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hero Feature Lamp Card -->
+            <div class="w-full md:w-1/2 relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-warmGold to-clay rounded-3xl blur-2xl opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                <div class="relative bg-lampDark rounded-2xl overflow-hidden border border-white/10 aspect-square flex items-center justify-center p-8">
+                    <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=1200&auto=format&fit=crop" 
+                         alt="Gourd Shades signature lamp" 
+                         class="w-full h-full object-cover rounded-xl transition duration-700 group-hover:scale-105 filter brightness-95">
+                    <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-obsidian/85 backdrop-blur-md border border-white/10 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-serif text-lg text-sandSoft">The Nebula Calabash</h4>
+                            <p class="text-xs text-warmGold tracking-wider">3,890 Hand-carved apertures</p>
+                        </div>
+                        <span class="font-serif text-xl text-sandSoft">$480</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Interactive Lighting Atmosphere Showcase -->
+        <section id="lamps" class="py-24 border-t border-white/5 bg-gradient-to-b from-transparent to-lampDark/50 px-6 sm:px-12">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <span class="text-xs uppercase tracking-[0.3em] text-warmGold">Handcrafted Portfolio</span>
+                        <h3 class="text-4xl sm:text-5xl font-serif font-light mt-2">Sculptural Luminescence</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="filter-tab active px-5 py-2 rounded-full text-xs tracking-wider uppercase border border-warmGold bg-warmGold text-obsidian">All Pieces</button>
+                        <button class="filter-tab px-5 py-2 rounded-full text-xs tracking-wider uppercase border border-white/10 text-sandSoft/70 hover:border-warmGold">Calabash Table</button>
+                        <button class="filter-tab px-5 py-2 rounded-full text-xs tracking-wider uppercase border border-white/10 text-sandSoft/70 hover:border-warmGold">Pendants</button>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Lamp 1 -->
+                    <div class="group bg-lampDark rounded-2xl overflow-hidden border border-white/5 hover:border-warmGold/40 transition-all duration-500">
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=800&auto=format&fit=crop" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Botanical Gourd Lamp">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent opacity-60"></div>
+                            <span class="absolute top-4 right-4 bg-obsidian/70 backdrop-blur-md text-[10px] tracking-widest text-warmGold px-3 py-1 rounded-full uppercase border border-warmGold/20">Unique 1 of 1</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs text-warmGold/80 tracking-widest uppercase">Organic Series</span>
+                            <h4 class="font-serif text-2xl text-sandSoft mt-1">Solaris Mandala</h4>
+                            <p class="text-xs text-sandSoft/60 mt-2 font-light">Castings include sacred geometry patterns with brass fixtures and braided silk cord.</p>
+                            <div class="mt-6 flex items-center justify-between pt-4 border-t border-white/5">
+                                <span class="text-lg font-serif">$390 USD</span>
+                                <button class="text-xs uppercase tracking-widest text-warmGold hover:text-white transition-colors flex items-center gap-1">Acquire &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lamp 2 -->
+                    <div class="group bg-lampDark rounded-2xl overflow-hidden border border-white/5 hover:border-warmGold/40 transition-all duration-500">
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=800&auto=format&fit=crop" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Eclipse Shadow Lamp">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent opacity-60"></div>
+                            <span class="absolute top-4 right-4 bg-obsidian/70 backdrop-blur-md text-[10px] tracking-widest text-warmGold px-3 py-1 rounded-full uppercase border border-warmGold/20">Masterpiece</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs text-warmGold/80 tracking-widest uppercase">Celestial Series</span>
+                            <h4 class="font-serif text-2xl text-sandSoft mt-1">Eclipse Mirage</h4>
+                            <p class="text-xs text-sandSoft/60 mt-2 font-light">Incorporates natural turquoise stone inlays with micro-pinhole ambient diffusion.</p>
+                            <div class="mt-6 flex items-center justify-between pt-4 border-t border-white/5">
+                                <span class="text-lg font-serif">$560 USD</span>
+                                <button class="text-xs uppercase tracking-widest text-warmGold hover:text-white transition-colors flex items-center gap-1">Acquire &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lamp 3 -->
+                    <div class="group bg-lampDark rounded-2xl overflow-hidden border border-white/5 hover:border-warmGold/40 transition-all duration-500">
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Botanical Gourd Lamp">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent opacity-60"></div>
+                            <span class="absolute top-4 right-4 bg-obsidian/70 backdrop-blur-md text-[10px] tracking-widest text-warmGold px-3 py-1 rounded-full uppercase border border-warmGold/20">Hand-Harvested</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs text-warmGold/80 tracking-widest uppercase">Flora Series</span>
+                            <h4 class="font-serif text-2xl text-sandSoft mt-1">Amazonian Fern</h4>
+                            <p class="text-xs text-sandSoft/60 mt-2 font-light">Organic leafy lace silhouette projections that transform walls into living canopies.</p>
+                            <div class="mt-6 flex items-center justify-between pt-4 border-t border-white/5">
+                                <span class="text-lg font-serif">$420 USD</span>
+                                <button class="text-xs uppercase tracking-widest text-warmGold hover:text-white transition-colors flex items-center gap-1">Acquire &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 px-6 sm:px-12 border-t border-white/5 text-center text-xs text-sandSoft/40">
+            <p class="tracking-widest uppercase">Gourd Shades &copy; 2025. Handcrafted in harmony with the soil.</p>
+        </footer>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /* ============================================================
+           1. CORE SCRAMBLE CONFIGURATION & SOUND GENERATOR
+           ============================================================ */
+        const TARGET_TEXT = "GOURD SHADES";
+        const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*0123456789§✦✧✺✹◈";
+        const scrambleDisplay = document.getElementById('scrambleDisplay');
+        const counterNumber = document.getElementById('counterNumber');
+        const loadingBar = document.getElementById('loadingBar');
+        const loadingStep = document.getElementById('loadingStep');
+        const enterSiteBtn = document.getElementById('enterSiteBtn');
+        const introContainer = document.getElementById('introContainer');
+        const mainSite = document.getElementById('mainSite');
+        const skipBtn = document.getElementById('skipBtn');
+        const replayIntroBtn = document.getElementById('replayIntroBtn');
+
+        // Audio Context for synthetic organic clicks and warm hum
+        let audioCtx = null;
+        let isMuted = true;
+        const soundToggleBtn = document.getElementById('soundToggleBtn');
+        const soundLabel = document.getElementById('soundLabel');
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playWoodClick(pitch = 1) {
+            if (isMuted || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime((180 + Math.random() * 80) * pitch, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.04);
+                
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.045);
+            } catch(e) {}
+        }
+
+        function playHarmonicChime() {
+            if (isMuted || !audioCtx) return;
+            try {
+                const freqs = [220, 277.18, 329.63, 440, 554.37];
+                freqs.forEach((f, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(f, audioCtx.currentTime + (i * 0.05));
+                    
+                    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 0.08 + (i * 0.05));
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + (i * 0.05));
+                    osc.stop(audioCtx.currentTime + 2.0);
+                });
+            } catch(e) {}
+        }
+
+        soundToggleBtn.addEventListener('click', () => {
+            initAudio();
+            isMuted = !isMuted;
+            if (!isMuted) {
+                soundLabel.textContent = "Atmosphere On";
+                soundLabel.classList.add('text-warmGold');
+                playWoodClick(1.5);
+            } else {
+                soundLabel.textContent = "Atmosphere Off";
+                soundLabel.classList.remove('text-warmGold');
+            }
+        });
+
+        /* ============================================================
+           2. TEXT SCRAMBLE ENGINE WITH PRECISE SEQUENTIAL LOCK
+           ============================================================ */
+        const lettersState = [];
+        const words = TARGET_TEXT.split(" ");
+        scrambleDisplay.innerHTML = "";
+
+        // Build DOM structure with word wrapping protection
+        words.forEach((word, wIdx) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = "inline-flex space-x-1 sm:space-x-2";
+            for (let i = 0; i < word.length; i++) {
+                const char = word[i];
+                const span = document.createElement('span');
+                span.className = "scramble-letter scrambling font-serif";
+                span.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                wordSpan.appendChild(span);
+                lettersState.push({
+                    dom: span,
+                    target: char,
+                    locked: false,
+                    charIndex: lettersState.length
+                });
+            }
+            scrambleDisplay.appendChild(wordSpan);
+
+            // Add space between words if not last
+            if (wIdx < words.length - 1) {
+                const space = document.createElement('span');
+                space.className = "w-3 sm:w-6 inline-block";
+                scrambleDisplay.appendChild(space);
+            }
+        });
+
+        /* ============================================================
+           3. PROGRESS COUNTDOWN & IMAGE CURTAIN ORCHESTRATION
+           ============================================================ */
+        let progress = 0;
+        let animationFrameId = null;
+        let isCompleted = false;
+
+        const lampImages = [
+            document.getElementById('lampImage0'),
+            document.getElementById('lampImage1'),
+            document.getElementById('lampImage2')
+        ];
+        const lampCaption = document.getElementById('lampCaption');
+        const lampCarve = document.getElementById('lampCarve');
+
+        const stages = [
+            { threshold: 0, text: "Air-curing botanical calabash", caption: "Calabash Sculpture • Series I", carve: "RAW FORM" },
+            { threshold: 25, text: "Carving mandala perforations", caption: "Perforation Precision • 0.8mm", carve: "1,420 DRILLS" },
+            { threshold: 60, text: "Installing warm brass core", caption: "Tungsten Warmth • 2200K", carve: "BRASS CORE" },
+            { threshold: 85, text: "Harmonizing shadow projection", caption: "Shadow Mandala • Master Edition", carve: "COMPLETED" },
+            { threshold: 100, text: "Sanctuary Ready", caption: "Gourd Shades • Illuminating", carve: "PERFECT" }
+        ];
+
+        function updateStepText(val) {
+            for (let i = stages.length - 1; i >= 0; i--) {
+                if (val >= stages[i].threshold) {
+                    loadingStep.textContent = stages[i].text;
+                    lampCaption.textContent = stages[i].caption;
+                    lampCarve.textContent = stages[i].carve;
+                    break;
+                }
+            }
+        }
+
+        function updateLampImages(val) {
+            if (val < 40) {
+                lampImages[0].style.opacity = "1";
+                lampImages[1].style.opacity = "0";
+                lampImages[2].style.opacity = "0";
+            } else if (val < 75) {
+                lampImages[0].style.opacity = "0";
+                lampImages[1].style.opacity = "1";
+                lampImages[2].style.opacity = "0";
+            } else {
+                lampImages[0].style.opacity = "0";
+                lampImages[1].style.opacity = "0";
+                lampImages[2].style.opacity = "1";
+            }
+        }
+
+        let lastScrambleTick = 0;
+        function runLoader() {
+            if (isCompleted) return;
+
+            // Nonlinear luxurious progress speed
+            let increment = 0.35;
+            if (progress > 30 && progress < 70) increment = 0.45;
+            if (progress > 70 && progress < 92) increment = 0.28;
+            if (progress >= 92) increment = 0.35;
+
+            progress = Math.min(100, progress + increment);
+            
+            // UI updates
+            const intProgress = Math.floor(progress);
+            counterNumber.textContent = intProgress.toString().padStart(2, '0');
+            loadingBar.style.width = `${progress}%`;
+            updateStepText(intProgress);
+            updateLampImages(intProgress);
+
+            // Scramble resolution calculation: Map 0-100% to lock each letter
+            const totalLetters = lettersState.length;
+            const lettersToLockCount = Math.floor((progress / 100) * (totalLetters + 1));
+
+            // Scramble active characters
+            const now = performance.now();
+            if (now - lastScrambleTick > 45) {
+                lastScrambleTick = now;
+                lettersState.forEach((item, idx) => {
+                    if (idx < lettersToLockCount) {
+                        if (!item.locked) {
+                            item.locked = true;
+                            item.dom.textContent = item.target;
+                            item.dom.classList.remove('scrambling');
+                            item.dom.classList.add('locked');
+                            item.dom.style.transform = "scale(1.15)";
+                            setTimeout(() => { item.dom.style.transform = "scale(1)"; }, 180);
+                            playWoodClick(1 + (idx * 0.08));
+                        }
+                    } else {
+                        // Keep scrambling unfinished characters
+                        item.dom.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    }
+                });
+            }
+
+            if (progress < 100) {
+                animationFrameId = requestAnimationFrame(runLoader);
+            } else {
+                completeIntro();
+            }
+        }
+
+        function completeIntro() {
+            isCompleted = true;
+            // Force all letters locked
+            lettersState.forEach(item => {
+                item.locked = true;
+                item.dom.textContent = item.target;
+                item.dom.classList.remove('scrambling');
+                item.dom.classList.add('locked');
+            });
+            counterNumber.textContent = "100";
+            loadingBar.style.width = "100%";
+            loadingStep.textContent = "Sanctuary Illumination Complete";
+            playHarmonicChime();
+
+            // Reveal button
+            enterSiteBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+            enterSiteBtn.classList.add('opacity-100', 'translate-y-0');
+
+            // Optional auto-enter after short breath if user doesn't click
+            setTimeout(() => {
+                if (introContainer.style.display !== "none") {
+                    enterSite();
+                }
+            }, 3200);
+        }
+
+        function enterSite() {
+            introContainer.style.opacity = '0';
+            introContainer.style.transform = 'scale(1.04)';
+            setTimeout(() => {
+                introContainer.style.display = 'none';
+                mainSite.classList.remove('hidden');
+                setTimeout(() => {
+                    mainSite.classList.remove('opacity-0');
+                    document.body.classList.remove('overflow-hidden');
+                }, 50);
+            }, 800);
+        }
+
+        // Event listeners
+        enterSiteBtn.addEventListener('click', enterSite);
+        skipBtn.addEventListener('click', () => {
+            progress = 99.5;
+            runLoader();
+            setTimeout(enterSite, 250);
+        });
+
+        replayIntroBtn.addEventListener('click', () => {
+            mainSite.classList.add('opacity-0');
+            setTimeout(() => {
+                mainSite.classList.add('hidden');
+                document.body.classList.add('overflow-hidden');
+                introContainer.style.display = 'flex';
+                introContainer.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    introContainer.style.opacity = '1';
+                    // Reset variables
+                    progress = 0;
+                    isCompleted = false;
+                    enterSiteBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+                    lettersState.forEach(item => {
+                        item.locked = false;
+                        item.dom.classList.remove('locked');
+                        item.dom.classList.add('scrambling');
+                    });
+                    runLoader();
+                }, 100);
+            }, 500);
+        });
+
+        // Start animation after subtle initial pause
+        setTimeout(runLoader, 400);
+
+        /* ============================================================
+           4. CANVAS PARTICLE & PERFORATED MANDALA LIGHT RAYS
+           ============================================================ */
+        const canvas = document.getElementById('lightCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Torch cursor follower position
+        let mouseX = width / 2;
+        let mouseY = height / 2;
+        const torch = document.getElementById('cursorTorch');
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            document.documentElement.style.setProperty('--mouse-x', `${(mouseX / width) * 100}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${(mouseY / height) * 100}%`);
+            if (torch) {
+                torch.style.left = `${mouseX}px`;
+                torch.style.top = `${mouseY}px`;
+            }
+        });
+
+        // Floating luminous embers and dust motes
+        const particles = Array.from({ length: 45 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: -Math.random() * 0.6 - 0.2,
+            alpha: Math.random() * 0.7 + 0.2,
+            flickerSpeed: Math.random() * 0.03 + 0.01
+        }));
+
+        let rotation = 0;
+
+        function drawPerforatedLight() {
+            ctx.clearRect(0, 0, width, height);
+
+            const centerX = width / 2;
+            const centerY = height * 0.45;
+
+            // Draw slow rotating sacred perforated rays inspired by carved calabash lamp shadows
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            rotation += 0.0012;
+            ctx.rotate(rotation);
+
+            const numRays = 18;
+            for (let i = 0; i < numRays; i++) {
+                const angle = (i * Math.PI * 2) / numRays;
+                const rayLen = Math.max(width, height) * 0.7;
+                
+                const grad = ctx.createRadialGradient(0, 0, 10, 0, 0, rayLen);
+                grad.addColorStop(0, 'rgba(255, 175, 80, 0.08)');
+                grad.addColorStop(0.4, 'rgba(215, 120, 60, 0.025)');
+                grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, rayLen, angle - 0.04, angle + 0.04);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Draw micro pinhole starlight points rotating outward
+            for (let ring = 1; ring <= 4; ring++) {
+                const ringRadius = ring * 120;
+                const dots = ring * 14;
+                for (let j = 0; j < dots; j++) {
+                    const dotAngle = (j * Math.PI * 2) / dots + (ring % 2 === 0 ? rotation * 1.5 : -rotation);
+                    const dx = Math.cos(dotAngle) * ringRadius;
+                    const dy = Math.sin(dotAngle) * ringRadius;
+                    
+                    const dotAlpha = (Math.sin(rotation * 4 + j) + 1.2) * 0.06;
+                    ctx.fillStyle = `rgba(255, 210, 140, ${dotAlpha})`;
+                    ctx.beginPath();
+                    ctx.arc(dx, dy, ring === 4 ? 1.5 : 1, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            ctx.restore();
+
+            // Render floating dust embers
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.alpha += Math.sin(performance.now() * p.flickerSpeed) * 0.01;
+
+                if (p.y < -10) p.y = height + 10;
+                if (p.x < -10) p.x = width + 10;
+                if (p.x > width + 10) p.x = -10;
+
+                const clampedAlpha = Math.max(0.1, Math.min(0.8, p.alpha));
+                ctx.fillStyle = `rgba(245, 175, 95, ${clampedAlpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawPerforatedLight);
+        }
+        drawPerforatedLight();
+
+        /* ============================================================
+           5. AMBIENCE TESTING TOGGLE (IN MAIN SITE)
+           ============================================================ */
+        const toggleRoomLightBtn = document.getElementById('toggleRoomLightBtn');
+        let dimMode = false;
+        if (toggleRoomLightBtn) {
+            toggleRoomLightBtn.addEventListener('click', () => {
+                dimMode = !dimMode;
+                if (dimMode) {
+                    document.body.style.backgroundColor = '#040302';
+                    toggleRoomLightBtn.innerHTML = `<span class="w-2 h-2 rounded-full bg-warmGold animate-ping"></span> Shadow Mode Active`;
+                    toggleRoomLightBtn.classList.add('border-warmGold', 'text-warmGold');
+                } else {
+                    document.body.style.backgroundColor = '#0B0907';
+                    toggleRoomLightBtn.innerHTML = `<span class="w-2 h-2 rounded-full bg-amberGlow"></span> Test Ambience Mode`;
+                    toggleRoomLightBtn.classList.remove('border-warmGold', 'text-warmGold');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
