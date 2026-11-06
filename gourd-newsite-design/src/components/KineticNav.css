@@ -1,467 +1,394 @@
 /* =========================================================
-   GOURD SHADES — STERLING GATE KINETIC NAVIGATION
-   Inspired by kinetic navigation with GSAP
-   Completely detached, floating logo & luxury 3-layer kinetic drawer
+   GOURD SHADES — EDITORIAL BRAND NAVIGATION DRAWER
+   Brand Palette:
+   - Signature Terracotta Red: #dc3331
+   - Rose Blush Pink: #f5cdcc
+   - Warm Alabaster Cream: #fffef6
    ========================================================= */
 
-/* 1. FLOATING UNATTACHED LOGO */
+/* 1. FLOATING UNATTACHED LOGO (PURE WHITE FOR CONTRAST ON RED HERO) */
 .floating-site-logo {
   position: fixed;
   top: clamp(16px, 2.5vh, 26px);
-  left: clamp(16px, 4.5vw, 48px);
-  z-index: 85;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  left: clamp(16px, 3.5vw, 40px);
+  z-index: 9999;
   text-decoration: none;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
-  pointer-events: auto;
-}
-
-.floating-site-logo:hover {
-  transform: translateY(-2px) scale(1.02);
-}
-
-.floating-site-logo .gourd-brand-logo {
   display: inline-flex;
   align-items: center;
-  color: var(--color-earth, #dc3331);
+  pointer-events: auto;
+  user-select: none;
 }
 
-.floating-site-logo .gourd-logo-icon {
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12));
+.floating-site-logo .gourd-brand-logo,
+.floating-site-logo .gourd-logo-icon,
+.floating-site-logo .gourd-logo-icon path,
+.floating-site-logo .gourd-logo-text,
+.floating-site-logo .wordmark-dot {
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              fill 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: color, fill;
 }
 
 .floating-site-logo .gourd-logo-text {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-weight: 400;
   letter-spacing: -0.06em;
   font-size: clamp(22px, 2.4vw, 30px);
   line-height: 0.85;
-  color: #252622;
 }
 
-.floating-site-logo .wordmark-dot {
-  color: var(--color-earth, #dc3331);
+/* =========================================================
+   1. WHITE / LIGHT BACKGROUND SECTION (Screenshot 1)
+   - SVG Icon: RED (#dc3331)
+   - Text "Shades": BLACK (#252622)
+   - Dot: RED (#dc3331)
+   ========================================================= */
+.floating-site-logo.theme-white .gourd-logo-icon,
+.floating-site-logo.theme-white .gourd-logo-icon path,
+.floating-site-logo.on-light .gourd-logo-icon,
+.floating-site-logo.on-light .gourd-logo-icon path {
+  color: var(--color-earth, #dc3331) !important;
+  fill: var(--color-earth, #dc3331) !important;
+  filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.2)) !important;
 }
 
-/* 2. TOP RIGHT KINETIC CONTROLS */
+.floating-site-logo.theme-white .gourd-logo-text,
+.floating-site-logo.on-light .gourd-logo-text {
+  color: #252622 !important;
+  text-shadow: none !important;
+}
+
+.floating-site-logo.theme-white .wordmark-dot,
+.floating-site-logo.on-light .wordmark-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* =========================================================
+   2. RED / TERRACOTTA SECTION (Matches Footer Logo)
+   - SVG Icon, Text "Shades", and Dot: var(--color-pink, #f5cdcc)
+   ========================================================= */
+.floating-site-logo.theme-red .gourd-logo-icon,
+.floating-site-logo.theme-red .gourd-logo-icon path {
+  color: var(--color-pink, #f5cdcc) !important;
+  fill: var(--color-pink, #f5cdcc) !important;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2)) !important;
+}
+
+.floating-site-logo.theme-red .gourd-logo-text {
+  color: var(--color-pink, #f5cdcc) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.floating-site-logo.theme-red .wordmark-dot {
+  color: var(--color-pink, #f5cdcc) !important;
+}
+
+/* =========================================================
+   3. DARK / BLACK HERO & SECTIONS (Screenshot & Fix for Dark Image)
+   "change the texts colour on the dark background too"
+   - SVG Icon: RED (#dc3331)
+   - Text "Shades": LUMINOUS PURE WHITE (#ffffff)
+   - Dot: RED (#dc3331)
+   ========================================================= */
+.floating-site-logo.theme-dark .gourd-logo-icon,
+.floating-site-logo.theme-dark .gourd-logo-icon path,
+.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-icon,
+.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-icon path {
+  color: var(--color-earth, #dc3331) !important;
+  fill: var(--color-earth, #dc3331) !important;
+  filter: drop-shadow(0 2px 10px rgba(220, 51, 49, 0.45)) !important;
+}
+
+.floating-site-logo.theme-dark .gourd-logo-text,
+.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-text {
+  color: #ffffff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
+}
+
+.floating-site-logo.theme-dark .wordmark-dot,
+.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .wordmark-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* 2. TOP RIGHT CONTROLS (INQUIRY BAG + MENU BUTTON) */
 .site-header-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 80;
+  top: clamp(16px, 2.5vh, 26px);
+  right: clamp(16px, 3.5vw, 40px);
+  z-index: 9999;
   pointer-events: none;
 }
 
-.nav-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: clamp(14px, 2.2vh, 24px) clamp(16px, 4.5vw, 48px);
-  width: 100%;
-}
-
-.nav-row__right {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(10px, 1.5vw, 16px);
+.site-header-wrapper * {
   pointer-events: auto;
 }
 
-/* Cart / Inquiry Bag in header */
+.nav-row__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Inquiry Bag Pill */
 .header-bag-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 254, 246, 0.85);
+  background: rgba(255, 254, 246, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(37, 38, 34, 0.12);
+  border: 1.5px solid rgba(220, 51, 49, 0.15);
   color: #252622;
   font-family: var(--font-small, 'DM Sans', sans-serif);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.header-bag-pill svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-bag-pill:hover {
-  background: #252622;
+  background: var(--color-apricot, #dc3331);
   color: #fffef6;
-  border-color: #252622;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--color-apricot, #dc3331);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot, #dc3331) 35%, transparent);
 }
 
-/* Click Indicator Pill */
-.nav-toggle-label {
+.header-bag-pill:hover svg {
+  transform: scale(1.1);
+}
+
+/* Menu Toggle Pill (Matching Page Buttons Hover Micro-interactions) */
+.nav-toggle-btn {
   display: inline-flex;
   align-items: center;
-  background: transparent;
-  border: 1px dashed rgba(220, 51, 49, 0.45);
-  color: var(--color-earth, #dc3331);
-  font-family: 'JetBrains Mono', 'DM Sans', monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  padding: 7px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  user-select: none;
-}
-
-.nav-toggle-label:hover {
-  border-color: var(--color-earth, #dc3331);
-  background: rgba(220, 51, 49, 0.06);
-  transform: translateY(-1px);
-}
-
-.nav-toggle-label .toggle-text {
-  font-weight: 600;
-}
-
-/* Main Kinetic Menu / Close Button */
-.nav-close-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  gap: 10px;
   background: #252622;
   color: #fffef6;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   padding: 8px 18px 8px 20px;
   border-radius: 999px;
   cursor: pointer;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
 
-.nav-close-btn:hover {
-  background: #dc3331;
-  border-color: #dc3331;
+.nav-toggle-btn svg {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-toggle-btn:hover {
+  background: var(--color-apricot, #dc3331);
+  color: #fffef6;
+  border-color: var(--color-apricot, #dc3331);
   transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(220, 51, 49, 0.35);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot, #dc3331) 35%, transparent);
 }
 
-/* Text Container with 2 stacked sliding <p> labels */
-.menu-button-text {
-  position: relative;
-  height: 18px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+.nav-toggle-btn:hover .nav-toggle-icon svg {
+  transform: rotate(90deg);
 }
 
-.menu-button-text .p-large {
+/* When Drawer is Open (High-contrast Alabaster Pill over Red Drawer) */
+.nav-toggle-btn.is-open {
+  background: #fffef6;
+  color: #dc3331;
+  border-color: #fffef6;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.nav-toggle-btn.is-open .nav-toggle-icon svg {
+  transform: rotate(45deg);
+}
+
+.nav-toggle-btn.is-open:hover {
+  background: var(--color-pink, #f5cdcc);
+  color: var(--color-apricot, #dc3331);
+  border-color: var(--color-pink, #f5cdcc);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.nav-toggle-btn.is-open:hover .nav-toggle-icon svg {
+  transform: rotate(135deg);
+}
+
+.nav-toggle-text {
   font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  line-height: 18px;
-  margin: 0;
-  display: block;
-  white-space: nowrap;
+  line-height: 1;
 }
 
-/* Rotating 4-Pointed Kinetic Icon */
-.icon-wrap {
-  width: 14px;
-  height: 14px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
+.nav-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
 }
 
-.menu-button-icon {
-  width: 100%;
-  height: 100%;
-  color: currentColor;
-  transform-origin: center;
-}
-
-/* =========================================================
-   3. FULLSCREEN KINETIC DRAWER OVERLAY
-   ========================================================= */
-.fullscreen-menu-container {
+/* 3. LUXURY EDITORIAL DRAWER */
+.nav-drawer-portal {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.nav-overlay-wrapper {
-  position: fixed;
-  inset: 0;
-  display: none;
+  z-index: 9998;
   pointer-events: auto;
 }
 
-/* Backdrop Dimming */
-.overlay {
+.nav-drawer-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(11, 9, 7, 0.65);
+  background: rgba(18, 8, 8, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
-  z-index: 1;
 }
 
-/* Sliding Drawer Panel */
-.menu-content {
+/* Terracotta Red Drawer Panel */
+.nav-drawer-panel {
   position: absolute;
-  right: 0;
   top: 0;
+  right: 0;
   bottom: 0;
-  width: min(100vw, 560px);
+  width: min(100vw, 540px);
   height: 100%;
-  z-index: 2;
-  overflow: hidden;
+  height: 100dvh;
+  background: #dc3331; /* Vibrant Terracotta Red */
+  box-shadow: -16px 0 50px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: -16px 0 60px rgba(0, 0, 0, 0.45);
-}
-
-/* Layered Kinetic Backdrops (3-Tier Color Sweep) */
-.menu-bg {
-  position: absolute;
-  inset: 0;
   overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.backdrop-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: #14110e; /* Deep artisan obsidian */
-}
-
-/* 1st Layer: Signature Terracotta Red */
-.backdrop-layer.first {
-  background: #dc3331;
   z-index: 1;
 }
 
-/* 2nd Layer: Warm Amber Gold */
-.backdrop-layer.second {
-  background: #e5a95a;
-  z-index: 2;
-}
-
-/* Final Layer: Main Luxury Dark Surface */
-.backdrop-layer:not(.first):not(.second) {
-  background: #14110e;
-  z-index: 3;
-}
-
-/* Subtle Film Grain inside drawer */
-.backdrop-layer:not(.first):not(.second)::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-/* Ambient Background Shapes Container */
-.ambient-background-shapes {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.bg-shape {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.bg-shape.active {
-  opacity: 1;
-}
-
-.shape-element {
-  transform-origin: center;
-  will-change: transform, opacity;
-}
-
-/* Menu Content Layout */
-.menu-content-wrapper {
+/* Content Container with natural top-to-bottom layout */
+.nav-drawer-content {
   position: relative;
-  z-index: 10;
-  padding: clamp(70px, 10vh, 100px) clamp(28px, 6vw, 64px) clamp(30px, 5vh, 48px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   height: 100%;
+  max-height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
-  user-select: none;
-}
-
-/* Menu Top Label */
-.menu-drawer-top {
+  box-sizing: border-box;
+  padding: clamp(90px, 14vh, 130px) clamp(28px, 6vw, 64px) clamp(40px, 6vh, 60px);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: clamp(24px, 4vh, 40px);
+  flex-direction: column;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.menu-drawer-eyebrow {
-  font-family: 'JetBrains Mono', 'DM Sans', monospace;
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(229, 169, 90, 0.7);
+.nav-drawer-content::-webkit-scrollbar {
+  display: none;
 }
 
 /* Menu Links List */
-.menu-list {
+.nav-links-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 2.4vh, 24px);
+  gap: clamp(14px, 2.5vh, 26px);
+  width: 100%;
 }
 
-.menu-list-item {
-  overflow: hidden;
-  padding: 4px 0;
+.nav-item {
+  display: block;
+  padding: 0;
+  margin: 0;
 }
 
-.nav-link {
+.nav-item-link {
   display: inline-flex;
   flex-direction: column;
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  transform-origin: left bottom;
+  padding: 4px 0 8px 0;
+  width: fit-content;
+  max-width: 100%;
 }
 
-.nav-link-text {
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  font-size: clamp(34px, 5vw, 54px);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: 0.02em;
-  color: #fffef6;
-  margin: 0;
-  transition: color 0.28s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+/* Line Mask with deep descender clearance (Prevents clipping of y, p, g) */
+.nav-item-mask {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.16em;
+  padding-bottom: 0.36em;
+  padding-left: 0.05em;
+  padding-right: 0.35em;
+  margin-top: -0.16em;
+  margin-bottom: -0.36em;
+}
+
+/* Animated text element */
+.nav-item-text {
   display: inline-block;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(28px, 4.2vw, 48px);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: 0.015em;
+  color: #fffef6; /* Warm Alabaster Cream */
+  margin: 0;
+  white-space: nowrap; /* Ensures "Community & Craft" is always on ONE line */
+  transform-origin: left bottom;
+  will-change: transform, opacity;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-link-sub {
-  font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(229, 169, 90, 0.65);
-  margin-top: 4px;
-  transition: color 0.28s ease;
+.nav-item-link:hover .nav-item-text {
+  color: #f5cdcc; /* Rose Blush Pink */
+  transform: translateX(10px);
 }
 
-.nav-link:hover .nav-link-text {
-  color: #e5a95a;
-  transform: translateX(8px);
-}
-
-.nav-link:hover .nav-link-sub {
-  color: #fffef6;
-}
-
-/* Hover Accent Line */
-.nav-link-hover-bg {
+/* Underline Accent on Hover */
+.nav-item-line {
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 0;
   width: 0%;
-  height: 1.5px;
-  background: linear-gradient(90deg, #dc3331, #e5a95a);
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 2px;
+  background: linear-gradient(90deg, #fffef6, #f5cdcc);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-link:hover .nav-link-hover-bg {
+.nav-item-link:hover .nav-item-line {
   width: 100%;
 }
 
-/* Menu Footer / Studio Metadata */
-.menu-drawer-footer {
-  margin-top: clamp(30px, 6vh, 60px);
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.menu-drawer-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 11px;
-  color: rgba(255, 254, 246, 0.55);
-}
-
-.menu-drawer-meta b {
-  color: #e5a95a;
-  font-weight: 500;
-}
-
-.menu-drawer-links {
-  display: flex;
-  gap: 20px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.menu-drawer-links a {
-  color: rgba(255, 254, 246, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.menu-drawer-links a:hover {
-  color: #e5a95a;
-}
-
-/* Mobile Responsiveness */
+/* Responsive Styles */
 @media (max-width: 640px) {
-  .nav-toggle-label {
-    display: none;
-  }
-  .menu-content {
+  .nav-drawer-panel {
     width: 100vw;
   }
   .floating-site-logo .gourd-logo-text {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-drawer-content {
+    padding: 80px 24px 32px;
+  }
+  .nav-links-list {
+    gap: 16px;
+  }
+  .nav-item-text {
+    font-size: clamp(24px, 6.5vw, 32px);
   }
 }

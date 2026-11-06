@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { RotateCcw } from 'lucide-react'
 import './SiteIntro.css'
 
 const TARGET_WORDS = ['GOURD', 'SHADES']
@@ -23,7 +22,6 @@ const STAGES = [
 export function SiteIntro() {
   const [isActive, setIsActive] = useState<boolean>(true)
   const [isFading, setIsFading] = useState<boolean>(false)
-  const [showReplay, setShowReplay] = useState<boolean>(false)
 
   // Progress 0 - 100
   const [progress, setProgress] = useState<number>(0)
@@ -120,7 +118,6 @@ export function SiteIntro() {
 
     setTimeout(() => {
       setIsActive(false)
-      setShowReplay(true)
     }, 850)
   }, [])
 
@@ -211,113 +208,93 @@ export function SiteIntro() {
     }
   }, [startLoader])
 
-  // Replay handler
-  const handleReplay = () => {
-    startLoader()
-  }
-
   return (
-    <>
-      {/* INTRO CONTAINER */}
-      <div
-        id="intro-container"
-        className={!isActive || isFading ? 'hidden' : ''}
-        aria-label="Loading Gourd Shades Experience"
-      >
-        {/* Background Image & Ambient Atmosphere */}
-        <div className="intro-bg-image" />
-        <div className="intro-bg-scrim" />
-        <div className="intro-ambient-glow" />
-        <div className="intro-grain" />
-        <canvas ref={canvasRef} className="intro-canvas" />
+    <div
+      id="intro-container"
+      className={!isActive || isFading ? 'hidden' : ''}
+      aria-label="Loading Gourd Shades Experience"
+    >
+      {/* Background Image & Ambient Atmosphere */}
+      <div className="intro-bg-image" />
+      <div className="intro-bg-scrim" />
+      <div className="intro-ambient-glow" />
+      <div className="intro-grain" />
+      <canvas ref={canvasRef} className="intro-canvas" />
 
-        {/* Central Stage: Only Image Card, Words Animation, and Loading Bar */}
-        <div className="intro-stage">
-          {/* 1. THE IMAGE CARD (Single Image, No Text Overlay) */}
-          <div className="intro-image-card-wrap">
-            <div className="intro-image-card-glow" />
-            <div className="intro-image-card">
-              <img
-                src="/images/Cinematic%20nature-inspired%20community%20spotlight.jpeg"
-                alt="Cinematic nature-inspired community spotlight"
-                className="intro-card-image"
-                loading="eager"
-              />
+      {/* Central Stage: Only Image Card, Words Animation, and Loading Bar */}
+      <div className="intro-stage">
+        {/* 1. THE IMAGE CARD (Single Image, No Text Overlay) */}
+        <div className="intro-image-card-wrap">
+          <div className="intro-image-card-glow" />
+          <div className="intro-image-card">
+            <img
+              src="/images/Cinematic%20nature-inspired%20community%20spotlight.jpeg"
+              alt="Cinematic nature-inspired community spotlight"
+              className="intro-card-image"
+              loading="eager"
+            />
 
-              {/* Organic Mandala Silhouette Watermark */}
-              <div className="intro-card-watermark">
-                <svg viewBox="0 0 100 100" fill="currentColor">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="46"
-                    stroke="#E5A95A"
-                    strokeWidth="0.8"
-                    fill="none"
-                    strokeDasharray="3 3"
-                  />
-                  <circle cx="50" cy="50" r="32" stroke="#E5A95A" strokeWidth="0.5" fill="none" />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="18"
-                    stroke="#E5A95A"
-                    strokeWidth="0.5"
-                    fill="none"
-                    strokeDasharray="2 4"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* 2. THE LOADING WORDS ANIMATION */}
-          <h1 className="intro-brand-title" aria-label="Gourd Shades">
-            {TARGET_WORDS.map((word, wIdx) => {
-              const wordLetters = letters.filter(l => l.wordIndex === wIdx)
-              return (
-                <span key={wIdx} className="intro-word-group">
-                  {wordLetters.map((l, lIdx) => (
-                    <span
-                      key={lIdx}
-                      className={`intro-scramble-letter ${l.locked ? 'locked' : 'scrambling'}`}
-                    >
-                      {l.current}
-                    </span>
-                  ))}
-                </span>
-              )
-            })}
-          </h1>
-
-          <div className="intro-step-text">{stepText}</div>
-
-          {/* 3. THE LOADING BAR */}
-          <div className="intro-bar-section">
-            <div className="intro-counter-display">
-              <span>{progress.toString().padStart(2, '0')}</span>
-              <small>%</small>
-            </div>
-
-            <div className="intro-bar-track">
-              <div className="intro-bar-fill" style={{ width: `${progress}%` }} />
+            {/* Organic Mandala Silhouette Watermark */}
+            <div className="intro-card-watermark">
+              <svg viewBox="0 0 100 100" fill="currentColor">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="46"
+                  stroke="#E5A95A"
+                  strokeWidth="0.8"
+                  fill="none"
+                  strokeDasharray="3 3"
+                />
+                <circle cx="50" cy="50" r="32" stroke="#E5A95A" strokeWidth="0.5" fill="none" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="18"
+                  stroke="#E5A95A"
+                  strokeWidth="0.5"
+                  fill="none"
+                  strokeDasharray="2 4"
+                />
+              </svg>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Floating Replay Intro Pill (When browsing main site) */}
-      {showReplay && !isActive && (
-        <button
-          className="intro-replay-pill"
-          onClick={handleReplay}
-          title="Replay intro animation"
-          aria-label="Replay intro"
-        >
-          <RotateCcw size={13} /> Replay intro
-        </button>
-      )}
-    </>
+        {/* 2. THE LOADING WORDS ANIMATION */}
+        <h1 className="intro-brand-title" aria-label="Gourd Shades">
+          {TARGET_WORDS.map((word, wIdx) => {
+            const wordLetters = letters.filter(l => l.wordIndex === wIdx)
+            return (
+              <span key={wIdx} className="intro-word-group">
+                {wordLetters.map((l, lIdx) => (
+                  <span
+                    key={lIdx}
+                    className={`intro-scramble-letter ${l.locked ? 'locked' : 'scrambling'}`}
+                  >
+                    {l.current}
+                  </span>
+                ))}
+              </span>
+            )
+          })}
+        </h1>
+
+        <div className="intro-step-text">{stepText}</div>
+
+        {/* 3. THE LOADING BAR */}
+        <div className="intro-bar-section">
+          <div className="intro-counter-display">
+            <span>{progress.toString().padStart(2, '0')}</span>
+            <small>%</small>
+          </div>
+
+          <div className="intro-bar-track">
+            <div className="intro-bar-fill" style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

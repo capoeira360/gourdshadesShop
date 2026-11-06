@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag } from 'lucide-react'
-import gsap from 'gsap'
-import { CustomEase } from 'gsap/CustomEase'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ShoppingBag, Plus } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { GourdLogo } from './GourdLogo'
 import './KineticNav.css'
-
-// Register GSAP Plugins safely
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(CustomEase)
-}
 
 interface KineticNavProps {
   cartCount?: number
@@ -19,409 +13,344 @@ interface KineticNavProps {
 interface MenuItem {
   name: string
   href: string
-  shape: string
-  subtitle: string
 }
 
 const MENU_ITEMS: MenuItem[] = [
-  { name: 'Home', href: '/', shape: '1', subtitle: 'Artisanal Calabash Lighting' },
-  { name: 'Lamps Collection', href: '/products', shape: '2', subtitle: 'Handcrafted Organic Sculptures' },
-  { name: 'Our Story', href: '/about', shape: '3', subtitle: 'Rooted in Arusha, Tanzania' },
-  { name: 'Community & Craft', href: '/community', shape: '4', subtitle: 'Preserving Ancient Botanicals' },
-  { name: 'Contact Us', href: '/contact', shape: '5', subtitle: 'Custom Orders & Inquiries' },
+  { name: 'Home', href: '/' },
+  { name: 'Lamps Collection', href: '/products' },
+  { name: 'Our Story', href: '/about' },
+  { name: 'Community & Craft', href: '/community' },
+  { name: 'Contact Us', href: '/contact' },
 ]
 
+/** Consistent luxury editorial transition curve */
+const LUXURY_EASE = [0.16, 0.65, 0.3, 1] as const
+
 export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+  const pendingNavRef = useRef<string | null>(null)
 
-  // Close menu automatically on route change
+  // Prevent background scrolling while drawer is active
   useEffect(() => {
-    setIsMenuOpen(false)
-  }, [location.pathname])
-
-  // Initial Setup & Hover Effects
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    // Create custom easing
-    try {
-      if (!gsap.parseEase('main')) {
-        CustomEase.create('main', '0.65, 0.01, 0.05, 0.99')
-        gsap.defaults({ ease: 'main', duration: 0.7 })
-      }
-    } catch {
-      gsap.defaults({ ease: 'power2.out', duration: 0.7 })
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
     }
-
-    const ctx = gsap.context(() => {
-      // Shape Hover logic
-      const menuItems = containerRef.current!.querySelectorAll('.menu-list-item[data-shape]')
-      const shapesContainer = containerRef.current!.querySelector('.ambient-background-shapes')
-
-      menuItems.forEach(item => {
-        const shapeIndex = item.getAttribute('data-shape')
-        const shape = shapesContainer ? shapesContainer.querySelector(`.bg-shape-${shapeIndex}`) : null
-
-        if (!shape) return
-
-        const shapeEls = shape.querySelectorAll('.shape-element')
-
-        const onEnter = () => {
-          if (shapesContainer) {
-            shapesContainer.querySelectorAll('.bg-shape').forEach(s => s.classList.remove('active'))
-          }
-          shape.classList.add('active')
-
-          gsap.fromTo(
-            shapeEls,
-            { scale: 0.5, opacity: 0, rotation: -10 },
-            {
-              scale: 1,
-              opacity: 1,
-              rotation: 0,
-              duration: 0.6,
-              stagger: 0.08,
-              ease: 'back.out(1.7)',
-              overwrite: 'auto',
-            }
-          )
-        }
-
-        const onLeave = () => {
-          gsap.to(shapeEls, {
-            scale: 0.8,
-            opacity: 0,
-            duration: 0.3,
-            ease: 'power2.in',
-            onComplete: () => shape.classList.remove('active'),
-            overwrite: 'auto',
-          })
-        }
-
-        item.addEventListener('mouseenter', onEnter)
-        item.addEventListener('mouseleave', onLeave)
-
-        // Store cleanup on node
-        ;(item as HTMLElement & { _cleanup?: () => void })._cleanup = () => {
-          item.removeEventListener('mouseenter', onEnter)
-          item.removeEventListener('mouseleave', onLeave)
-        }
-      })
-    }, containerRef)
-
     return () => {
-      ctx.revert()
-      if (containerRef.current) {
-        const items = containerRef.current.querySelectorAll('.menu-list-item[data-shape]')
-        items.forEach((item: Element) => {
-          const el = item as HTMLElement & { _cleanup?: () => void }
-          if (el._cleanup) el._cleanup()
-        })
-      }
+      document.body.style.overflow = ''
     }
-  }, [])
-
-  // Menu Open/Close Animation Effect
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const ctx = gsap.context(() => {
-      const navWrap = containerRef.current!.querySelector('.nav-overlay-wrapper')
-      const menu = containerRef.current!.querySelector('.menu-content')
-      const overlay = containerRef.current!.querySelector('.overlay')
-      const bgPanels = containerRef.current!.querySelectorAll('.backdrop-layer')
-      const menuLinks = containerRef.current!.querySelectorAll('.nav-link')
-      const fadeTargets = containerRef.current!.querySelectorAll('[data-menu-fade]')
-
-      const menuButton = containerRef.current!.querySelector('.nav-close-btn')
-      const menuButtonTexts = menuButton?.querySelectorAll('p')
-      const menuButtonIcon = menuButton?.querySelector('.menu-button-icon')
-
-      const tl = gsap.timeline()
-
-      if (isMenuOpen) {
-        // Prevent body scroll when menu is active
-        document.body.style.overflow = 'hidden'
-
-        if (navWrap) tl.set(navWrap, { display: 'block' })
-        if (menu) tl.set(menu, { xPercent: 0 }, '<')
-        if (menuButtonTexts && menuButtonTexts.length > 0) {
-          tl.fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 }, '<')
-        }
-        if (menuButtonIcon) {
-          tl.fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, '<')
-        }
-        if (overlay) tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, '<')
-        if (bgPanels.length > 0) {
-          tl.fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, '<')
-        }
-        if (menuLinks.length > 0) {
-          tl.fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, '<+=0.35')
-        }
-
-        if (fadeTargets.length > 0) {
-          tl.fromTo(
-            fadeTargets,
-            { autoAlpha: 0, yPercent: 50 },
-            { autoAlpha: 1, yPercent: 0, stagger: 0.04, clearProps: 'all' },
-            '<+=0.2'
-          )
-        }
-      } else {
-        // Restore body scroll
-        document.body.style.overflow = ''
-
-        if (navWrap) navWrap.setAttribute('data-nav', 'closed')
-
-        if (overlay) tl.to(overlay, { autoAlpha: 0 })
-        if (menu) tl.to(menu, { xPercent: 120 }, '<')
-        if (menuButtonTexts && menuButtonTexts.length > 0) {
-          tl.to(menuButtonTexts, { yPercent: 0 }, '<')
-        }
-        if (menuButtonIcon) {
-          tl.to(menuButtonIcon, { rotate: 0 }, '<')
-        }
-        if (navWrap) tl.set(navWrap, { display: 'none' })
-      }
-    }, containerRef)
-
-    return () => ctx.revert()
   }, [isMenuOpen])
 
-  // Escape key handler
+  // Escape key listener to close menu
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
         setIsMenuOpen(false)
       }
     }
-    window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [isMenuOpen])
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const toggleMenu = () => setIsMenuOpen(prev => !prev)
   const closeMenu = () => setIsMenuOpen(false)
 
+  // Graceful sequential navigation: drawer closes smoothly first, then page transitions
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault()
+
+    // If already on the requested page, smoothly close drawer without reloading
+    if (location.pathname === href) {
+      setIsMenuOpen(false)
+      return
+    }
+
+    // Stage destination & trigger smooth close
+    pendingNavRef.current = href
+    setIsMenuOpen(false)
+
+    // Safety fallback ensures navigation triggers even if exit event is missed
+    setTimeout(() => {
+      if (pendingNavRef.current) {
+        const destination = pendingNavRef.current
+        pendingNavRef.current = null
+        navigate(destination)
+      }
+    }, 420)
+  }
+
+  // Triggered automatically as soon as the drawer's exit animation completes
+  const handleExitComplete = () => {
+    if (pendingNavRef.current) {
+      const destination = pendingNavRef.current
+      pendingNavRef.current = null
+      navigate(destination)
+    }
+  }
+
+  const logoLinkRef = useRef<HTMLAnchorElement>(null)
+
+  // Initialize theme based on pathname
+  const getInitialTheme = (pathname: string): 'white' | 'red' | 'dark' => {
+    if (pathname === '/') return 'red' // Home top hero is red
+    if (
+      pathname === '/products' ||
+      pathname === '/contact' ||
+      pathname === '/community' ||
+      pathname === '/services'
+    ) {
+      return 'dark' // Photography hero banners with dark ambiance
+    }
+    return 'white' // Light editorial pages (/privacy, /disclaimer, /about)
+  }
+
+  const [logoTheme, setLogoTheme] = useState<'white' | 'red' | 'dark'>(() =>
+    getInitialTheme(location.pathname)
+  )
+
+  // Dynamically detect section background under the logo during scroll & navigation
+  useEffect(() => {
+    // Immediately set appropriate theme on route change to prevent color flash
+    setLogoTheme(getInitialTheme(location.pathname))
+
+    let rafId: number | null = null
+
+    const updateLogoTheme = () => {
+      const logoEl = logoLinkRef.current
+      if (!logoEl) return
+
+      const rect = logoEl.getBoundingClientRect()
+      const probeX = Math.round(rect.left + rect.width / 2)
+      const probeY = Math.round(rect.top + rect.height / 2)
+
+      const elements = document.elementsFromPoint(probeX, probeY)
+
+      for (const el of elements) {
+        // Skip navigation and fixed overlays
+        if (
+          el.closest('.floating-site-logo') ||
+          el.closest('.site-header-wrapper') ||
+          el.closest('.nav-drawer-portal') ||
+          el.closest('.cookie-banner') ||
+          el.closest('.cookie-modal-overlay') ||
+          el.tagName === 'HTML' ||
+          el.tagName === 'BODY'
+        ) {
+          continue
+        }
+
+        // 1. Explicit data-logo-theme attribute
+        const themedAncestor = el.closest('[data-logo-theme]') as HTMLElement | null
+        if (themedAncestor) {
+          const explicit = themedAncestor.getAttribute('data-logo-theme')
+          if (explicit === 'white' || explicit === 'red' || explicit === 'dark') {
+            setLogoTheme(explicit)
+            return
+          }
+        }
+
+        // 2. Class-based detection (Dark image/photo containers checked first!)
+        if (
+          el.closest(
+            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
+          )
+        ) {
+          setLogoTheme('dark')
+          return
+        }
+        if (el.closest('.intro-band, .hero-copy, .contact-bottom, .bg-red')) {
+          setLogoTheme('red')
+          return
+        }
+        if (
+          el.closest(
+            '.featured-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section'
+          ) ||
+          (el.closest('.page-intro') && !el.closest('.products-hero-bg, .contact-hero-bg, .community-hero-bg'))
+        ) {
+          setLogoTheme('white')
+          return
+        }
+
+        // 3. Computed style luminance & chromatic analysis
+        let current: HTMLElement | null = el as HTMLElement
+        while (current && current !== document.body) {
+          const style = window.getComputedStyle(current)
+          const bg = style.backgroundColor
+          if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
+            const rgbMatch = bg.match(/\d+/g)
+            if (rgbMatch && rgbMatch.length >= 3) {
+              const r = parseInt(rgbMatch[0], 10)
+              const g = parseInt(rgbMatch[1], 10)
+              const b = parseInt(rgbMatch[2], 10)
+              const a = rgbMatch[3] !== undefined ? parseFloat(rgbMatch[3]) : 1
+
+              if (a > 0.4) {
+                // Red tone detection (e.g. #dc3331)
+                if (r > 165 && g < 110 && b < 110) {
+                  setLogoTheme('red')
+                  return
+                }
+                // Dark/Black detection (luminance < 75)
+                const lum = 0.299 * r + 0.587 * g + 0.114 * b
+                if (lum < 75) {
+                  setLogoTheme('dark')
+                  return
+                }
+                // Light/White detection (luminance > 160)
+                if (lum > 160) {
+                  setLogoTheme('white')
+                  return
+                }
+              }
+            }
+          }
+          current = current.parentElement
+        }
+      }
+
+      // Fallback based on scroll position & route
+      if (window.scrollY < 80) {
+        setLogoTheme(getInitialTheme(location.pathname))
+      } else {
+        setLogoTheme('white')
+      }
+    }
+
+    const onScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(updateLogoTheme)
+    }
+
+    updateLogoTheme()
+    const timer1 = setTimeout(updateLogoTheme, 60)
+    const timer2 = setTimeout(updateLogoTheme, 200)
+    const timer3 = setTimeout(updateLogoTheme, 450)
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [location.pathname])
+
   return (
-    <div ref={containerRef}>
-      {/* 1. FLOATING UNATTACHED LOGO (Completely independent of header bar) */}
-      <Link to="/" className="floating-site-logo" aria-label="Gourd Shades Home">
+    <>
+      {/* 1. FLOATING DETACHED LOGO (Adapts to White, Red, and Dark sections) */}
+      <Link
+        ref={logoLinkRef}
+        to="/"
+        className={`floating-site-logo theme-${logoTheme}`}
+        aria-label="Gourd Shades Home"
+      >
         <GourdLogo iconSize={46} showText={true} />
       </Link>
 
-      {/* 2. TOP RIGHT CONTROLS (Cart + Kinetic Menu Button) */}
+      {/* 2. TOP RIGHT CONTROLS (Inquiry Bag + Menu Button) */}
       <div className="site-header-wrapper">
-        <header className="header">
-          <nav className="nav-row">
-            <div className="nav-row__right">
-              {/* Inquiry Bag Button */}
-              {onOpenCart && (
-                <button
-                  className="header-bag-pill"
-                  onClick={onOpenCart}
-                  aria-label={`Open inquiry bag with ${cartCount} items`}
-                >
-                  <ShoppingBag size={15} strokeWidth={1.8} />
-                  <span>Bag ({cartCount})</span>
-                </button>
-              )}
+        <div className="nav-row__right">
+          {onOpenCart && (
+            <button
+              type="button"
+              className="header-bag-pill"
+              onClick={onOpenCart}
+              aria-label={`Open inquiry bag with ${cartCount} items`}
+            >
+              <ShoppingBag size={15} strokeWidth={1.8} />
+              <span>Bag ({cartCount})</span>
+            </button>
+          )}
 
-              {/* Kinetic Click Indicator */}
-              <div
-                className="nav-toggle-label"
-                onClick={toggleMenu}
-                style={{ cursor: 'pointer', pointerEvents: 'auto' }}
-              >
-                <span className="toggle-text">explore</span>
-              </div>
-
-              {/* Restored Kinetic Menu Button */}
-              <button
-                type="button"
-                className="nav-close-btn"
-                onClick={toggleMenu}
-                style={{ pointerEvents: 'auto' }}
-                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              >
-                <div className="menu-button-text">
-                  <p className="p-large">Menu</p>
-                  <p className="p-large">Close</p>
-                </div>
-                <div className="icon-wrap">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="100%"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    className="menu-button-icon"
-                  >
-                    <path
-                      d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </nav>
-        </header>
+          <button
+            type="button"
+            className={`nav-toggle-btn ${isMenuOpen ? 'is-open' : ''}`}
+            onClick={toggleMenu}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
+          >
+            <span className="nav-toggle-text">{isMenuOpen ? 'Close' : 'Menu'}</span>
+            <span className={`nav-toggle-icon ${isMenuOpen ? 'is-open' : ''}`}>
+              <Plus size={16} strokeWidth={2.2} />
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* 3. FULLSCREEN KINETIC DRAWER */}
-      <section className="fullscreen-menu-container">
-        <div data-nav="closed" className="nav-overlay-wrapper">
-          <div className="overlay" onClick={closeMenu} />
-          <nav className="menu-content" aria-label="Kinetic Navigation Menu">
-            {/* 3-Tier Layered Kinetic Backdrops */}
-            <div className="menu-bg">
-              <div className="backdrop-layer first" />
-              <div className="backdrop-layer second" />
-              <div className="backdrop-layer" />
+      {/* 3. LUXURY EDITORIAL DRAWER (Framer Motion with subtle closing prior to route change) */}
+      <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+        {isMenuOpen && (
+          <div className="nav-drawer-portal">
+            {/* Translucent Backdrop */}
+            <motion.div
+              className="nav-drawer-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
 
-              {/* Abstract shapes container (Calabash & Light Themed) */}
-              <div className="ambient-background-shapes">
-                {/* Shape 1: Floating Celestial Calabashes */}
-                <svg className="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="90" cy="110" r="46" fill="rgba(220,51,49,0.2)" />
-                  <circle className="shape-element" cx="310" cy="90" r="68" fill="rgba(229,169,90,0.18)" />
-                  <circle className="shape-element" cx="210" cy="290" r="88" fill="rgba(245,158,68,0.15)" />
-                  <circle className="shape-element" cx="350" cy="270" r="32" fill="rgba(220,51,49,0.18)" />
-                </svg>
-
-                {/* Shape 2: Flowing Light Wave Ripple */}
-                <svg className="bg-shape bg-shape-2" viewBox="0 0 400 400" fill="none">
-                  <path
-                    className="shape-element"
-                    d="M0 200 Q100 100, 200 200 T 400 200"
-                    stroke="rgba(229,169,90,0.25)"
-                    strokeWidth="50"
-                    fill="none"
-                  />
-                  <path
-                    className="shape-element"
-                    d="M0 280 Q100 180, 200 280 T 400 280"
-                    stroke="rgba(220,51,49,0.2)"
-                    strokeWidth="35"
-                    fill="none"
-                  />
-                </svg>
-
-                {/* Shape 3: Intricate Perforation Starlight Grid (Handmade Holes) */}
-                <svg className="bg-shape bg-shape-3" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="60" cy="60" r="7" fill="rgba(229,169,90,0.4)" />
-                  <circle className="shape-element" cx="160" cy="60" r="9" fill="rgba(220,51,49,0.35)" />
-                  <circle className="shape-element" cx="260" cy="60" r="7" fill="rgba(255,254,246,0.3)" />
-                  <circle className="shape-element" cx="340" cy="60" r="8" fill="rgba(229,169,90,0.35)" />
-                  <circle className="shape-element" cx="110" cy="160" r="14" fill="rgba(245,158,68,0.35)" />
-                  <circle className="shape-element" cx="210" cy="160" r="16" fill="rgba(220,51,49,0.35)" />
-                  <circle className="shape-element" cx="310" cy="160" r="12" fill="rgba(229,169,90,0.3)" />
-                  <circle className="shape-element" cx="60" cy="260" r="10" fill="rgba(229,169,90,0.35)" />
-                  <circle className="shape-element" cx="160" cy="260" r="12" fill="rgba(220,51,49,0.3)" />
-                  <circle className="shape-element" cx="260" cy="260" r="14" fill="rgba(255,254,246,0.3)" />
-                  <circle className="shape-element" cx="340" cy="260" r="9" fill="rgba(229,169,90,0.35)" />
-                  <circle className="shape-element" cx="110" cy="340" r="8" fill="rgba(245,158,68,0.3)" />
-                  <circle className="shape-element" cx="210" cy="340" r="10" fill="rgba(220,51,49,0.3)" />
-                  <circle className="shape-element" cx="310" cy="340" r="8" fill="rgba(229,169,90,0.3)" />
-                </svg>
-
-                {/* Shape 4: Organic Botanical Calabash Contours */}
-                <svg className="bg-shape bg-shape-4" viewBox="0 0 400 400" fill="none">
-                  <path
-                    className="shape-element"
-                    d="M100 100 Q150 50, 200 100 Q250 150, 200 200 Q150 250, 100 200 Q50 150, 100 100"
-                    fill="rgba(229,169,90,0.16)"
-                  />
-                  <path
-                    className="shape-element"
-                    d="M240 190 Q300 140, 360 190 Q400 240, 350 290 Q300 340, 250 290 Q200 240, 240 190"
-                    fill="rgba(220,51,49,0.14)"
-                  />
-                </svg>
-
-                {/* Shape 5: Radiating Filament Rays */}
-                <svg className="bg-shape bg-shape-5" viewBox="0 0 400 400" fill="none">
-                  <line className="shape-element" x1="0" y1="100" x2="300" y2="400" stroke="rgba(229,169,90,0.2)" strokeWidth="28" />
-                  <line className="shape-element" x1="100" y1="0" x2="400" y2="300" stroke="rgba(220,51,49,0.18)" strokeWidth="22" />
-                  <line className="shape-element" x1="200" y1="0" x2="400" y2="200" stroke="rgba(255,254,246,0.12)" strokeWidth="18" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Menu Inner Content */}
-            <div className="menu-content-wrapper">
-              <div className="menu-drawer-top" data-menu-fade>
-                <span className="menu-drawer-eyebrow">Artisanal Directory • 2025</span>
-              </div>
-
-              <ul className="menu-list">
-                {MENU_ITEMS.map((item, idx) => (
-                  <li key={item.href} className="menu-list-item" data-shape={item.shape}>
-                    <Link
-                      to={item.href}
-                      className="nav-link w-inline-block"
-                      onClick={closeMenu}
-                    >
-                      <span className="nav-link-text">{item.name}</span>
-                      <span className="nav-link-sub">{item.subtitle}</span>
-                      <div className="nav-link-hover-bg" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Drawer Studio Footer Metadata */}
-              <div className="menu-drawer-footer" data-menu-fade>
-                <div className="menu-drawer-meta">
-                  <div>
-                    <span>Handmade in <b>Arusha, Tanzania</b></span>
-                    <br />
-                    <span>Air-cured natural dried calabashes</span>
-                  </div>
-                  <div className="menu-drawer-links">
-                    <a
-                      href="https://www.instagram.com/gourdshadestz?igsh=MTZteGx1OXR5Zno1NQ=="
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Instagram
-                    </a>
-                    <a
-                      href="https://wa.me/255746754878"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      WhatsApp
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </section>
-    </div>
+            {/* Signature Terracotta Red Drawer */}
+            <motion.aside
+              className="nav-drawer-panel"
+              initial={{ x: '100%' }}
+              animate={{ x: '0%' }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.38, ease: LUXURY_EASE }}
+              aria-label="Site Navigation"
+            >
+              <nav className="nav-drawer-content">
+                <ul className="nav-links-list">
+                  {MENU_ITEMS.map((item, idx) => (
+                    <li key={item.href} className="nav-item">
+                      <Link
+                        to={item.href}
+                        className="nav-item-link"
+                        onClick={(e) => handleNavClick(e, item.href)}
+                      >
+                        <span className="nav-item-mask">
+                          <motion.span
+                            className="nav-item-text"
+                            initial={{ y: '115%', opacity: 0 }}
+                            animate={{ y: '0%', opacity: 1 }}
+                            exit={{ y: '100%', opacity: 0 }}
+                            transition={{
+                              y: {
+                                duration: isMenuOpen ? 0.65 : 0.25,
+                                delay: isMenuOpen ? 0.12 + idx * 0.05 : (4 - idx) * 0.02,
+                                ease: isMenuOpen ? LUXURY_EASE : 'easeIn',
+                              },
+                              opacity: {
+                                duration: isMenuOpen ? 0.5 : 0.22,
+                                delay: isMenuOpen ? 0.12 + idx * 0.05 : (4 - idx) * 0.02,
+                                ease: 'easeOut',
+                              },
+                            }}
+                          >
+                            {item.name}
+                          </motion.span>
+                        </span>
+                        <span className="nav-item-line" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 

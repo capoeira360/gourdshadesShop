@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react'
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -18,6 +18,7 @@ import {
   Minus,
   Phone,
   Plus,
+  RefreshCw,
   Search,
   ShoppingBag,
   X,
@@ -36,6 +37,8 @@ import {
 } from './components/ScrollReveal'
 import { GourdLogo } from './components/GourdLogo'
 import { KineticNav } from './components/KineticNav'
+import { PrivacyPolicy, Disclaimer } from './components/LegalPages'
+import { CookieConsent } from './components/CookieConsent'
 import './storefront.css'
 
 const STUDIO_EMAIL = 'gourdshadestz@gmail.com'
@@ -72,6 +75,10 @@ function ProductCard({
   const cardRef = useRef<HTMLElement>(null)
   const [scrollState, setScrollState] = useState<'in-view' | 'below' | 'above'>('below')
   const primaryImage = product.images?.[0] || '/images/hero-editorial.png'
+  const secondaryImage =
+    product.images && product.images.length > 1
+      ? product.images[1]
+      : null
 
   useEffect(() => {
     const el = cardRef.current
@@ -120,8 +127,18 @@ function ProductCard({
           <img
             src={primaryImage}
             alt={`${product.name} handmade calabash lamp`}
+            className="product-card-img product-card-img-primary"
             loading="lazy"
           />
+          {secondaryImage && secondaryImage !== primaryImage && (
+            <img
+              src={secondaryImage}
+              alt={`${product.name} alternate view`}
+              className="product-card-img product-card-img-secondary"
+              loading="lazy"
+              aria-hidden="true"
+            />
+          )}
           <span className="round-arrow">
             <ArrowUpRight size={21} strokeWidth={1.5} />
           </span>
@@ -144,15 +161,7 @@ function ProductCard({
 }
 
 function Header({ count, openCart }: { count: number; openCart: () => void }) {
-  return (
-    <>
-      <div className="announcement">
-        HANDCRAFTED IN ARUSHA, TANZANIA <span>✳</span> NATURAL CALABASH & GOURD ARTISAN LIGHTING{' '}
-        <span>✳</span> WORLDWIDE INQUIRIES & CUSTOM COMMISSIONS
-      </div>
-      <KineticNav cartCount={count} onOpenCart={openCart} />
-    </>
-  )
+  return <KineticNav cartCount={count} onOpenCart={openCart} />
 }
 
 function Footer() {
@@ -160,7 +169,6 @@ function Footer() {
     <footer className="footer">
       <div className="footer-top">
         <div>
-          <ScrollEyebrowReveal withLine>ARTISANAL CALABASH LIGHTING • ARUSHA, TANZANIA</ScrollEyebrowReveal>
           <MaskedHeading
             as="h2"
             lines={[
@@ -221,6 +229,15 @@ function Footer() {
           <Link to="/community">Community & Outreach</Link>
           <Link to="/about">Our Story</Link>
           <Link to="/contact">Studio & Contact</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/disclaimer">Disclaimer</Link>
+          <button
+            type="button"
+            className="footer-cookie-trigger"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))}
+          >
+            Cookie Preferences
+          </button>
           <a href={`mailto:${STUDIO_EMAIL}`}>gourdshadestz@gmail.com</a>
           <a href={`tel:${STUDIO_PHONE}`}>{STUDIO_PHONE}</a>
           <span>{STUDIO_LOCATION}</span>
@@ -256,17 +273,7 @@ function Home() {
   return (
     <main>
       <section className="hero">
-        <div className="hero-copy">
-          <div className="hero-copy-top">
-            <span className="eyebrow">
-              <span className="asterisk">✳</span> ARTISANAL CALABASH LIGHTING
-            </span>
-            <span className="hero-edition">
-              INDEPENDENT STUDIO
-              <br />
-              ARUSHA, TANZANIA
-            </span>
-          </div>
+        <div className="hero-copy" data-logo-theme="red">
           <div className="hero-title-wrap">
             <MaskedHeading
               as="h1"
@@ -291,7 +298,6 @@ function Home() {
             </Link>
           </div>
           <div className="hero-bottom">
-            <span>01 / 26 &nbsp;—&nbsp; THE HANDMADE COLLECTION</span>
             <a href="#featured" aria-label="Scroll to featured collection">
               <ArrowDown size={20} strokeWidth={1.5} />
             </a>
@@ -311,15 +317,10 @@ function Home() {
             playsInline
             aria-hidden="true"
           />
-          <div className="hero-image-label">
-            <span>AURA GOURD LAMP</span>
-            <span>HANDMADE IN TANZANIA</span>
-          </div>
         </div>
       </section>
 
-      <section className="intro-band">
-        <ScrollEyebrowReveal withLine>FORM FOLLOWS FEELING</ScrollEyebrowReveal>
+      <section className="intro-band" data-logo-theme="red">
         <MaskedHeading
           as="p"
           lines={[
@@ -331,10 +332,9 @@ function Home() {
         <ScrollSpinStar className="intro-symbol" />
       </section>
 
-      <section id="featured" className="section featured-section">
+      <section id="featured" className="section featured-section" data-logo-theme="white">
         <div className="section-heading">
           <div>
-            <ScrollEyebrowReveal withLine>01 / FEATURED CREATIONS</ScrollEyebrowReveal>
             <MaskedHeading
               as="h2"
               lines={[
@@ -365,7 +365,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="story-preview">
+      <section className="story-preview" data-logo-theme="dark">
         <div className="story-image">
           <ParallaxImage
             src="/images/background-replace.jpg"
@@ -376,10 +376,8 @@ function Home() {
             yRange={['-2%', '2%']}
             scale={1.04}
           />
-          <span className="image-caption">INSIDE THE ARUSHA WORKSHOP</span>
         </div>
         <div className="story-copy">
-          <ScrollEyebrowReveal withLine>02 / THE ARTISAN WAY</ScrollEyebrowReveal>
           <MaskedHeading
             as="h2"
             lines={[
@@ -404,7 +402,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="values-strip">
+      <section className="values-strip" data-logo-theme="white">
         <ScrollFadeReveal delay={0.1}>
           <span className="value-num">01</span>
           <strong>Thoughtful by design</strong>
@@ -479,8 +477,7 @@ function ProductsPage() {
 
   return (
     <main className="listing-page">
-      <section className="page-intro products-hero-bg">
-        <ScrollEyebrowReveal withLine>01 / THE COLLECTION</ScrollEyebrowReveal>
+      <section className="page-intro products-hero-bg" data-logo-theme="dark">
         <div className="page-intro-row">
           <MaskedHeading
             as="h1"
@@ -501,7 +498,7 @@ function ProductsPage() {
         </div>
       </section>
 
-      <section className="catalog section">
+      <section className="catalog section" data-logo-theme="white">
         <div className="catalog-search-wrap">
           <input
             type="text"
@@ -575,8 +572,13 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
 
   const galleryImages = product.images && product.images.length > 0 ? product.images : ['/images/hero-editorial.png']
   const activeImage = galleryImages[activeImageIndex] || galleryImages[0]
-  const related = products.filter(p => p.id !== id && p.category === product.category).slice(0, 2)
-  const fallbackRelated = related.length >= 2 ? related : products.filter(p => p.id !== id).slice(0, 2)
+
+  // Automatically shuffle 3 random products every time a product is tapped/viewed
+  const relatedLamps = useMemo(() => {
+    const pool = products.filter(p => p.id !== product.id)
+    const shuffled = [...pool].sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, 3)
+  }, [product.id])
 
   // Keyboard navigation & body lock for fullscreen lightbox
   useEffect(() => {
@@ -626,7 +628,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
 
   return (
     <main className="detail-page">
-      <div className="detail-breadcrumb">
+      <div className="detail-breadcrumb" data-logo-theme="white">
         <Link to="/products" className="detail-back-link">
           <ArrowLeft size={16} /> Back to all lamps
         </Link>
@@ -640,6 +642,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           <SlideMaskCard direction="left" delay={0.1}>
             <div
               className="detail-image"
+              data-logo-theme="dark"
               role="button"
               tabIndex={0}
               onClick={() => setIsFullscreen(true)}
@@ -684,10 +687,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           )}
         </div>
 
-        <div className="detail-copy">
-          <ScrollEyebrowReveal withLine>
-            HANDMADE LIGHTING / {formatCategory(product.category).toUpperCase()}
-          </ScrollEyebrowReveal>
+        <div className="detail-copy" data-logo-theme="white">
           <MaskedHeading
             as="h1"
             lines={titleLines}
@@ -784,10 +784,9 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
         </div>
       </div>
 
-      <section className="section related-section">
+      <section className="section related-section" data-logo-theme="white">
         <div className="section-heading">
           <div>
-            <ScrollEyebrowReveal withLine>EXPLORE MORE CREATIONS</ScrollEyebrowReveal>
             <MaskedHeading
               as="h2"
               lines={[
@@ -798,8 +797,9 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
             />
           </div>
         </div>
+
         <div className="product-grid">
-          {fallbackRelated.map((p, i) => (
+          {relatedLamps.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
@@ -917,8 +917,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
 function About() {
   return (
     <main className="about-page">
-      <section className="page-intro about-intro">
-        <ScrollEyebrowReveal withLine>02 / OUR STORY</ScrollEyebrowReveal>
+      <section className="page-intro about-intro" data-logo-theme="white">
         <div className="page-intro-row">
           <MaskedHeading
             as="h1"
@@ -939,7 +938,7 @@ function About() {
         </div>
       </section>
 
-      <section className="about-hero-image">
+      <section className="about-hero-image" data-logo-theme="dark">
         <ParallaxImage
           src="/images/image-wm-about.jpg"
           alt="Portrait of Isaac Munis, founder and artisan of Gourd Shades in Arusha, Tanzania"
@@ -949,15 +948,10 @@ function About() {
           yRange={['-2%', '2%']}
           scale={1.04}
         />
-        <div className="about-image-overlay">
-          <span>ISAAC MUNIS &nbsp;•&nbsp; FOUNDER & MASTER ARTISAN</span>
-          <span>GOURD SHADES / ARUSHA, TANZANIA</span>
-        </div>
       </section>
 
       <section className="about-content">
         <div>
-          <ScrollEyebrowReveal withLine>A NOTE FROM THE ARTISAN</ScrollEyebrowReveal>
           <MaskedHeading
             as="h2"
             lines={[
@@ -1012,7 +1006,6 @@ function About() {
                 />
               </div>
               <figcaption className="about-origin-caption">
-                <span>01 / IN THE FIELD</span>
                 <strong>Organic gourd growing on the farm</strong>
               </figcaption>
             </figure>
@@ -1028,7 +1021,6 @@ function About() {
                 />
               </div>
               <figcaption className="about-origin-caption">
-                <span>02 / THE FIRST LAMP</span>
                 <strong>The friend’s lampshade that started it all</strong>
               </figcaption>
             </figure>
@@ -1036,7 +1028,6 @@ function About() {
         </div>
 
         <div className="about-origin-copy">
-          <ScrollEyebrowReveal withLine>ROOTS &amp; THE FIRST SPARK</ScrollEyebrowReveal>
           <MaskedHeading
             as="h2"
             lines={[
@@ -1047,7 +1038,6 @@ function About() {
           />
           <div className="about-origin-notes">
             <ScrollFadeReveal className="about-origin-note" delay={0.1}>
-              <span className="eyebrow">01 / CULTURAL HERITAGE</span>
               <h3>Reimagining the traditional calabash.</h3>
               <MaskedParagraph
                 delay={0.15}
@@ -1060,7 +1050,6 @@ function About() {
             </ScrollFadeReveal>
 
             <ScrollFadeReveal className="about-origin-note" delay={0.2}>
-              <span className="eyebrow">02 / DISCOVERING GOURD CRAFT</span>
               <h3>The first lampshade for a friend.</h3>
               <MaskedParagraph
                 delay={0.2}
@@ -1151,8 +1140,7 @@ function Community() {
 
   return (
     <main className="community-page">
-      <section className="page-intro community-hero-bg">
-        <ScrollEyebrowReveal withLine>03 / SOCIAL IMPACT & CULTURE</ScrollEyebrowReveal>
+      <section className="page-intro community-hero-bg" data-logo-theme="dark">
         <div className="page-intro-row">
           <MaskedHeading
             as="h1"
@@ -1174,7 +1162,7 @@ function Community() {
       </section>
 
       {/* Chapter 01: Outreach */}
-      <section className="community-section">
+      <section className="community-section" data-logo-theme="white">
         <div className="community-grid">
           <SlideMaskCard direction="left" delay={0.15} className="community-slide-card">
             <div className="community-visual">
@@ -1223,8 +1211,6 @@ function Community() {
           </SlideMaskCard>
 
           <div className="community-copy">
-            <span className="community-tag">COMMUNITY OUTREACH & INCLUSION</span>
-            <ScrollEyebrowReveal withLine>01 / SKILL SHARING & EMPOWERMENT</ScrollEyebrowReveal>
             <MaskedHeading
               as="h2"
               lines={[
@@ -1323,8 +1309,6 @@ function Community() {
           </SlideMaskCard>
 
           <div className="community-copy">
-            <span className="community-tag">CULTURAL SHOWCASE & HERITAGE</span>
-            <ScrollEyebrowReveal withLine>02 / EXHIBITIONS ACROSS TANZANIA</ScrollEyebrowReveal>
             <MaskedHeading
               as="h2"
               lines={[
@@ -1367,7 +1351,7 @@ function Community() {
       </section>
 
       {/* Values Strip */}
-      <section className="values-strip">
+      <section className="values-strip" data-logo-theme="white">
         <ScrollFadeReveal delay={0.1}>
           <span>01</span>
           <strong>Inclusive Mentorship</strong>
@@ -1431,8 +1415,7 @@ function Contact() {
 
   return (
     <main className="contact-page">
-      <section className="page-intro contact-intro contact-hero-bg">
-        <ScrollEyebrowReveal withLine>03 / GET IN TOUCH</ScrollEyebrowReveal>
+      <section className="page-intro contact-intro contact-hero-bg" data-logo-theme="dark">
         <div className="page-intro-row">
           <MaskedHeading
             as="h1"
@@ -1454,7 +1437,7 @@ function Contact() {
       </section>
 
       {/* Redesigned Contact Form Section (Split Editorial Style) */}
-      <section className="contact-editorial-section">
+      <section className="contact-editorial-section" data-logo-theme="white">
         <div className="contact-editorial-container">
           {/* Left Column: Artisan Craft Visual */}
           <div className="contact-editorial-visual-wrap">
@@ -1748,6 +1731,8 @@ function Storefront() {
         <Route path="/services" element={<Community />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
         <Route
           path="*"
           element={
@@ -1768,6 +1753,7 @@ function Storefront() {
         add={add}
         remove={remove}
       />
+      <CookieConsent />
     </BrowserRouter>
   )
 }

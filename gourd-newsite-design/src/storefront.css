@@ -1963,6 +1963,7 @@ main,
 
 /* 1. Announcement & Header Bar (Pill Navigation Leaning to Left like Reference Image) */
 .announcement {
+  display: none !important;
   background: var(--color-apricot);
   color: var(--color-alabaster);
   border-bottom: none !important;
@@ -2271,6 +2272,36 @@ main,
 .hero-copy {
   background: var(--color-apricot);
   color: var(--color-alabaster) !important;
+  padding-top: clamp(80px, 12vh, 130px) !important;
+}
+
+.hero-bottom {
+  display: flex !important;
+  justify-content: flex-end !important;
+  width: 100%;
+}
+
+/* Removal of Editorial Small Notes & Eyebrows */
+.reveal-eyebrow-container,
+.hero-copy-top,
+.hero-edition,
+.hero-image-label,
+.image-caption,
+.about-image-overlay,
+.community-tag {
+  display: none !important;
+}
+
+.intro-band {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 40px !important;
+}
+
+.intro-band p {
+  flex: 1;
+  max-width: 900px;
 }
 
 .hero h1,
@@ -2471,9 +2502,47 @@ main,
 
 .product-card-image {
   background: var(--color-pink);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, opacity;
+}
+
+.product-card-img-primary {
+  display: block;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+}
+
+.product-card-img-secondary {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-card:hover .product-card-img,
+.product-card-image:hover .product-card-img {
+  transform: scale(1.055);
+}
+
+.product-card:hover .product-card-img-secondary,
+.product-card-image:hover .product-card-img-secondary {
+  opacity: 1;
 }
 
 .round-arrow {
+  position: absolute;
+  z-index: 5;
   background: var(--color-alabaster);
   color: var(--color-apricot);
   border: 1px solid var(--border-earth-soft);
@@ -2757,12 +2826,16 @@ strong,
   border-bottom-color: var(--color-alabaster);
 }
 
-/* Detail Breadcrumb "Back to all lamps" Button (Matching reference & brand pills) */
+/* Detail Page & Breadcrumb Clearance (Prevents collision with fixed logo) */
+.detail-page {
+  padding-top: clamp(84px, 11vh, 105px) !important;
+}
+
 .detail-breadcrumb {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 5.2% 16px;
+  padding: 16px 5.2% 20px;
 }
 
 .detail-breadcrumb a,
@@ -3504,3 +3577,265 @@ em,
     border-right: none !important;
   }
 }
+
+/* === RELATED SECTION (YOU MIGHT ALSO LOVE — 3 CARDS AT A TIME) === */
+.related-section {
+  background: var(--color-alabaster);
+  padding: 100px 5.2% 120px;
+}
+
+/* 3-Column Grid matching Featured & Collection */
+.related-section .product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 43px 20px !important;
+  width: 100%;
+}
+
+@media (max-width: 950px) {
+  .related-section .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .related-section .product-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   LEGAL PAGES (PRIVACY POLICY & DISCLAIMER)
+   ========================================================================== */
+.legal-page {
+  background: var(--color-alabaster);
+  min-height: 100vh;
+  padding-top: clamp(84px, 11vh, 105px);
+}
+
+.legal-intro {
+  padding-bottom: clamp(35px, 5vh, 50px);
+}
+
+.legal-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 5.2% 32px;
+  border-bottom: 1px solid var(--border-earth-soft);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.legal-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-earth-soft);
+  background: transparent;
+  color: var(--color-earth);
+  transition: all 0.25s ease;
+}
+
+.legal-tab-btn:hover {
+  border-color: var(--color-earth);
+  transform: translateY(-2px);
+}
+
+.legal-tab-btn.active {
+  background: var(--color-earth);
+  color: var(--color-alabaster) !important;
+  border-color: var(--color-earth);
+  box-shadow: 0 4px 14px rgba(220, 51, 49, 0.22);
+}
+
+.legal-layout {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: clamp(36px, 5vw, 64px);
+  padding: clamp(40px, 6vh, 60px) 5.2% clamp(80px, 10vh, 120px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.legal-sidebar {
+  position: sticky;
+  top: 110px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.legal-toc {
+  background: var(--color-alabaster);
+  border: 1px solid var(--border-earth-soft);
+  padding: 24px;
+}
+
+.legal-toc-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-earth);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.legal-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legal-toc-item a {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #62625b;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+  line-height: 1.45;
+}
+
+.legal-toc-item a:hover {
+  color: var(--color-earth);
+  transform: translateX(4px);
+}
+
+.legal-toc-num {
+  font-family: var(--font-small);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--color-earth);
+  opacity: 0.85;
+}
+
+.legal-sidebar-card {
+  background: var(--color-pink);
+  border: 1px solid var(--border-earth-soft);
+  padding: 24px;
+}
+
+.legal-sidebar-card h4 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  margin: 0 0 10px;
+  color: var(--color-earth);
+}
+
+.legal-sidebar-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+  color: var(--color-earth);
+}
+
+.legal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.legal-section-card {
+  background: var(--color-alabaster);
+  border: 1px solid var(--border-earth-soft);
+  padding: clamp(28px, 4vw, 42px);
+  scroll-margin-top: 110px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.legal-section-card:hover {
+  border-color: var(--color-earth);
+  box-shadow: 0 8px 30px rgba(37, 38, 34, 0.05);
+}
+
+.legal-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.legal-section-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-earth);
+  background: var(--color-pink);
+  padding: 4px 10px;
+  border: 1px solid var(--border-earth-soft);
+}
+
+.legal-section-card h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(21px, 2.3vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-earth);
+  margin: 0;
+}
+
+.legal-section-card p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #494943;
+  margin: 0 0 16px;
+}
+
+.legal-section-card p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-highlight-box {
+  background: var(--color-pink);
+  border-left: 3px solid var(--color-earth);
+  padding: 18px 22px;
+  margin: 20px 0 10px;
+}
+
+.legal-highlight-box p {
+  color: var(--color-earth) !important;
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 600;
+  margin: 0;
+}
+
+.legal-footer-meta {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-earth-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #77766f;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .legal-layout {
+    grid-template-columns: 1fr;
+    padding-top: 30px;
+  }
+  .legal-sidebar {
+    position: static;
+  }
+  .legal-toc {
+    display: none;
+  }
+}
+
