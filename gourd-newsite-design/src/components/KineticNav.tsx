@@ -155,7 +155,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         // 2. Class-based detection (Dark image/photo containers checked first!)
         if (
           el.closest(
-            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
+            '.category-showcase-section, .products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
           )
         ) {
           setLogoTheme('dark')

@@ -39,6 +39,7 @@ import { GourdLogo } from './components/GourdLogo'
 import { KineticNav } from './components/KineticNav'
 import { PrivacyPolicy, Disclaimer } from './components/LegalPages'
 import { CookieConsent } from './components/CookieConsent'
+import { CategoryShowcase } from './components/CategoryShowcase'
 import './storefront.css'
 
 const STUDIO_EMAIL = 'gourdshadestz@gmail.com'
@@ -331,6 +332,9 @@ function Home() {
         />
         <ScrollSpinStar className="intro-symbol" />
       </section>
+
+      {/* Pinned Interactive Category Showcase (6 Main Lighting Forms) */}
+      <CategoryShowcase />
 
       <section id="featured" className="section featured-section" data-logo-theme="white">
         <div className="section-heading">
