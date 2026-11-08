@@ -155,7 +155,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         // 2. Class-based detection (Dark image/photo containers checked first!)
         if (
           el.closest(
-            '.category-showcase-section, .products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
+            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
           )
         ) {
           setLogoTheme('dark')
@@ -167,7 +167,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         }
         if (
           el.closest(
-            '.featured-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section'
+            '.featured-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section, .editorial-categories-section'
           ) ||
           (el.closest('.page-intro') && !el.closest('.products-hero-bg, .contact-hero-bg, .community-hero-bg'))
         ) {

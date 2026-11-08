@@ -1,348 +1,276 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import './CategoryShowcase.css'
 
-export interface CategorySlide {
+export interface EditorialCategory {
   id: string
   title: string
-  titleEm: string
-  tagline: string
-  description: string
   image: string
-  bgColor: string
-  textColor: string
-  accentColor: string
-  specs: string[]
-  craftNote: string
   filterKey: string
+  productId: string
 }
 
-export const categorySlides: CategorySlide[] = [
+const editorialCategories: EditorialCategory[] = [
   {
     id: 'table-lamps',
-    title: 'Table',
-    titleEm: 'Lamps',
-    tagline: '01 / Ambient Desk & Accent Lighting',
-    description:
-      'Artisanal table pieces carved from mature calabash gourds. Ideal for desks, side consoles, and credenzas, projecting delicate geometric shadows and warm kaleidoscopic patterns across adjacent walls.',
-    image: '/images/20240520_161231-featured-1.jpg',
-    bgColor: '#1a1b17', // Obsidian Charcoal
-    textColor: '#ffffff',
-    accentColor: '#dc3331',
-    specs: ['E27 Warm LED', 'Intricate Beadwork', 'Console & Desk Accent'],
-    craftNote: 'Handcrafted in Arusha',
+    title: 'Table Lamps',
+    image: '/images/20240405_131741-a1.jpg',
     filterKey: 'Table lamps',
+    productId: 'african-wild-life-lamps',
   },
   {
     id: 'standing-bed-side',
-    title: 'Standing',
-    titleEm: 'Bed Side',
-    tagline: '02 / Intimate Evening Sanctuary',
-    description:
-      'Crafted to accompany peaceful evenings and nighttime reading. Gentle downward-directed light filtration and amber crystal accents create a calming, glare-free haven beside your bed.',
-    image: '/images/20240105_163859_IMG_1386-g1.jpg',
-    bgColor: '#261a17', // Warm Amber Noir
-    textColor: '#ffffff',
-    accentColor: '#f5cdcc',
-    specs: ['Soft Evening Glow', 'Natural Dried Calabash', 'Bedside Companion'],
-    craftNote: 'Organic Calabash Silhouette',
-    filterKey: 'Bed side',
-  },
-  {
-    id: 'floor-standing',
-    title: 'Floor',
-    titleEm: 'Standing',
-    tagline: '03 / Architectural Living Presence',
-    description:
-      'Statuesque statement pieces carved from large-scale Tanzanian gourds mounted on hand-forged pedestals. Fills spacious living rooms and studio corners with dramatic upward silhouettes and organic warmth.',
-    image: '/images/20240612_135238-featured-2-.jpg',
-    bgColor: '#171c20', // Midnight Indigo Slate
-    textColor: '#ffffff',
-    accentColor: '#dc3331',
-    specs: ['Grand Scale Gourd', 'Custom Iron Stand', 'Corner Living Room'],
-    craftNote: 'Sculptural Statement',
-    filterKey: 'Floor standing',
+    title: 'Standing Bed Side',
+    image: '/images/standing-bedside-1.jpg',
+    filterKey: 'Standing Bed Side',
+    productId: 'standing-bedside-lamp',
   },
   {
     id: 'hanging-lamps',
-    title: 'Hanging',
-    titleEm: 'Lamps',
-    tagline: '04 / Overhead Celestial Halos',
-    description:
-      'Pendant calabash lamps suspended by braided textiles with brass fittings. Perfect for dining areas, kitchen islands, and entryways seeking an eye-level focal point of warm artisan craftsmanship.',
-    image: '/images/20240614_140014-featured-3-.jpg',
-    bgColor: '#241a13', // Warm Raw Ochre
-    textColor: '#ffffff',
-    accentColor: '#e5c99e',
-    specs: ['Braided Cord Pendant', 'Radial Ceiling Glow', 'Dining & Island'],
-    craftNote: 'Suspended Illumination',
-    filterKey: 'Hanging lamps',
+    title: 'Hanging Lamps',
+    image: '/images/hanging-single-1.jpg',
+    filterKey: 'Hanging Lamps',
+    productId: 'hanging-single-pendant-lamp',
   },
   {
     id: 'hanging-three-ways',
-    title: 'Hanging',
-    titleEm: 'Three Ways',
-    tagline: '05 / Triple Pendant Chandelier',
-    description:
-      'A clustered triad of hand-carved calabashes suspended at staggered heights from a single canopy. Creates a layered symphony of light, depth, and organic geometry over larger dining tables and double-height foyers.',
-    image: '/images/IMG-20250301-WA0010-nav-services.jpg',
-    bgColor: '#19221c', // Deep Botanical Forest
-    textColor: '#ffffff',
-    accentColor: '#f5cdcc',
-    specs: ['Tri-Pendant Cluster', 'Staggered Cord Heights', 'Chandelier Presence'],
-    craftNote: 'Triple Gourd Cluster',
-    filterKey: 'Hanging three ways',
+    title: 'Hanging Three Ways',
+    image: '/images/hanging-threeways-1.jpg',
+    filterKey: 'Hanging Three Ways',
+    productId: 'hanging-three-ways-cluster-lamp',
   },
   {
-    id: 'floor-three-ways',
-    title: 'Floor',
-    titleEm: 'Three Ways',
-    tagline: '06 / Multi-Tier Sculptural Tree',
-    description:
-      'An architectural multi-arm floor lamp featuring three distinct calabash vessels branching from a central stand. Illuminates from multiple vantage points for a luxurious, immersive ambient experience.',
-    image: '/images/20240804_155809-featured-4-.jpg',
-    bgColor: '#241820', // Carved Plum Mahogany
-    textColor: '#ffffff',
-    accentColor: '#dc3331',
-    specs: ['Three-Branch Tree', 'Triple Ambient Glow', 'Artisanal Centerpiece'],
-    craftNote: 'Multi-Tier Branching',
-    filterKey: 'Floor three ways',
+    id: 'floor-sculptured-stand',
+    title: 'Floor-Sculptured Stand',
+    image: '/images/floor-sculptured-stand-1.jpg',
+    filterKey: 'Floor-Sculptured Stand',
+    productId: 'floor-sculptured-stand-lamp',
+  },
+  {
+    id: 'floor-flexible-threeways',
+    title: 'Floor-Flexible Threeways',
+    image: '/images/floor-flexible-threeways-1.jpg',
+    filterKey: 'Floor-Flexible Threeways',
+    productId: 'floor-flexible-threeways-lamp',
   },
   {
     id: 'wall-lamps',
-    title: 'Wall',
-    titleEm: 'Lamps',
-    tagline: '07 / Sconce & Radial Accent Play',
-    description:
-      'Wall-mounted sculptural calabash sconces tailored for hallways, staircases, and headboards. Throws mesmerizing radial shadow tapestries that turn plain architectural walls into dynamic works of illuminated art.',
-    image: '/images/IMG-20250529-WA0007-nav-contacts.jpg',
-    bgColor: '#211d17', // Smoked Calabash Bronze
-    textColor: '#ffffff',
-    accentColor: '#e5af64',
-    specs: ['Flush Wall Mount', 'Radial Shadow Art', 'Corridor & Headboard'],
-    craftNote: 'Shadow Tapestry',
-    filterKey: 'Wall lamps',
+    title: 'Wall Lamps',
+    image: '/images/wall-lamp-1.jpg',
+    filterKey: 'Wall Lamps',
+    productId: 'wall-mounted-sculptural-lamp',
   },
 ]
 
+// Duplicate 4 sets of the 7 editorial categories for seamless infinite looping
+const infiniteCategories = [
+  ...editorialCategories.map((cat, idx) => ({ ...cat, loopKey: `set0-${cat.id}-${idx}` })),
+  ...editorialCategories.map((cat, idx) => ({ ...cat, loopKey: `set1-${cat.id}-${idx}` })),
+  ...editorialCategories.map((cat, idx) => ({ ...cat, loopKey: `set2-${cat.id}-${idx}` })),
+  ...editorialCategories.map((cat, idx) => ({ ...cat, loopKey: `set3-${cat.id}-${idx}` })),
+]
+
 export function CategoryShowcase() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const sectionRef = useRef<HTMLElement>(null)
-  const isProgrammaticScrollRef = useRef(false)
+  const trackWrapperRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const isDraggingRef = useRef(false)
+  const lastXRef = useRef(0)
+  const hasMovedRef = useRef(false)
+  const isHoveredRef = useRef(false)
 
-  // Track window scroll through this pinned section
-  useEffect(() => {
-    let ticking = false
-
-    const handleScroll = () => {
-      if (ticking) return
-      ticking = true
-
-      requestAnimationFrame(() => {
-        ticking = false
-        if (isProgrammaticScrollRef.current) return
-        const section = sectionRef.current
-        if (!section) return
-
-        const rect = section.getBoundingClientRect()
-        const sectionHeight = section.offsetHeight
-        const windowHeight = window.innerHeight
-        const totalScrollable = sectionHeight - windowHeight
-
-        if (totalScrollable <= 0) return
-
-        // When the section is in view
-        if (rect.top <= 0 && rect.bottom >= windowHeight) {
-          const scrolled = -rect.top
-          const progress = Math.min(1, Math.max(0, scrolled / totalScrollable))
-          const newIndex = Math.min(
-            categorySlides.length - 1,
-            Math.floor(progress * categorySlides.length)
-          )
-          setActiveIndex(newIndex)
-        } else if (rect.top > 0) {
-          setActiveIndex(0)
-        } else if (rect.bottom < windowHeight) {
-          setActiveIndex(categorySlides.length - 1)
-        }
-      })
+  // Measure single set width dynamically
+  const getSingleSetWidth = () => {
+    const track = trackRef.current
+    if (!track || !track.children || track.children.length < editorialCategories.length * 2) {
+      return 0
     }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const scrollToSlide = (index: number) => {
-    const targetIndex = Math.max(0, Math.min(categorySlides.length - 1, index))
-    setActiveIndex(targetIndex)
-
-    const section = sectionRef.current
-    if (!section) return
-
-    isProgrammaticScrollRef.current = true
-    const sectionTop = window.scrollY + section.getBoundingClientRect().top
-    const totalScrollable = section.offsetHeight - window.innerHeight
-    const stepHeight = totalScrollable / categorySlides.length
-    const targetY = sectionTop + stepHeight * targetIndex + stepHeight * 0.15
-
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth',
-    })
-
-    setTimeout(() => {
-      isProgrammaticScrollRef.current = false
-    }, 650)
+    const firstChild = track.children[0] as HTMLElement
+    const nextSetChild = track.children[editorialCategories.length] as HTMLElement
+    if (!firstChild || !nextSetChild) return 0
+    return nextSetChild.offsetLeft - firstChild.offsetLeft
   }
 
-  // Dynamic styles for smooth background and text transition
-  const dynamicStyles = {
-    backgroundColor: categorySlides[activeIndex].bgColor,
-    color: categorySlides[activeIndex].textColor,
-    transition:
-      'background-color 0.75s cubic-bezier(0.16, 1, 0.3, 1), color 0.75s cubic-bezier(0.16, 1, 0.3, 1)',
+  // Handle infinite scroll boundary wrapping
+  const checkInfiniteBounds = () => {
+    const wrapper = trackWrapperRef.current
+    if (!wrapper) return
+    const setWidth = getSingleSetWidth()
+    if (setWidth <= 0) return
+
+    // User scrolled forward into set 3 -> wrap back by 1 set
+    if (wrapper.scrollLeft >= setWidth * 2.5) {
+      wrapper.scrollLeft -= setWidth
+    }
+    // User scrolled backwards into set 0 -> wrap forward by 1 set
+    else if (wrapper.scrollLeft <= setWidth * 0.5) {
+      wrapper.scrollLeft += setWidth
+    }
+  }
+
+  // Mount effect: initialize scrollLeft in the middle (Set 1.5) and run gentle ambient drift
+  useEffect(() => {
+    const wrapper = trackWrapperRef.current
+    if (!wrapper) return
+
+    let isMounted = true
+
+    const initPosition = () => {
+      if (!isMounted) return
+      const setWidth = getSingleSetWidth()
+      if (setWidth > 0) {
+        wrapper.scrollLeft = setWidth * 1.5
+      } else {
+        setTimeout(initPosition, 60)
+      }
+    }
+
+    const initTimer = setTimeout(initPosition, 80)
+
+    // Gentle editorial auto-glide when idle (pauses on hover or drag)
+    let animationFrameId: number
+    const glide = () => {
+      if (isMounted) {
+        if (!isHoveredRef.current && !isDraggingRef.current && wrapper) {
+          wrapper.scrollLeft += 0.55
+          checkInfiniteBounds()
+        }
+        animationFrameId = requestAnimationFrame(glide)
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(glide)
+
+    return () => {
+      isMounted = false
+      clearTimeout(initTimer)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
+
+  // Native onScroll listener for trackpad, mouse wheel, and touch gestures
+  const handleScroll = () => {
+    checkInfiniteBounds()
+  }
+
+  // Fluid mouse drag-to-scroll support for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDraggingRef.current = true
+    hasMovedRef.current = false
+    lastXRef.current = e.pageX
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return
+    const wrapper = trackWrapperRef.current
+    if (!wrapper) return
+    e.preventDefault()
+    const deltaX = e.pageX - lastXRef.current
+    lastXRef.current = e.pageX
+    if (Math.abs(deltaX) > 1) {
+      hasMovedRef.current = true
+    }
+    wrapper.scrollLeft -= deltaX * 1.35
+    checkInfiniteBounds()
+  }
+
+  const handleMouseUpOrLeave = () => {
+    isDraggingRef.current = false
+  }
+
+  const handleMouseEnter = () => {
+    isHoveredRef.current = true
+  }
+
+  const handleSectionMouseLeave = () => {
+    isDraggingRef.current = false
+    isHoveredRef.current = false
+  }
+
+  const handleTouchStart = () => {
+    isHoveredRef.current = true
+  }
+
+  const handleTouchEnd = () => {
+    isHoveredRef.current = false
+  }
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // If user was actively dragging to pan sideways, cancel navigation
+    if (hasMovedRef.current) {
+      e.preventDefault()
+    }
   }
 
   return (
     <section
-      ref={sectionRef}
-      className="category-showcase-section"
-      data-logo-theme="dark"
-      style={{ height: `${categorySlides.length * 85}vh` }}
-      aria-label="Artisanal Lighting Categories Showcase"
+      className="editorial-categories-section"
+      data-logo-theme="white"
+      aria-label="Handcrafted Calabash Lighting Categories"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleSectionMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
+      {/* Connected Full-Bleed Lookbook Strip (0px Gap, Wider Horizontal Cards) */}
       <div
-        className="category-showcase-sticky"
-        style={dynamicStyles}
+        ref={trackWrapperRef}
+        className="editorial-category-track-wrapper"
+        tabIndex={0}
+        role="region"
+        aria-label="Horizontal scrollable categories showcase"
+        onScroll={handleScroll}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
       >
-        <div className="category-showcase-grid">
-          {/* Left Column: Narrative, Pagination, and Category Details */}
-          <div className="category-text-column">
-            {/* Top Bar: Organized with Eyebrow, Live Counter, and Segmented Progress */}
-            <div className="category-top-bar">
-              <div className="category-eyebrow-row">
-                <span className="category-eyebrow-badge">
-                  <Sparkles size={13} style={{ display: 'inline', verticalAlign: '-1px' }} />
-                  OUR LIGHTING CATEGORIES
-                </span>
-                <span className="category-counter-text">
-                  <strong className="category-counter-current">
-                    {String(activeIndex + 1).padStart(2, '0')}
-                  </strong>
-                  <span className="category-counter-slash">/</span>
-                  <span className="category-counter-total">
-                    {String(categorySlides.length).padStart(2, '0')}
-                  </span>
-                </span>
-              </div>
-
-              <div className="category-pagination-row" role="tablist" aria-label="Category Slides">
-                {categorySlides.map((slide, index) => (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={index === activeIndex}
-                    onClick={() => scrollToSlide(index)}
-                    className={`category-page-bar ${index === activeIndex ? 'is-active' : ''}`}
-                    title={`${slide.title} ${slide.titleEm}`}
-                    aria-label={`Category ${index + 1}: ${slide.title} ${slide.titleEm}`}
+        <div ref={trackRef} className="editorial-category-track">
+          {infiniteCategories.map((category) => (
+            <article key={category.loopKey} className="editorial-category-card">
+              {/* Connected Full Portrait Photographic Frame */}
+              <div className="editorial-image-frame">
+                <Link
+                  to={`/products/${category.productId}`}
+                  className="editorial-image-link"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  onClick={handleCardClick}
+                >
+                  <img
+                    src={category.image}
+                    alt={`${category.title} handcrafted calabash lamp`}
+                    className="editorial-img"
+                    loading="lazy"
+                    draggable={false}
                   />
-                ))}
-              </div>
-            </div>
+                </Link>
 
-            {/* Content Holder: Animated Text Transitions */}
-            <div className="category-content-holder">
-              {categorySlides.map((slide, index) => {
-                const isActive = index === activeIndex
-                return (
-                  <div
-                    key={slide.id}
-                    className={`category-slide-text ${isActive ? 'is-active' : ''}`}
-                    aria-hidden={!isActive}
-                  >
-                    <span className="category-subhead">{slide.tagline}</span>
-                    <h2 className="category-title">
-                      {slide.title} <em>{slide.titleEm}</em>
-                    </h2>
-                    <p className="category-description">{slide.description}</p>
-
-                    <div className="category-specs-chips">
-                      {slide.specs.map((spec, i) => (
-                        <span key={i} className="category-spec-chip">
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* Bottom Actions: View Category + Nav Arrows */}
-            <div className="category-bottom-actions">
-              <Link
-                to={`/products?search=${encodeURIComponent(categorySlides[activeIndex].filterKey)}`}
-                className="category-cta-button"
-              >
-                <span>Browse {categorySlides[activeIndex].title} {categorySlides[activeIndex].titleEm}</span>
-                <ArrowUpRight size={17} strokeWidth={2} />
-              </Link>
-
-              <div className="category-nav-arrows">
-                <button
-                  type="button"
-                  onClick={() => scrollToSlide(activeIndex - 1)}
-                  disabled={activeIndex === 0}
-                  className="category-arrow-btn"
-                  aria-label="Previous category"
+                {/* Quick View Button: direct user to product detail page */}
+                <Link
+                  to={`/products/${category.productId}`}
+                  className="editorial-quick-view-btn"
+                  title={`Quick view ${category.title} details`}
+                  onClick={handleCardClick}
                 >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSlide(activeIndex + 1)}
-                  disabled={activeIndex === categorySlides.length - 1}
-                  className="category-arrow-btn"
-                  aria-label="Next category"
-                >
-                  <ChevronRight size={20} />
-                </button>
+                  <span>Quick View</span>
+                  <ArrowUpRight size={14} strokeWidth={2.2} />
+                </Link>
               </div>
-            </div>
-          </div>
 
-          {/* Right Column: Visual Sliding Card Showcase */}
-          <div className="category-visual-column">
-            <div className="category-visual-frame">
-              <div
-                className="category-visual-slider"
-                style={{ transform: `translateY(-${activeIndex * 100}%)` }}
-              >
-                {categorySlides.map((slide, index) => (
-                  <div key={slide.id} className="category-visual-slide">
-                    <img
-                      src={slide.image}
-                      alt={`${slide.title} ${slide.titleEm} - Handcrafted calabash lighting`}
-                      className="category-visual-img"
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                    />
-                    <div className="category-visual-gradient" />
-                    <div className="category-visual-pill">
-                      <span>{slide.title} {slide.titleEm}</span>
-                      <span>{slide.craftNote}</span>
-                    </div>
-                  </div>
-                ))}
+              {/* Only Category Name Centered (Matching Reference Screenshot) */}
+              <div className="editorial-label-wrap">
+                <Link
+                  to={`/products/${category.productId}`}
+                  className="editorial-title-link"
+                  onClick={handleCardClick}
+                >
+                  <h3 className="editorial-category-title">{category.title}</h3>
+                </Link>
               </div>
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
   )
 }
-

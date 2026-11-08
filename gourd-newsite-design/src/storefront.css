@@ -2294,14 +2294,32 @@ main,
 
 .intro-band {
   display: flex !important;
-  justify-content: space-between !important;
+  justify-content: center !important;
   align-items: center !important;
-  gap: 40px !important;
+  text-align: center !important;
+  padding: clamp(65px, 9vh, 110px) 5.2% !important;
 }
 
-.intro-band p {
-  flex: 1;
-  max-width: 900px;
+.intro-band p,
+.intro-band .intro-band-note,
+.intro-band .masked-heading {
+  margin: 0 auto !important;
+  text-align: center !important;
+  max-width: 950px !important;
+  width: 100% !important;
+}
+
+.intro-band .reveal-line-mask {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+}
+
+.intro-band .reveal-line-inner {
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
 }
 
 .hero h1,

@@ -324,16 +324,16 @@ function Home() {
       <section className="intro-band" data-logo-theme="red">
         <MaskedHeading
           as="p"
+          className="intro-band-note"
           lines={[
             <>Not just something you switch on.</>,
             <>Something you <em>come home to.</em></>,
           ]}
           stagger={0.14}
         />
-        <ScrollSpinStar className="intro-symbol" />
       </section>
 
-      {/* Pinned Interactive Category Showcase (6 Main Lighting Forms) */}
+      {/* Editorial Lookbook Category Strip (Interactive Hover Expansion) */}
       <CategoryShowcase />
 
       <section id="featured" className="section featured-section" data-logo-theme="white">
@@ -452,8 +452,19 @@ function Home() {
 }
 
 function ProductsPage() {
+  const location = useLocation()
   const [filter, setFilter] = useState('All lamps')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(() => {
+    return new URLSearchParams(location.search).get('search') || ''
+  })
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const q = params.get('search')
+    if (q !== null) {
+      setSearchQuery(q)
+    }
+  }, [location.search])
 
   const filtered = useMemo(() => {
     return products.filter(p => {

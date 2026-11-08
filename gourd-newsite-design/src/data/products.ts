@@ -299,11 +299,8 @@ export const products: Product[] = [
     category: 'piece',
     price: '$250 - $350',
     images: [
-      '/images/IMG-20250501-WA0021-p1.jpg',
-      '/images/IMG-20250501-WA0020-p2.jpg',
-      '/images/IMG-20250501-WA0018-p3.jpg',
-      '/images/IMG-20250501-WA0015-p4.jpg',
-      '/images/IMG-20250501-WA0009-p5.jpg'
+      '/images/family-tree-replace-1.jpg',
+      '/images/family-tree-replace-2.jpg'
     ],
     description: 'A stand lamp with three branches each one faces its own directions, featuring light refraction and spectrum effects for abstracts and dynamic illumination.',
     longDescription: 'The Family tree piece is a unique standing lamp that symbolizes the interconnectedness of family relationships. With three branches extending in different directions, each representing different family members or generations, this piece creates a beautiful metaphor for how families grow and spread while remaining connected at their roots. The multi-directional lighting creates dynamic illumination patterns throughout the room.',
@@ -819,6 +816,168 @@ export const products: Product[] = [
       "Contemporary design integration",
       "Multiple size options available",
       "Energy-efficient LED bulbs"
+    ]
+  },
+  {
+    id: 'floor-flexible-threeways-lamp',
+    name: 'Floor-Flexible Threeways',
+    category: 'piece',
+    price: '$280 - $380',
+    images: [
+      '/images/floor-flexible-threeways-1.jpg',
+      '/images/floor-flexible-threeways-2.jpg',
+      '/images/floor-flexible-threeways-3.jpg',
+      '/images/floor-flexible-threeways-4.jpg',
+      '/images/floor-flexible-threeways-5.jpg'
+    ],
+    description: 'Floor-standing three-branch flexible lamp crafted with three directional calabashes, casting dynamic organic glow patterns.',
+    longDescription: 'The Floor-Flexible Threeways design features an articulating multi-branch architectural frame crowned with three handcrafted Tanzanian calabash shades. Each shade features hand-carved perforations and beadwork that cast warm geometric light arcs across walls and ceilings, offering both functional ambiance and sculptural presence.',
+    specifications: [
+      "Dimensions: 160cm-190cm height, 3 x 20-25cm calabash shades",
+      "Materials: Natural calabash, handcrafted steel branch frame, brass fixtures",
+      "Bulb Type: 3 x E27 Standard Base (LED recommended)",
+      "Wattage: 3W-10W per bulb",
+      "Voltage: 110V-240V AC international compatible",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Tri-directional flexible illumination",
+      "Hand-carved organic perforation patterns",
+      "Weighted artisanal base for sturdy floor placement",
+      "Energy-efficient multi-bulb configuration"
+    ]
+  },
+  {
+    id: 'floor-sculptured-stand-lamp',
+    name: 'Floor-Sculptured Stand',
+    category: 'piece',
+    price: '$260 - $360',
+    images: [
+      '/images/floor-sculptured-stand-1.jpg',
+      '/images/floor-sculptured-stand-2.jpg',
+      '/images/floor-sculptured-stand-3.jpg',
+      '/images/floor-sculptured-stand-4.jpg'
+    ],
+    description: 'Sculptural standing lamp integrating organic carved calabash with an artistic standing silhouette.',
+    longDescription: 'The Floor-Sculptured Stand unites natural botanic curves with bespoke artisanal metalwork. Each lamp features an elongated calabash meticulously drilled and hand-beaded, resting upon a hand-bent sculptural stand that serves as an expressive centerpiece for lounges and reading spaces.',
+    specifications: [
+      "Dimensions: 140cm-170cm height / 25-30cm shade diameter",
+      "Materials: Dried gourd (calabash), hand-forged sculptural stand",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (LED recommended)",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Unique sculptural silhouette",
+      "Precision drilled light projection vents",
+      "Artisanal floor balance and weighted base"
+    ]
+  },
+  {
+    id: 'standing-bedside-lamp',
+    name: 'Standing Bed Side',
+    category: 'piece',
+    price: '$120 - $160',
+    images: [
+      '/images/standing-bedside-1.jpg',
+      '/images/standing-bedside-2.jpeg',
+      '/images/standing-bedside-3.jpg',
+      '/images/standing-bedside-4.jpeg',
+      '/images/standing-bedside-5.jpeg'
+    ],
+    description: 'Compact standing bedside lamp creating soft warm ambient light perfect for nightstands and evening reading.',
+    longDescription: 'The Standing Bed Side lamp is tailored for nightstands, credenzas, and ambient bedside lighting. Its focused warm light and intricate dot patterns create a tranquil, glare-free aura ideal for evening unwinding.',
+    specifications: [
+      "Dimensions: 35cm-45cm height / 18-22cm diameter",
+      "Materials: Natural calabash, weighted desktop stand",
+      "Bulb Type: E14 / E27 Base",
+      "Wattage: 3W-7W warm LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Intimate bedside illumination",
+      "Soft soothing light distribution",
+      "Hand-carved organic texture"
+    ]
+  },
+  {
+    id: 'hanging-single-pendant-lamp',
+    name: 'Hanging Lamps',
+    category: 'piece',
+    price: '$140 - $190',
+    images: [
+      '/images/hanging-single-1.jpg',
+      '/images/hanging-single-2.jpg',
+      '/images/hanging-single-3.jpeg'
+    ],
+    description: 'Single hanging pendant calabash lamp suspended on woven cable for dining tables, entryways, and corner nooks.',
+    longDescription: 'The Hanging Single Pendant transforms the raw geometry of the calabash into a suspended luminaire. Suspended by a braided textile cord and brass ceiling rose, it directs downlight while casting ornamental celestial shadows.',
+    specifications: [
+      "Dimensions: 25cm-35cm shade height / 1.5m adjustable braided cord",
+      "Materials: Natural gourd, braided textile cable, brass ceiling canopy",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 4W-10W LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Ceiling pendant suspension",
+      "Adjustable drop height",
+      "Radial shadow projection"
+    ]
+  },
+  {
+    id: 'hanging-three-ways-cluster-lamp',
+    name: 'Hanging Three Ways',
+    category: 'piece',
+    price: '$290 - $390',
+    images: [
+      '/images/hanging-threeways-1.jpg',
+      '/images/hanging-threeways-2.jpg',
+      '/images/hanging-threeways-3.jpeg'
+    ],
+    description: 'Three-drop chandelier cluster of handcrafted calabash pendants suspended at staggered heights.',
+    longDescription: 'The Hanging Three Ways chandelier pairs three distinct hand-carved calabash globes in a cascading cluster. Suspended from a unified ceiling canopy, the trio creates rich depth and multi-tiered ambient lighting over dining tables, kitchen islands, or double-height foyers.',
+    specifications: [
+      "Dimensions: 3 x 20-25cm calabash pendants, staggered heights up to 1.8m",
+      "Materials: Natural calabash, braided cables, multi-port canopy",
+      "Bulb Type: 3 x E27 Base",
+      "Wattage: 3 x 4W-8W LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Three-point cascading pendant cluster",
+      "Multi-tiered celestial light projection",
+      "Statement lighting centerpiece"
+    ]
+  },
+  {
+    id: 'wall-mounted-sculptural-lamp',
+    name: 'Wall Lamps',
+    category: 'piece',
+    price: '$130 - $180',
+    images: [
+      '/images/wall-lamp-1.jpg',
+      '/images/wall-lamp-2.jpg',
+      '/images/wall-maunted-3.jpg'
+    ],
+    description: 'Wall-mounted calabash sconce projecting warm back-wall halos and intricate carved motifs.',
+    longDescription: 'The Wall Lamp sconce hugs architectural walls to provide evocative accent lighting and silhouette shadows. Designed for hallways, bedside sconces, and living rooms, it turns blank surfaces into textured illuminated art.',
+    specifications: [
+      "Dimensions: 25cm-35cm height / 15-20cm wall projection",
+      "Materials: Hand-carved calabash, steel wall mount bracket",
+      "Bulb Type: E27 or E14 Base",
+      "Wattage: 3W-6W warm LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Flush wall sconce mount",
+      "Back-lit halo effect",
+      "Architectural accent lighting"
     ]
   }
 ];
