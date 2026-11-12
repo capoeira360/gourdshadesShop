@@ -979,5 +979,31 @@ export const products: Product[] = [
       "Back-lit halo effect",
       "Architectural accent lighting"
     ]
+  },
+  {
+    id: 'bespoke-custom-design-lamp',
+    name: 'Custom Design',
+    category: 'piece',
+    price: 'Custom Quote',
+    images: [
+      '/images/IMG-20250529-WA0007-nav-contacts.jpg',
+      '/images/20240520_161231-featured-1.jpg',
+      '/images/20241018_094717-reach-1-.jpg'
+    ],
+    description: 'Bespoke commissioned lighting tailored to your interior space, botanical dimensions, and personalized perforation motifs.',
+    longDescription: 'Our Custom Design service invites you into the artisan creation process. Whether you have specific architectural dimensions, custom perforation patterns, commemorative constellation maps, or unique crystal bead palettes in mind, master artisan Frank works closely with you to sculpt a one-of-a-kind Tanzanian calabash luminaire tailored specifically to your home or commercial sanctuary.',
+    specifications: [
+      "Dimensions: Tailored to your space (Table, Floor, Wall, or Suspended)",
+      "Materials: Sustainably harvested Tanzanian calabash, bespoke metalwork / brass hardware",
+      "Bulb Type: E27 / E14 (110V - 240V international compatible)",
+      "Lead Time: 2-4 weeks handcrafted from raw botanical selection to completion",
+      "Warranty: 3 months on all electrical fixtures"
+    ],
+    features: [
+      "One-on-one design consultation with the master artisan",
+      "Custom perforated patterns, symbols, or crystal bead configurations",
+      "Personalized engraved brass plaque or signature detailing",
+      "Worldwide insured express shipping"
+    ]
   }
 ];

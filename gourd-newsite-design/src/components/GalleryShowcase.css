@@ -1,0 +1,182 @@
+/* =========================================================
+   EDITORIAL GALLERY SECTION
+   Connected Edge-to-Edge Images with Infinite Scroll & Sideways Expansion
+   ========================================================= */
+
+.editorial-gallery-section {
+  position: relative;
+  width: 100%;
+  padding: clamp(45px, 6vh, 65px) 0 clamp(55px, 7vh, 80px);
+  background-color: var(--color-alabaster, #fffef6);
+  color: #252622;
+  overflow: hidden;
+  border-top: 1px solid var(--border-earth-soft);
+}
+
+.gallery-header-container {
+  padding: 0 5.2%;
+  margin-bottom: 24px;
+}
+
+/* =========================================================
+   CONNECTED GALLERY TRACK (0px Gap, Infinite Horizontal Scroll)
+   ========================================================= */
+.editorial-gallery-track-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0;
+  margin: 0;
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.editorial-gallery-track-wrapper:active {
+  cursor: grabbing;
+}
+
+.editorial-gallery-track-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.editorial-gallery-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0 !important; /* Connected edge-to-edge flush like categories */
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual Column Card:
+   Wide comfortable horizontal dimensions */
+.editorial-gallery-card {
+  position: relative;
+  flex: 0 0 clamp(290px, 24vw, 410px);
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  transition: flex 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: flex, opacity, filter;
+}
+
+/* Interactive Dimming & Sideways Expansion on Hover */
+.editorial-gallery-track:hover .editorial-gallery-card {
+  opacity: 0.32;
+  filter: brightness(0.68) saturate(0.85);
+}
+
+.editorial-gallery-track .editorial-gallery-card:hover {
+  flex: 0 0 clamp(390px, 33vw, 530px);
+  opacity: 1 !important;
+  filter: brightness(1) saturate(1) !important;
+}
+
+/* Photographic Frame */
+.editorial-gallery-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 58vh, 660px);
+  background: #edeae3;
+  overflow: hidden;
+  border-radius: 0 !important;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.editorial-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0 !important;
+  user-select: none;
+  pointer-events: none;
+  transition: none;
+}
+
+/* Bottom Labels */
+.editorial-gallery-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px 14px 10px;
+  width: 100%;
+  background: transparent;
+}
+
+.editorial-gallery-title {
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-size: clamp(16px, 1.2vw, 20px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #252622;
+  margin: 0;
+  line-height: 1.25;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.editorial-gallery-card:hover .editorial-gallery-title {
+  color: var(--color-earth, #dc3331);
+}
+
+.editorial-gallery-sub {
+  font-family: var(--font-small, sans-serif);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #77766f;
+  margin-top: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .editorial-gallery-card {
+    flex: 0 0 clamp(260px, 34vw, 340px);
+  }
+
+  .editorial-gallery-track .editorial-gallery-card:hover {
+    flex: 0 0 clamp(320px, 44vw, 420px);
+  }
+
+  .editorial-gallery-frame {
+    height: clamp(380px, 52vh, 540px);
+  }
+}
+
+@media (max-width: 768px) {
+  .editorial-gallery-section {
+    padding: 35px 0 50px;
+  }
+
+  .editorial-gallery-card {
+    flex: 0 0 74vw;
+  }
+
+  .editorial-gallery-track .editorial-gallery-card:hover {
+    flex: 0 0 82vw;
+  }
+
+  .editorial-gallery-frame {
+    height: clamp(340px, 48vh, 460px);
+  }
+
+  .editorial-gallery-title {
+    font-size: 15px;
+  }
+}
+

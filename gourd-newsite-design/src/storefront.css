@@ -2273,6 +2273,35 @@ main,
   background: var(--color-apricot);
   color: var(--color-alabaster) !important;
   padding-top: clamp(80px, 12vh, 130px) !important;
+  position: relative !important;
+}
+
+/* Floor-Flexible Threeway Image in Drawn Box Position (Flat, No Shadows, No Hover Effects) */
+.hero-feature-frame {
+  position: absolute !important;
+  right: clamp(28px, 6.2%, 60px) !important;
+  bottom: clamp(65px, 9.5vh, 88px) !important;
+  width: clamp(240px, 22.5vw, 360px) !important;
+  aspect-ratio: 896 / 1280 !important;
+  max-height: clamp(360px, 52vh, 520px) !important;
+  z-index: 4 !important;
+  overflow: hidden !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.hero-feature-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+@media (max-width: 900px) {
+  .hero-feature-frame {
+    display: none !important;
+  }
 }
 
 .hero-bottom {
@@ -3854,6 +3883,156 @@ em,
   }
   .legal-toc {
     display: none;
+  }
+}
+
+/* =========================================================
+   MOST POPULAR & NEW DESIGNS HOMEPAGE SECTIONS
+   ========================================================= */
+
+.popular-section {
+  background: var(--color-alabaster);
+  padding: clamp(40px, 5vh, 60px) 5.2% clamp(24px, 3.5vh, 36px) !important;
+}
+
+.new-designs-section {
+  background: var(--color-alabaster);
+  border-top: 1px solid var(--border-earth-soft);
+  padding: clamp(28px, 4vh, 40px) 5.2% clamp(55px, 7vh, 80px) !important;
+}
+
+/* Simplified Single-Line Collection Heading */
+.collection-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+  width: 100%;
+  gap: 20px;
+}
+
+.collection-header-title {
+  font-family: var(--font-heading, 'Manrope', sans-serif);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--color-earth, #dc3331);
+  margin: 0;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.collection-header-title em {
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.collection-header-link {
+  font-family: var(--font-small, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #252622;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(37, 38, 34, 0.35);
+  transition: color 0.25s ease, border-color 0.25s ease;
+  white-space: nowrap;
+}
+
+.collection-header-link:hover {
+  color: var(--color-earth, #dc3331);
+  border-color: var(--color-earth, #dc3331);
+}
+
+.new-designs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 20px;
+  width: 100%;
+}
+
+.new-designs-grid .product-card-image {
+  aspect-ratio: 1 / 1.15;
+}
+
+/* Editorial Product Card Badge */
+.product-card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 12px;
+  background: rgba(255, 254, 246, 0.95);
+  color: var(--color-earth, #dc3331);
+  font-family: var(--font-small, sans-serif);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid rgba(220, 51, 49, 0.22);
+  z-index: 3;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Responsive 4-Column Layout */
+@media (max-width: 1100px) {
+  .new-designs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .popular-section {
+    padding: 35px 5.2% 20px !important;
+  }
+
+  .new-designs-section {
+    padding: 24px 5.2% 45px !important;
+  }
+
+  .collection-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .new-designs-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* Stagger entrance animations for New Designs */
+@media (prefers-reduced-motion: no-preference) {
+  .new-designs-grid > .product-card[data-scroll-state="below"] > .product-card-inner {
+    translate: 0 45px;
+    opacity: 0;
+  }
+
+  .new-designs-grid > .product-card[data-scroll-state="in-view"] > .product-card-inner {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  .new-designs-grid > .product-card[data-scroll-state="in-view"]:nth-child(2) > .product-card-inner {
+    transition-delay: 0.12s;
+  }
+
+  .new-designs-grid > .product-card[data-scroll-state="in-view"]:nth-child(3) > .product-card-inner {
+    transition-delay: 0.24s;
+  }
+
+  .new-designs-grid > .product-card[data-scroll-state="in-view"]:nth-child(4) > .product-card-inner {
+    transition-delay: 0.36s;
   }
 }
 

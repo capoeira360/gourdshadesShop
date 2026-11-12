@@ -167,7 +167,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         }
         if (
           el.closest(
-            '.featured-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section, .editorial-categories-section'
+            '.featured-section, .new-designs-section, .editorial-gallery-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section, .editorial-categories-section'
           ) ||
           (el.closest('.page-intro') && !el.closest('.products-hero-bg, .contact-hero-bg, .community-hero-bg'))
         ) {

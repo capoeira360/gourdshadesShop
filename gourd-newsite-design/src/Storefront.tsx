@@ -40,6 +40,7 @@ import { KineticNav } from './components/KineticNav'
 import { PrivacyPolicy, Disclaimer } from './components/LegalPages'
 import { CookieConsent } from './components/CookieConsent'
 import { CategoryShowcase } from './components/CategoryShowcase'
+import { GalleryShowcase } from './components/GalleryShowcase'
 import './storefront.css'
 
 const STUDIO_EMAIL = 'gourdshadestz@gmail.com'
@@ -69,9 +70,11 @@ function ScrollToTop() {
 function ProductCard({
   product,
   index = 0,
+  tag,
 }: {
   product: Product
   index?: number
+  tag?: string
 }) {
   const cardRef = useRef<HTMLElement>(null)
   const [scrollState, setScrollState] = useState<'in-view' | 'below' | 'above'>('below')
@@ -125,6 +128,7 @@ function ProductCard({
           className="product-card-image"
           aria-label={`View ${product.name} handcrafted lamp`}
         >
+          {tag && <span className="product-card-badge">{tag}</span>}
           <img
             src={primaryImage}
             alt={`${product.name} handmade calabash lamp`}
@@ -264,11 +268,15 @@ function Home() {
     })
   }, [])
 
-  const featuredLamps = useMemo(() => {
-    const special = products.find(p => p.id === 'aura-new-design-lamp')
+  const popularLamps = useMemo(() => {
     const wildlife = products.find(p => p.id === 'african-wild-life-lamps')
     const woman = products.find(p => p.id === 'african-woman-crystal-prismatic-lamp')
-    return [special, wildlife, woman].filter(Boolean) as Product[]
+    const familyTree = products.find(p => p.id === 'family-tree-stand-lamp')
+    return [wildlife, woman, familyTree].filter(Boolean) as Product[]
+  }, [])
+
+  const newDesignLamps = useMemo(() => {
+    return products.filter(p => p.category === 'new design')
   }, [])
 
   return (
@@ -297,6 +305,17 @@ function Home() {
             <Link to="/products" className="button-dark" style={{ marginTop: '24px' }}>
               Explore the collection <ArrowUpRight size={19} strokeWidth={1.7} />
             </Link>
+          </div>
+          {/* Featured studio image in custom hero frame */}
+          <div className="hero-feature-frame" aria-label="Handcrafted calabash lamp">
+            <img
+              src="/images/hero-og.jpeg"
+              alt="Handcrafted calabash lamp"
+              className="hero-feature-img"
+              width={1920}
+              height={2560}
+              loading="eager"
+            />
           </div>
           <div className="hero-bottom">
             <a href="#featured" aria-label="Scroll to featured collection">
@@ -336,35 +355,36 @@ function Home() {
       {/* Editorial Lookbook Category Strip (Interactive Hover Expansion) */}
       <CategoryShowcase />
 
-      <section id="featured" className="section featured-section" data-logo-theme="white">
-        <div className="section-heading">
-          <div>
-            <MaskedHeading
-              as="h2"
-              lines={[
-                <>Find your</>,
-                <><em>kind of glow.</em></>,
-              ]}
-              stagger={0.12}
-            />
-          </div>
-          <div className="section-heading-side">
-            <MaskedParagraph
-              delay={0.2}
-              stagger={0.12}
-              lines={[
-                "One at a time, sculpted by hand from dried gourds with crystal beads and intricate perforations.",
-                "Meet lighting with a story to tell."
-              ]}
-            />
-            <Link to="/products" className="text-link" style={{ marginTop: '20px' }}>
-              Shop all {products.length} lamps <ArrowUpRight size={18} />
-            </Link>
-          </div>
+      {/* Most Popular Designs */}
+      <section id="featured" className="section featured-section popular-section" data-logo-theme="white">
+        <div className="collection-header-row">
+          <h2 className="collection-header-title">
+            Most Popular <em>Designs.</em>
+          </h2>
+          <Link to="/products" className="collection-header-link">
+            Shop all {products.length} lamps <ArrowUpRight size={15} />
+          </Link>
         </div>
         <div className="product-grid">
-          {featuredLamps.map((product, index) => (
+          {popularLamps.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
+          ))}
+        </div>
+      </section>
+
+      {/* New Designs */}
+      <section id="new-designs" className="section new-designs-section" data-logo-theme="white">
+        <div className="collection-header-row">
+          <h2 className="collection-header-title">
+            New <em>Designs.</em>
+          </h2>
+          <Link to="/products?filter=New+Designs" className="collection-header-link">
+            Explore all new releases <ArrowUpRight size={15} />
+          </Link>
+        </div>
+        <div className="new-designs-grid">
+          {newDesignLamps.map((product, index) => (
+            <ProductCard key={product.id} product={product} index={index} tag="New Design" />
           ))}
         </div>
       </section>
@@ -405,6 +425,9 @@ function Home() {
           <ScrollSpinStar className="story-star" />
         </div>
       </section>
+
+      {/* Craft & Exhibition Gallery Section (Infinite Scrolling Lookbook) */}
+      <GalleryShowcase />
 
       <section className="values-strip" data-logo-theme="white">
         <ScrollFadeReveal delay={0.1}>
@@ -453,7 +476,9 @@ function Home() {
 
 function ProductsPage() {
   const location = useLocation()
-  const [filter, setFilter] = useState('All lamps')
+  const [filter, setFilter] = useState(() => {
+    return new URLSearchParams(location.search).get('filter') || 'All lamps'
+  })
   const [searchQuery, setSearchQuery] = useState(() => {
     return new URLSearchParams(location.search).get('search') || ''
   })
@@ -463,6 +488,10 @@ function ProductsPage() {
     const q = params.get('search')
     if (q !== null) {
       setSearchQuery(q)
+    }
+    const f = params.get('filter')
+    if (f !== null) {
+      setFilter(f)
     }
   }, [location.search])
 

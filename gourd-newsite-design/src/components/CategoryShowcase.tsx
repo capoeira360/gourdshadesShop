@@ -61,6 +61,13 @@ const editorialCategories: EditorialCategory[] = [
     filterKey: 'Wall Lamps',
     productId: 'wall-mounted-sculptural-lamp',
   },
+  {
+    id: 'custom-design',
+    title: 'Custom Design',
+    image: '/images/IMG-20250529-WA0007-nav-contacts.jpg',
+    filterKey: 'Custom Design',
+    productId: 'bespoke-custom-design-lamp',
+  },
 ]
 
 // Duplicate 4 sets of the 7 editorial categories for seamless infinite looping
