@@ -2,6 +2,7 @@ export interface Product {
   id: string;
   name: string;
   category: string;
+  subCategory?: string;
   price: string;
   images: string[];
   description: string;
@@ -15,6 +16,7 @@ export const products: Product[] = [
     id: 'african-wild-life-lamps',
     name: 'Tembo/Twiga savana',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20240405_131741-a1.jpg',
@@ -23,8 +25,8 @@ export const products: Product[] = [
       '/images/20240405_132238-a4.jpg',
       '/images/20240408_112214-a5.jpg'
     ],
-    description: 'Handcrafted lighting featuring herbivores animals in the savanna, artisanal techniques with contemporary design from natural materials.',
-    longDescription: 'The Tembo/Twiga savana piece showcases the majestic beauty of African wildlife through intricate handcrafted gourd artistry. This unique lamp features detailed depictions of elephants (Tembo) and giraffes (Twiga) in their natural savanna habitat, created using traditional calabash crafting techniques passed down through generations. Each piece tells a story of the African wilderness, with carefully carved details that come alive when illuminated, casting beautiful shadow patterns that dance across your walls.',
+    description: 'We hand-carved peaceful elephants and giraffes grazing under an acacia sky. At dusk, the warm bulb casts soft savanna twilight shadows right across your room.',
+    longDescription: 'We hand-carved peaceful elephants and giraffes grazing under an acacia sky. At dusk, the warm bulb casts soft savanna twilight shadows right across your room.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -46,6 +48,7 @@ export const products: Product[] = [
     id: 'sophisticated-abstract-crystal-lighting',
     name: 'Spackle blue/red',
     category: 'piece',
+    subCategory: 'Abstract & Contemporary',
     price: '$120 - $150',
     images: [
       '/images/20240508_141055-b1.jpg',
@@ -54,8 +57,8 @@ export const products: Product[] = [
       '/images/20240508_141359-b4.jpg',
       '/images/20240508_141454-b5.jpg'
     ],
-    description: 'Sophisticated abstract lighting combining Crystal beads elegance with modern patterns and timeless appeal.',
-    longDescription: 'The Spackle blue/red piece represents a perfect fusion of abstract artistry and functional lighting. This sophisticated lamp features an intricate pattern of blue and red crystal beads that create mesmerizing light patterns when illuminated. The abstract design allows for personal interpretation while maintaining universal appeal, making it a perfect conversation piece for any modern interior.',
+    description: 'Tiny perforated constellations paired with hand-threaded blue and red glass beads that catch the light. When lit, it throws dancing specks of jewel color onto your walls.',
+    longDescription: 'Tiny perforated constellations paired with hand-threaded blue and red glass beads that catch the light. When lit, it throws dancing specks of jewel color onto your walls.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -78,6 +81,7 @@ export const products: Product[] = [
     id: 'african-woman-crystal-prismatic-lamp',
     name: 'Natural African woman',
     category: 'piece',
+    subCategory: 'Cultural & Prismatic',
     price: '$150 - $180',
     images: [
       '/images/20240520_160914-c1.jpg',
@@ -86,8 +90,8 @@ export const products: Product[] = [
       '/images/20240520_161309-c4.jpg',
       '/images/20240520_161319-c5.jpg'
     ],
-    description: 'Elegant crystal beads and three sides showing different aspects of African woman featuring prismatic effects and luxurious multi-tier designs for sophisticated spaces.',
-    longDescription: 'The Natural African woman piece celebrates the beauty, strength, and grace of African femininity through three distinct artistic perspectives. Each side of this elegant lamp showcases a different aspect of womanhood, adorned with carefully placed crystal beads that create stunning prismatic effects when lit. This piece serves as both a lighting fixture and a tribute to the diverse beauty of African women.',
+    description: 'Each side celebrates the quiet grace and poise of an African woman. Warm beads and delicate carved contours fill the space with a calm, deeply comforting glow.',
+    longDescription: 'Each side celebrates the quiet grace and poise of an African woman. Warm beads and delicate carved contours fill the space with a calm, deeply comforting glow.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -110,6 +114,7 @@ export const products: Product[] = [
     id: 'trees-for-life-lamp',
     name: 'Trees for life',
     category: 'piece',
+    subCategory: 'Botanical & Trees',
     price: '$100 - $150',
     images: [
       '/images/20240607_162317-d1.jpg',
@@ -118,8 +123,8 @@ export const products: Product[] = [
       '/images/20240607_162656-d4.jpg',
       '/images/20240607_162743-d5.jpg'
     ],
-    description: 'Three different trees on different sides, together with blue/purple crystal beads. very unique pattern design.',
-    longDescription: 'The Trees for life piece represents the interconnectedness of nature and the vital role trees play in our ecosystem. This unique lamp features three different tree species on different sides, each complemented by blue and purple crystal beads that represent the life-giving elements of water and sky. The design celebrates biodiversity and environmental consciousness while providing beautiful ambient lighting.',
+    description: 'Three interlocking tree silhouettes wrap around the gourd with deep purple crystal accents. It feels like bringing a quiet, moonlit forest corner into your living room.',
+    longDescription: 'Three interlocking tree silhouettes wrap around the gourd with deep purple crystal accents. It feels like bringing a quiet, moonlit forest corner into your living room.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -142,6 +147,7 @@ export const products: Product[] = [
     id: 'twiga-mugshot-giraffe-lamp',
     name: 'Twiga mugshot',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20240612_135043-e1.jpg',
@@ -150,8 +156,8 @@ export const products: Product[] = [
       '/images/20240612_135313-e4-.jpg',
       '/images/20240612_140355-e5.jpg'
     ],
-    description: 'A giraffe shown on three different perspectives. Minimalist to Art Deco inspired lighting with clean and architectural presence for contemporary spaces.',
-    longDescription: 'The Twiga mugshot piece captures the elegant beauty of the giraffe from three distinct perspectives, showcasing the grace and majesty of this iconic African animal. The minimalist approach to the design, inspired by Art Deco aesthetics, creates clean lines and architectural presence that fits perfectly in contemporary spaces while honoring traditional African wildlife artistry.',
+    description: 'A close-up portrait of the savanna\'s tallest wanderer, captured from three viewpoints. The clean light paths project tall, elegant arcs that add warmth to any quiet corner.',
+    longDescription: 'A close-up portrait of the savanna\'s tallest wanderer, captured from three viewpoints. The clean light paths project tall, elegant arcs that add warmth to any quiet corner.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -173,6 +179,7 @@ export const products: Product[] = [
     id: 'savanna-sunset-ecosystem-lamp',
     name: 'The wild sunset',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20240614_140132-f2.jpg',
@@ -181,8 +188,8 @@ export const products: Product[] = [
       '/images/20240614_135944-f5.jpg',
       '/images/20240614_140121-f5-.jpg'
     ],
-    description: 'The mix of all the animals herbivores and carnivores on a beautiful sunset of the savanna. The design includes large to small animals.',
-    longDescription: 'The wild sunset piece captures the dramatic beauty of an African savanna at golden hour, featuring a comprehensive ecosystem of both herbivores and carnivores in their natural habitat. This intricate design showcases animals of all sizes, from the mighty elephant to the smallest antelope, all set against the backdrop of a stunning savanna sunset. The piece tells the complete story of African wildlife in perfect harmony.',
+    description: 'Carved with the whole savanna gathered together as dusk falls. Once turned on, predators and gentle herbivores come alive in a peaceful, golden silhouette against your wall.',
+    longDescription: 'Carved with the whole savanna gathered together as dusk falls. Once turned on, predators and gentle herbivores come alive in a peaceful, golden silhouette against your wall.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -204,6 +211,7 @@ export const products: Product[] = [
     id: 'fallen-leaves-2-0-lamp',
     name: 'Fallen leaves 2.0',
     category: 'piece',
+    subCategory: 'Botanical & Trees',
     price: '$100 - $150',
     images: [
       '/images/IMG-20241116-WA0036-s1.jpg',
@@ -212,8 +220,8 @@ export const products: Product[] = [
       '/images/IMG-20241116-WA0016-s4.jpg',
       '/images/IMG-20241116-WA0014-s5.jpg'
     ],
-    description: 'Contemporary plant leaves-inspired lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
-    longDescription: 'Fallen leaves 2.0 represents the evolution of natural design, combining the organic beauty of fallen autumn leaves with contemporary artistic interpretation. This piece captures the delicate patterns and textures of leaves in their final stage of beauty, creating a meditation on the cycles of nature and the beauty found in transition.',
+    description: 'Sweeping leaf trails cut into cured botanical shell, mimicking sunlight through a lush garden canopy. It creates an organic, meditative ambiance perfect for unwinding after a long day.',
+    longDescription: 'Sweeping leaf trails cut into cured botanical shell, mimicking sunlight through a lush garden canopy. It creates an organic, meditative ambiance perfect for unwinding after a long day.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -235,6 +243,7 @@ export const products: Product[] = [
     id: 'big-five-animal-faces-lamp',
     name: 'The five mugshots',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$200 - $250',
     images: [
       '/images/IMG-20250123-WA0028-r1.jpg',
@@ -243,8 +252,8 @@ export const products: Product[] = [
       '/images/IMG-20250123-WA0020-r4.jpg',
       '/images/IMG-20250123-WA0016-r5.jpg'
     ],
-    description: 'The big five of the animal kingdom displaying their faces all around the lamp emphasizing brilliant illumination and sophisticated design elements.',
-    longDescription: 'The five mugshots piece celebrates Africa\'s legendary "Big Five" - the lion, leopard, rhinoceros, elephant, and Cape buffalo. Each animal\'s face is prominently featured around the lamp, creating a powerful tribute to these magnificent creatures. This larger piece commands attention and serves as a statement of respect for African wildlife conservation.',
+    description: 'A bold statement piece featuring the faces of the lion, leopard, rhino, elephant, and buffalo. It casts powerful, commanding shadows that celebrate East Africa\'s wild heritage.',
+    longDescription: 'A bold statement piece featuring the faces of the lion, leopard, rhino, elephant, and buffalo. It casts powerful, commanding shadows that celebrate East Africa\'s wild heritage.',
     specifications: [
       "Dimensions: Various sizes available (35\"- 40\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -266,6 +275,7 @@ export const products: Product[] = [
     id: 'fallen-leaves-00-lamp',
     name: 'Fallen leaves 00',
     category: 'collection',
+    subCategory: 'Botanical & Trees',
     price: '$100 - $150',
     images: [
       '/images/IMG-20250213-WA0011-q1.jpg',
@@ -274,8 +284,8 @@ export const products: Product[] = [
       '/images/IMG-20250213-WA0015-q4.jpg',
       '/images/IMG-20250213-WA0013-q5.jpg'
     ],
-    description: 'Contemporary plant-leaves,lighting featuring cosmic designs and celestial aesthetics for modern spaces.',
-    longDescription: 'Fallen leaves 00 represents the original concept in the fallen leaves series, featuring the pure essence of plant leaves in their natural state. This collection captures the intricate vein patterns, organic shapes, and natural beauty of leaves, creating lighting that brings the serenity of nature indoors.',
+    description: 'Simple, sweeping botanical curves carved into the natural gourd skin. We kept the lines clean so the warm, unfiltered ambient glow takes center stage in your sanctuary.',
+    longDescription: 'Simple, sweeping botanical curves carved into the natural gourd skin. We kept the lines clean so the warm, unfiltered ambient glow takes center stage in your sanctuary.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -297,13 +307,14 @@ export const products: Product[] = [
     id: 'family-tree-stand-lamp',
     name: 'Family tree',
     category: 'piece',
+    subCategory: 'Floor Lamps',
     price: '$250 - $350',
     images: [
       '/images/family-tree-replace-1.jpg',
       '/images/family-tree-replace-2.jpg'
     ],
-    description: 'A stand lamp with three branches each one faces its own directions, featuring light refraction and spectrum effects for abstracts and dynamic illumination.',
-    longDescription: 'The Family tree piece is a unique standing lamp that symbolizes the interconnectedness of family relationships. With three branches extending in different directions, each representing different family members or generations, this piece creates a beautiful metaphor for how families grow and spread while remaining connected at their roots. The multi-directional lighting creates dynamic illumination patterns throughout the room.',
+    description: 'A standing three-way luminaire built on natural wood branches. It spreads radiant light across three directions, symbolizing deep roots and growing generations together in the home.',
+    longDescription: 'A standing three-way luminaire built on natural wood branches. It spreads radiant light across three directions, symbolizing deep roots and growing generations together in the home.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter for calabashes/ 100\"-200cm stand heights)",
       "Materials: gourd(calabash)/metal stand",
@@ -325,6 +336,7 @@ export const products: Product[] = [
     id: 'young-lion-roar-duality-lamp',
     name: 'The young roar',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/IMG-20250516-WA0016-o1.jpg',
@@ -333,8 +345,8 @@ export const products: Product[] = [
       '/images/IMG-20250516-WA0002-o4.jpg',
       '/images/IMG-20250516-WA0006-o5.jpg'
     ],
-    description: 'Lion inspired design with two sides a young lion roaring and a very chilled dad each side showing a unique and dynamic patterns.',
-    longDescription: 'The young roar piece captures the duality of lion behavior, showcasing both the fierce energy of a young lion announcing its presence to the world and the calm confidence of a mature male lion at rest. This dual-sided design tells the story of growth, maturity, and the different aspects of strength found in the king of beasts.',
+    description: 'Captures the spirited energy of a young lion finding its voice. Bold open cuts throw warm amber patches across the room, full of warmth and youthful character.',
+    longDescription: 'Captures the spirited energy of a young lion finding its voice. Bold open cuts throw warm amber patches across the room, full of warmth and youthful character.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -356,6 +368,7 @@ export const products: Product[] = [
     id: 'butterfly-effects-crystal-lamp',
     name: 'Butterfly effects',
     category: 'piece',
+    subCategory: 'Wildlife & Nature',
     price: '$100 - $150',
     images: [
       '/images/IMG-20250527-WA0035-n1.jpg',
@@ -364,8 +377,8 @@ export const products: Product[] = [
       '/images/IMG-20250527-WA0037-n4.jpg',
       '/images/IMG-20250527-WA0036-n5.jpg'
     ],
-    description: 'Explosive butterfly design with crystal spackle, featuring burst patterns and radial designs for dramatic illumination effects.',
-    longDescription: 'Butterfly effects explores the concept that small changes can have large consequences, represented through an explosive butterfly design enhanced with crystal spackle. The piece features burst patterns that radiate from the central butterfly motif, creating dramatic illumination effects that symbolize the far-reaching impact of transformation and change.',
+    description: 'Exploding butterfly wing patterns threaded with shimmering crystal spackle. Switch it on at night and your ceiling transforms into a soft, glowing halo of dancing light.',
+    longDescription: 'Exploding butterfly wing patterns threaded with shimmering crystal spackle. Switch it on at night and your ceiling transforms into a soft, glowing halo of dancing light.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -388,6 +401,7 @@ export const products: Product[] = [
     id: 'wild-linear-directional-lighting',
     name: 'The wild sere',
     category: 'piece',
+    subCategory: 'Abstract & Contemporary',
     price: '$100 - $150',
     images: [
       '/images/IMG-20250606-WA0007-m1.jpg',
@@ -396,8 +410,8 @@ export const products: Product[] = [
       '/images/IMG-20250606-WA0013-m4.jpg',
       '/images/IMG-20250606-WA0001-m5.jpg'
     ],
-    description: 'The wild inspired lamp, featuring linear and directional designs for precise illumination control.',
-    longDescription: 'The wild sere piece captures the essence of the African wilderness in its most raw and untamed form. The design features linear and directional elements that represent the paths and territories of wild animals, creating precise illumination control that mimics the way light filters through the African bush.',
+    description: 'Clean directional stripes carved along the natural curve of the calabash. It throws sharp, modern geometric shadows that feel both ancient and strikingly contemporary.',
+    longDescription: 'Clean directional stripes carved along the natural curve of the calabash. It throws sharp, modern geometric shadows that feel both ancient and strikingly contemporary.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -419,6 +433,7 @@ export const products: Product[] = [
     id: 'hummingbird-elegant-artisanal-lighting',
     name: 'The humming',
     category: 'collection',
+    subCategory: 'Botanical & Trees',
     price: '$100 - $150',
     images: [
       '/images/IMG-20250616-WA0007-l1.jpg',
@@ -427,8 +442,8 @@ export const products: Product[] = [
       '/images/IMG-20250616-WA0009-l4.jpg',
       '/images/IMG-20250616-WA0005-l5.jpg'
     ],
-    description: 'Elegant design showing hummingbird with different artisanal style clean illumination and minimalist design principles.',
-    longDescription: 'The humming piece celebrates the delicate beauty and incredible energy of the hummingbird through elegant artisanal design. This piece showcases different artistic interpretations of these remarkable birds, emphasizing their grace, speed, and the joy they bring to any garden. The clean illumination and minimalist design principles create a serene and uplifting atmosphere.',
+    description: 'Delicate blossoms and hovering wings carved with fine micro-tools. It projects a light, airy ambiance that brings a sense of fresh botanical life to bedside tables.',
+    longDescription: 'Delicate blossoms and hovering wings carved with fine micro-tools. It projects a light, airy ambiance that brings a sense of fresh botanical life to bedside tables.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -450,6 +465,7 @@ export const products: Product[] = [
     id: 'african-rhino-heritage-carving-lamp',
     name: 'African Rhinoceros',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20231002_141245_IMG_0901-k1.jpg',
@@ -458,8 +474,8 @@ export const products: Product[] = [
       '/images/20231002_141052_IMG_0893-k4.jpg',
       '/images/20231002_140955_IMG_0889-k5.jpg'
     ],
-    description: 'African rhino on three different carving style with traditional craftsmanship meets contemporary design in this heritage featuring intricate patterns and timeless elegance.',
-    longDescription: 'The African Rhinoceros piece showcases the mighty rhino through three distinct carving styles, each highlighting different aspects of this powerful creature. Traditional craftsmanship techniques are combined with contemporary design sensibilities to create a heritage piece that tells the story of one of Africa\'s most iconic animals through intricate patterns and timeless elegance.',
+    description: 'A grounding sculpture honoring the quiet power of the black rhino. Strong silhouette perforations cast rugged, textured shadows that ground any living space.',
+    longDescription: 'A grounding sculpture honoring the quiet power of the black rhino. Strong silhouette perforations cast rugged, textured shadows that ground any living space.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -481,6 +497,7 @@ export const products: Product[] = [
     id: 'lion-king-majestic-artisanal-lamp',
     name: 'Cool King',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20231004_155909_IMG_0908-j1.jpg',
@@ -489,8 +506,8 @@ export const products: Product[] = [
       '/images/20231004_160327_IMG_0926-j4.jpg',
       '/images/20231004_160327_IMG_0926-j5.jpg'
     ],
-    description: 'A king of the jungle in three different styles, masterfully crafted lighting pieces showcasing exceptional artisanal techniques and sophisticated design elements.',
-    longDescription: 'The Cool King piece celebrates the majesty of the lion through three different artistic interpretations. Each style captures a unique aspect of the king of the jungle, from fierce authority to regal composure. This masterfully crafted lighting piece showcases exceptional artisanal techniques and sophisticated design elements that honor the lion\'s legendary status.',
+    description: 'Three interpretations of the king\'s regal mane carved into rich cured shell. It casts a proud, golden aura that brings warmth and quiet confidence to a home library or study.',
+    longDescription: 'Three interpretations of the king\'s regal mane carved into rich cured shell. It casts a proud, golden aura that brings warmth and quiet confidence to a home library or study.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -512,6 +529,7 @@ export const products: Product[] = [
     id: 'cheetah-speed-modern-artistry-lamp',
     name: 'Chilly Cheetah',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $150',
     images: [
       '/images/20231011_145655_IMG_0938-i1.jpg',
@@ -520,8 +538,8 @@ export const products: Product[] = [
       '/images/20231011_145655_IMG_0938-i4.jpg',
       '/images/20231011_150015_IMG_0953-i5.jpg'
     ],
-    description: 'Exploration of artistry in three different sides. Innovative lighting solutions combining modern aesthetics with functional brilliance for contemporary living spaces.',
-    longDescription: 'The Chilly Cheetah piece explores the grace and speed of the world\'s fastest land animal through three different artistic perspectives. Each side reveals a unique aspect of the cheetah\'s character, from its relaxed demeanor to its explosive energy. This innovative lighting solution combines modern aesthetics with functional brilliance, perfect for contemporary living spaces.',
+    description: 'Streamlined aerodynamic contours inspired by the speed and grace of the cheetah. At night, rhythmic light paths trace sleek motion across your floor and walls.',
+    longDescription: 'Streamlined aerodynamic contours inspired by the speed and grace of the cheetah. At night, rhythmic light paths trace sleek motion across your floor and walls.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -543,6 +561,7 @@ export const products: Product[] = [
     id: 'baobab-tree-of-life-earth-design',
     name: 'Bibi Baobab',
     category: 'piece',
+    subCategory: 'Botanical & Trees',
     price: '$100 - $150',
     images: [
       '/images/20231014_142008_IMG_0984-t1.jpg',
@@ -551,8 +570,8 @@ export const products: Product[] = [
       '/images/20231014_142151_IMG_0987-t4.jpg',
       '/images/20231014_142516_IMG_0997-t5.jpg'
     ],
-    description: 'Three different aspects of a baobab tree. Earth-inspired designs featuring natural textures and organic forms that bring warmth and character to any environment.',
-    longDescription: 'The Bibi Baobab piece celebrates the iconic African baobab tree through three different artistic interpretations. Known as the "Tree of Life," the baobab is showcased in various stages and perspectives, from its massive trunk to its distinctive silhouette. These earth-inspired designs feature natural textures and organic forms that bring the warmth and ancient wisdom of the baobab to any environment.',
+    description: 'Honoring the ancient baobab tree, known across Africa as the tree of life. Its broad, deeply rooted silhouette wraps your space in a warm, timeless presence.',
+    longDescription: 'Honoring the ancient baobab tree, known across Africa as the tree of life. Its broad, deeply rooted silhouette wraps your space in a warm, timeless presence.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -574,6 +593,7 @@ export const products: Product[] = [
     id: 'buffalo-metropolitan-modern-lamp',
     name: 'Brother Buffalo',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$120 - $150',
     images: [
       '/images/20231019_144959_IMG_1031-u1.jpg',
@@ -582,8 +602,8 @@ export const products: Product[] = [
       '/images/20231019_145051_IMG_1034-u4.jpg',
       '/images/20231019_145204_IMG_1038-u5.jpg'
     ],
-    description: 'Three sided buffalo with metropolitan-inspired lighting featuring sleek patterns and contemporary finishes perfect for modern urban spaces.',
-    longDescription: 'The Brother Buffalo piece honors the strength and resilience of the African buffalo through three distinct perspectives. Each side captures different aspects of this formidable creature, from its powerful stance to its protective nature. The metropolitan-inspired lighting features sleek patterns and contemporary finishes that make it perfect for modern urban spaces while maintaining connection to African wildlife.',
+    description: 'Strong, curved horn silhouettes carved into thick calabash husk. It gives off a steady, warm hearth glow that feels solid, protective, and deeply grounded.',
+    longDescription: 'Strong, curved horn silhouettes carved into thick calabash husk. It gives off a steady, warm hearth glow that feels solid, protective, and deeply grounded.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -605,6 +625,7 @@ export const products: Product[] = [
     id: 'tied-wave-abstract-lamp',
     name: 'Tied Wave',
     category: 'piece',
+    subCategory: 'Abstract & Contemporary',
     price: '$100 - $150',
     images: [
       '/images/20240105_163859_IMG_1386-g1.jpg',
@@ -613,8 +634,8 @@ export const products: Product[] = [
       '/images/20240105_163847_IMG_1384-g4.jpg',
       '/images/20240105_163754_IMG_1380-g5.jpg'
     ],
-    description: 'Luxurious abstract yet undefined shapes and elegant craftsmanship for sophisticated interiors.',
-    longDescription: 'The Tied Wave piece explores the beauty of abstract forms through luxurious yet undefined shapes that invite personal interpretation. This elegant piece combines flowing, wave-like patterns with intricate binding details that create a sense of movement and fluidity. The sophisticated craftsmanship makes it perfect for contemporary interiors that appreciate artistic ambiguity and refined aesthetics.',
+    description: 'Flowing organic waves that look like wind rippling through water. When evening sets in, the curved cuts cast hypnotic, rolling shadows that melt away evening stress.',
+    longDescription: 'Flowing organic waves that look like wind rippling through water. When evening sets in, the curved cuts cast hypnotic, rolling shadows that melt away evening stress.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -636,16 +657,17 @@ export const products: Product[] = [
     id: 'posing-zebra-gourd-lamp',
     name: 'Posing Zebra',
     category: 'piece',
+    subCategory: 'Wildlife Sculptures',
     price: '$100 - $160',
     images: [
-      '/images/20240122_155926_IMG_1502-v1.jpg',
-      '/images/20240122_160019_IMG_1505-v2.jpg',
+      '/images/posing-zebra-replace-1.jpg',
+      '/images/posing-zebra-replace-2.jpg',
       '/images/20240122_160128_IMG_1511-v3.jpg',
       '/images/20240122_160137_IMG_1512-v4.jpg',
       '/images/20240122_160320_IMG_1517-v5.jpg'
     ],
-    description: 'Handcrafted gourd lamp featuring a playful zebra design. This handmade lamp combines artistic craftsmanship with functional lighting.',
-    longDescription: 'The Posing Zebra is a unique handmade gourd lamp that captures the playful and spirited nature of zebras through whimsical artistic interpretation. This handcrafted lamp showcases a zebra in various poses, illuminated by the warm glow of the dried calabash shell. Perfect for those seeking a one-of-a-kind artisan lighting piece, this gourd lamp brings joy, character, and organic beauty to any space.',
+    description: 'Bold zebra stripes carved with contrasting rhythmic spacing. Switch it on and striking monochrome patterns ripple across your room like shadows in the Serengeti breeze.',
+    longDescription: 'Bold zebra stripes carved with contrasting rhythmic spacing. Switch it on and striking monochrome patterns ripple across your room like shadows in the Serengeti breeze.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -667,6 +689,7 @@ export const products: Product[] = [
     id: 'harmonious-balanced-serene-lighting',
     name: 'Toto Tundu',
     category: 'piece',
+    subCategory: 'Bedside & Table Lamps',
     price: '$100 - $150',
     images: [
       '/images/20240326_142130_IMG_1803-h1.jpg',
@@ -675,8 +698,8 @@ export const products: Product[] = [
       '/images/20240326_142228_IMG_1805-h4.jpg',
       '/images/20240326_142228_IMG_1805-h5.jpg'
     ],
-    description: 'Harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance.',
-    longDescription: 'The Toto Tundu piece embodies harmoniously balanced designs featuring perfect proportions and refined aesthetics for creating peaceful ambiance. This carefully crafted lighting solution combines traditional artisanal techniques with contemporary design principles to deliver a serene and sophisticated lighting experience that enhances any living space.',
+    description: 'A playful, rounded bedside lamp dotted with cheerful starburst pinholes. It casts a gentle, cozy glow that makes bedrooms feel instantly relaxed and welcoming.',
+    longDescription: 'A playful, rounded bedside lamp dotted with cheerful starburst pinholes. It casts a gentle, cozy glow that makes bedrooms feel instantly relaxed and welcoming.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -698,6 +721,7 @@ export const products: Product[] = [
     id: 'aura-new-design-lamp',
     name: 'Aura',
     category: 'new design',
+    subCategory: 'New Designs',
     price: '$100 - $150',
     images: [
       '/new-designs/aura-1.jpg',
@@ -706,8 +730,8 @@ export const products: Product[] = [
       '/new-designs/aura-4.jpg',
       '/new-designs/aura-5.jpg'
     ],
-    description: 'Circular ring patterns with soft wave-like edges, creating warm balanced illumination and a calm visual rhythm.',
-    longDescription: 'The Aura piece features circular ring patterns that draw the eye toward the center of the lamp, while soft wave-like edges add movement around the sides. The careful perforation work creates a warm, balanced glow that feels calm, decorative, and easy to place in different interiors.',
+    description: 'Our new minimalist exploration pairing clean concentric rings with warm gourd tones. It bathes tabletops in an even, tranquil halo that feels effortless and modern.',
+    longDescription: 'Our new minimalist exploration pairing clean concentric rings with warm gourd tones. It bathes tabletops in an even, tranquil halo that feels effortless and modern.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -729,6 +753,7 @@ export const products: Product[] = [
     id: 'comfort-new-design-lamp',
     name: 'Comfort',
     category: 'new design',
+    subCategory: 'New Designs',
     price: '$100 - $150',
     images: [
       '/new-designs/comfort-1.jpg',
@@ -737,8 +762,8 @@ export const products: Product[] = [
       '/new-designs/comfort-4.jpg',
       '/new-designs/comfort-5.jpg'
     ],
-    description: 'Mixed circular perforations and woven-style patterns, giving a cozy glow with rich texture and soft shadows.',
-    longDescription: 'The Comfort piece combines rounded perforations with woven-style patterned sections to create a soft and cozy lighting effect. Its mix of textures gives the lamp a warm handmade character, while the light escapes in a way that produces rich shadows and a welcoming atmosphere.',
+    description: 'Designed specifically to create a restful evening corner with soft, low-glare light vents. Perfect beside a reading armchair or bedside for unwinding with a favorite book.',
+    longDescription: 'Designed specifically to create a restful evening corner with soft, low-glare light vents. Perfect beside a reading armchair or bedside for unwinding with a favorite book.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -760,6 +785,7 @@ export const products: Product[] = [
     id: 'luster-new-design-lamp',
     name: 'Luster',
     category: 'new design',
+    subCategory: 'New Designs',
     price: '$100 - $150',
     images: [
       '/new-designs/luster-1.jpg',
@@ -768,8 +794,8 @@ export const products: Product[] = [
       '/new-designs/luster-4.jpg',
       '/new-designs/luster-5.jpg'
     ],
-    description: 'Bold geometric panels and dotted paths, creating striking contrast and dramatic shadow patterns when illuminated.',
-    longDescription: 'The Luster piece stands out through bold geometric panels connected by lines of perforated dots and larger openings. This arrangement gives the lamp a strong visual contrast and produces dramatic shadow patterns, making it a simple but eye-catching statement design.',
+    description: 'Dense clusters of micro-drilled light points that shimmer like polished beads. It turns nighttime illumination into a rich, luminous texture across plain walls.',
+    longDescription: 'Dense clusters of micro-drilled light points that shimmer like polished beads. It turns nighttime illumination into a rich, luminous texture across plain walls.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -791,6 +817,7 @@ export const products: Product[] = [
     id: 'pembe-tatu-new-design-lamp',
     name: 'Pembe Tatu',
     category: 'new design',
+    subCategory: 'New Designs',
     price: '$100 - $150',
     images: [
       '/new-designs/pembe-tatu-1.jpg',
@@ -799,8 +826,8 @@ export const products: Product[] = [
       '/new-designs/pembe-tatu-4.jpg',
       '/new-designs/pembe-tatu-5.jpg'
     ],
-    description: 'Three horn-like shapes around the lamp with dotted patterns, creating warm light and distinctive organic shadows.',
-    longDescription: 'The Pembe Tatu piece takes its name from the three horn-like shapes that define the design around the lamp body. Combined with carefully spaced dotted perforations, these shapes create a warm glow and distinctive organic shadow patterns that make the piece feel both simple and unique.',
+    description: 'A three-sided architectural geometry carved into a tall botanical sphere. Each turn presents a fresh geometric perspective, casting structured light shapes in all directions.',
+    longDescription: 'A three-sided architectural geometry carved into a tall botanical sphere. Each turn presents a fresh geometric perspective, casting structured light shapes in all directions.',
     specifications: [
       "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
       "Materials: gourd(calabash)",
@@ -822,6 +849,7 @@ export const products: Product[] = [
     id: 'floor-flexible-threeways-lamp',
     name: 'Floor-Flexible Threeways',
     category: 'piece',
+    subCategory: 'Floor Lamps',
     price: '$280 - $380',
     images: [
       '/images/floor-flexible-threeways-1.jpg',
@@ -830,8 +858,8 @@ export const products: Product[] = [
       '/images/floor-flexible-threeways-4.jpg',
       '/images/floor-flexible-threeways-5.jpg'
     ],
-    description: 'Floor-standing three-branch flexible lamp crafted with three directional calabashes, casting dynamic organic glow patterns.',
-    longDescription: 'The Floor-Flexible Threeways design features an articulating multi-branch architectural frame crowned with three handcrafted Tanzanian calabash shades. Each shade features hand-carved perforations and beadwork that cast warm geometric light arcs across walls and ceilings, offering both functional ambiance and sculptural presence.',
+    description: 'Three independent flexible necks let you direct handcrafted calabash shades where you need them most. Perfect for open living rooms that love dramatic accent lighting.',
+    longDescription: 'Three independent flexible necks let you direct handcrafted calabash shades where you need them most. Perfect for open living rooms that love dramatic accent lighting.',
     specifications: [
       "Dimensions: 160cm-190cm height, 3 x 20-25cm calabash shades",
       "Materials: Natural calabash, handcrafted steel branch frame, brass fixtures",
@@ -851,6 +879,7 @@ export const products: Product[] = [
     id: 'floor-sculptured-stand-lamp',
     name: 'Floor-Sculptured Stand',
     category: 'piece',
+    subCategory: 'Floor Lamps',
     price: '$260 - $360',
     images: [
       '/images/floor-sculptured-stand-1.jpg',
@@ -858,8 +887,8 @@ export const products: Product[] = [
       '/images/floor-sculptured-stand-3.jpg',
       '/images/floor-sculptured-stand-4.jpg'
     ],
-    description: 'Sculptural standing lamp integrating organic carved calabash with an artistic standing silhouette.',
-    longDescription: 'The Floor-Sculptured Stand unites natural botanic curves with bespoke artisanal metalwork. Each lamp features an elongated calabash meticulously drilled and hand-beaded, resting upon a hand-bent sculptural stand that serves as an expressive centerpiece for lounges and reading spaces.',
+    description: 'An artistic floor sculpture mounted on hand-welded steel hairpin legs. It anchors the corner of your lounge with dramatic height and sweeping shadow projections.',
+    longDescription: 'An artistic floor sculpture mounted on hand-welded steel hairpin legs. It anchors the corner of your lounge with dramatic height and sweeping shadow projections.',
     specifications: [
       "Dimensions: 140cm-170cm height / 25-30cm shade diameter",
       "Materials: Dried gourd (calabash), hand-forged sculptural stand",
@@ -878,6 +907,7 @@ export const products: Product[] = [
     id: 'standing-bedside-lamp',
     name: 'Standing Bed Side',
     category: 'piece',
+    subCategory: 'Bedside & Table Lamps',
     price: '$120 - $160',
     images: [
       '/images/standing-bedside-1.jpg',
@@ -886,8 +916,8 @@ export const products: Product[] = [
       '/images/standing-bedside-4.jpeg',
       '/images/standing-bedside-5.jpeg'
     ],
-    description: 'Compact standing bedside lamp creating soft warm ambient light perfect for nightstands and evening reading.',
-    longDescription: 'The Standing Bed Side lamp is tailored for nightstands, credenzas, and ambient bedside lighting. Its focused warm light and intricate dot patterns create a tranquil, glare-free aura ideal for evening unwinding.',
+    description: 'A compact, rounded companion shaped naturally by sun and soil. It sits quietly on your nightstand, providing just enough soft glow for quiet evening conversations.',
+    longDescription: 'A compact, rounded companion shaped naturally by sun and soil. It sits quietly on your nightstand, providing just enough soft glow for quiet evening conversations.',
     specifications: [
       "Dimensions: 35cm-45cm height / 18-22cm diameter",
       "Materials: Natural calabash, weighted desktop stand",
@@ -902,18 +932,19 @@ export const products: Product[] = [
       "Hand-carved organic texture"
     ]
   },
-  {
+{
     id: 'hanging-single-pendant-lamp',
     name: 'Hanging Lamps',
     category: 'piece',
+    subCategory: 'Hanging Lamps',
     price: '$140 - $190',
     images: [
       '/images/hanging-single-1.jpg',
       '/images/hanging-single-2.jpg',
       '/images/hanging-single-3.jpeg'
     ],
-    description: 'Single hanging pendant calabash lamp suspended on woven cable for dining tables, entryways, and corner nooks.',
-    longDescription: 'The Hanging Single Pendant transforms the raw geometry of the calabash into a suspended luminaire. Suspended by a braided textile cord and brass ceiling rose, it directs downlight while casting ornamental celestial shadows.',
+    description: 'Suspended gracefully from woven textile cord over a table or nook. It directs intimate downlight while casting gentle radial stars across your dining ceiling.',
+    longDescription: 'Suspended gracefully from woven textile cord over a table or nook. It directs intimate downlight while casting gentle radial stars across your dining ceiling.',
     specifications: [
       "Dimensions: 25cm-35cm shade height / 1.5m adjustable braided cord",
       "Materials: Natural gourd, braided textile cable, brass ceiling canopy",
@@ -932,14 +963,15 @@ export const products: Product[] = [
     id: 'hanging-three-ways-cluster-lamp',
     name: 'Hanging Three Ways',
     category: 'piece',
+    subCategory: 'Hanging Lamps',
     price: '$290 - $390',
     images: [
       '/images/hanging-threeways-1.jpg',
       '/images/hanging-threeways-2.jpg',
       '/images/hanging-threeways-3.jpeg'
     ],
-    description: 'Three-drop chandelier cluster of handcrafted calabash pendants suspended at staggered heights.',
-    longDescription: 'The Hanging Three Ways chandelier pairs three distinct hand-carved calabash globes in a cascading cluster. Suspended from a unified ceiling canopy, the trio creates rich depth and multi-tiered ambient lighting over dining tables, kitchen islands, or double-height foyers.',
+    description: 'A trio of distinct calabash globes clustered at cascading heights from a single canopy. Creates an eye-catching, multi-layered ceiling feature over dining tables and foyers.',
+    longDescription: 'A trio of distinct calabash globes clustered at cascading heights from a single canopy. Creates an eye-catching, multi-layered ceiling feature over dining tables and foyers.',
     specifications: [
       "Dimensions: 3 x 20-25cm calabash pendants, staggered heights up to 1.8m",
       "Materials: Natural calabash, braided cables, multi-port canopy",
@@ -958,14 +990,15 @@ export const products: Product[] = [
     id: 'wall-mounted-sculptural-lamp',
     name: 'Wall Lamps',
     category: 'piece',
+    subCategory: 'Wall Lamps',
     price: '$130 - $180',
     images: [
       '/images/wall-lamp-1.jpg',
       '/images/wall-lamp-2.jpg',
       '/images/wall-maunted-3.jpg'
     ],
-    description: 'Wall-mounted calabash sconce projecting warm back-wall halos and intricate carved motifs.',
-    longDescription: 'The Wall Lamp sconce hugs architectural walls to provide evocative accent lighting and silhouette shadows. Designed for hallways, bedside sconces, and living rooms, it turns blank surfaces into textured illuminated art.',
+    description: 'Mounted flush against the wall like living sculpture. Backlit halos bounce warm light into the room while detailed face carvings project expressive shadow art.',
+    longDescription: 'Mounted flush against the wall like living sculpture. Backlit halos bounce warm light into the room while detailed face carvings project expressive shadow art.',
     specifications: [
       "Dimensions: 25cm-35cm height / 15-20cm wall projection",
       "Materials: Hand-carved calabash, steel wall mount bracket",
@@ -984,14 +1017,15 @@ export const products: Product[] = [
     id: 'bespoke-custom-design-lamp',
     name: 'Custom Design',
     category: 'piece',
+    subCategory: 'Custom Design',
     price: 'Custom Quote',
     images: [
       '/images/IMG-20250529-WA0007-nav-contacts.jpg',
       '/images/20240520_161231-featured-1.jpg',
       '/images/20241018_094717-reach-1-.jpg'
     ],
-    description: 'Bespoke commissioned lighting tailored to your interior space, botanical dimensions, and personalized perforation motifs.',
-    longDescription: 'Our Custom Design service invites you into the artisan creation process. Whether you have specific architectural dimensions, custom perforation patterns, commemorative constellation maps, or unique crystal bead palettes in mind, master artisan Frank works closely with you to sculpt a one-of-a-kind Tanzanian calabash luminaire tailored specifically to your home or commercial sanctuary.',
+    description: 'Work directly with our studio to choose your raw gourd shape, dimension, and carving motifs. We craft a truly personal, one-of-a-kind luminaire made just for your space.',
+    longDescription: 'Work directly with our studio to choose your raw gourd shape, dimension, and carving motifs. We craft a truly personal, one-of-a-kind luminaire made just for your space.',
     specifications: [
       "Dimensions: Tailored to your space (Table, Floor, Wall, or Suspended)",
       "Materials: Sustainably harvested Tanzanian calabash, bespoke metalwork / brass hardware",
@@ -1004,6 +1038,181 @@ export const products: Product[] = [
       "Custom perforated patterns, symbols, or crystal bead configurations",
       "Personalized engraved brass plaque or signature detailing",
       "Worldwide insured express shipping"
+    ]
+  },
+  {
+    id: 'ndovu-calabash-lamp',
+    name: 'Ndovu',
+    category: 'piece',
+    subCategory: 'Wildlife Sculptures',
+    price: '$140 - $190',
+    images: [
+      '/images/ndovu-1.jpg',
+      '/images/ndovu-2.jpg',
+      '/images/ndovu-3.jpg'
+    ],
+    description: 'Carved with the proud silhouette of the African elephant walking through acacia brush. When lit, it casts grand savanna twilight shadows that fill your home with calm.',
+    longDescription: 'Carved with the proud silhouette of the African elephant walking through acacia brush. When lit, it casts grand savanna twilight shadows that fill your home with calm.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: Natural gourd (calabash)",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (warm LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted Ndovu elephant silhouette carving",
+      "Savanna twilight shadow projection",
+      "Natural cured calabash body",
+      "Warm ambient lighting aura",
+      "Energy-efficient LED compatible"
+    ]
+  },
+  {
+    id: 'butterfly-dreams-lamp',
+    name: 'Butterfly Dreams',
+    category: 'piece',
+    subCategory: 'Wildlife & Nature',
+    price: '$130 - $170',
+    images: [
+      '/images/butterfly-dreams-1.jpg',
+      '/images/butterfly-dreams-2.jpg',
+      '/images/butterfly-dreams-3.jpg'
+    ],
+    description: 'Delicate butterfly wings hand-perforated with colorful crystal beads along their flight paths. It scatters a cheerful, rainbow-hued glow across bedroom or living room walls.',
+    longDescription: 'Delicate butterfly wings hand-perforated with colorful crystal beads along their flight paths. It scatters a cheerful, rainbow-hued glow across bedroom or living room walls.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: Natural gourd (calabash), colorful crystal beads",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (warm LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Artisan butterfly wing perforation detailing",
+      "Hand-threaded prismatic crystal beads",
+      "Dual ambient light & shadow halo projection",
+      "Sustainable natural calabash medium",
+      "Energy-efficient LED illumination"
+    ]
+  },
+  {
+    id: 'sculptured-tri-lamp',
+    name: 'Sculptured Tri',
+    category: 'piece',
+    subCategory: 'Floor Lamps',
+    price: '$270 - $370',
+    images: [
+      '/images/sculpured-tri-1.jpg',
+      '/images/sculpured-tri-2.jpg',
+      '/images/sculpured-tri-3.jpg'
+    ],
+    description: 'A sculpted calabash globe cradled on a custom three-legged architectural stand. Its radial starburst carvings throw dramatic, room-filling shadow patterns across floors and walls.',
+    longDescription: 'A sculpted calabash globe cradled on a custom three-legged architectural stand. Its radial starburst carvings throw dramatic, room-filling shadow patterns across floors and walls.',
+    specifications: [
+      "Dimensions: 140cm-170cm height / 25-30cm shade diameter",
+      "Materials: Natural calabash, hand-forged sculptural tripod stand",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 4W-10W (LED recommended)",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Three-legged architectural sculptural stand",
+      "Radiant geometric perforation map",
+      "Elevated statement floor presence",
+      "Handcrafted natural botanical shade",
+      "Weighted base for steady balance"
+    ]
+  },
+  {
+    id: 'hanging-draw-lamp',
+    name: 'Hanging Draw',
+    category: 'piece',
+    subCategory: 'Hanging Lamps',
+    price: '$150 - $210',
+    images: [
+      '/images/hanging-draw-1.jpg',
+      '/images/hanging-draw-2.jpg',
+      '/images/hanging-draw-3.jpg',
+      '/images/hanging-draw-4.jpg'
+    ],
+    description: 'Freehand linear sketches carved directly onto the botanical shell and hung as a pendant. It brings an intimate, hand-drawn warmth to kitchen islands and breakfast nooks.',
+    longDescription: 'Freehand linear sketches carved directly onto the botanical shell and hung as a pendant. It brings an intimate, hand-drawn warmth to kitchen islands and breakfast nooks.',
+    specifications: [
+      "Dimensions: 25cm-35cm shade height / 1.5m adjustable braided textile cord",
+      "Materials: Natural gourd, braided textile cable, brass ceiling canopy",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 4W-10W LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Hand-drawn geometric linear carving",
+      "Ceiling pendant suspension with brass canopy",
+      "Adjustable drop height for custom spaces",
+      "Downlight illumination with radial wall shadows",
+      "Artisanal one-of-a-kind finish"
+    ]
+  },
+  {
+    id: '3-way-hanging-family-lamp',
+    name: '3-Way Hanging Familiy',
+    category: 'piece',
+    subCategory: 'Hanging Lamps',
+    price: '$310 - $420',
+    images: [
+      '/images/3-way-hanging-familiy-1.jpg',
+      '/images/3-way-hanging-familiy-2.jpg'
+    ],
+    description: 'Three complementary gourds cascading together like an artisan chandelier. Each shade has its own individual carving, blending together into a rich, cohesive canopy of light.',
+    longDescription: 'Three complementary gourds cascading together like an artisan chandelier. Each shade has its own individual carving, blending together into a rich, cohesive canopy of light.',
+    specifications: [
+      "Dimensions: 3 x 20-25cm calabash pendants, staggered heights up to 1.8m",
+      "Materials: Natural calabash, braided cables, multi-port ceiling canopy",
+      "Bulb Type: 3 x E27 Base",
+      "Wattage: 3 x 4W-8W LED",
+      "Voltage: 110V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Triple pendant cascading family arrangement",
+      "Tiered multi-dimensional shadow tapestry",
+      "Unified single-canopy ceiling mount",
+      "Organic botanical texture variations",
+      "Statement centerpiece illumination"
+    ]
+  },
+  {
+    id: 'coral-calabash-lamp',
+    name: 'Coral',
+    category: 'piece',
+    subCategory: 'Abstract & Contemporary',
+    price: '$120 - $160',
+    images: [
+      '/images/coral-1.jpg',
+      '/images/coral-2.jpg',
+      '/images/coral-3.jpeg',
+      '/images/coral-4.jpeg'
+    ],
+    description: 'Inspired by the organic textures and flowing porous structures of ocean reefs. Hundreds of micro-holes cast a shimmering, underwater-like glow that soothes the senses.',
+    longDescription: 'Inspired by the organic textures and flowing porous structures of ocean reefs. Hundreds of micro-holes cast a shimmering, underwater-like glow that soothes the senses.',
+    specifications: [
+      "Dimensions: Various sizes available (20\"-30\" diameter/ 25\"-35cm heights)",
+      "Materials: Natural gourd (calabash), warm brass accents",
+      "Bulb Type: E27 Standard Base",
+      "Wattage: 3W-10W (warm LED recommended)",
+      "Voltage: 120V-240V AC",
+      "Warranty: on electrical fixtures (3 months)"
+    ],
+    features: [
+      "Handcrafted coral reef perforation pattern",
+      "Fluid organic silhouette contours",
+      "Immersive marine-like light projection",
+      "Premium hand-selected natural calabash",
+      "Energy-efficient LED illumination"
     ]
   }
 ];

@@ -7,6 +7,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Clock,
@@ -275,9 +276,37 @@ function Home() {
     return [wildlife, woman, familyTree].filter(Boolean) as Product[]
   }, [])
 
-  const newDesignLamps = useMemo(() => {
-    return products.filter(p => p.category === 'new design')
+  const newEntryLamps = useMemo(() => {
+    const priorityIds = [
+      'ndovu-calabash-lamp',
+      'butterfly-dreams-lamp',
+      'coral-calabash-lamp',
+      'hanging-draw-lamp',
+      'sculptured-tri-lamp',
+      '3-way-hanging-family-lamp',
+      'aura-new-design-lamp',
+      'comfort-new-design-lamp',
+      'luster-new-design-lamp',
+      'pembe-tatu-new-design-lamp',
+    ]
+    return priorityIds
+      .map(id => products.find(p => p.id === id))
+      .filter(Boolean) as Product[]
   }, [])
+
+  const newEntriesScrollRef = useRef<HTMLDivElement>(null)
+
+  const scrollNewEntries = (direction: 'left' | 'right') => {
+    const el = newEntriesScrollRef.current
+    if (!el) return
+    const card = el.querySelector<HTMLElement>('.product-card')
+    const cardWidth = card ? card.offsetWidth : 300
+    const scrollAmount = (cardWidth + 24) * 1.5
+    el.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    })
+  }
 
   return (
     <main>
@@ -372,20 +401,48 @@ function Home() {
         </div>
       </section>
 
-      {/* New Designs */}
+      {/* New Entries Horizontal Scroll Track */}
       <section id="new-designs" className="section new-designs-section" data-logo-theme="white">
         <div className="collection-header-row">
           <h2 className="collection-header-title">
-            New <em>Designs.</em>
+            New <em>Entries.</em>
           </h2>
-          <Link to="/products?filter=New+Designs" className="collection-header-link">
-            Explore all new releases <ArrowUpRight size={15} />
-          </Link>
+          <div className="carousel-nav-arrows" aria-label="Scroll new entries">
+            <button
+              type="button"
+              className="carousel-arrow-btn"
+              onClick={() => scrollNewEntries('left')}
+              aria-label="Previous entries"
+            >
+              <ArrowLeft size={16} strokeWidth={1.8} />
+            </button>
+            <button
+              type="button"
+              className="carousel-arrow-btn"
+              onClick={() => scrollNewEntries('right')}
+              aria-label="Next entries"
+            >
+              <ArrowRight size={16} strokeWidth={1.8} />
+            </button>
+          </div>
         </div>
-        <div className="new-designs-grid">
-          {newDesignLamps.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} tag="New Design" />
-          ))}
+        <div
+          ref={newEntriesScrollRef}
+          className="new-entries-scroll-wrapper"
+          tabIndex={0}
+          role="region"
+          aria-label="Horizontal scrollable new entries"
+        >
+          <div className="new-entries-track">
+            {newEntryLamps.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                index={index}
+                tag={product.category === 'new design' ? 'New Design' : 'New Entry'}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -500,12 +557,29 @@ function ProductsPage() {
       const matchesFilter =
         filter === 'All lamps'
           ? true
+          : filter === 'New Entries'
+          ? [
+              'ndovu-calabash-lamp',
+              'butterfly-dreams-lamp',
+              'coral-calabash-lamp',
+              'hanging-draw-lamp',
+              'sculptured-tri-lamp',
+              '3-way-hanging-family-lamp',
+              'aura-new-design-lamp',
+              'comfort-new-design-lamp',
+              'luster-new-design-lamp',
+              'pembe-tatu-new-design-lamp',
+            ].includes(p.id)
           : filter === 'Artisan Pieces'
           ? p.category === 'piece'
           : filter === 'New Designs'
           ? p.category === 'new design'
           : filter === 'Collections'
           ? p.category === 'collection'
+          : filter === 'Custom Design'
+          ? p.id === 'bespoke-custom-design-lamp' || p.subCategory === 'Custom Design'
+          : p.subCategory === filter
+          ? true
           : true
 
       const matchesSearch =
@@ -513,7 +587,8 @@ function ProductsPage() {
           ? true
           : p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.category.toLowerCase().includes(searchQuery.toLowerCase())
+            p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (p.subCategory && p.subCategory.toLowerCase().includes(searchQuery.toLowerCase()))
 
       return matchesFilter && matchesSearch
     })
@@ -559,7 +634,7 @@ function ProductsPage() {
             <span className="catalog-count">({String(filtered.length).padStart(2, '0')})</span>
           </span>
           <div className="filters" aria-label="Filter products">
-            {['All lamps', 'Artisan Pieces', 'New Designs', 'Collections'].map(f => (
+            {['All lamps', 'New Entries', 'Artisan Pieces', 'New Designs', 'Collections'].map(f => (
               <button
                 key={f}
                 className={filter === f ? 'filter-active' : ''}
@@ -595,12 +670,21 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const product = products.find(p => p.id === id)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [added, setAdded] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    specifications: false,
+    guarantee: false,
+  })
 
-  // Reset active image when id changes
+  const toggleSection = (section: string) => {
+    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }))
+  }
+
+  const [shuffleSeed, setShuffleSeed] = useState(0)
+
+  // Reset active image and reshuffle related lamps whenever product changes
   useEffect(() => {
     setActiveImageIndex(0)
-    setIsFullscreen(false)
+    setShuffleSeed(Date.now() + Math.random())
   }, [id])
 
   if (!product) {
@@ -617,36 +701,63 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const galleryImages = product.images && product.images.length > 0 ? product.images : ['/images/hero-editorial.png']
   const activeImage = galleryImages[activeImageIndex] || galleryImages[0]
 
-  // Automatically shuffle 3 random products every time a product is tapped/viewed
+  // Display 3 related lamps from similar categories, dynamically shuffled
   const relatedLamps = useMemo(() => {
-    const pool = products.filter(p => p.id !== product.id)
-    const shuffled = [...pool].sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, 3)
-  }, [product.id])
-
-  // Keyboard navigation & body lock for fullscreen lightbox
-  useEffect(() => {
-    if (!isFullscreen) return
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsFullscreen(false)
-      } else if (e.key === 'ArrowLeft') {
-        setActiveImageIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1))
-      } else if (e.key === 'ArrowRight') {
-        setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
+    // Fisher-Yates array shuffler
+    const shuffle = <T,>(arr: T[]): T[] => {
+      const copy = [...arr]
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[copy[i], copy[j]] = [copy[j], copy[i]]
       }
+      return copy
     }
 
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = prevOverflow
-      window.removeEventListener('keydown', handleKeyDown)
+    // Thematic relationships between categories
+    const thematicRelated: Record<string, string[]> = {
+      'Wildlife Sculptures': ['Wildlife & Nature', 'Botanical & Trees'],
+      'Wildlife & Nature': ['Wildlife Sculptures', 'Botanical & Trees'],
+      'Botanical & Trees': ['Abstract & Contemporary', 'Wildlife & Nature'],
+      'Abstract & Contemporary': ['Botanical & Trees', 'New Designs'],
+      'Floor Lamps': ['Hanging Lamps', 'Bedside & Table Lamps'],
+      'Hanging Lamps': ['Floor Lamps', 'Wall Lamps'],
+      'Bedside & Table Lamps': ['Floor Lamps', 'Hanging Lamps'],
+      'Wall Lamps': ['Hanging Lamps', 'Floor Lamps'],
+      'New Designs': ['Abstract & Contemporary', 'Floor Lamps'],
+      'Custom Design': ['Wildlife Sculptures', 'Floor Lamps', 'Hanging Lamps'],
+      'Cultural & Prismatic': ['Abstract & Contemporary', 'Wildlife Sculptures'],
     }
-  }, [isFullscreen, galleryImages.length])
+
+    const currentSub = product.subCategory || ''
+    const relatedSubs = thematicRelated[currentSub] || []
+
+    // 1. Primary pool: exact same subCategory
+    const exactSubPool = currentSub
+      ? products.filter(p => p.id !== product.id && p.subCategory === currentSub)
+      : []
+
+    // 2. Secondary pool: thematic/related subcategories or same main category
+    const thematicPool = products.filter(
+      p =>
+        p.id !== product.id &&
+        !exactSubPool.some(s => s.id === p.id) &&
+        ((p.subCategory && relatedSubs.includes(p.subCategory)) || p.category === product.category)
+    )
+
+    // 3. Fallback pool: other catalog lamps
+    const otherPool = products.filter(
+      p =>
+        p.id !== product.id &&
+        !exactSubPool.some(s => s.id === p.id) &&
+        !thematicPool.some(t => t.id === p.id)
+    )
+
+    const shuffledExact = shuffle(exactSubPool)
+    const shuffledThematic = shuffle(thematicPool)
+    const shuffledOther = shuffle(otherPool)
+
+    return [...shuffledExact, ...shuffledThematic, ...shuffledOther].slice(0, 3)
+  }, [product.id, product.category, product.subCategory, shuffleSeed])
 
   const whatsappMessage = encodeURIComponent(
     `Hello Gourd Shades,\nI am interested in inquiring about the "${product.name}" lamp (ID: ${product.id}).\nPrice: ${product.price}\nPlease let me know about availability and order steps.`
@@ -689,28 +800,36 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
               data-logo-theme="dark"
               role="button"
               tabIndex={0}
-              onClick={() => setIsFullscreen(true)}
+              onClick={() => {
+                if (galleryImages.length > 1) {
+                  setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
-                  setIsFullscreen(true)
+                  if (galleryImages.length > 1) {
+                    setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
+                  }
                 }
               }}
-              aria-label={`View ${product.name} image full screen`}
-              title="Click to view full screen"
+              aria-label={`View next image for ${product.name}`}
+              title={galleryImages.length > 1 ? "Click to view next image" : undefined}
             >
               <img
                 key={activeImage}
                 src={activeImage}
                 alt={`${product.name} view ${activeImageIndex + 1}`}
               />
-              <span className="detail-expand-hint">
-                <Maximize2 size={12} /> View Fullscreen
-              </span>
               {galleryImages.length > 1 && (
-                <span className="detail-image-badge">
-                  VIEW {activeImageIndex + 1} OF {galleryImages.length}
-                </span>
+                <div className="detail-image-dots" aria-hidden="true">
+                  {galleryImages.map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`detail-dot ${activeImageIndex === idx ? 'dot-active' : ''}`}
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </SlideMaskCard>
@@ -732,56 +851,21 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
         </div>
 
         <div className="detail-copy" data-logo-theme="white">
-          <MaskedHeading
-            as="h1"
-            lines={titleLines}
-          />
-          <p className="detail-subtitle">Artisanal calabash craftsmanship</p>
-          <span className="detail-price">{product.price}</span>
-
-          <div className="detail-divider" />
-
-          <MaskedParagraph
-            className="detail-description"
-            delay={0.1}
-            stagger={0.1}
-            text={product.description}
-          />
-
-          <ScrollFadeReveal className="detail-story-box" delay={0.1}>
-            <h4>The Story & Craftsmanship</h4>
-            <MaskedParagraph
-              delay={0.2}
-              stagger={0.1}
-              text={product.longDescription}
+          <div className="detail-header-block">
+            <span className="detail-category-eyebrow">
+              {product.subCategory || formatCategory(product.category)}
+            </span>
+            <MaskedHeading
+              as="h1"
+              lines={titleLines}
             />
-          </ScrollFadeReveal>
+          </div>
 
-          {product.specifications && product.specifications.length > 0 && (
-            <div className="detail-list">
-              <span className="eyebrow">SPECIFICATIONS & DIMENSIONS</span>
-              {product.specifications.map((item, idx) => (
-                <div key={idx}>
-                  <span className="small-star">✳</span> {item}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {product.features && product.features.length > 0 && (
-            <div className="detail-list">
-              <span className="eyebrow">ARTISANAL FEATURES</span>
-              {product.features.map((item, idx) => (
-                <div key={idx}>
-                  <span className="small-star">✳</span> {item}
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="detail-actions-wrap">
+          {/* Full-width Red Add to Cart Button */}
+          <div className="detail-cta-block">
             <button
-              className="button-dark add-button"
+              type="button"
+              className="detail-add-cart-btn"
               onClick={() => {
                 addToCart(product.id)
                 setAdded(true)
@@ -789,57 +873,113 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
               }}
             >
               {added ? (
-                <>
-                  Added to inquiry bag <Check size={19} />
-                </>
+                <>ADDED TO CART <Check size={18} /></>
               ) : (
-                <>
-                  Add to inquiry bag &nbsp;—&nbsp; {product.price}{' '}
-                  <ArrowUpRight size={19} />
-                </>
+                <>ADD TO CART - {product.price}</>
               )}
             </button>
-
-            <a
-              className="button-whatsapp"
-              href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MessageCircle size={18} /> Inquire Directly via WhatsApp
-            </a>
           </div>
 
-          <div className="detail-studio-meta">
-            <div>
-              <strong>Studio Contact</strong>
-              <a href={`tel:${STUDIO_PHONE}`}>{STUDIO_PHONE}</a>
-            </div>
-            <div>
-              <strong>Studio Location</strong>
-              <span>{STUDIO_LOCATION}</span>
+          {/* Narrative lead description (human, heartfelt, 3 lines max) */}
+          <div className="detail-narrative">
+            <p className="detail-narrative-lead">{product.description}</p>
+          </div>
+
+          {/* Gourd shape rarity & availability note */}
+          <div className="detail-availability-note">
+            <span className="availability-dot" aria-hidden="true" />
+            <div className="availability-text">
+              <strong>Shape &amp; Availability Note:</strong> Most lamps displayed in our gallery are sold original pieces, and natural gourd shapes are naturally rare. Please check with our studio to confirm current shape availability or have a piece crafted on a similar harvested gourd.
             </div>
           </div>
 
-          <p className="detail-footnote">
-            Every lamp is handcrafted to order. Need custom dimensions or bespoke patterns?{' '}
-            <Link to="/contact">Contact the studio.</Link>
-          </p>
+          {/* Collapsible Accordions: Specifications & Studio Delivery */}
+          <div className="detail-accordions">
+            {/* Specifications & Dimensions */}
+            <div className="accordion-item">
+              <button
+                type="button"
+                className="accordion-trigger"
+                onClick={() => toggleSection('specifications')}
+                aria-expanded={openSections.specifications}
+              >
+                <span className="accordion-title">Specifications &amp; Dimensions</span>
+                <ChevronDown
+                  size={18}
+                  className={`accordion-chevron ${openSections.specifications ? 'chevron-open' : ''}`}
+                />
+              </button>
+              <div className={`accordion-content ${openSections.specifications ? 'content-open' : ''}`}>
+                {product.specifications && product.specifications.length > 0 ? (
+                  <ul className="accordion-list">
+                    {product.specifications.map((spec, idx) => (
+                      <li key={idx}>{spec}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="accordion-text">Handcrafted natural calabash with standard electrical fixture.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Studio Delivery & Guarantee */}
+            <div className="accordion-item">
+              <button
+                type="button"
+                className="accordion-trigger"
+                onClick={() => toggleSection('guarantee')}
+                aria-expanded={openSections.guarantee}
+              >
+                <span className="accordion-title">Studio Delivery &amp; Guarantee</span>
+                <ChevronDown
+                  size={18}
+                  className={`accordion-chevron ${openSections.guarantee ? 'chevron-open' : ''}`}
+                />
+              </button>
+              <div className={`accordion-content ${openSections.guarantee ? 'content-open' : ''}`}>
+                <ul className="accordion-list">
+                  <li>3-month comprehensive warranty on all electrical fixtures and wiring</li>
+                  <li>Handcrafted to order from cured organic Tanzanian calabash</li>
+                  <li>Secure export-grade packaging with shock absorption</li>
+                  <li>Studio location: {STUDIO_LOCATION}</li>
+                  <li>Shape availability confirmed directly before crafting begins</li>
+                </ul>
+                <a
+                  className="accordion-whatsapp-link"
+                  href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle size={15} /> Inquire Directly via WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <section className="section related-section" data-logo-theme="white">
-        <div className="section-heading">
+        <div className="section-heading related-heading-row">
           <div>
             <MaskedHeading
               as="h2"
               lines={[
                 <>You might</>,
-                <><em>also love.</em></>,
+                <><em>also like.</em></>,
               ]}
               stagger={0.12}
             />
           </div>
+          <button
+            type="button"
+            className="related-shuffle-btn"
+            onClick={() => setShuffleSeed(Date.now() + Math.random())}
+            aria-label="Shuffle related lamps"
+            title="Shuffle lamps"
+          >
+            <RefreshCw size={13} />
+            <span>Shuffle</span>
+          </button>
         </div>
 
         <div className="product-grid">
@@ -848,112 +988,6 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           ))}
         </div>
       </section>
-
-      {/* Fullscreen Lightbox Modal */}
-      <AnimatePresence>
-        {isFullscreen && (
-          <motion.div
-            className="fullscreen-lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: [0.16, 0.65, 0.3, 1] }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${product.name} full screen view`}
-            onClick={() => setIsFullscreen(false)}
-          >
-            {/* Top Bar */}
-            <div className="fullscreen-lightbox-bar" onClick={e => e.stopPropagation()}>
-              <div className="fullscreen-lightbox-title">
-                <span className="eyebrow muted">{formatCategory(product.category)}</span>
-                <strong>{product.name}</strong>
-              </div>
-
-              {galleryImages.length > 1 && (
-                <span className="fullscreen-lightbox-counter">
-                  {activeImageIndex + 1} / {galleryImages.length}
-                </span>
-              )}
-
-              <button
-                type="button"
-                className="fullscreen-lightbox-close"
-                onClick={() => setIsFullscreen(false)}
-                aria-label="Close full screen view"
-              >
-                <X size={18} />
-                <span>CLOSE [ESC]</span>
-              </button>
-            </div>
-
-            {/* Main Stage */}
-            <div className="fullscreen-lightbox-stage" onClick={e => e.stopPropagation()}>
-              {galleryImages.length > 1 && (
-                <button
-                  type="button"
-                  className="fullscreen-lightbox-nav prev"
-                  onClick={e => {
-                    e.stopPropagation()
-                    setActiveImageIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1))
-                  }}
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft size={28} />
-                </button>
-              )}
-
-              <motion.div
-                key={activeImage}
-                className="fullscreen-lightbox-image-wrap"
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.25, ease: [0.16, 0.65, 0.3, 1] }}
-                onClick={() => setIsFullscreen(false)}
-              >
-                <img
-                  src={activeImage}
-                  alt={`${product.name} large view ${activeImageIndex + 1}`}
-                  className="fullscreen-lightbox-img"
-                  onClick={e => e.stopPropagation()}
-                />
-              </motion.div>
-
-              {galleryImages.length > 1 && (
-                <button
-                  type="button"
-                  className="fullscreen-lightbox-nav next"
-                  onClick={e => {
-                    e.stopPropagation()
-                    setActiveImageIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1))
-                  }}
-                  aria-label="Next image"
-                >
-                  <ChevronRight size={28} />
-                </button>
-              )}
-            </div>
-
-            {/* Bottom Thumbnail Strip */}
-            {galleryImages.length > 1 && (
-              <div className="fullscreen-lightbox-strip" onClick={e => e.stopPropagation()}>
-                {galleryImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`fullscreen-lightbox-thumb ${activeImageIndex === idx ? 'thumb-active' : ''}`}
-                    onClick={() => setActiveImageIndex(idx)}
-                    aria-label={`View photo ${idx + 1}`}
-                  >
-                    <img src={img} alt={`Thumbnail ${idx + 1}`} />
-                  </button>
-                ))}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   )
 }

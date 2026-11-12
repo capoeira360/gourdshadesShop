@@ -1,394 +1,1038 @@
 /* =========================================================
-   GOURD SHADES — EDITORIAL BRAND NAVIGATION DRAWER
-   Brand Palette:
-   - Signature Terracotta Red: #dc3331
-   - Rose Blush Pink: #f5cdcc
-   - Warm Alabaster Cream: #fffef6
+   THE FRANKIE SHOP STYLE TOP NAVIGATION — GOURD SHADES EDITION
+   Minimalist luxury fashion house aesthetic
+   Monochrome palette, clean typography, editorial mega menus
    ========================================================= */
 
-/* 1. FLOATING UNATTACHED LOGO (PURE WHITE FOR CONTRAST ON RED HERO) */
-.floating-site-logo {
-  position: fixed;
-  top: clamp(16px, 2.5vh, 26px);
-  left: clamp(16px, 3.5vw, 40px);
-  z-index: 9999;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  pointer-events: auto;
-  user-select: none;
+:root {
+  --frankie-bg: rgba(255, 255, 255, 0.98);
+  --frankie-border: rgba(0, 0, 0, 0.08);
+  --frankie-text: #1a1a18;
+  --frankie-muted: #75746e;
+  --frankie-badge-red: #dc3331;
 }
 
-.floating-site-logo .gourd-brand-logo,
-.floating-site-logo .gourd-logo-icon,
-.floating-site-logo .gourd-logo-icon path,
-.floating-site-logo .gourd-logo-text,
-.floating-site-logo .wordmark-dot {
+/* 1. FIXED TOP HEADER CONTAINER (TRANSPARENT NAVBAR) */
+.the-frankie-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.the-frankie-header.menu-active,
+.the-frankie-header:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. TOPBAR ROW */
+.frankie-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: clamp(62px, 7.5vh, 68px);
+  padding: 0 clamp(20px, 4vw, 54px);
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* Left: Original Gourd Shades Brand Logo */
+.frankie-topbar-left {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.frankie-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.frankie-brand-logo:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.frankie-brand-logo .gourd-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px; /* pushed snug right next to the gourd silhouette as in footer logo */
+  line-height: 1;
+}
+
+.frankie-brand-logo .gourd-logo-icon {
+  display: block;
+  flex-shrink: 0;
+  transform-origin: center center;
+  margin-right: -2px; /* snug fit next to 'S' */
   transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               fill 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: color, fill;
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.floating-site-logo .gourd-logo-text {
+.frankie-brand-logo:hover .gourd-logo-icon {
+  transform: rotate(-7deg) scale(1.08);
+}
+
+.frankie-brand-logo .gourd-logo-icon path {
+  vector-effect: non-scaling-stroke;
+  stroke: currentColor;
+  stroke-width: 0.6px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  paint-order: stroke fill;
+}
+
+.frankie-brand-logo .gourd-logo-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+}
+
+.frankie-brand-logo .gourd-logo-text {
   font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
   font-weight: 400;
   letter-spacing: -0.06em;
-  font-size: clamp(22px, 2.4vw, 30px);
+  font-size: clamp(26px, 2.5vw, 32px);
   line-height: 0.85;
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s ease;
+}
+
+.frankie-brand-logo:hover .gourd-logo-text {
+  transform: translateX(1px);
+}
+
+.frankie-brand-logo .wordmark-dot {
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-weight: 600;
+  font-size: clamp(26px, 2.5vw, 32px);
+  line-height: 0.85;
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* =========================================================
-   1. WHITE / LIGHT BACKGROUND SECTION (Screenshot 1)
-   - SVG Icon: RED (#dc3331)
-   - Text "Shades": BLACK (#252622)
-   - Dot: RED (#dc3331)
+   LOGO THEME COLOR STATES (RESTING / UNHOVERED)
    ========================================================= */
-.floating-site-logo.theme-white .gourd-logo-icon,
-.floating-site-logo.theme-white .gourd-logo-icon path,
-.floating-site-logo.on-light .gourd-logo-icon,
-.floating-site-logo.on-light .gourd-logo-icon path {
-  color: var(--color-earth, #dc3331) !important;
-  fill: var(--color-earth, #dc3331) !important;
-  filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.2)) !important;
-}
 
-.floating-site-logo.theme-white .gourd-logo-text,
-.floating-site-logo.on-light .gourd-logo-text {
-  color: #252622 !important;
-  text-shadow: none !important;
-}
-
-.floating-site-logo.theme-white .wordmark-dot,
-.floating-site-logo.on-light .wordmark-dot {
-  color: var(--color-earth, #dc3331) !important;
-}
-
-/* =========================================================
-   2. RED / TERRACOTTA SECTION (Matches Footer Logo)
-   - SVG Icon, Text "Shades", and Dot: var(--color-pink, #f5cdcc)
-   ========================================================= */
-.floating-site-logo.theme-red .gourd-logo-icon,
-.floating-site-logo.theme-red .gourd-logo-icon path {
+/* 1. Theme Red (Terracotta hero banners, when NOT open and NOT hovered) */
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon,
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon path {
   color: var(--color-pink, #f5cdcc) !important;
   fill: var(--color-pink, #f5cdcc) !important;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2)) !important;
 }
 
-.floating-site-logo.theme-red .gourd-logo-text {
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-text {
   color: var(--color-pink, #f5cdcc) !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
-.floating-site-logo.theme-red .wordmark-dot {
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .wordmark-dot {
   color: var(--color-pink, #f5cdcc) !important;
 }
 
-/* =========================================================
-   3. DARK / BLACK HERO & SECTIONS (Screenshot & Fix for Dark Image)
-   "change the texts colour on the dark background too"
-   - SVG Icon: RED (#dc3331)
-   - Text "Shades": LUMINOUS PURE WHITE (#ffffff)
-   - Dot: RED (#dc3331)
-   ========================================================= */
-.floating-site-logo.theme-dark .gourd-logo-icon,
-.floating-site-logo.theme-dark .gourd-logo-icon path,
-.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-icon,
-.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-icon path {
+/* 2. Theme Dark (Dark image hero banners, when NOT open and NOT hovered) */
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon,
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon path {
   color: var(--color-earth, #dc3331) !important;
   fill: var(--color-earth, #dc3331) !important;
   filter: drop-shadow(0 2px 10px rgba(220, 51, 49, 0.45)) !important;
 }
 
-.floating-site-logo.theme-dark .gourd-logo-text,
-.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .gourd-logo-text {
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-text {
   color: #ffffff !important;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
 }
 
-.floating-site-logo.theme-dark .wordmark-dot,
-.floating-site-logo:not(.theme-white):not(.theme-red):not(.on-light) .wordmark-dot {
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .wordmark-dot {
   color: var(--color-earth, #dc3331) !important;
 }
 
-/* 2. TOP RIGHT CONTROLS (INQUIRY BAG + MENU BUTTON) */
-.site-header-wrapper {
-  position: fixed;
-  top: clamp(16px, 2.5vh, 26px);
-  right: clamp(16px, 3.5vw, 40px);
-  z-index: 9999;
-  pointer-events: none;
+/* =========================================================
+   LOGO OPEN & NAVBAR HOVER STATE (Red calabash + dark text)
+   ========================================================= */
+.frankie-brand-logo.theme-white .gourd-logo-icon,
+.frankie-brand-logo.theme-white .gourd-logo-icon path,
+.the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-icon,
+.the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-icon path,
+.the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-icon,
+.the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-icon path,
+.the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon,
+.the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon path {
+  color: var(--color-earth, #dc3331) !important;
+  fill: var(--color-earth, #dc3331) !important;
+  filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.25)) !important;
 }
 
-.site-header-wrapper * {
-  pointer-events: auto;
+.frankie-brand-logo.theme-white .gourd-logo-text,
+.the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-text,
+.the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-text,
+.the-frankie-header:hover .frankie-brand-logo .gourd-logo-text {
+  color: #252622 !important;
+  text-shadow: none !important;
 }
 
-.nav-row__right {
+.frankie-brand-logo.theme-white .wordmark-dot,
+.the-frankie-header.theme-white .frankie-brand-logo .wordmark-dot,
+.the-frankie-header.menu-active .frankie-brand-logo .wordmark-dot,
+.the-frankie-header:hover .frankie-brand-logo .wordmark-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* =========================================================
+   LOGO DIRECT HOVER STATE (Interactive highlight on logo itself)
+   ========================================================= */
+.frankie-brand-logo:hover .gourd-logo-icon,
+.frankie-brand-logo:hover .gourd-logo-icon path {
+  color: var(--color-earth, #dc3331) !important;
+  fill: var(--color-earth, #dc3331) !important;
+  filter: drop-shadow(0 4px 14px rgba(220, 51, 49, 0.45)) !important;
+  transform: rotate(-7deg) scale(1.08);
+}
+
+.frankie-brand-logo:hover .gourd-logo-text {
+  color: var(--color-earth, #dc3331) !important;
+  transform: translateX(1px);
+}
+
+.frankie-brand-logo:hover .wordmark-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* Center / Left-Center: Navigation triggers (SHOP, EXPLORE, SEARCH _) */
+.frankie-topbar-nav {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(24px, 3.5vw, 44px);
+  margin-left: clamp(32px, 5vw, 72px);
+  margin-right: auto;
 }
 
-/* Inquiry Bag Pill */
-.header-bag-pill {
+.frankie-nav-link {
+  background: none;
+  border: none;
+  padding: 8px 4px;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--frankie-text);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              letter-spacing 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+}
+
+.frankie-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background: #111111;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.frankie-nav-link:hover::after,
+.frankie-nav-link.is-active::after {
+  width: 100%;
+}
+
+.frankie-nav-link:hover {
+  color: #000000;
+  letter-spacing: 0.14em;
+  transform: translateY(-1px);
+}
+
+/* Search Trigger with Trailing Underscore */
+.frankie-search-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255, 254, 246, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid rgba(220, 51, 49, 0.15);
-  color: #252622;
-  font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  gap: 1px;
 }
 
-.header-bag-pill svg {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.search-cursor-bar {
+  display: inline-block;
+  animation: cursorBlink 1.1s infinite;
+  font-weight: 600;
+  margin-left: 1px;
 }
 
-.header-bag-pill:hover {
-  background: var(--color-apricot, #dc3331);
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* =========================================================
+   NAV LINKS & BUTTONS THEME COLOR STATES
+   ========================================================= */
+
+/* Default / Theme White (and when menu-active is open, or when navbar is hovered) */
+.the-frankie-header.theme-white .frankie-nav-link,
+.the-frankie-header.menu-active .frankie-nav-link,
+.the-frankie-header:hover .frankie-nav-link {
+  color: var(--frankie-text);
+  text-shadow: none !important;
+}
+.the-frankie-header.theme-white .frankie-nav-link:hover,
+.the-frankie-header.theme-white .frankie-nav-link.is-active,
+.the-frankie-header.menu-active .frankie-nav-link:hover,
+.the-frankie-header.menu-active .frankie-nav-link.is-active,
+.the-frankie-header:hover .frankie-nav-link:hover,
+.the-frankie-header:hover .frankie-nav-link.is-active {
+  color: #000000;
+}
+.the-frankie-header.theme-white .frankie-nav-link.is-active::after,
+.the-frankie-header.menu-active .frankie-nav-link.is-active::after,
+.the-frankie-header:hover .frankie-nav-link.is-active::after {
+  background: #111111;
+}
+.the-frankie-header.theme-white .search-cursor-bar,
+.the-frankie-header.menu-active .search-cursor-bar,
+.the-frankie-header:hover .search-cursor-bar {
+  color: var(--frankie-badge-red);
+}
+.the-frankie-header.theme-white .frankie-util-btn,
+.the-frankie-header.menu-active .frankie-util-btn,
+.the-frankie-header:hover .frankie-util-btn {
+  color: var(--frankie-text);
+  text-shadow: none !important;
+}
+.the-frankie-header.theme-white .frankie-counter,
+.the-frankie-header.menu-active .frankie-counter,
+.the-frankie-header:hover .frankie-counter {
+  color: var(--frankie-muted);
+}
+.the-frankie-header.theme-white .frankie-mobile-toggle,
+.the-frankie-header.menu-active .frankie-mobile-toggle,
+.the-frankie-header:hover .frankie-mobile-toggle {
+  color: var(--frankie-text);
+}
+
+/* Theme Red (Terracotta hero banners, when NOT open and NOT hovered) */
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-nav-link {
   color: #fffef6;
-  border-color: var(--color-apricot, #dc3331);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot, #dc3331) 35%, transparent);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-nav-link:hover,
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-nav-link.is-active {
+  color: #f5cdcc;
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-nav-link.is-active::after {
+  background: #f5cdcc;
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .search-cursor-bar {
+  color: #f5cdcc;
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-util-btn {
+  color: #fffef6;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-counter {
+  color: #f5cdcc;
+}
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-mobile-toggle {
+  color: #fffef6;
 }
 
-.header-bag-pill:hover svg {
+/* Theme Dark (Dark image / photography hero banners, when NOT open and NOT hovered) */
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-nav-link {
+  color: #faf8f5;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-nav-link:hover,
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-nav-link.is-active {
+  color: #e5c99e;
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-nav-link.is-active::after {
+  background: #e5c99e;
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .search-cursor-bar {
+  color: #ffffff;
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-util-btn {
+  color: #faf8f5;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-counter {
+  color: #d5c4a9;
+}
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-mobile-toggle {
+  color: #faf8f5;
+}
+
+/* Right: Utility icons (TZ/EN, User, Bell [1], Bookmark [0], Bag [0]) */
+.frankie-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 24px);
+}
+
+.frankie-util-item {
+  position: relative;
+}
+
+.frankie-util-btn {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--frankie-text);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 12px;
+  transition: opacity 0.2s ease,
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.2s ease,
+              background-color 0.25s ease;
+}
+
+.frankie-util-btn:hover {
+  opacity: 1 !important;
+  transform: translateY(-1.5px);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-util-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-util-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.region-btn {
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 6px 8px;
+}
+
+.frankie-counter {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-left: 2px;
+  color: inherit;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.frankie-util-btn:hover .frankie-counter {
+  color: var(--frankie-badge-red) !important;
   transform: scale(1.1);
 }
 
-/* Menu Toggle Pill (Matching Page Buttons Hover Micro-interactions) */
-.nav-toggle-btn {
+.bag-btn .frankie-counter {
+  font-weight: 600;
+}
+
+.frankie-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 6px;
+  color: var(--frankie-text);
+  cursor: pointer;
+}
+
+/* 3. UTILITY POPOVERS (Region, Bell, Wishlist) */
+.frankie-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 260px;
+  background: #ffffff;
+  border: 1px solid var(--frankie-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 16px 18px;
+  z-index: 10000;
+  animation: popoverFadeIn 0.2s ease-out;
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.frankie-popover strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.frankie-popover p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--frankie-muted);
+  margin: 0 0 10px;
+}
+
+.popover-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--frankie-badge-red);
+  margin-bottom: 4px;
+}
+
+.popover-link {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: #252622;
-  color: #fffef6;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 18px 8px 20px;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  user-select: none;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.nav-toggle-btn svg {
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-toggle-btn:hover {
-  background: var(--color-apricot, #dc3331);
-  color: #fffef6;
-  border-color: var(--color-apricot, #dc3331);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-apricot, #dc3331) 35%, transparent);
-}
-
-.nav-toggle-btn:hover .nav-toggle-icon svg {
-  transform: rotate(90deg);
-}
-
-/* When Drawer is Open (High-contrast Alabaster Pill over Red Drawer) */
-.nav-toggle-btn.is-open {
-  background: #fffef6;
-  color: #dc3331;
-  border-color: #fffef6;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-}
-
-.nav-toggle-btn.is-open .nav-toggle-icon svg {
-  transform: rotate(45deg);
-}
-
-.nav-toggle-btn.is-open:hover {
-  background: var(--color-pink, #f5cdcc);
-  color: var(--color-apricot, #dc3331);
-  border-color: var(--color-pink, #f5cdcc);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-
-.nav-toggle-btn.is-open:hover .nav-toggle-icon svg {
-  transform: rotate(135deg);
-}
-
-.nav-toggle-text {
-  font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.nav-toggle-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-}
-
-/* 3. LUXURY EDITORIAL DRAWER */
-.nav-drawer-portal {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  pointer-events: auto;
-}
-
-.nav-drawer-overlay {
+/* 4. MEGA MENUS BASE (TRANSLUCENT FROSTED GLASS NAV PANEL) */
+.frankie-megamenu {
   position: absolute;
-  inset: 0;
-  background: rgba(18, 8, 8, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  cursor: pointer;
-}
-
-/* Terracotta Red Drawer Panel */
-.nav-drawer-panel {
-  position: absolute;
-  top: 0;
+  top: 100%;
+  left: 0;
   right: 0;
-  bottom: 0;
-  width: min(100vw, 540px);
-  height: 100%;
-  height: 100dvh;
-  background: #dc3331; /* Vibrant Terracotta Red */
-  box-shadow: -16px 0 50px rgba(0, 0, 0, 0.35);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.07);
+  z-index: 99998;
 }
 
-/* Content Container with natural top-to-bottom layout */
-.nav-drawer-content {
-  position: relative;
-  height: 100%;
-  max-height: 100dvh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  box-sizing: border-box;
-  padding: clamp(90px, 14vh, 130px) clamp(28px, 6vw, 64px) clamp(40px, 6vh, 60px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.mega-col-heading {
+  display: block;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--frankie-muted);
+  margin-bottom: 16px;
 }
 
-.nav-drawer-content::-webkit-scrollbar {
-  display: none;
-}
-
-/* Menu Links List */
-.nav-links-list {
+.mega-link-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 2.5vh, 26px);
-  width: 100%;
+  gap: 12px;
 }
 
-.nav-item {
-  display: block;
+.mega-text-btn,
+.mega-link {
+  background: none;
+  border: none;
   padding: 0;
-  margin: 0;
-}
-
-.nav-item-link {
-  display: inline-flex;
-  flex-direction: column;
-  text-decoration: none;
-  position: relative;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  color: #222220;
+  text-align: left;
   cursor: pointer;
-  padding: 4px 0 8px 0;
-  width: fit-content;
-  max-width: 100%;
+  text-decoration: none;
+  transition: color 0.18s ease, transform 0.18s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
-/* Line Mask with deep descender clearance (Prevents clipping of y, p, g) */
-.nav-item-mask {
+.mega-text-btn:hover,
+.mega-link:hover {
+  color: #000000;
+  transform: translateX(3px);
+}
+
+.mega-text-btn.is-highlight {
+  font-weight: 700;
+  color: #000000;
+}
+
+.mega-text-btn.is-strong {
+  font-weight: 600;
+  color: #000000;
+}
+
+.mega-badge {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--frankie-badge-red);
+  margin-left: 6px;
+}
+
+/* 5. SHOP MEGA MENU LAYOUT (Screenshot 2) */
+.shop-mega {
+  padding: 38px clamp(20px, 4vw, 54px) 46px;
+}
+
+.shop-mega-grid {
+  display: grid;
+  grid-template-columns: 160px 210px 240px minmax(320px, 1fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  max-width: 1720px;
+  margin: 0 auto;
+}
+
+/* Column 4: Editorial Showcase Card */
+.editorial-showcase-col {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editorial-showcase-card {
   display: block;
+  text-decoration: none;
+  color: #111;
+  width: 100%;
+  max-width: 540px;
+}
+
+.editorial-showcase-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10.5;
+  max-height: 380px;
   overflow: hidden;
-  padding-top: 0.16em;
-  padding-bottom: 0.36em;
-  padding-left: 0.05em;
-  padding-right: 0.35em;
-  margin-top: -0.16em;
-  margin-bottom: -0.36em;
+  background: #141412;
+  border-radius: 2px;
 }
 
-/* Animated text element */
-.nav-item-text {
+.editorial-showcase-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-showcase-card:hover .editorial-showcase-img {
+  transform: scale(1.03);
+}
+
+.editorial-showcase-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.editorial-arrow {
+  font-size: 14px;
+}
+
+/* 6. EXPLORE MEGA MENU LAYOUT (Screenshot 3) */
+.explore-mega {
+  padding: 38px clamp(20px, 4vw, 54px) 46px;
+}
+
+.explore-mega-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr 1.5fr;
+  gap: clamp(24px, 3.5vw, 48px);
+  max-width: 1720px;
+  margin: 0 auto;
+}
+
+.mega-link-list.large-links {
+  gap: 16px;
+}
+
+.mega-large-link {
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a18;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
   display: inline-block;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  font-size: clamp(28px, 4.2vw, 48px);
-  font-weight: 300;
-  line-height: 1.25;
-  letter-spacing: 0.015em;
-  color: #fffef6; /* Warm Alabaster Cream */
-  margin: 0;
-  white-space: nowrap; /* Ensures "Community & Craft" is always on ONE line */
-  transform-origin: left bottom;
-  will-change: transform, opacity;
-  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-item-link:hover .nav-item-text {
-  color: #f5cdcc; /* Rose Blush Pink */
-  transform: translateX(10px);
+.mega-large-link:hover {
+  color: #000000;
+  transform: translateX(4px);
 }
 
-/* Underline Accent on Hover */
-.nav-item-line {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, #fffef6, #f5cdcc);
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-item-link:hover .nav-item-line {
+.explore-editorial-card {
+  display: block;
+  text-decoration: none;
+  color: #111;
   width: 100%;
 }
 
-/* Responsive Styles */
-@media (max-width: 640px) {
-  .nav-drawer-panel {
-    width: 100vw;
+.explore-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 4.4;
+  max-height: 380px;
+  overflow: hidden;
+  background: #141412;
+  border-radius: 2px;
+}
+
+.explore-card-col.wide .explore-card-img-wrap {
+  aspect-ratio: 16 / 10.5;
+}
+
+.explore-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.explore-editorial-card:hover .explore-card-img {
+  transform: scale(1.03);
+}
+
+/* 7. SEARCH PANEL (SEARCH _) */
+.frankie-search-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.07);
+  padding: 24px clamp(20px, 4vw, 54px) 32px;
+  z-index: 99998;
+}
+
+.search-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-bottom: 1px solid #111111;
+  padding-bottom: 10px;
+}
+
+.search-input-icon {
+  color: #888;
+  flex-shrink: 0;
+}
+
+.search-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 16px;
+  color: #111;
+}
+
+.search-field::placeholder {
+  color: #999;
+}
+
+.search-close-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.search-close-btn:hover {
+  color: #111;
+}
+
+.search-results-tray {
+  max-width: 1100px;
+  margin: 24px auto 0;
+}
+
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.search-result-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fbfaf6;
+  border: 1px solid #eeece3;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-result-card:hover {
+  background: #ffffff;
+  border-color: #252622;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.search-result-thumb {
+  width: 50px;
+  height: 50px;
+  background: #eae7dd;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.search-result-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-result-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.search-result-cat {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--frankie-muted);
+}
+
+.search-result-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2px 0 3px;
+}
+
+.search-result-price {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--frankie-badge-red);
+}
+
+.search-no-results {
+  font-size: 13px;
+  color: var(--frankie-muted);
+  padding: 16px 0;
+  text-align: center;
+}
+
+/* 8. MOBILE RESPONSIVE ADAPTATIONS */
+@media (max-width: 1024px) {
+  .shop-mega-grid {
+    grid-template-columns: 140px 180px 200px 1fr;
+    gap: 24px;
   }
-  .floating-site-logo .gourd-logo-text {
+  .explore-mega-grid {
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .frankie-topbar-nav {
     display: none;
   }
-}
+  .frankie-mobile-toggle {
+    display: inline-flex;
+  }
+  .region-wrap,
+  .frankie-topbar-right .frankie-util-item:nth-child(2),
+  .frankie-topbar-right .frankie-util-item:nth-child(3),
+  .frankie-topbar-right .frankie-util-item:nth-child(4) {
+    display: none;
+  }
 
-@media (max-width: 480px) {
-  .nav-drawer-content {
-    padding: 80px 24px 32px;
+  /* Mobile Drawer (Translucent) */
+  .frankie-mobile-drawer {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    z-index: 99997;
+    overflow-y: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
-  .nav-links-list {
-    gap: 16px;
+
+  .mobile-drawer-inner {
+    padding: 24px 22px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
-  .nav-item-text {
-    font-size: clamp(24px, 6.5vw, 32px);
+
+  .mobile-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f4ef;
+    padding: 12px 14px;
+    border: 1px solid #e5e3db;
+  }
+
+  .mobile-search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    flex: 1;
+  }
+
+  .mobile-search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .mobile-search-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  .mobile-search-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  .mobile-search-item strong {
+    display: block;
+    font-size: 13px;
+  }
+
+  .mobile-search-item span {
+    font-size: 11px;
+    color: var(--frankie-badge-red);
+  }
+
+  .mobile-nav-block {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding-bottom: 16px;
+  }
+
+  .mobile-accordion-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 10px 0;
+    font-family: var(--font-small, 'DM Sans', sans-serif);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #111;
+    cursor: pointer;
+  }
+
+  .mobile-chevron {
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-chevron.is-open {
+    transform: rotate(180deg);
+  }
+
+  .mobile-submenu {
+    list-style: none;
+    padding: 10px 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mobile-submenu button,
+  .mobile-submenu a {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    font-size: 14px;
+    color: #444;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-drawer-footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-region-pill {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #222;
+    margin-bottom: 8px;
+  }
+
+  .mobile-drawer-footer p {
+    font-size: 12px;
+    color: var(--frankie-muted);
+    margin: 0;
   }
 }

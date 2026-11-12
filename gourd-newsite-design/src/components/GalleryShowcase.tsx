@@ -69,6 +69,42 @@ const galleryItems: GalleryItem[] = [
     subtitle: 'Precision Pattern',
     image: '/images/20240913_145501-reach-2-.jpg',
   },
+  {
+    id: 'gallery-savanna-terrain-1',
+    title: 'Savanna Expedition',
+    subtitle: 'Natural Landscape',
+    image: '/images/terrain-1.jpeg',
+  },
+  {
+    id: 'gallery-savanna-terrain-2',
+    title: 'Arusha Terrain',
+    subtitle: 'Studio Inspiration',
+    image: '/images/terrain-2.jpeg',
+  },
+  {
+    id: 'gallery-savanna-terrain-3',
+    title: 'Artisan Heritage',
+    subtitle: 'Field Exploration',
+    image: '/images/terrain-3.jpeg',
+  },
+  {
+    id: 'gallery-savanna-terrain-4',
+    title: 'Organic Elements',
+    subtitle: 'Natural Flora',
+    image: '/images/terrain-4.jpeg',
+  },
+  {
+    id: 'gallery-coral-reef',
+    title: 'Coral Luminescence',
+    subtitle: 'Organic Reef Form',
+    image: '/images/coral-1.jpg',
+  },
+  {
+    id: 'gallery-hanging-three-family',
+    title: 'Cascading Triplets',
+    subtitle: 'Suspended Cluster',
+    image: '/images/3-way-hanging-familiy-1.jpg',
+  },
 ]
 
 // Duplicate 4 sets for seamless infinite loop wrapping
@@ -239,15 +275,11 @@ export function GalleryShowcase() {
               <div className="editorial-gallery-frame">
                 <img
                   src={item.image}
-                  alt={item.title}
+                  alt={item.title || "Calabash artisan studio gallery"}
                   className="editorial-gallery-img"
                   loading="lazy"
                   draggable={false}
                 />
-              </div>
-              <div className="editorial-gallery-label">
-                <h3 className="editorial-gallery-title">{item.title}</h3>
-                {item.subtitle && <span className="editorial-gallery-sub">{item.subtitle}</span>}
               </div>
             </article>
           ))}
