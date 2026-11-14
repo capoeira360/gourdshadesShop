@@ -66,8 +66,7 @@
 }
 
 .frankie-brand-logo:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
+  opacity: 0.88;
 }
 
 .frankie-brand-logo .gourd-brand-logo {
@@ -86,10 +85,6 @@
               fill 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.frankie-brand-logo:hover .gourd-logo-icon {
-  transform: rotate(-7deg) scale(1.08);
 }
 
 .frankie-brand-logo .gourd-logo-icon path {
@@ -116,10 +111,6 @@
   transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.25s ease;
-}
-
-.frankie-brand-logo:hover .gourd-logo-text {
-  transform: translateX(1px);
 }
 
 .frankie-brand-logo .wordmark-dot {
@@ -200,19 +191,17 @@
 }
 
 /* =========================================================
-   LOGO DIRECT HOVER STATE (Interactive highlight on logo itself)
+   LOGO DIRECT HOVER STATE (Single clean color highlight)
    ========================================================= */
 .frankie-brand-logo:hover .gourd-logo-icon,
 .frankie-brand-logo:hover .gourd-logo-icon path {
   color: var(--color-earth, #dc3331) !important;
   fill: var(--color-earth, #dc3331) !important;
-  filter: drop-shadow(0 4px 14px rgba(220, 51, 49, 0.45)) !important;
-  transform: rotate(-7deg) scale(1.08);
+  filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.3)) !important;
 }
 
 .frankie-brand-logo:hover .gourd-logo-text {
-  color: var(--color-earth, #dc3331) !important;
-  transform: translateX(1px);
+  color: #252622 !important;
 }
 
 .frankie-brand-logo:hover .wordmark-dot {
@@ -266,8 +255,6 @@
 
 .frankie-nav-link:hover {
   color: #000000;
-  letter-spacing: 0.14em;
-  transform: translateY(-1px);
 }
 
 /* Search Trigger with Trailing Underscore */
@@ -418,16 +405,7 @@
 
 .frankie-util-btn:hover {
   opacity: 1 !important;
-  transform: translateY(-1.5px);
-  background: rgba(0, 0, 0, 0.04);
-}
-
-.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-util-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-util-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  color: #000000;
 }
 
 .region-btn {
@@ -447,7 +425,6 @@
 
 .frankie-util-btn:hover .frankie-counter {
   color: var(--frankie-badge-red) !important;
-  transform: scale(1.1);
 }
 
 .bag-btn .frankie-counter {
@@ -573,7 +550,6 @@
 .mega-text-btn:hover,
 .mega-link:hover {
   color: #000000;
-  transform: translateX(3px);
 }
 
 .mega-text-btn.is-highlight {
@@ -689,7 +665,6 @@
 
 .mega-large-link:hover {
   color: #000000;
-  transform: translateX(4px);
 }
 
 .explore-editorial-card {
@@ -810,7 +785,6 @@
 .search-result-card:hover {
   background: #ffffff;
   border-color: #252622;
-  transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
 }
 
