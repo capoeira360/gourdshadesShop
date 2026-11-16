@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from 'react'
-import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowDown,
@@ -19,12 +19,12 @@ import {
   Minus,
   Phone,
   Plus,
-  RefreshCw,
   Search,
   ShoppingBag,
   X,
 } from 'lucide-react'
-import { products, type Product } from './data/products'
+import { ProductProvider, useProductStore, type Product } from './context/ProductContext'
+import { AdminPortal } from './components/AdminPortal'
 import {
   MaskedHeading,
   MaskedParagraph,
@@ -259,6 +259,7 @@ function Footer() {
 }
 
 function Home() {
+  const { products } = useProductStore()
   const heroVideoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -274,7 +275,7 @@ function Home() {
     const woman = products.find(p => p.id === 'african-woman-crystal-prismatic-lamp')
     const familyTree = products.find(p => p.id === 'family-tree-stand-lamp')
     return [wildlife, woman, familyTree].filter(Boolean) as Product[]
-  }, [])
+  }, [products])
 
   const newEntryLamps = useMemo(() => {
     const priorityIds = [
@@ -292,7 +293,7 @@ function Home() {
     return priorityIds
       .map(id => products.find(p => p.id === id))
       .filter(Boolean) as Product[]
-  }, [])
+  }, [products])
 
   const newEntriesScrollRef = useRef<HTMLDivElement>(null)
 
@@ -531,8 +532,147 @@ function Home() {
   )
 }
 
+function checkLampFilterMatch(p: Product, activeFilter: string): boolean {
+  if (!activeFilter || activeFilter === 'All lamps' || activeFilter === 'All Lamps' || activeFilter === 'all') {
+    return true
+  }
+
+  const f = activeFilter.trim().toLowerCase()
+
+  if (f === 'new entries' || f === 'new in') {
+    return (
+      [
+        'ndovu-calabash-lamp',
+        'butterfly-dreams-lamp',
+        'coral-calabash-lamp',
+        'hanging-draw-lamp',
+        'sculptured-tri-lamp',
+        '3-way-hanging-family-lamp',
+        'aura-new-design-lamp',
+        'comfort-new-design-lamp',
+        'luster-new-design-lamp',
+        'pembe-tatu-new-design-lamp',
+      ].includes(p.id) || p.category === 'new design'
+    )
+  }
+
+  if (f === 'artisan pieces') {
+    return p.category === 'piece'
+  }
+
+  if (f === 'new designs') {
+    return p.category === 'new design' || Boolean(p.subCategory && p.subCategory.toLowerCase() === 'new designs')
+  }
+
+  if (f === 'custom studio' || f === 'custom design' || f === 'bespoke commissions') {
+    return (
+      p.id === 'bespoke-custom-design-lamp' ||
+      Boolean(p.subCategory && p.subCategory.toLowerCase() === 'custom design') ||
+      p.name.toLowerCase().includes('custom')
+    )
+  }
+
+  if (f === 'wildlife sculptures' || f === 'wildlife & nature' || f === 'wildlife') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('wildlife')
+  }
+
+  if (f === 'botanical & trees' || f === 'botanical') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('botanical') || sub.includes('tree')
+  }
+
+  if (f === 'abstract & contemporary' || f === 'abstract') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('abstract')
+  }
+
+  if (f === 'floor lamps' || f === 'floor') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('floor')
+  }
+
+  if (f === 'hanging lamps' || f === 'architectural pendants' || f === 'hanging') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('hanging')
+  }
+
+  if (
+    f === 'bedside & table' ||
+    f === 'bedside & table lamps' ||
+    f === 'bedside' ||
+    f === 'table lamps' ||
+    f === 'standing bed side'
+  ) {
+    const sub = (p.subCategory || '').toLowerCase()
+    return (
+      sub.includes('bedside') ||
+      sub.includes('table') ||
+      p.id === 'standing-bedside-lamp' ||
+      p.id === 'harmonious-balanced-serene-lighting'
+    )
+  }
+
+  if (f === 'wall lamps' || f === 'wall') {
+    const sub = (p.subCategory || '').toLowerCase()
+    return sub.includes('wall')
+  }
+
+  if (f === 'savanna twilight edit' || f === 'savanna twilight') {
+    return [
+      'african-wild-life-lamps',
+      'savanna-sunset-ecosystem-lamp',
+      'lion-king-majestic-artisanal-lamp',
+      'baobab-tree-of-life-earth-design',
+      'cheetah-speed-modern-artistry-lamp',
+      'ndovu-calabash-lamp',
+      'african-rhino-heritage-carving-lamp',
+      'young-lion-roar-duality-lamp',
+      'big-five-animal-faces-lamp',
+      'posing-zebra-gourd-lamp',
+      'buffalo-metropolitan-modern-lamp',
+    ].includes(p.id)
+  }
+
+  if (f === 'the arusha capsule' || f === 'arusha capsule') {
+    return [
+      'african-woman-crystal-prismatic-lamp',
+      'sophisticated-abstract-crystal-lighting',
+      'trees-for-life-lamp',
+      'baobab-tree-of-life-earth-design',
+      'aura-new-design-lamp',
+      'comfort-new-design-lamp',
+      'luster-new-design-lamp',
+      'pembe-tatu-new-design-lamp',
+      'ndovu-calabash-lamp',
+    ].includes(p.id)
+  }
+
+  if (f === 'collections') {
+    return p.category === 'collection'
+  }
+
+  const sub = (p.subCategory || '').toLowerCase()
+  const cat = (p.category || '').toLowerCase()
+  return sub === f || cat === f || sub.includes(f)
+}
+
+const CATALOG_PILL_FILTERS = [
+  'All lamps',
+  'Artisan Pieces',
+  'New Designs',
+  'Wildlife Sculptures',
+  'Botanical & Trees',
+  'Abstract & Contemporary',
+  'Floor Lamps',
+  'Hanging Lamps',
+  'Bedside & Table',
+]
+
 function ProductsPage() {
+  const { products } = useProductStore()
   const location = useLocation()
+  const navigate = useNavigate()
   const [filter, setFilter] = useState(() => {
     return new URLSearchParams(location.search).get('filter') || 'All lamps'
   })
@@ -549,38 +689,23 @@ function ProductsPage() {
     const f = params.get('filter')
     if (f !== null) {
       setFilter(f)
+      setTimeout(() => {
+        const el = document.getElementById('catalog-section')
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 120)
     }
   }, [location.search])
 
+  const handleFilterClick = (f: string) => {
+    setFilter(f)
+    navigate(`/products?filter=${encodeURIComponent(f)}`, { replace: true })
+  }
+
   const filtered = useMemo(() => {
     return products.filter(p => {
-      const matchesFilter =
-        filter === 'All lamps'
-          ? true
-          : filter === 'New Entries'
-          ? [
-              'ndovu-calabash-lamp',
-              'butterfly-dreams-lamp',
-              'coral-calabash-lamp',
-              'hanging-draw-lamp',
-              'sculptured-tri-lamp',
-              '3-way-hanging-family-lamp',
-              'aura-new-design-lamp',
-              'comfort-new-design-lamp',
-              'luster-new-design-lamp',
-              'pembe-tatu-new-design-lamp',
-            ].includes(p.id)
-          : filter === 'Artisan Pieces'
-          ? p.category === 'piece'
-          : filter === 'New Designs'
-          ? p.category === 'new design'
-          : filter === 'Collections'
-          ? p.category === 'collection'
-          : filter === 'Custom Design'
-          ? p.id === 'bespoke-custom-design-lamp' || p.subCategory === 'Custom Design'
-          : p.subCategory === filter
-          ? true
-          : true
+      const matchesFilter = checkLampFilterMatch(p, filter)
 
       const matchesSearch =
         searchQuery.trim() === ''
@@ -592,7 +717,12 @@ function ProductsPage() {
 
       return matchesFilter && matchesSearch
     })
-  }, [filter, searchQuery])
+  }, [filter, searchQuery, products])
+
+  const normalizedCurrentFilter = filter === 'New Entries' ? 'New In' : filter
+  const displayFilters = CATALOG_PILL_FILTERS.includes(normalizedCurrentFilter)
+    ? CATALOG_PILL_FILTERS
+    : [normalizedCurrentFilter, ...CATALOG_PILL_FILTERS]
 
   return (
     <main className="listing-page">
@@ -617,7 +747,7 @@ function ProductsPage() {
         </div>
       </section>
 
-      <section className="catalog section" data-logo-theme="white">
+      <section id="catalog-section" className="catalog section" data-logo-theme="white">
         <div className="catalog-search-wrap">
           <input
             type="text"
@@ -629,27 +759,48 @@ function ProductsPage() {
         </div>
 
         <div className="catalog-bar">
-          <span>
-            THE COLLECTION{' '}
-            <span className="catalog-count">({String(filtered.length).padStart(2, '0')})</span>
-          </span>
+          <div className="catalog-bar-meta">
+            <span>
+              THE COLLECTION{' '}
+              <span className="catalog-count">({String(filtered.length).padStart(2, '0')})</span>
+            </span>
+            {filter !== 'All lamps' && (
+              <span className="catalog-active-filter-badge">
+                Selected: <strong>{filter === 'New Entries' ? 'New In' : filter}</strong>
+                <button
+                  type="button"
+                  className="catalog-clear-pill"
+                  onClick={() => handleFilterClick('All lamps')}
+                  title="Clear filter and show all lamps"
+                >
+                  ✕ View All
+                </button>
+              </span>
+            )}
+          </div>
+
           <div className="filters" aria-label="Filter products">
-            {['All lamps', 'New Entries', 'Artisan Pieces', 'New Designs', 'Collections'].map(f => (
-              <button
-                key={f}
-                className={filter === f ? 'filter-active' : ''}
-                onClick={() => setFilter(f)}
-              >
-                {f}
-              </button>
-            ))}
+            {displayFilters.map(f => {
+              const isSelected =
+                filter === f ||
+                (f === 'New In' && (filter === 'New In' || filter === 'New Entries'))
+              return (
+                <button
+                  key={f}
+                  className={isSelected ? 'filter-active' : ''}
+                  onClick={() => handleFilterClick(f === 'New In' ? 'New Entries' : f)}
+                >
+                  {f}
+                </button>
+              )
+            })}
           </div>
         </div>
 
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-            <p style={{ fontSize: '18px', color: 'var(--color-earth)' }}>No lamps found matching your search.</p>
-            <button className="button-dark" onClick={() => { setSearchQuery(''); setFilter('All lamps'); }}>
+            <p style={{ fontSize: '18px', color: 'var(--color-earth)' }}>No lamps found matching your selection.</p>
+            <button className="button-dark" onClick={() => { setSearchQuery(''); handleFilterClick('All lamps'); }}>
               Reset filters
             </button>
           </div>
@@ -666,6 +817,7 @@ function ProductsPage() {
 }
 
 function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
+  const { products } = useProductStore()
   const { id } = useParams<{ id: string }>()
   const product = products.find(p => p.id === id)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
@@ -679,9 +831,9 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }))
   }
 
-  const [shuffleSeed, setShuffleSeed] = useState(0)
+  const [shuffleSeed, setShuffleSeed] = useState(() => Date.now() + Math.random())
 
-  // Reset active image and reshuffle related lamps whenever product changes
+  // Reset active image and automatically reshuffle related lamps whenever product changes
   useEffect(() => {
     setActiveImageIndex(0)
     setShuffleSeed(Date.now() + Math.random())
@@ -757,7 +909,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
     const shuffledOther = shuffle(otherPool)
 
     return [...shuffledExact, ...shuffledThematic, ...shuffledOther].slice(0, 3)
-  }, [product.id, product.category, product.subCategory, shuffleSeed])
+  }, [product.id, product.category, product.subCategory, shuffleSeed, products])
 
   const whatsappMessage = encodeURIComponent(
     `Hello Gourd Shades,\nI am interested in inquiring about the "${product.name}" lamp (ID: ${product.id}).\nPrice: ${product.price}\nPlease let me know about availability and order steps.`
@@ -889,7 +1041,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           <div className="detail-availability-note">
             <span className="availability-dot" aria-hidden="true" />
             <div className="availability-text">
-              <strong>Shape &amp; Availability Note:</strong> Most lamps displayed in our gallery are sold original pieces, and natural gourd shapes are naturally rare. Please check with our studio to confirm current shape availability or have a piece crafted on a similar harvested gourd.
+              <strong>Shape &amp; Availability Note:</strong> {product.availabilityNote || 'Most lamps displayed in our gallery are sold original pieces, and natural gourd shapes are naturally rare. Please check with our studio to confirm current shape availability or have a piece crafted on a similar harvested gourd.'}
             </div>
           </div>
 
@@ -959,27 +1111,15 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
       </div>
 
       <section className="section related-section" data-logo-theme="white">
-        <div className="section-heading related-heading-row">
-          <div>
-            <MaskedHeading
-              as="h2"
-              lines={[
-                <>You might</>,
-                <><em>also like.</em></>,
-              ]}
-              stagger={0.12}
-            />
-          </div>
-          <button
-            type="button"
-            className="related-shuffle-btn"
-            onClick={() => setShuffleSeed(Date.now() + Math.random())}
-            aria-label="Shuffle related lamps"
-            title="Shuffle lamps"
-          >
-            <RefreshCw size={13} />
-            <span>Shuffle</span>
-          </button>
+        <div className="section-heading">
+          <MaskedHeading
+            as="h2"
+            lines={[
+              <>You might</>,
+              <><em>also like.</em></>,
+            ]}
+            stagger={0.12}
+          />
         </div>
 
         <div className="product-grid">
@@ -1634,15 +1774,23 @@ function CartDrawer({
   add: (id: string) => void
   remove: (id: string) => void
 }) {
+  const { products } = useProductStore()
   const entries = products.filter(p => items[p.id] > 0)
   const count = entries.reduce((sum, p) => sum + items[p.id], 0)
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        close()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
     return () => {
       document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [open])
+  }, [open, close])
 
   const orderText = `Hello Gourd Shades,\n\nI would like to inquire about ordering the following handcrafted lamps:\n\n${entries
     .map(p => `- ${p.name} (${productPriceDisplay(p.price)}) × ${items[p.id]} unit(s) [ID: ${p.id}]`)
@@ -1772,7 +1920,7 @@ function CartDrawer({
   )
 }
 
-function Storefront() {
+function StorefrontContent() {
   const [cart, setCart] = useState<Record<string, number>>(() => {
     try {
       return JSON.parse(localStorage.getItem('gourd-shades-bag') || '{}')
@@ -1781,9 +1929,13 @@ function Storefront() {
     }
   })
   const [cartOpen, setCartOpen] = useState(false)
+  const location = useLocation()
+  const isAdmin = location.pathname === '/admin'
 
   useEffect(() => {
-    localStorage.setItem('gourd-shades-bag', JSON.stringify(cart))
+    try {
+      localStorage.setItem('gourd-shades-bag', JSON.stringify(cart))
+    } catch {}
   }, [cart])
 
   function add(id: string) {
@@ -1798,9 +1950,9 @@ function Storefront() {
   const count = Object.values(cart).reduce((a, b) => a + b, 0)
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
-      <Header count={count} openCart={() => setCartOpen(true)} />
+      {!isAdmin && <Header count={count} openCart={() => setCartOpen(true)} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductsPage />} />
@@ -1811,6 +1963,7 @@ function Storefront() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/admin" element={<AdminPortal />} />
         <Route
           path="*"
           element={
@@ -1823,16 +1976,28 @@ function Storefront() {
           }
         />
       </Routes>
-      <Footer />
-      <CartDrawer
-        open={cartOpen}
-        close={() => setCartOpen(false)}
-        items={cart}
-        add={add}
-        remove={remove}
-      />
-      <CookieConsent />
-    </BrowserRouter>
+      {!isAdmin && <Footer />}
+      {!isAdmin && (
+        <CartDrawer
+          open={cartOpen}
+          close={() => setCartOpen(false)}
+          items={cart}
+          add={add}
+          remove={remove}
+        />
+      )}
+      {!isAdmin && <CookieConsent />}
+    </>
+  )
+}
+
+export function Storefront() {
+  return (
+    <ProductProvider>
+      <BrowserRouter>
+        <StorefrontContent />
+      </BrowserRouter>
+    </ProductProvider>
   )
 }
 

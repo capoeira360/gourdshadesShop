@@ -13,8 +13,9 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { products, type Product } from '../data/products'
+import { useProductStore, type Product } from '../context/ProductContext'
 import { GourdLogo } from './GourdLogo'
+import { AnnouncementBar } from './AnnouncementBar'
 import './KineticNav.css'
 
 interface KineticNavProps {
@@ -39,6 +40,7 @@ const getInitialTheme = (pathname: string): NavTheme => {
 }
 
 export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
+  const { products } = useProductStore()
   const [activeMega, setActiveMega] = useState<ActiveMega>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileAccordion, setMobileAccordion] = useState<'shop' | 'explore' | null>('shop')
@@ -244,13 +246,13 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
     }
   }, [])
 
-  // Mouse hover handlers with graceful delay
+  // Mouse hover handlers with fast, agile responsiveness
   const handleMouseEnter = (menu: 'shop' | 'explore') => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current)
       closeTimeoutRef.current = null
     }
-    setActiveMega(menu)
+    setActiveMega(prev => (prev === menu ? prev : menu))
     setShowNotificationPopover(false)
     setShowWishlistPopover(false)
     setShowRegionPopover(false)
@@ -259,7 +261,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setActiveMega(prev => (prev === 'search' ? prev : null))
-    }, 180)
+    }, 110)
   }
 
   // Filtered lamps for live search
@@ -275,7 +277,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           p.category.toLowerCase().includes(q)
       )
       .slice(0, 6)
-  }, [searchQuery])
+  }, [searchQuery, products])
 
   // Navigate to lamp detail and close menus
   const handleSelectProduct = (id: string) => {
@@ -302,6 +304,9 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
       }`}
       onMouseLeave={handleMouseLeave}
     >
+      {/* 0. EDITABLE TOP ANNOUNCEMENT BAR */}
+      <AnnouncementBar />
+
       {/* 1. TOP UTILITY & NAVIGATION BAR */}
       <div className="frankie-topbar">
         {/* Left: Brand Logo (Original Calabash Icon + Shades Wordmark) */}
@@ -480,10 +485,10 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         {activeMega === 'shop' && (
           <motion.div
             className="frankie-megamenu shop-mega"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.14, ease: 'easeOut' }}
             onMouseEnter={() => handleMouseEnter('shop')}
           >
             <div className="shop-mega-grid">
@@ -538,15 +543,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <button
                       type="button"
                       className="mega-text-btn is-strong"
-                      onClick={() => handleSelectFilter('New Entries')}
-                    >
-                      New In
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
                       onClick={() => handleSelectFilter('Wildlife Sculptures')}
                     >
                       Wildlife Sculptures
@@ -573,7 +569,24 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                   <li>
                     <button
                       type="button"
-                      className="mega-text-btn"
+                      className="mega-text-btn with-badge"
+                      onClick={() => handleSelectFilter('Savanna Twilight Edit')}
+                    >
+                      <span>Savanna Twilight Edit</span>
+                      <span className="mega-badge">NEW</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 3: Curated Edits & Lighting Placements */}
+              <div className="mega-col edits-col">
+                <span className="mega-col-heading">Curated Edits</span>
+                <ul className="mega-link-list">
+                  <li>
+                    <button
+                      type="button"
+                      className="mega-text-btn is-strong"
                       onClick={() => handleSelectFilter('Floor Lamps')}
                     >
                       Floor Lamps
@@ -592,7 +605,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <button
                       type="button"
                       className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Bedside & Table Lamps')}
+                      onClick={() => handleSelectFilter('Bedside & Table')}
                     >
                       Bedside &amp; Table
                     </button>
@@ -601,81 +614,9 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <button
                       type="button"
                       className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Wall Lamps')}
-                    >
-                      Wall Lamps
-                    </button>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Column 3: Curated Edits & Studio Notes with NEW badges */}
-              <div className="mega-col edits-col">
-                <span className="mega-col-heading">Curated Edits</span>
-                <ul className="mega-link-list">
-                  <li>
-                    <Link
-                      to="/contact?custom=1"
-                      className="mega-link with-badge"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      <span>Bespoke Commissions</span>
-                      <span className="mega-badge">NEW</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn with-badge"
-                      onClick={() => handleSelectFilter('New Entries')}
-                    >
-                      <span>Savanna Twilight Edit</span>
-                      <span className="mega-badge">NEW</span>
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Hanging Lamps')}
-                    >
-                      Architectural Pendants
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Wildlife Sculptures')}
+                      onClick={() => handleSelectFilter('The Arusha Capsule')}
                     >
                       The Arusha Capsule
-                    </button>
-                  </li>
-                  <li>
-                    <Link
-                      to="/about#craft"
-                      className="mega-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      Organic Calabash Sourcing
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/about#guarantee"
-                      className="mega-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      3-Month Studio Warranty
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn is-strong"
-                      onClick={() => handleSelectFilter('All lamps')}
-                    >
-                      Explore All 39 Lamps
                     </button>
                   </li>
                 </ul>
@@ -711,10 +652,10 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         {activeMega === 'explore' && (
           <motion.div
             className="frankie-megamenu explore-mega"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.14, ease: 'easeOut' }}
             onMouseEnter={() => handleMouseEnter('explore')}
           >
             <div className="explore-mega-grid">
@@ -811,10 +752,10 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         {activeMega === 'search' && (
           <motion.div
             className="frankie-search-panel"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.14, ease: 'easeOut' }}
           >
             <div className="search-bar-row">
               <Search size={16} className="search-input-icon" />
@@ -939,9 +880,33 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <li>
                       <button
                         type="button"
-                        onClick={() => handleSelectFilter('New Entries')}
+                        onClick={() => handleSelectFilter('All lamps')}
                       >
-                        New In
+                        All 39 Lamps
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => handleSelectFilter('Artisan Pieces')}
+                      >
+                        Artisan Pieces
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => handleSelectFilter('New Designs')}
+                      >
+                        New Designs
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => handleSelectFilter('Custom Design')}
+                      >
+                        Custom Studio
                       </button>
                     </li>
                     <li>
@@ -971,6 +936,14 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <li>
                       <button
                         type="button"
+                        onClick={() => handleSelectFilter('Savanna Twilight Edit')}
+                      >
+                        Savanna Twilight Edit
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
                         onClick={() => handleSelectFilter('Floor Lamps')}
                       >
                         Floor Lamps
@@ -987,9 +960,17 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     <li>
                       <button
                         type="button"
-                        onClick={() => handleSelectFilter('All lamps')}
+                        onClick={() => handleSelectFilter('Bedside & Table')}
                       >
-                        All 39 Lamps
+                        Bedside &amp; Table
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => handleSelectFilter('The Arusha Capsule')}
+                      >
+                        The Arusha Capsule
                       </button>
                     </li>
                   </ul>
