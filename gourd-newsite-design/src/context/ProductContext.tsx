@@ -4,6 +4,7 @@ import { products as initialProducts, type Product as BaseProduct } from '../dat
 export interface Product extends BaseProduct {
   availabilityStatus?: 'available' | 'sold' | 'rare';
   availabilityNote?: string;
+  isNewEntry?: boolean;
 }
 
 export interface AnnouncementNote {
@@ -94,6 +95,16 @@ interface ProductContextType {
   changePassword: (newPass: string) => boolean;
   exportProductsJson: () => string;
   importProductsJson: (jsonStr: string) => boolean;
+  wishlist: string[];
+  wishlistCount: number;
+  isInWishlist: (productId: string) => boolean;
+  toggleWishlist: (productId: string) => void;
+  addToWishlist: (productId: string) => void;
+  removeFromWishlist: (productId: string) => void;
+  clearWishlist: () => void;
+  isWishlistOpen: boolean;
+  openWishlist: () => void;
+  closeWishlist: () => void;
 }
 
 const STORAGE_KEY_PRODUCTS = 'gourd_shades_products_v1'
@@ -101,6 +112,7 @@ const STORAGE_KEY_SETTINGS = 'gourd_shades_settings_v1'
 const STORAGE_KEY_ANNOUNCEMENTS = 'gourd_shades_announcements_v1'
 const STORAGE_KEY_AUTH = 'gourd_shades_admin_session_v1'
 const STORAGE_KEY_CREDS = 'gourd_shades_admin_creds_v1'
+const STORAGE_KEY_WISHLIST = 'gourd_shades_wishlist_v1'
 
 const DEFAULT_CREDS = {
   email: 'admin@gourdshades.com',
@@ -163,6 +175,54 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   })
 
   const [adminEmail, setAdminEmail] = useState<string>(DEFAULT_CREDS.email)
+
+  // Wishlist state (persists across reloads)
+  const [wishlist, setWishlist] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_WISHLIST)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed)) return parsed
+      }
+    } catch (e) {
+      console.warn('Failed to load wishlist from localStorage:', e)
+    }
+    return []
+  })
+
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false)
+
+  // Save wishlist on change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_WISHLIST, JSON.stringify(wishlist))
+    } catch (e) {
+      console.warn('Failed to save wishlist to localStorage:', e)
+    }
+  }, [wishlist])
+
+  const isInWishlist = (productId: string) => wishlist.includes(productId)
+
+  const toggleWishlist = (productId: string) => {
+    setWishlist(prev =>
+      prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId]
+    )
+  }
+
+  const addToWishlist = (productId: string) => {
+    setWishlist(prev => (prev.includes(productId) ? prev : [...prev, productId]))
+  }
+
+  const removeFromWishlist = (productId: string) => {
+    setWishlist(prev => prev.filter(id => id !== productId))
+  }
+
+  const clearWishlist = () => {
+    setWishlist([])
+  }
+
+  const openWishlist = () => setIsWishlistOpen(true)
+  const closeWishlist = () => setIsWishlistOpen(false)
 
   // Save products on change
   useEffect(() => {
@@ -328,7 +388,17 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         logout,
         changePassword,
         exportProductsJson,
-        importProductsJson
+        importProductsJson,
+        wishlist,
+        wishlistCount: wishlist.length,
+        isInWishlist,
+        toggleWishlist,
+        addToWishlist,
+        removeFromWishlist,
+        clearWishlist,
+        isWishlistOpen,
+        openWishlist,
+        closeWishlist
       }}
     >
       {children}

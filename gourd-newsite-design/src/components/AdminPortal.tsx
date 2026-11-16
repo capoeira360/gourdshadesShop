@@ -464,11 +464,16 @@ export const AdminPortal: React.FC = () => {
                         <div className="col-status">
                           <span className={`status-pill ${product.availabilityStatus || 'available'}`}>
                             {product.availabilityStatus === 'sold'
-                              ? 'Sold Out'
+                              ? '🔴 Sold (Price Hidden)'
                               : product.availabilityStatus === 'rare'
-                              ? 'Rare Shape'
-                              : 'Available'}
+                              ? '🟡 Rare Shape'
+                              : '🟢 Available'}
                           </span>
+                          {product.isNewEntry && (
+                            <span className="status-pill" style={{ background: '#f5cdcc', color: '#901b19', marginTop: '4px' }}>
+                              ⭐ New Entry
+                            </span>
+                          )}
                           {product.availabilityNote && (
                             <small className="availability-note-hint">{product.availabilityNote}</small>
                           )}
@@ -1098,24 +1103,44 @@ export const AdminPortal: React.FC = () => {
                     }
                     className="admin-select"
                   >
-                    <option value="available">In Stock / Available</option>
-                    <option value="rare">Rare Gourd Shape (Check Availability)</option>
-                    <option value="sold">Sold Out (Bespoke Remake on Request)</option>
+                    <option value="available">🟢 In Stock / Available (Shows Price)</option>
+                    <option value="sold">🔴 Sold (Hides Price — Prompts "Ask for Shape Availability")</option>
+                    <option value="rare">🟡 Rare Gourd Shape (Check Shape Availability)</option>
                   </select>
                 </div>
               </div>
 
-              {/* Row 3: Availability Special Note */}
-              <div className="admin-form-group">
-                <label>Gourd Shape / Availability Note</label>
-                <input
-                  type="text"
-                  value={editingProduct.availabilityNote || ''}
-                  onChange={e => setEditingProduct({ ...editingProduct, availabilityNote: e.target.value })}
-                  placeholder="e.g. Please check availability of this gourd shape since each calabash is rare and one-of-a-kind."
-                  className="admin-input"
-                />
-                <small>Displayed prominently on product pages to inform customers about rare shapes.</small>
+              {/* Row 3: Availability Special Note & New Entry Toggle */}
+              <div className="admin-grid-2">
+                <div className="admin-form-group">
+                  <label>Gourd Shape &amp; Availability Note</label>
+                  <input
+                    type="text"
+                    value={editingProduct.availabilityNote || ''}
+                    onChange={e => setEditingProduct({ ...editingProduct, availabilityNote: e.target.value })}
+                    placeholder="e.g. Original piece sold. Available to craft on harvested calabash shapes upon request."
+                    className="admin-input"
+                  />
+                  <small>Displayed prominently on product page to inform customers about shape availability.</small>
+                </div>
+
+                <div className="admin-form-group">
+                  <label>Storefront Release Tag</label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginTop: '8px' }}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(editingProduct.isNewEntry)}
+                      onChange={e => setEditingProduct({ ...editingProduct, isNewEntry: e.target.checked })}
+                      style={{ width: '18px', height: '18px', accentColor: '#dc3331' }}
+                    />
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: '#1a1a18' }}>
+                      Mark as "New Entry" on details page
+                    </span>
+                  </label>
+                  <small style={{ color: '#777', display: 'block', marginTop: '4px' }}>
+                    Displays the editorial "NEW ENTRY" badge on the product details page.
+                  </small>
+                </div>
               </div>
 
               {/* Row 4: Short Human Description (Max 3 lines) */}

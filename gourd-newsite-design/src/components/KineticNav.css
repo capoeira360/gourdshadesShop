@@ -38,12 +38,14 @@
 
 /* Header hover frosted background is strictly for desktop mouse users */
 @media (hover: hover) and (pointer: fine) {
-  .the-frankie-header:hover {
+  .the-frankie-header:hover,
+  .the-frankie-header.theme-red:hover,
+  .the-frankie-header.theme-dark:hover {
     background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
   }
 }
 
@@ -203,18 +205,26 @@
    ========================================================= */
 @media (hover: hover) and (pointer: fine) {
   .the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon,
-  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon path {
+  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon path,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-icon,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-icon path,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-icon,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-icon path {
     color: var(--color-earth, #dc3331) !important;
     fill: var(--color-earth, #dc3331) !important;
     filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.25)) !important;
   }
 
-  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-text {
+  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-text,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-text,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-text {
     color: #252622 !important;
     text-shadow: none !important;
   }
 
-  .the-frankie-header:hover .frankie-brand-logo .wordmark-dot {
+  .the-frankie-header:hover .frankie-brand-logo .wordmark-dot,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo .wordmark-dot,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo .wordmark-dot {
     color: var(--color-earth, #dc3331) !important;
   }
 
@@ -399,41 +409,76 @@
 
 /* Nav Links & Buttons Hover States (Desktop Fine Pointers Only) */
 @media (hover: hover) and (pointer: fine) {
-  .the-frankie-header:hover .frankie-nav-link {
-    color: var(--frankie-text);
+  .the-frankie-header:hover .frankie-nav-link,
+  .the-frankie-header.theme-red:hover .frankie-nav-link,
+  .the-frankie-header.theme-dark:hover .frankie-nav-link {
+    color: var(--frankie-text, #252622) !important;
     text-shadow: none !important;
   }
+
   .the-frankie-header:hover .frankie-nav-link:hover,
   .the-frankie-header:hover .frankie-nav-link.is-active,
+  .the-frankie-header.theme-red:hover .frankie-nav-link:hover,
+  .the-frankie-header.theme-red:hover .frankie-nav-link.is-active,
+  .the-frankie-header.theme-dark:hover .frankie-nav-link:hover,
+  .the-frankie-header.theme-dark:hover .frankie-nav-link.is-active,
   .the-frankie-header.theme-white .frankie-nav-link:hover,
   .the-frankie-header.menu-active .frankie-nav-link:hover {
-    color: #000000;
+    color: #000000 !important;
   }
-  .the-frankie-header:hover .frankie-nav-link.is-active::after {
-    background: #111111;
+
+  .the-frankie-header:hover .frankie-nav-link.is-active::after,
+  .the-frankie-header.theme-red:hover .frankie-nav-link.is-active::after,
+  .the-frankie-header.theme-dark:hover .frankie-nav-link.is-active::after {
+    background: #111111 !important;
   }
-  .the-frankie-header:hover .search-cursor-bar {
-    color: var(--frankie-badge-red);
+
+  .the-frankie-header:hover .search-cursor-bar,
+  .the-frankie-header.theme-red:hover .search-cursor-bar,
+  .the-frankie-header.theme-dark:hover .search-cursor-bar {
+    color: var(--frankie-badge-red, #dc3331) !important;
   }
-  .the-frankie-header:hover .frankie-util-btn {
-    color: var(--frankie-text);
+
+  .the-frankie-header:hover .frankie-util-btn,
+  .the-frankie-header.theme-red:hover .frankie-util-btn,
+  .the-frankie-header.theme-dark:hover .frankie-util-btn {
+    color: var(--frankie-text, #252622) !important;
     text-shadow: none !important;
   }
-  .the-frankie-header:hover .frankie-counter {
-    color: var(--frankie-muted);
+
+  .the-frankie-header:hover .frankie-counter,
+  .the-frankie-header.theme-red:hover .frankie-counter,
+  .the-frankie-header.theme-dark:hover .frankie-counter {
+    color: var(--frankie-muted, #77766f) !important;
   }
-  .the-frankie-header:hover .frankie-mobile-toggle {
-    color: var(--frankie-text);
+
+  .the-frankie-header:hover .frankie-mobile-toggle,
+  .the-frankie-header.theme-red:hover .frankie-mobile-toggle,
+  .the-frankie-header.theme-dark:hover .frankie-mobile-toggle {
+    color: var(--frankie-text, #252622) !important;
   }
+
   .frankie-nav-link:hover {
-    color: #000000;
+    color: #000000 !important;
   }
+
   .frankie-nav-link:hover::after {
-    width: 100%;
+    width: 100% !important;
   }
-  .frankie-util-btn:hover {
+
+  .frankie-util-btn:hover,
+  .the-frankie-header:hover .frankie-util-btn:hover,
+  .the-frankie-header.theme-red:hover .frankie-util-btn:hover,
+  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover {
     opacity: 1 !important;
-    color: #000000;
+    color: #000000 !important;
+  }
+
+  .frankie-util-btn:hover .frankie-counter,
+  .the-frankie-header:hover .frankie-util-btn:hover .frankie-counter,
+  .the-frankie-header.theme-red:hover .frankie-util-btn:hover .frankie-counter,
+  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover .frankie-counter {
+    color: var(--frankie-badge-red, #dc3331) !important;
   }
 }
 
@@ -492,8 +537,22 @@
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
 }
 
-.bag-btn .frankie-counter {
+.bag-btn .frankie-counter,
+.wishlist-btn .frankie-counter {
   font-weight: 600;
+}
+
+@media (min-width: 901px) {
+  .frankie-topbar-right .bag-button,
+  .frankie-topbar-right .wishlist-button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    padding: 6px 8px !important;
+    min-height: unset !important;
+    font-weight: 500 !important;
+  }
 }
 
 .frankie-mobile-toggle {
@@ -974,12 +1033,13 @@
     gap: 8px !important;
   }
 
-  /* Compact Luxury Bag Pill */
-  .frankie-topbar-right .bag-button {
+  /* Compact Luxury Bag & Wishlist Pills */
+  .frankie-topbar-right .bag-button,
+  .frankie-topbar-right .wishlist-button {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 5px !important;
-    padding: 6px 12px !important;
+    gap: 4px !important;
+    padding: 6px 10px !important;
     border-radius: 999px !important;
     font-size: 12px !important;
     font-weight: 600 !important;
@@ -995,7 +1055,8 @@
   .frankie-nav-link,
   .frankie-util-btn,
   .frankie-mobile-toggle,
-  .bag-button {
+  .bag-button,
+  .wishlist-button {
     -webkit-tap-highlight-color: transparent !important;
   }
 
@@ -1007,21 +1068,25 @@
     box-shadow: none !important;
   }
 
-  .the-frankie-header.theme-red:not(.menu-active) .bag-button {
+  .the-frankie-header.theme-red:not(.menu-active) .bag-button,
+  .the-frankie-header.theme-red:not(.menu-active) .wishlist-button {
     background: rgba(255, 255, 255, 0.16) !important;
     border-color: rgba(255, 255, 255, 0.28) !important;
     color: #fffef6 !important;
   }
-  .the-frankie-header.theme-red:not(.menu-active) .bag-button .frankie-counter {
+  .the-frankie-header.theme-red:not(.menu-active) .bag-button .frankie-counter,
+  .the-frankie-header.theme-red:not(.menu-active) .wishlist-button .frankie-counter {
     color: #f5cdcc !important;
   }
 
-  .the-frankie-header.theme-dark:not(.menu-active) .bag-button {
+  .the-frankie-header.theme-dark:not(.menu-active) .bag-button,
+  .the-frankie-header.theme-dark:not(.menu-active) .wishlist-button {
     background: rgba(255, 255, 255, 0.12) !important;
     border-color: rgba(255, 255, 255, 0.22) !important;
     color: #fffef6 !important;
   }
-  .the-frankie-header.theme-dark:not(.menu-active) .bag-button .frankie-counter {
+  .the-frankie-header.theme-dark:not(.menu-active) .bag-button .frankie-counter,
+  .the-frankie-header.theme-dark:not(.menu-active) .wishlist-button .frankie-counter {
     color: #d5c4a9 !important;
   }
 

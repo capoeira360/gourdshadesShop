@@ -40,15 +40,13 @@ const getInitialTheme = (pathname: string): NavTheme => {
 }
 
 export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
-  const { products } = useProductStore()
+  const { products, wishlistCount, openWishlist } = useProductStore()
   const [activeMega, setActiveMega] = useState<ActiveMega>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileAccordion, setMobileAccordion] = useState<'shop' | 'explore' | null>('shop')
   const [searchQuery, setSearchQuery] = useState('')
   const [showNotificationPopover, setShowNotificationPopover] = useState(false)
-  const [showWishlistPopover, setShowWishlistPopover] = useState(false)
   const [showRegionPopover, setShowRegionPopover] = useState(false)
-  const [savedCount, setSavedCount] = useState(0)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -190,7 +188,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
     setActiveMega(null)
     setIsMobileMenuOpen(false)
     setShowNotificationPopover(false)
-    setShowWishlistPopover(false)
     setShowRegionPopover(false)
   }, [location.pathname, location.search])
 
@@ -224,7 +221,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         setActiveMega(null)
         setIsMobileMenuOpen(false)
         setShowNotificationPopover(false)
-        setShowWishlistPopover(false)
         setShowRegionPopover(false)
       }
     }
@@ -233,7 +229,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setActiveMega(null)
         setShowNotificationPopover(false)
-        setShowWishlistPopover(false)
         setShowRegionPopover(false)
       }
     }
@@ -254,7 +249,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
     }
     setActiveMega(prev => (prev === menu ? prev : menu))
     setShowNotificationPopover(false)
-    setShowWishlistPopover(false)
     setShowRegionPopover(false)
   }
 
@@ -367,7 +361,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
               onClick={() => {
                 setShowRegionPopover(prev => !prev)
                 setShowNotificationPopover(false)
-                setShowWishlistPopover(false)
               }}
               title="Studio Location & Currency"
             >
@@ -398,7 +391,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
               className="frankie-util-btn"
               onClick={() => {
                 setShowNotificationPopover(prev => !prev)
-                setShowWishlistPopover(false)
                 setShowRegionPopover(false)
               }}
               title="Studio Updates"
@@ -423,42 +415,23 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
             )}
           </div>
 
-          {/* Wishlist / Bookmark Icon [0] */}
-          <div className="frankie-util-item">
-            <button
-              type="button"
-              className="frankie-util-btn"
-              onClick={() => {
-                setShowWishlistPopover(prev => !prev)
-                setShowNotificationPopover(false)
-                setShowRegionPopover(false)
-              }}
-              title="Saved Lamps"
-              aria-label="Saved lamps"
-            >
-              <Bookmark size={15} strokeWidth={1.8} />
-              <span className="frankie-counter">[{savedCount}]</span>
-            </button>
-            {showWishlistPopover && (
-              <div className="frankie-popover wishlist-popover">
-                <strong>Saved Pieces</strong>
-                <p>Browse our catalog of 39 artisan calabashes to inquire or collect your favorite luminaires.</p>
-                <Link
-                  to="/products"
-                  className="popover-link"
-                  onClick={() => setShowWishlistPopover(false)}
-                >
-                  Explore Catalog <ArrowRight size={13} />
-                </Link>
-              </div>
-            )}
-          </div>
+          {/* Wishlist / Bookmark Icon [wishlistCount] */}
+          <button
+            type="button"
+            className="frankie-util-btn wishlist-btn wishlist-button"
+            onClick={openWishlist}
+            title="Saved Wishlamps"
+            aria-label={`Wishlist with ${wishlistCount} saved lamps`}
+          >
+            <Bookmark size={15} strokeWidth={1.8} fill={wishlistCount > 0 ? 'currentColor' : 'none'} />
+            <span className="frankie-counter">[{wishlistCount}]</span>
+          </button>
 
           {/* Shopping Bag Icon [cartCount] */}
           {onOpenCart && (
             <button
               type="button"
-              className="frankie-util-btn bag-btn"
+              className="frankie-util-btn bag-btn bag-button"
               onClick={onOpenCart}
               title="Open Inquiry Bag"
               aria-label={`Open inquiry bag with ${cartCount} items`}
@@ -1018,6 +991,25 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                     </li>
                   </ul>
                 )}
+              </div>
+
+              {/* Direct Wishlist Trigger */}
+              <div className="mobile-nav-block">
+                <button
+                  type="button"
+                  className="mobile-accordion-trigger"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    openWishlist()
+                  }}
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                >
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '9px' }}>
+                    <Bookmark size={16} strokeWidth={1.8} fill={wishlistCount > 0 ? 'currentColor' : 'none'} />
+                    <span>SAVED WISHLAMPS</span>
+                  </span>
+                  <span className="frankie-counter">[{wishlistCount}]</span>
+                </button>
               </div>
 
               {/* Mobile Footer Meta */}

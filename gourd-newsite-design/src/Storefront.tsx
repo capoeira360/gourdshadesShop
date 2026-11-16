@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Bookmark,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -21,6 +22,7 @@ import {
   Plus,
   Search,
   ShoppingBag,
+  Trash2,
   X,
 } from 'lucide-react'
 import { ProductProvider, useProductStore, type Product } from './context/ProductContext'
@@ -71,11 +73,9 @@ function ScrollToTop() {
 function ProductCard({
   product,
   index = 0,
-  tag,
 }: {
   product: Product
   index?: number
-  tag?: string
 }) {
   const cardRef = useRef<HTMLElement>(null)
   const [scrollState, setScrollState] = useState<'in-view' | 'below' | 'above'>('below')
@@ -121,34 +121,37 @@ function ProductCard({
     return () => observer.disconnect()
   }, [])
 
+  const isSold = product.availabilityStatus === 'sold'
+
   return (
     <article ref={cardRef} className="product-card" data-scroll-state={scrollState}>
       <div className="product-card-inner">
-        <Link
-          to={`/products/${product.id}`}
-          className="product-card-image"
-          aria-label={`View ${product.name} handcrafted lamp`}
-        >
-          {tag && <span className="product-card-badge">{tag}</span>}
-          <img
-            src={primaryImage}
-            alt={`${product.name} handmade calabash lamp`}
-            className="product-card-img product-card-img-primary"
-            loading="lazy"
-          />
-          {secondaryImage && secondaryImage !== primaryImage && (
+        <div className="product-card-image-wrap">
+          <Link
+            to={`/products/${product.id}`}
+            className="product-card-image"
+            aria-label={`View ${product.name} handcrafted lamp`}
+          >
             <img
-              src={secondaryImage}
-              alt={`${product.name} alternate view`}
-              className="product-card-img product-card-img-secondary"
+              src={primaryImage}
+              alt={`${product.name} handmade calabash lamp`}
+              className="product-card-img product-card-img-primary"
               loading="lazy"
-              aria-hidden="true"
             />
-          )}
-          <span className="round-arrow">
-            <ArrowUpRight size={21} strokeWidth={1.5} />
-          </span>
-        </Link>
+            {secondaryImage && secondaryImage !== primaryImage && (
+              <img
+                src={secondaryImage}
+                alt={`${product.name} alternate view`}
+                className="product-card-img product-card-img-secondary"
+                loading="lazy"
+                aria-hidden="true"
+              />
+            )}
+            <span className="round-arrow">
+              <ArrowUpRight size={21} strokeWidth={1.5} />
+            </span>
+          </Link>
+        </div>
         <div className="product-card-info">
           <div>
             <span className="eyebrow muted">
@@ -159,7 +162,11 @@ function ProductCard({
             </h3>
             <p>{product.description}</p>
           </div>
-          <span className="price">{product.price}</span>
+          {isSold ? (
+            <span className="price price-sold">Sold • Inquire Shape</span>
+          ) : (
+            <span className="price">{product.price}</span>
+          )}
         </div>
       </div>
     </article>
@@ -440,7 +447,6 @@ function Home() {
                 key={product.id}
                 product={product}
                 index={index}
-                tag={product.category === 'new design' ? 'New Design' : 'New Entry'}
               />
             ))}
           </div>
@@ -817,9 +823,10 @@ function ProductsPage() {
 }
 
 function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
-  const { products } = useProductStore()
+  const { products, isInWishlist, toggleWishlist } = useProductStore()
   const { id } = useParams<{ id: string }>()
   const product = products.find(p => p.id === id)
+  const isSaved = product ? isInWishlist(product.id) : false
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [added, setAdded] = useState(false)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -1003,47 +1010,124 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
         </div>
 
         <div className="detail-copy" data-logo-theme="white">
-          <div className="detail-header-block">
-            <span className="detail-category-eyebrow">
-              {product.subCategory || formatCategory(product.category)}
-            </span>
-            <MaskedHeading
-              as="h1"
-              lines={titleLines}
-            />
-          </div>
+          {(() => {
+            const isSold = product.availabilityStatus === 'sold'
+            const isNewEntry = Boolean(
+              product.isNewEntry ||
+              product.category === 'new design' ||
+              [
+                'ndovu-calabash-lamp',
+                'butterfly-dreams-lamp',
+                'coral-calabash-lamp',
+                'hanging-draw-lamp',
+                'sculptured-tri-lamp',
+                '3-way-hanging-family-lamp',
+                'aura-new-design-lamp',
+                'comfort-new-design-lamp',
+                'luster-new-design-lamp',
+                'pembe-tatu-new-design-lamp',
+              ].includes(product.id)
+            )
 
-          {/* Full-width Red Add to Cart Button */}
-          <div className="detail-cta-block">
-            <button
-              type="button"
-              className="detail-add-cart-btn"
-              onClick={() => {
-                addToCart(product.id)
-                setAdded(true)
-                setTimeout(() => setAdded(false), 2000)
-              }}
-            >
-              {added ? (
-                <>ADDED TO CART <Check size={18} /></>
-              ) : (
-                <>ADD TO CART - {product.price}</>
-              )}
-            </button>
-          </div>
+            const whatsappSoldMessage = encodeURIComponent(
+              `Hello Gourd Shades,\nI am inquiring about the "${product.name}" lamp (ID: ${product.id}).\nI saw that this original piece is sold, and I would love to ask about design and shape availability to commission a piece on an available harvested calabash shape.`
+            )
 
-          {/* Narrative lead description (human, heartfelt, 3 lines max) */}
-          <div className="detail-narrative">
-            <p className="detail-narrative-lead">{product.description}</p>
-          </div>
+            return (
+              <>
+                <div className="detail-header-block">
+                  <div className="detail-meta-pill-row">
+                    <span className="detail-category-eyebrow">
+                      {product.subCategory || formatCategory(product.category)}
+                    </span>
+                    {isNewEntry && (
+                      <span className="detail-pill-badge new-entry">
+                        {product.category === 'new design' ? 'NEW DESIGN' : 'NEW ENTRY'}
+                      </span>
+                    )}
+                    {isSold && (
+                      <span className="detail-pill-badge sold">
+                        SOLD PIECE
+                      </span>
+                    )}
+                  </div>
+                  <MaskedHeading
+                    as="h1"
+                    lines={titleLines}
+                  />
+                </div>
 
-          {/* Gourd shape rarity & availability note */}
-          <div className="detail-availability-note">
-            <span className="availability-dot" aria-hidden="true" />
-            <div className="availability-text">
-              <strong>Shape &amp; Availability Note:</strong> {product.availabilityNote || 'Most lamps displayed in our gallery are sold original pieces, and natural gourd shapes are naturally rare. Please check with our studio to confirm current shape availability or have a piece crafted on a similar harvested gourd.'}
-            </div>
-          </div>
+                {/* Action Buttons: Add to Inquiry Bag & Save to Wishlist */}
+                <div className="detail-cta-block">
+                  {isSold ? (
+                    <div className="detail-sold-cta-container">
+                      <a
+                        href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappSoldMessage}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="detail-add-cart-btn detail-ask-shape-btn"
+                      >
+                        <MessageCircle size={18} /> ASK FOR DESIGN SHAPE AVAILABILITY
+                      </a>
+                      <a
+                        href={`mailto:${STUDIO_EMAIL}?subject=${encodeURIComponent(
+                          `Inquiry: Design & Shape Availability — ${product.name}`
+                        )}&body=${encodeURIComponent(
+                          `Hello Gourd Shades,\n\nI am inquiring about the "${product.name}" design (ID: ${product.id}).\n\nSince this original piece is marked sold, I would love to inquire about available harvested gourd shapes to craft this design upon.\n\nPlease let me know what shapes you currently have ready in your Arusha studio.\n\nThank you!`
+                        )}`}
+                        className="detail-email-shape-btn"
+                      >
+                        <Mail size={16} /> Inquire via Email
+                      </a>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="detail-add-cart-btn"
+                      onClick={() => {
+                        addToCart(product.id)
+                        setAdded(true)
+                        setTimeout(() => setAdded(false), 2000)
+                      }}
+                    >
+                      {added ? (
+                        <>ADDED TO INQUIRY BAG <Check size={18} /></>
+                      ) : (
+                        <>ADD TO INQUIRY BAG — {product.price}</>
+                      )}
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    className={`detail-wishlist-btn ${isSaved ? 'is-saved' : ''}`}
+                    onClick={() => toggleWishlist(product.id)}
+                    title={isSaved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+                    aria-label={isSaved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+                  >
+                    <Bookmark size={17} strokeWidth={1.8} fill={isSaved ? 'currentColor' : 'none'} />
+                    <span>{isSaved ? 'SAVED IN WISHLIST' : 'SAVE TO WISHLIST'}</span>
+                  </button>
+                </div>
+
+                {/* Narrative lead description (human, heartfelt, 3 lines max) */}
+                <div className="detail-narrative">
+                  <p className="detail-narrative-lead">{product.description}</p>
+                </div>
+
+                {/* Gourd shape rarity & availability note */}
+                <div className={`detail-availability-note ${isSold ? 'is-sold-note-box' : ''}`}>
+                  <span className="availability-dot" aria-hidden="true" />
+                  <div className="availability-text">
+                    <strong>Shape &amp; Availability Note:</strong>{' '}
+                    {product.availabilityNote || (isSold
+                      ? 'Original piece sold. Because natural calabashes grow into unique organic silhouettes, our Arusha studio crafts this carving pattern on similar harvested gourds upon request. Ask our artisans to confirm current shape availability.'
+                      : 'Most lamps displayed in our gallery are sold original pieces, and natural gourd shapes are naturally rare. Please check with our studio to confirm current shape availability or have a piece crafted on a similar harvested gourd.')}
+                  </div>
+                </div>
+              </>
+            )
+          })()}
 
           {/* Collapsible Accordions: Specifications & Studio Delivery */}
           <div className="detail-accordions">
@@ -1761,6 +1845,206 @@ function Contact() {
   )
 }
 
+function WishlistDrawer({
+  open,
+  close,
+  onAddToCart,
+}: {
+  open: boolean
+  close: () => void
+  onAddToCart: (id: string) => void
+}) {
+  const { products, wishlist, removeFromWishlist, clearWishlist } = useProductStore()
+  const entries = products.filter(p => wishlist.includes(p.id))
+  const [addedMap, setAddedMap] = useState<Record<string, boolean>>({})
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        close()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open, close])
+
+  const handleMoveToBag = (id: string) => {
+    onAddToCart(id)
+    setAddedMap(prev => ({ ...prev, [id]: true }))
+    setTimeout(() => {
+      setAddedMap(prev => ({ ...prev, [id]: false }))
+    }, 2000)
+  }
+
+  const handleAddAllToBag = () => {
+    entries.forEach(p => onAddToCart(p.id))
+  }
+
+  const whatsappWishlistText = encodeURIComponent(
+    `Hello Gourd Shades,\nI would like to inquire about availability and pricing for my saved wishlamps:\n${entries
+      .map((p, idx) => `${idx + 1}. ${p.name} (${p.price}) [ID: ${p.id}]`)
+      .join('\n')}\n\nTotal: ${entries.length} wishlamp(s).\nPlease advise on shape availability and shipping options.`
+  )
+
+  const emailWishlistText = `Hello Gourd Shades,\n\nI would like to inquire about the following wishlamps from my saved collection:\n\n${entries
+    .map(p => `- ${p.name} (${p.price}) [ID: ${p.id}]`)
+    .join('\n')}\n\nTotal Items: ${entries.length}\n\nPlease advise on current availability and shipping details.\n\nThank you!`
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <>
+          <motion.div
+            className="drawer-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={close}
+          />
+          <motion.aside
+            className="cart-drawer wishlist-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Saved Wishlamps"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="drawer-header">
+              <div>
+                <span className="eyebrow">CURATED COLLECTION</span>
+                <h2>
+                  Wishlamps <span>({entries.length})</span>
+                </h2>
+              </div>
+              <button onClick={close} aria-label="Close wishlist">
+                <X size={24} strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {entries.length ? (
+              <>
+                <div className="cart-items wishlist-items">
+                  {entries.map(p => (
+                    <div className="cart-item wishlist-item" key={p.id}>
+                      <Link to={`/products/${p.id}`} onClick={close} className="wishlist-thumb-link">
+                        <img
+                          src={p.images?.[0] || '/images/hero-editorial.png'}
+                          alt={p.name}
+                        />
+                      </Link>
+                      <div className="cart-item-info wishlist-item-info">
+                        <span className="eyebrow">{formatCategory(p.category)}</span>
+                        <h3>
+                          <Link to={`/products/${p.id}`} onClick={close}>
+                            {p.name}
+                          </Link>
+                        </h3>
+                        <p className="wishlist-item-price">{p.price}</p>
+                        {p.availabilityNote && (
+                          <span className="wishlist-item-note">{p.availabilityNote}</span>
+                        )}
+
+                        <div className="wishlist-item-actions">
+                          <button
+                            type="button"
+                            className="wishlist-btn-add-bag"
+                            onClick={() => handleMoveToBag(p.id)}
+                          >
+                            {addedMap[p.id] ? (
+                              <>IN BAG <Check size={13} strokeWidth={2.2} /></>
+                            ) : (
+                              <>ADD TO BAG <Plus size={13} strokeWidth={2.2} /></>
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            className="wishlist-btn-remove"
+                            onClick={() => removeFromWishlist(p.id)}
+                            title={`Remove ${p.name} from wishlist`}
+                            aria-label={`Remove ${p.name} from wishlist`}
+                          >
+                            <Trash2 size={13} />
+                            <span>Remove</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="drawer-bottom">
+                  <div className="subtotal">
+                    <span>Selected Wishlamps</span>
+                    <strong>{entries.length} {entries.length === 1 ? 'piece' : 'pieces'}</strong>
+                  </div>
+                  <p>Inquire directly about these shapes or move them to your inquiry bag.</p>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <button
+                      type="button"
+                      className="button-dark"
+                      onClick={handleAddAllToBag}
+                    >
+                      Add All to Inquiry Bag <Plus size={16} />
+                    </button>
+
+                    <a
+                      className="button-whatsapp"
+                      href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappWishlistText}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle size={18} /> Inquire Wishlist via WhatsApp
+                    </a>
+
+                    <a
+                      className="button-outline"
+                      href={`mailto:${STUDIO_EMAIL}?subject=${encodeURIComponent(
+                        'Wishlist Inquiry — Gourd Shades'
+                      )}&body=${encodeURIComponent(emailWishlistText)}`}
+                    >
+                      Email Wishlist to Studio <ArrowUpRight size={17} />
+                    </a>
+                  </div>
+
+                  <div style={{ marginTop: '14px', textAlign: 'center' }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm('Clear all items from your wishlist?')) {
+                          clearWishlist()
+                        }
+                      }}
+                      className="wishlist-clear-all-btn"
+                    >
+                      Clear All Wishlamps
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="empty-cart empty-wishlist">
+                <Bookmark size={42} strokeWidth={1.2} style={{ color: 'var(--color-earth)' }} />
+                <h3>Your wishlist is empty.</h3>
+                <p>Save your favorite calabash luminaires to compare shapes or order bespoke pieces.</p>
+                <Link to="/products" className="button-dark" onClick={close}>
+                  Explore the collection <ArrowRight size={18} />
+                </Link>
+              </div>
+            )}
+          </motion.aside>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
 function CartDrawer({
   open,
   close,
@@ -1921,6 +2205,7 @@ function CartDrawer({
 }
 
 function StorefrontContent() {
+  const { isWishlistOpen, closeWishlist } = useProductStore()
   const [cart, setCart] = useState<Record<string, number>>(() => {
     try {
       return JSON.parse(localStorage.getItem('gourd-shades-bag') || '{}')
@@ -1978,13 +2263,20 @@ function StorefrontContent() {
       </Routes>
       {!isAdmin && <Footer />}
       {!isAdmin && (
-        <CartDrawer
-          open={cartOpen}
-          close={() => setCartOpen(false)}
-          items={cart}
-          add={add}
-          remove={remove}
-        />
+        <>
+          <CartDrawer
+            open={cartOpen}
+            close={() => setCartOpen(false)}
+            items={cart}
+            add={add}
+            remove={remove}
+          />
+          <WishlistDrawer
+            open={isWishlistOpen}
+            close={closeWishlist}
+            onAddToCart={add}
+          />
+        </>
       )}
       {!isAdmin && <CookieConsent />}
     </>
