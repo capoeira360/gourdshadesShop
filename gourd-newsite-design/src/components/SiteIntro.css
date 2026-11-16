@@ -322,6 +322,45 @@
   transition: width 0.08s linear;
 }
 
+@media (max-width: 480px) {
+  .intro-image-card-wrap {
+    width: clamp(180px, 46vw, 240px);
+    margin-bottom: 16px;
+  }
+
+  .intro-brand-title {
+    font-size: clamp(28px, 7.8vw, 42px);
+    gap: 0.15em 0.35em;
+  }
+
+  .intro-step-text {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    margin-top: 10px;
+    margin-bottom: 16px;
+  }
+
+  .intro-bar-track {
+    width: min(88vw, 260px);
+  }
+}
+
+@media (max-height: 640px) {
+  .intro-image-card-wrap {
+    width: clamp(130px, 22vh, 170px);
+    margin-bottom: 10px;
+  }
+
+  .intro-brand-title {
+    font-size: clamp(24px, 5vh, 34px);
+  }
+
+  .intro-step-text {
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .intro-card-watermark svg {
     animation: none;

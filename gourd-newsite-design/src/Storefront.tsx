@@ -392,7 +392,7 @@ function Home() {
             Most Popular <em>Designs.</em>
           </h2>
           <Link to="/products" className="collection-header-link">
-            Shop all {products.length} lamps <ArrowUpRight size={15} />
+            Shop all lamps <ArrowUpRight size={15} />
           </Link>
         </div>
         <div className="product-grid">

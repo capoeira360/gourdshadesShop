@@ -85,6 +85,18 @@ export function CategoryShowcase() {
   const lastXRef = useRef(0)
   const hasMovedRef = useRef(false)
   const isHoveredRef = useRef(false)
+  const isTouchingRef = useRef(false)
+  const scrollTimeoutRef = useRef<number | null>(null)
+
+  // Detect touch device or mobile screen to prevent conflicting interactions
+  const isTouchOrMobileDevice = () => {
+    if (typeof window === 'undefined') return false
+    return (
+      window.matchMedia('(hover: none), (pointer: coarse)').matches ||
+      window.innerWidth <= 900 ||
+      navigator.maxTouchPoints > 0
+    )
+  }
 
   // Measure single set width dynamically
   const getSingleSetWidth = () => {
@@ -115,7 +127,7 @@ export function CategoryShowcase() {
     }
   }
 
-  // Mount effect: initialize scrollLeft in the middle (Set 1.5) and run gentle ambient drift
+  // Mount effect: initialize scrollLeft in the middle (Set 1.5) and run gentle ambient drift on desktop
   useEffect(() => {
     const wrapper = trackWrapperRef.current
     if (!wrapper) return
@@ -134,30 +146,59 @@ export function CategoryShowcase() {
 
     const initTimer = setTimeout(initPosition, 80)
 
-    // Gentle editorial auto-glide when idle (pauses on hover or drag)
-    let animationFrameId: number
-    const glide = () => {
-      if (isMounted) {
-        if (!isHoveredRef.current && !isDraggingRef.current && wrapper) {
-          wrapper.scrollLeft += 0.55
-          checkInfiniteBounds()
-        }
-        animationFrameId = requestAnimationFrame(glide)
-      }
-    }
+    // Gentle editorial auto-glide when idle:
+    // ONLY run on desktop fine pointers to avoid fighting touch momentum and CSS scroll-snap
+    let animationFrameId: number | null = null
+    const isTouch = isTouchOrMobileDevice()
 
-    animationFrameId = requestAnimationFrame(glide)
+    if (!isTouch) {
+      const glide = () => {
+        if (isMounted) {
+          if (!isHoveredRef.current && !isDraggingRef.current && wrapper) {
+            wrapper.scrollLeft += 0.55
+            checkInfiniteBounds()
+          }
+          animationFrameId = requestAnimationFrame(glide)
+        }
+      }
+      animationFrameId = requestAnimationFrame(glide)
+    }
 
     return () => {
       isMounted = false
       clearTimeout(initTimer)
-      cancelAnimationFrame(animationFrameId)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId)
+      }
     }
   }, [])
 
   // Native onScroll listener for trackpad, mouse wheel, and touch gestures
   const handleScroll = () => {
-    checkInfiniteBounds()
+    // If user is actively touching or dragging, debounce the infinite boundary check
+    // so it doesn't cause sudden jump/stutter mid-swipe or during momentum deceleration
+    if (isTouchingRef.current || isDraggingRef.current) {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        if (!isTouchingRef.current && !isDraggingRef.current) {
+          checkInfiniteBounds()
+        }
+      }, 160)
+      return
+    }
+
+    // For mouse wheel or settled scroll, debounce boundary check slightly
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+    }
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      checkInfiniteBounds()
+    }, 120)
   }
 
   // Fluid mouse drag-to-scroll support for desktop
@@ -195,11 +236,20 @@ export function CategoryShowcase() {
   }
 
   const handleTouchStart = () => {
+    isTouchingRef.current = true
     isHoveredRef.current = true
   }
 
   const handleTouchEnd = () => {
+    isTouchingRef.current = false
     isHoveredRef.current = false
+    // After touch ends, wait for momentum scroll to settle, then verify boundary
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+    }
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      checkInfiniteBounds()
+    }, 200)
   }
 
   const handleCardClick = (e: React.MouseEvent) => {

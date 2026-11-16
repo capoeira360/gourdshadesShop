@@ -384,7 +384,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           {/* User / Studio Profile Icon */}
           <Link
             to="/contact"
-            className="frankie-util-btn"
+            className="frankie-util-btn frankie-user-link"
             title="Studio Inquiries & Profile"
             aria-label="Studio contact"
           >
@@ -882,7 +882,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
                         type="button"
                         onClick={() => handleSelectFilter('All lamps')}
                       >
-                        All 39 Lamps
+                        All Lamps
                       </button>
                     </li>
                     <li>

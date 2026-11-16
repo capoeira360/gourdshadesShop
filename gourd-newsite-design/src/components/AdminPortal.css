@@ -811,24 +811,306 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 900px) {
-  .admin-layout {
-    flex-direction: column;
-  }
+/* =========================================================
+   COMPREHENSIVE RESPONSIVE DESIGN & MEDIA QUERIES
+   Touch-friendly CMS interface across tablets, laptops & smartphones
+   ========================================================= */
+
+@media (max-width: 1024px) {
   .admin-sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #ebe8df;
-  }
-  .admin-nav-list {
-    flex-direction: row;
-    overflow-x: auto;
+    width: 220px;
   }
   .admin-table-head,
   .admin-table-row {
-    grid-template-columns: 50px 1.5fr 90px 100px 70px;
+    grid-template-columns: 60px 1.6fr 100px 140px 80px;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    flex-direction: column !important;
+  }
+  .admin-sidebar {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #ebe8df !important;
+    padding: 10px 16px !important;
+    position: sticky;
+    top: 56px;
+    z-index: 800;
+    background: #ffffff;
+  }
+  .admin-nav-list {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px !important;
+    padding: 2px 0 !important;
+  }
+  .admin-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+  .admin-nav-item {
+    width: auto !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+  }
+  .admin-sidebar-footer {
+    display: none !important;
+  }
+  .admin-main {
+    padding: 20px 16px 40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Topbar header */
+  .admin-topbar {
+    height: 56px !important;
+    padding: 0 14px !important;
+  }
+  .admin-topbar-actions {
+    gap: 8px !important;
+  }
+  .admin-topbar-link {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+    gap: 5px !important;
+  }
+  .admin-mode-pill {
+    font-size: 9px !important;
+    padding: 3px 6px !important;
+  }
+
+  /* Catalog header & filters */
+  .admin-section-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .admin-section-header .admin-btn.primary {
+    width: 100% !important;
+    min-height: 44px !important;
+  }
+  .admin-title {
+    font-size: 22px !important;
+  }
+  .admin-subtitle {
+    font-size: 13px !important;
+  }
+
+  .admin-filter-bar {
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+  .admin-search-wrap,
+  .admin-select-wrap {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  .admin-input,
+  .admin-select {
+    min-height: 44px !important;
+    font-size: 15px !important;
+  }
+
+  /* Transform product table into mobile product cards */
+  .admin-table-head {
+    display: none !important;
+  }
+  .admin-products-table {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .admin-table-row {
+    display: grid !important;
+    grid-template-columns: 72px 1fr !important;
+    gap: 8px 14px !important;
+    padding: 14px !important;
+    background: #ffffff !important;
+    border: 1px solid #ebe8df !important;
+    border-radius: 6px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+    align-items: start !important;
+  }
+  .admin-table-row .col-img {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+  .admin-table-row .admin-thumb {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 4px !important;
+  }
+  .admin-table-row .col-details {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .admin-table-row .product-row-name {
+    font-size: 14.5px !important;
+    line-height: 1.35 !important;
+  }
+  .admin-table-row .col-price {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 2px;
+  }
+  .admin-table-row .col-status {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    padding-top: 8px !important;
+    border-top: 1px dashed #f0eee6 !important;
+  }
+  .admin-table-row .availability-note-hint {
+    max-width: 100% !important;
+    font-size: 11px !important;
+  }
+  .admin-table-row .col-actions {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #ebe8df !important;
+    margin-top: 4px !important;
+  }
+  .admin-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 4px !important;
+    margin-right: 0 !important;
+  }
+
+  /* Full-screen bottom sheet modal for editing products */
+  .admin-modal-backdrop {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+  .admin-modal {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+  .admin-modal-head {
+    padding: 16px 18px !important;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 10;
+    border-bottom: 1px solid #ebe8df;
+  }
+  .admin-modal-body {
+    padding: 18px 16px 24px !important;
+  }
+  .admin-modal-footer {
+    padding: 12px 16px !important;
+    position: sticky;
+    bottom: 0;
+    background: #faf8f5;
+    border-top: 1px solid #ebe8df;
+    z-index: 10;
+    gap: 10px !important;
+  }
+  .admin-modal-footer .admin-btn {
+    flex: 1 !important;
+    min-height: 44px !important;
+  }
+  .admin-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .admin-add-url-row {
+    flex-direction: column !important;
+  }
+  .admin-add-url-row .admin-btn {
+    width: 100% !important;
+    min-height: 42px !important;
+  }
+
+  /* Announcements and settings tabs */
+  .announcement-note-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .announcement-note-actions {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  .announcement-presets-row {
+    gap: 8px !important;
+  }
+  .preset-chip-btn {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+  }
+  .color-swatch-row {
+    gap: 6px !important;
+  }
+  .admin-card {
+    padding: 18px 16px !important;
+  }
+  .admin-backup-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .admin-toast {
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 16px !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-login-wrapper {
+    padding: 14px !important;
+    align-items: flex-start !important;
+    padding-top: 28px !important;
+  }
+  .admin-login-card {
+    padding: 22px 16px 18px !important;
+  }
+  .admin-login-brand {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
-    padding: 10px 12px;
+  }
+  .admin-btn.full-width {
+    min-height: 46px !important;
+    font-size: 14px !important;
+  }
+
+  .admin-topbar-left {
+    gap: 8px !important;
+  }
+  .admin-mode-pill {
+    display: none !important;
+  }
+  .admin-topbar-actions {
+    gap: 6px !important;
+  }
+  .admin-btn.small {
+    padding: 6px 10px !important;
+    font-size: 11.5px !important;
   }
 }
 

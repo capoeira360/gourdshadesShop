@@ -19,6 +19,10 @@ export default defineConfig(async ({ mode }) => {
 
   return {
     plugins,
+    server: {
+      host: true, // Exposes the server on local network (Wi-Fi) for smartphones and tablets
+      port: 5173,
+    },
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
   };

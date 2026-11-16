@@ -27,6 +27,8 @@
   cursor: grab;
   user-select: none;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
 }
 
 .editorial-category-track-wrapper:active {
@@ -59,26 +61,46 @@
   outline: none;
   margin: 0;
   padding: 0;
-  /* ONLY extend sideways: horizontal flex width transition without vertical shifts */
-  transition: flex 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: flex, opacity, filter;
 }
 
-/* Interactive Dimming & Sideways Expansion:
+/* Interactive Dimming & Sideways Expansion (Desktop Fine Pointers Only):
    When user hovers over ANY category:
    - All other cards DIM to 32% opacity + slight brightness drop
    - The hovered card stays 100% bright and EXTENDS WIDER SIDEWAYS */
-.editorial-category-track:hover .editorial-category-card {
-  opacity: 0.32;
-  filter: brightness(0.68) saturate(0.85);
+@media (hover: hover) and (pointer: fine) {
+  .editorial-category-card {
+    transition: flex 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: flex, opacity, filter;
+  }
+
+  .editorial-category-track:hover .editorial-category-card {
+    opacity: 0.32;
+    filter: brightness(0.68) saturate(0.85);
+  }
+
+  .editorial-category-track .editorial-category-card:hover {
+    flex: 0 0 clamp(420px, 36vw, 580px);
+    opacity: 1 !important;
+    filter: brightness(1) saturate(1) !important;
+  }
 }
 
-.editorial-category-track .editorial-category-card:hover {
-  flex: 0 0 clamp(420px, 36vw, 580px);
-  opacity: 1 !important;
-  filter: brightness(1) saturate(1) !important;
+/* Touch & Mobile Viewports: Absolutely no hover reflows, sticky dimming, or layout jank */
+@media (hover: none), (max-width: 900px) {
+  .editorial-category-card {
+    transition: none !important;
+    will-change: auto !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .editorial-category-track:hover .editorial-category-card,
+  .editorial-category-track .editorial-category-card:hover {
+    opacity: 1 !important;
+    filter: none !important;
+  }
 }
 
 /* Connected Vertical Photographic Frame */
@@ -157,12 +179,14 @@
   transition: transform 0.25s ease;
 }
 
-/* Show Quick View button on card hover */
-.editorial-category-card:hover .editorial-quick-view-btn,
-.editorial-category-card:focus-within .editorial-quick-view-btn {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
+/* Show Quick View button on card hover (Desktop fine pointers only) */
+@media (hover: hover) and (pointer: fine) {
+  .editorial-category-card:hover .editorial-quick-view-btn,
+  .editorial-category-card:focus-within .editorial-quick-view-btn {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
 }
 
 /* Quick View Hover State */
@@ -208,8 +232,10 @@
   transition: color 0.3s ease;
 }
 
-.editorial-category-card:hover .editorial-category-title {
-  color: var(--color-earth, #dc3331);
+@media (hover: hover) and (pointer: fine) {
+  .editorial-category-card:hover .editorial-category-title {
+    color: var(--color-earth, #dc3331);
+  }
 }
 
 /* =========================================================
@@ -240,19 +266,25 @@
 
 @media (max-width: 768px) {
   .editorial-categories-section {
-    padding: 0 0 50px;
+    padding: 0 0 clamp(36px, 6vh, 50px);
+  }
+
+  .editorial-category-track-wrapper {
+    scroll-snap-type: x mandatory;
+    padding: 0 5.2%;
   }
 
   .editorial-category-card {
-    flex: 0 0 74vw;
+    flex: 0 0 clamp(260px, 76vw, 340px);
+    scroll-snap-align: center;
   }
 
   .editorial-category-track .editorial-category-card:hover {
-    flex: 0 0 82vw;
+    flex: 0 0 clamp(260px, 76vw, 340px);
   }
 
   .editorial-image-frame {
-    height: clamp(380px, 54vh, 500px);
+    height: clamp(360px, 52vh, 480px);
   }
 
   .editorial-quick-view-btn {
@@ -266,6 +298,16 @@
 
   .editorial-category-title {
     font-size: 16px;
-    padding-top: 16px;
+    padding-top: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editorial-category-card {
+    flex: 0 0 82vw;
+  }
+
+  .editorial-image-frame {
+    height: clamp(320px, 48vh, 420px);
   }
 }
