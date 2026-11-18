@@ -52,7 +52,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
   const navigate = useNavigate()
   const searchInputRef = useRef<HTMLInputElement>(null)
   const navRef = useRef<HTMLElement>(null)
-  const logoLinkRef = useRef<HTMLAnchorElement>(null)
+  const logoLinkRef = useRef<HTMLDivElement>(null)
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const [navTheme, setNavTheme] = useState<NavTheme>(() => getInitialTheme(location.pathname))
@@ -303,17 +303,15 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
 
       {/* 1. TOP UTILITY & NAVIGATION BAR */}
       <div className="frankie-topbar">
-        {/* Left: Brand Logo (Original Calabash Icon + Shades Wordmark) */}
+        {/* Left: Brand Slot (Invisible guide that measures where the intro logo docks) */}
         <div className="frankie-topbar-left">
-          <Link
-            ref={logoLinkRef}
-            to="/"
-            className={`frankie-brand-logo ${isAnyMenuOpen ? 'theme-white' : `theme-${navTheme}`}`}
-            onClick={() => setActiveMega(null)}
-            aria-label="Gourd Shades Home"
+          <div
+            id="brand-slot"
+            className="frankie-brand-slot"
+            aria-hidden="true"
           >
-            <GourdLogo iconSize={48} showText={true} />
-          </Link>
+            <GourdLogo />
+          </div>
         </div>
 
         {/* Center / Left-Center: Nav Items */}

@@ -198,7 +198,7 @@ function Footer() {
       <div className="footer-bottom">
         <div>
           <Link className="footer-logo" to="/" aria-label="Gourd Shades Home">
-            <GourdLogo iconSize={64} />
+            <GourdLogo />
           </Link>
           <p className="footer-logo-note">
             Crafting unique lighting experiences with artisanal gourd-inspired designs. Handcrafted excellence from raw calabashes.

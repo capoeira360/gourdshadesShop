@@ -40,7 +40,9 @@
 @media (hover: hover) and (pointer: fine) {
   .the-frankie-header:hover,
   .the-frankie-header.theme-red:hover,
-  .the-frankie-header.theme-dark:hover {
+  .the-frankie-header.theme-dark:hover,
+  .the-frankie-header.is-hovered,
+  body:has(#gourd-main-logo:hover) .the-frankie-header {
     background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
@@ -67,159 +69,166 @@
   flex: 0 0 auto;
 }
 
+/* =========================================================
+   FRANKIE TOPBAR BRAND LOGO (Matches Footer Logo G[svg]urd Shades.)
+   ========================================================= */
+#brand-slot,
+.frankie-brand-slot {
+  display: inline-flex;
+  align-items: baseline;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em !important;
+  font-size: clamp(21px, 2.3vw, 28px);
+  line-height: 1;
+}
+
 .frankie-brand-logo {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   text-decoration: none;
   cursor: pointer;
   line-height: 1;
   user-select: none;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .frankie-brand-logo:hover {
-    opacity: 0.88;
-  }
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em;
+  font-size: clamp(21px, 2.3vw, 28px);
+  transition: opacity 0.2s ease, color 0.25s ease;
 }
 
 .frankie-brand-logo .gourd-brand-logo {
   display: inline-flex;
-  align-items: center;
-  gap: 2px; /* pushed snug right next to the gourd silhouette as in footer logo */
+  align-items: baseline;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em;
   line-height: 1;
+  font-size: 1em;
+}
+
+.frankie-brand-logo .gourd-letter-g {
+  margin-right: -0.01em;
+}
+
+.frankie-brand-logo .gourd-letter-g,
+.frankie-brand-logo .gourd-letters-urd,
+.frankie-brand-logo .gourd-logo-text,
+.frankie-brand-logo .gourd-logo-wordmark span {
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
 .frankie-brand-logo .gourd-logo-icon {
-  display: block;
+  display: inline-block;
+  vertical-align: baseline;
   flex-shrink: 0;
-  transform-origin: center center;
-  margin-right: -2px; /* snug fit next to 'S' */
-  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              fill 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.frankie-brand-logo .gourd-logo-icon path {
-  vector-effect: non-scaling-stroke;
-  stroke: currentColor;
-  stroke-width: 0.6px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  paint-order: stroke fill;
-}
-
-.frankie-brand-logo .gourd-logo-wordmark {
-  display: inline-flex;
-  align-items: baseline;
-  line-height: 1;
-}
-
-.frankie-brand-logo .gourd-logo-text {
-  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
-  font-weight: 400;
-  letter-spacing: -0.06em;
-  font-size: clamp(26px, 2.5vw, 32px);
-  line-height: 0.85;
-  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.25s ease;
+  width: 0.92em;
+  height: 0.88em;
+  margin: 0 0.02em 0 -0.05em !important;
+  position: relative;
+  top: 0.04em;
+  transition: color 0.25s ease, fill 0.25s ease, filter 0.25s ease;
 }
 
 .frankie-brand-logo .wordmark-dot {
-  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
-  font-weight: 600;
-  font-size: clamp(26px, 2.5vw, 32px);
-  line-height: 0.85;
-  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  line-height: 1;
+  transition: color 0.25s ease;
 }
 
-/* =========================================================
-   LOGO THEME COLOR STATES (RESTING / UNHOVERED)
-   ========================================================= */
+/* 1. Theme Red (Terracotta hero banners: unhovered, unscrolled) */
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo,
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo span {
+  color: var(--color-pink, #f5cdcc) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
 
-/* 1. Theme Red (Terracotta hero banners, when NOT open) */
-.the-frankie-header.theme-red:not(.menu-active) .frankie-brand-logo .gourd-logo-icon,
-.the-frankie-header.theme-red:not(.menu-active) .frankie-brand-logo .gourd-logo-icon path {
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon {
   color: var(--color-pink, #f5cdcc) !important;
   fill: var(--color-pink, #f5cdcc) !important;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2)) !important;
 }
 
-.the-frankie-header.theme-red:not(.menu-active) .frankie-brand-logo .gourd-logo-text {
-  color: var(--color-pink, #f5cdcc) !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+/* 2. Theme Dark (Dark image hero banners: unhovered, unscrolled) */
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo,
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo span {
+  color: #ffffff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
 }
 
-.the-frankie-header.theme-red:not(.menu-active) .frankie-brand-logo .wordmark-dot {
-  color: var(--color-pink, #f5cdcc) !important;
-}
-
-/* 2. Theme Dark (Dark image hero banners, when NOT open) */
-.the-frankie-header.theme-dark:not(.menu-active) .frankie-brand-logo .gourd-logo-icon,
-.the-frankie-header.theme-dark:not(.menu-active) .frankie-brand-logo .gourd-logo-icon path {
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon {
   color: var(--color-earth, #dc3331) !important;
   fill: var(--color-earth, #dc3331) !important;
   filter: drop-shadow(0 2px 10px rgba(220, 51, 49, 0.45)) !important;
 }
 
-.the-frankie-header.theme-dark:not(.menu-active) .frankie-brand-logo .gourd-logo-text {
-  color: #ffffff !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
-}
-
-.the-frankie-header.theme-dark:not(.menu-active) .frankie-brand-logo .wordmark-dot {
+.the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo .wordmark-dot {
   color: var(--color-earth, #dc3331) !important;
 }
 
-/* =========================================================
-   LOGO OPEN & WHITE THEME STATE (Red calabash + dark text)
-   ========================================================= */
-.frankie-brand-logo.theme-white .gourd-logo-icon,
-.frankie-brand-logo.theme-white .gourd-logo-icon path,
+/* 3. Theme White / Scrolled / Menu Active:
+   Dark Charcoal #252622 text + Terracotta Red #dc3331 gourd & dot */
+.the-frankie-header.theme-white .frankie-brand-logo,
+.the-frankie-header.theme-white .frankie-brand-logo span,
+.the-frankie-header.menu-active .frankie-brand-logo,
+.the-frankie-header.menu-active .frankie-brand-logo span,
+.the-frankie-header.is-scrolled .frankie-brand-logo,
+.the-frankie-header.is-scrolled .frankie-brand-logo span {
+  color: #252622 !important;
+  text-shadow: none !important;
+}
+
 .the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-icon,
-.the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-icon path,
 .the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-icon,
-.the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-icon path {
+.the-frankie-header.is-scrolled .frankie-brand-logo .gourd-logo-icon {
   color: var(--color-earth, #dc3331) !important;
   fill: var(--color-earth, #dc3331) !important;
   filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.25)) !important;
 }
 
-.frankie-brand-logo.theme-white .gourd-logo-text,
-.the-frankie-header.theme-white .frankie-brand-logo .gourd-logo-text,
-.the-frankie-header.menu-active .frankie-brand-logo .gourd-logo-text {
-  color: #252622 !important;
-  text-shadow: none !important;
-}
-
-.frankie-brand-logo.theme-white .wordmark-dot,
 .the-frankie-header.theme-white .frankie-brand-logo .wordmark-dot,
-.the-frankie-header.menu-active .frankie-brand-logo .wordmark-dot {
+.the-frankie-header.menu-active .frankie-brand-logo .wordmark-dot,
+.the-frankie-header.is-scrolled .frankie-brand-logo .wordmark-dot {
   color: var(--color-earth, #dc3331) !important;
 }
 
-/* =========================================================
-   LOGO HOVER STATES (Desktop Fine Pointers Only)
-   ========================================================= */
+/* 4. Desktop Navbar Hover: Frosted white bar with Dark Charcoal text */
 @media (hover: hover) and (pointer: fine) {
+  .the-frankie-header:hover .frankie-brand-logo,
+  .the-frankie-header:hover .frankie-brand-logo span,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo,
+  .the-frankie-header.theme-red:hover .frankie-brand-logo span,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo,
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo span {
+    color: #252622 !important;
+    text-shadow: none !important;
+  }
+
   .the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon,
-  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-icon path,
   .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-icon,
-  .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-icon path,
-  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-icon,
-  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-icon path {
+  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-icon {
     color: var(--color-earth, #dc3331) !important;
     fill: var(--color-earth, #dc3331) !important;
     filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.25)) !important;
-  }
-
-  .the-frankie-header:hover .frankie-brand-logo .gourd-logo-text,
-  .the-frankie-header.theme-red:hover .frankie-brand-logo .gourd-logo-text,
-  .the-frankie-header.theme-dark:hover .frankie-brand-logo .gourd-logo-text {
-    color: #252622 !important;
-    text-shadow: none !important;
   }
 
   .the-frankie-header:hover .frankie-brand-logo .wordmark-dot,
@@ -229,22 +238,7 @@
   }
 
   .frankie-brand-logo:hover {
-    opacity: 0.88;
-  }
-
-  .frankie-brand-logo:hover .gourd-logo-icon,
-  .frankie-brand-logo:hover .gourd-logo-icon path {
-    color: var(--color-earth, #dc3331) !important;
-    fill: var(--color-earth, #dc3331) !important;
-    filter: drop-shadow(0 2px 8px rgba(220, 51, 49, 0.3)) !important;
-  }
-
-  .frankie-brand-logo:hover .gourd-logo-text {
-    color: #252622 !important;
-  }
-
-  .frankie-brand-logo:hover .wordmark-dot {
-    color: var(--color-earth, #dc3331) !important;
+    opacity: 0.82;
   }
 }
 
@@ -411,7 +405,9 @@
 @media (hover: hover) and (pointer: fine) {
   .the-frankie-header:hover .frankie-nav-link,
   .the-frankie-header.theme-red:hover .frankie-nav-link,
-  .the-frankie-header.theme-dark:hover .frankie-nav-link {
+  .the-frankie-header.theme-dark:hover .frankie-nav-link,
+  .the-frankie-header.is-hovered .frankie-nav-link,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-nav-link {
     color: var(--frankie-text, #252622) !important;
     text-shadow: none !important;
   }
@@ -422,6 +418,10 @@
   .the-frankie-header.theme-red:hover .frankie-nav-link.is-active,
   .the-frankie-header.theme-dark:hover .frankie-nav-link:hover,
   .the-frankie-header.theme-dark:hover .frankie-nav-link.is-active,
+  .the-frankie-header.is-hovered .frankie-nav-link:hover,
+  .the-frankie-header.is-hovered .frankie-nav-link.is-active,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-nav-link:hover,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-nav-link.is-active,
   .the-frankie-header.theme-white .frankie-nav-link:hover,
   .the-frankie-header.menu-active .frankie-nav-link:hover {
     color: #000000 !important;
@@ -429,32 +429,42 @@
 
   .the-frankie-header:hover .frankie-nav-link.is-active::after,
   .the-frankie-header.theme-red:hover .frankie-nav-link.is-active::after,
-  .the-frankie-header.theme-dark:hover .frankie-nav-link.is-active::after {
+  .the-frankie-header.theme-dark:hover .frankie-nav-link.is-active::after,
+  .the-frankie-header.is-hovered .frankie-nav-link.is-active::after,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-nav-link.is-active::after {
     background: #111111 !important;
   }
 
   .the-frankie-header:hover .search-cursor-bar,
   .the-frankie-header.theme-red:hover .search-cursor-bar,
-  .the-frankie-header.theme-dark:hover .search-cursor-bar {
+  .the-frankie-header.theme-dark:hover .search-cursor-bar,
+  .the-frankie-header.is-hovered .search-cursor-bar,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .search-cursor-bar {
     color: var(--frankie-badge-red, #dc3331) !important;
   }
 
   .the-frankie-header:hover .frankie-util-btn,
   .the-frankie-header.theme-red:hover .frankie-util-btn,
-  .the-frankie-header.theme-dark:hover .frankie-util-btn {
+  .the-frankie-header.theme-dark:hover .frankie-util-btn,
+  .the-frankie-header.is-hovered .frankie-util-btn,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-util-btn {
     color: var(--frankie-text, #252622) !important;
     text-shadow: none !important;
   }
 
   .the-frankie-header:hover .frankie-counter,
   .the-frankie-header.theme-red:hover .frankie-counter,
-  .the-frankie-header.theme-dark:hover .frankie-counter {
+  .the-frankie-header.theme-dark:hover .frankie-counter,
+  .the-frankie-header.is-hovered .frankie-counter,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-counter {
     color: var(--frankie-muted, #77766f) !important;
   }
 
   .the-frankie-header:hover .frankie-mobile-toggle,
   .the-frankie-header.theme-red:hover .frankie-mobile-toggle,
-  .the-frankie-header.theme-dark:hover .frankie-mobile-toggle {
+  .the-frankie-header.theme-dark:hover .frankie-mobile-toggle,
+  .the-frankie-header.is-hovered .frankie-mobile-toggle,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-mobile-toggle {
     color: var(--frankie-text, #252622) !important;
   }
 
@@ -469,7 +479,9 @@
   .frankie-util-btn:hover,
   .the-frankie-header:hover .frankie-util-btn:hover,
   .the-frankie-header.theme-red:hover .frankie-util-btn:hover,
-  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover {
+  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover,
+  .the-frankie-header.is-hovered .frankie-util-btn:hover,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-util-btn:hover {
     opacity: 1 !important;
     color: #000000 !important;
   }
@@ -477,7 +489,9 @@
   .frankie-util-btn:hover .frankie-counter,
   .the-frankie-header:hover .frankie-util-btn:hover .frankie-counter,
   .the-frankie-header.theme-red:hover .frankie-util-btn:hover .frankie-counter,
-  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover .frankie-counter {
+  .the-frankie-header.theme-dark:hover .frankie-util-btn:hover .frankie-counter,
+  .the-frankie-header.is-hovered .frankie-util-btn:hover .frankie-counter,
+  body:has(#gourd-main-logo:hover) .the-frankie-header .frankie-util-btn:hover .frankie-counter {
     color: var(--frankie-badge-red, #dc3331) !important;
   }
 }

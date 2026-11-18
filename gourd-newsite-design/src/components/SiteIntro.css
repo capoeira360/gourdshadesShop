@@ -1,372 +1,543 @@
 /* =========================================================
-   GOURD SHADES — ARTISANAL MINIMAL INTRO
-   Inspired by index 2 21.53.20.html
-   Focused exclusively on:
-   1. The Image Card (with rotating calabash photos & badge)
-   2. The Loading Words Animation (scrambled letters locking into GOURD SHADES)
-   3. The Loading Bar (percentage counter & glowing gradient line)
+   GOURD SHADES — THE ONE TRAVELING BRAND LOGO & INTRO
    ========================================================= */
+
+@font-face {
+  font-family: 'Timeburner';
+  src: url('/fonts/TimeburnerBold-peGR.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Timeburner';
+  src: url('/fonts/Timeburner-xJB8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --intro-obsidian: #0b0907;
-  --intro-lamp-dark: #14110e;
-  --intro-amber: #ff9e44;
-  --intro-gold: #e5a95a;
-  --intro-clay: #b86b4b;
-  --intro-sand: #f6f1ea;
+  --t1: #ffb347; /* warm golden amber */
+  --t2: #dc3331; /* vibrant terracotta / crimson */
+  --intro-bg: #07070a;
+  --intro-fg: #f4f4f6;
+  --intro-muted: #8c8c99;
+  --intro-line: rgba(255, 255, 255, 0.09);
+  --intro-ease: cubic-bezier(0.77, 0, 0.18, 1);
+  --intro-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-#intro-container {
+body.intro-lock {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+/* ============ INTRO OVERLAY ============ */
+.intro-overlay {
   position: fixed;
   inset: 0;
-  z-index: 999999;
-  background-color: var(--intro-obsidian);
-  color: var(--intro-sand);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  z-index: 999980;
+  background: var(--intro-bg);
+  transition: opacity 1.1s ease 0.1s;
   overflow: hidden;
   user-select: none;
-  -webkit-font-smoothing: antialiased;
-  padding: clamp(20px, 4vw, 40px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s;
+  cursor: pointer;
 }
 
-#intro-container.hidden {
+.intro-overlay.out {
   opacity: 0;
-  visibility: hidden;
-  transform: scale(1.03);
   pointer-events: none;
 }
 
-/* Background Image with Ambient Film Scrim */
-.intro-bg-image {
+/* Subtle Geometric Grid Backdrop */
+.intro-overlay::before {
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/images/top-intro.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  opacity: 0.42;
-  filter: brightness(0.62) contrast(1.1) saturate(1.05);
+  background-image:
+    linear-gradient(var(--intro-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--intro-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at center, #000 0, transparent 65%);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0, transparent 65%);
+  opacity: 0.7;
   pointer-events: none;
-  z-index: 0;
 }
 
-.intro-bg-scrim {
+/* Ambient Radial Glow */
+.intro-glow {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(11, 9, 7, 0.45) 0%,
-    rgba(11, 9, 7, 0.82) 58%,
-    rgba(11, 9, 7, 0.98) 100%
-  );
+  left: 50%;
+  top: 50%;
+  width: 70vmax;
+  height: 70vmax;
+  transform: translate(-50%, -50%) scale(0.4);
+  background: radial-gradient(circle, rgba(220, 51, 49, 0.38), transparent 60%);
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 2s ease, transform 3s var(--intro-out);
   pointer-events: none;
-  z-index: 1;
 }
 
-/* Ambient Radial Glow Backdrop */
-.intro-ambient-glow {
+.intro-overlay.go .intro-glow {
+  opacity: 0.55;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Bottom Meta Bar */
+.intro-meta {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 48%,
-    rgba(229, 169, 90, 0.16) 0%,
-    rgba(184, 107, 75, 0.06) 38%,
-    rgba(11, 9, 7, 0.98) 72%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Film Grain Texture */
-.intro-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Floating Particle Canvas */
-.intro-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0.75;
-}
-
-/* Central Stage */
-.intro-stage {
-  position: relative;
-  z-index: 10;
+  left: 5vw;
+  right: 5vw;
+  bottom: 5vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 680px;
-  width: 100%;
-  margin: auto;
-}
-
-/* =========================================================
-   1. THE IMAGE CARD
-   ========================================================= */
-.intro-image-card-wrap {
-  position: relative;
-  width: clamp(230px, 24vw, 320px);
-  aspect-ratio: 3 / 4;
-  margin: 0 auto clamp(20px, 3vh, 32px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Outer Ambient Glow Ring */
-.intro-image-card-glow {
-  position: absolute;
-  inset: -12%;
-  border-radius: 28px;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 158, 68, 0.22) 0%,
-    rgba(229, 169, 90, 0.12) 40%,
-    transparent 70%
-  );
-  filter: blur(28px);
-  pointer-events: none;
-}
-
-/* Card Container */
-.intro-image-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--intro-lamp-dark);
-  border: 1px solid rgba(229, 169, 90, 0.28);
-  box-shadow:
-    0 24px 50px -12px rgba(0, 0, 0, 0.85),
-    0 0 35px rgba(229, 169, 90, 0.15);
-}
-
-.intro-card-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.intro-image-card:hover .intro-card-image {
-  transform: scale(1.03);
-}
-
-/* Rotating Mandala Watermark */
-.intro-card-watermark {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  opacity: 0.18;
-  z-index: 2;
-}
-
-.intro-card-watermark svg {
-  width: 58%;
-  height: 58%;
-  animation: introWatermarkSpin 70s linear infinite;
-}
-
-@keyframes introWatermarkSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* =========================================================
-   2. THE LOADING WORDS ANIMATION
-   ========================================================= */
-.intro-brand-title {
-  position: relative;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  font-size: clamp(34px, 5.8vw, 68px);
-  font-weight: 300;
-  letter-spacing: clamp(0.04em, 0.12vw, 0.1em);
-  text-transform: uppercase;
-  color: var(--intro-sand);
-  margin: 0;
-  line-height: 1.1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25em 0.55em;
-  min-height: 1.2em;
-}
-
-.intro-word-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.08em;
-}
-
-.intro-scramble-letter {
-  display: inline-block;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
-}
-
-.intro-scramble-letter.scrambling {
-  color: var(--intro-gold);
-  opacity: 0.78;
-  filter: blur(0.35px);
-}
-
-.intro-scramble-letter.locked {
-  color: var(--intro-sand);
-  text-shadow:
-    0 0 24px rgba(245, 179, 96, 0.75),
-    0 0 50px rgba(229, 169, 90, 0.35);
-  animation: introPulseSoft 3.8s infinite alternate ease-in-out;
-}
-
-@keyframes introPulseSoft {
-  0% {
-    text-shadow: 0 0 18px rgba(245, 179, 96, 0.6);
-  }
-  100% {
-    text-shadow:
-      0 0 34px rgba(245, 179, 96, 0.95),
-      0 0 65px rgba(184, 107, 75, 0.4);
-  }
-}
-
-/* Status message beneath brand title */
-.intro-step-text {
-  font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  font-family: 'DM Sans', sans-serif;
   font-size: 11px;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(229, 169, 90, 0.85);
-  margin-top: clamp(10px, 1.8vh, 16px);
-  margin-bottom: clamp(18px, 2.5vh, 26px);
-  min-height: 16px;
-  transition: opacity 0.3s ease;
+  color: var(--intro-muted);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.intro-bar {
+  flex: 1;
+  height: 1px;
+  background: var(--intro-line);
+  position: relative;
+  overflow: hidden;
+  margin: 0 20px 5px;
+}
+
+.intro-bar b {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--t1), var(--t2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform linear;
+}
+
+.intro-count {
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  text-align: right;
+  font-weight: 500;
+  color: #fff;
+}
+
+.intro-skip-hint {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  padding: 6px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.intro-skip-hint:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 580px) {
+  .intro-meta .hide-sm {
+    display: none;
+  }
 }
 
 /* =========================================================
-   3. THE LOADING BAR
+   THE ONE LOGO (Reveals at center, travels, and docks in nav)
    ========================================================= */
-.intro-bar-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Counter Percentage */
-.intro-counter-display {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  font-size: clamp(24px, 3.2vw, 36px);
-  font-weight: 300;
-  line-height: 1;
-  color: var(--intro-gold);
-  letter-spacing: 0.05em;
-  font-variant-numeric: tabular-nums;
-}
-
-.intro-counter-display small {
-  font-family: 'JetBrains Mono', 'DM Sans', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: rgba(246, 241, 234, 0.45);
-}
-
-/* Glowing Progress Bar */
-.intro-bar-track {
-  width: min(85vw, 320px);
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  overflow: hidden;
-  position: relative;
-}
-
-.intro-bar-fill {
-  position: absolute;
+.intro-logo {
+  position: fixed;
   left: 0;
   top: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, var(--intro-clay) 0%, var(--intro-gold) 60%, var(--intro-amber) 100%);
-  box-shadow: 0 0 14px rgba(229, 169, 90, 0.85);
-  border-radius: 999px;
-  transition: width 0.08s linear;
+  z-index: 999995;
+  display: flex;
+  align-items: baseline;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  font-size: 110px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: #fff;
+  transform-origin: 0 0;
+  pointer-events: none;
+  opacity: 0;
+  text-decoration: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  will-change: transform, opacity;
 }
 
-@media (max-width: 480px) {
-  .intro-image-card-wrap {
-    width: clamp(180px, 46vw, 240px);
-    margin-bottom: 16px;
-  }
+.intro-logo.visible {
+  opacity: 1;
+}
 
-  .intro-brand-title {
-    font-size: clamp(28px, 7.8vw, 42px);
-    gap: 0.15em 0.35em;
-  }
+/* Once docked, it becomes the interactive permanent navbar logo */
+.intro-logo.docked {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
 
-  .intro-step-text {
-    font-size: 10px;
-    letter-spacing: 0.24em;
-    margin-top: 10px;
-    margin-bottom: 16px;
-  }
+.intro-logo.docked:hover {
+  opacity: 0.82;
+}
 
-  .intro-bar-track {
-    width: min(88vw, 260px);
+/* Letter reveal masks */
+.intro-ch {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.1em 0.02em 0.14em;
+  margin: -0.1em -0.02em -0.14em;
+  transition: opacity 0.5s ease, max-width 0.6s var(--intro-ease), margin 0.5s ease, transform 0.5s ease;
+  vertical-align: baseline;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em !important;
+  font-style: normal !important;
+}
+
+.intro-ch i {
+  display: inline-block;
+  font-style: normal !important;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em !important;
+  transform: translateY(118%);
+  transition: transform 1s var(--intro-out) var(--d, 0s);
+  will-change: transform;
+}
+
+.intro-g-letter {
+  margin-right: -0.01em;
+}
+
+.intro-logo.show .intro-ch i,
+.intro-logo.docked .intro-ch i {
+  transform: none;
+}
+
+.intro-sp {
+  display: inline-block;
+  width: 0.22em;
+}
+
+/* Wordmark typography: Matches Timeburner font style */
+.intro-shades-word {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  letter-spacing: -0.01em !important;
+}
+
+.intro-dot {
+  font-family: 'Timeburner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  -webkit-text-stroke: 0.025em currentColor;
+  paint-order: stroke fill;
+  display: inline-block;
+}
+
+/* =========================================================
+   CALABASH SVG ICON (Draws itself directly - NO CIRCLE)
+   Letters closer to the SVG and almost same size
+   ========================================================= */
+.intro-lens {
+  width: 0.92em;
+  height: 0.88em;
+  flex: none;
+  margin: 0 0.02em 0 -0.05em;
+  position: relative;
+  top: 0.04em;
+  overflow: visible;
+  vertical-align: baseline;
+}
+
+/* Gourd SVG contour stroke drawing animation */
+.intro-lens .gourd-contour-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.3s var(--intro-ease);
+}
+
+.intro-logo.draw .intro-lens .gourd-contour-draw,
+.intro-logo.docked .intro-lens .gourd-contour-draw {
+  stroke-dashoffset: 0;
+}
+
+/* Gourd fill and scale */
+.intro-lens .fillg {
+  opacity: 0;
+  transform-origin: 300px 287px;
+  transform: scale(0.4);
+  transition: opacity 0.75s ease, transform 0.95s var(--intro-out);
+}
+
+.intro-logo.fill .intro-lens .fillg,
+.intro-logo.docked .intro-lens .fillg {
+  opacity: 1;
+  transform: none;
+}
+
+/* Light glint sweep */
+.intro-lens .glint {
+  opacity: 0;
+}
+
+.intro-logo.shine .intro-lens .glint {
+  animation: intro-glint 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes intro-glint {
+  0% {
+    transform: translateX(-350px) rotate(26deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.92;
+  }
+  80% {
+    opacity: 0.92;
+  }
+  100% {
+    transform: translateX(450px) rotate(26deg);
+    opacity: 0;
   }
 }
 
-@media (max-height: 640px) {
-  .intro-image-card-wrap {
-    width: clamp(130px, 22vh, 170px);
-    margin-bottom: 10px;
-  }
+.intro-lens .gourdbob {
+  animation: gourdbob 5s ease-in-out infinite;
+}
 
-  .intro-brand-title {
-    font-size: clamp(24px, 5vh, 34px);
+@keyframes gourdbob {
+  0%, 100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-5px);
+  }
+}
 
-  .intro-step-text {
-    margin-top: 6px;
-    margin-bottom: 10px;
+/* =========================================================
+   DOCKED LOGO THEME ADAPTATION (FIX FOR WHITE SCREENS)
+   Default is DARK CHARCOAL so white screens always show clearly!
+   ========================================================= */
+
+/* Default docked & docking state: dark charcoal text + vibrant red gourd */
+.intro-logo.docking,
+.intro-logo.docked {
+  color: #252622 !important;
+  transition: opacity 0.25s ease, filter 0.25s ease, color 0.3s ease;
+}
+
+.intro-logo.docking .intro-shades-word .intro-ch i,
+.intro-logo.docked .intro-shades-word .intro-ch i {
+  color: #252622 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  transition: color 0.3s ease;
+}
+
+.intro-logo.docking .gourd-silhouette,
+.intro-logo.docked .gourd-silhouette {
+  fill: var(--color-earth, #dc3331) !important;
+  transition: fill 0.3s ease;
+}
+
+.intro-logo.docking .gourd-contour-draw,
+.intro-logo.docked .gourd-contour-draw {
+  stroke: var(--color-earth, #dc3331) !important;
+  stroke-width: 80 !important;
+  transition: stroke 0.3s ease;
+}
+
+.intro-logo.docking .intro-dot,
+.intro-logo.docked .intro-dot {
+  color: var(--color-earth, #dc3331) !important;
+  transition: color 0.3s ease;
+}
+
+/* 1. Theme Red (Only when header is theme-red AND not hovered and not menu-active) */
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered),
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered),
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) {
+  color: #f5cdcc !important;
+}
+
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-shades-word .intro-ch i,
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i,
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i {
+  color: #f5cdcc !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-silhouette,
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .gourd-silhouette,
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .gourd-silhouette {
+  fill: #f5cdcc !important;
+}
+
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-contour-draw,
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .gourd-contour-draw,
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .gourd-contour-draw {
+  stroke: #f5cdcc !important;
+}
+
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-dot,
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .intro-dot,
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .intro-dot {
+  color: #f5cdcc !important;
+}
+
+/* 2. Theme Dark (Photography hero pages: /products, /contact, /community when not hovered) */
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered),
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered),
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) {
+  color: #ffffff !important;
+}
+
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-shades-word .intro-ch i,
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i,
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i {
+  color: #ffffff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
+}
+
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-silhouette,
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .gourd-silhouette,
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .gourd-silhouette {
+  fill: var(--color-earth, #dc3331) !important;
+}
+
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-contour-draw,
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .gourd-contour-draw,
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .gourd-contour-draw {
+  stroke: var(--color-earth, #dc3331) !important;
+}
+
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-dot,
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .intro-dot,
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .intro-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* 3. Theme White, Header Hover, Scrolled, or Mobile Menu Open */
+body:has(.the-frankie-header.theme-white) .intro-logo.docked,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked,
+body:has(.the-frankie-header:hover) .intro-logo.docked,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked,
+body:has(#gourd-main-logo:hover) .intro-logo.docked,
+.intro-logo.docking.theme-white,
+.intro-logo.docked.theme-white,
+.intro-logo.docking.menu-active,
+.intro-logo.docked.menu-active,
+.intro-logo.docked.header-hovered {
+  color: #252622 !important;
+}
+
+body:has(.the-frankie-header.theme-white) .intro-logo.docked .intro-shades-word .intro-ch i,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-shades-word .intro-ch i,
+body:has(.the-frankie-header:hover) .intro-logo.docked .intro-shades-word .intro-ch i,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-shades-word .intro-ch i,
+body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-shades-word .intro-ch i,
+.intro-logo.docking.theme-white .intro-shades-word .intro-ch i,
+.intro-logo.docked.theme-white .intro-shades-word .intro-ch i,
+.intro-logo.docking.menu-active .intro-shades-word .intro-ch i,
+.intro-logo.docked.menu-active .intro-shades-word .intro-ch i,
+.intro-logo.docked.header-hovered .intro-shades-word .intro-ch i {
+  color: #252622 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  text-shadow: none !important;
+}
+
+body:has(.the-frankie-header.theme-white) .intro-logo.docked .gourd-silhouette,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked .gourd-silhouette,
+body:has(.the-frankie-header:hover) .intro-logo.docked .gourd-silhouette,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked .gourd-silhouette,
+body:has(#gourd-main-logo:hover) .intro-logo.docked .gourd-silhouette,
+.intro-logo.docking.theme-white .gourd-silhouette,
+.intro-logo.docked.theme-white .gourd-silhouette,
+.intro-logo.docking.menu-active .gourd-silhouette,
+.intro-logo.docked.menu-active .gourd-silhouette,
+.intro-logo.docked.header-hovered .gourd-silhouette {
+  fill: var(--color-earth, #dc3331) !important;
+}
+
+body:has(.the-frankie-header.theme-white) .intro-logo.docked .gourd-contour-draw,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked .gourd-contour-draw,
+body:has(.the-frankie-header:hover) .intro-logo.docked .gourd-contour-draw,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked .gourd-contour-draw,
+body:has(#gourd-main-logo:hover) .intro-logo.docked .gourd-contour-draw,
+.intro-logo.docking.theme-white .gourd-contour-draw,
+.intro-logo.docked.theme-white .gourd-contour-draw,
+.intro-logo.docking.menu-active .gourd-contour-draw,
+.intro-logo.docked.menu-active .gourd-contour-draw,
+.intro-logo.docked.header-hovered .gourd-contour-draw {
+  stroke: var(--color-earth, #dc3331) !important;
+}
+
+body:has(.the-frankie-header.theme-white) .intro-logo.docked .intro-dot,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-dot,
+body:has(.the-frankie-header:hover) .intro-logo.docked .intro-dot,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-dot,
+body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-dot,
+.intro-logo.docking.theme-white .intro-dot,
+.intro-logo.docked.theme-white .intro-dot,
+.intro-logo.docking.menu-active .intro-dot,
+.intro-logo.docked.menu-active .intro-dot,
+.intro-logo.docked.header-hovered .intro-dot {
+  color: var(--color-earth, #dc3331) !important;
+}
+
+/* Interactive Hover effects on the Docked Logo */
+@media (hover: hover) and (pointer: fine) {
+  .intro-logo.docked:hover {
+    opacity: 0.82;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-card-watermark svg {
-    animation: none;
-  }
-  .intro-scramble-letter.locked {
-    animation: none;
+  .intro-overlay,
+  .intro-logo,
+  .intro-ch i,
+  .intro-bar b {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
-
