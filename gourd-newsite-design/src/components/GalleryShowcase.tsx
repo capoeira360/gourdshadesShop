@@ -1,163 +1,20 @@
 import React, { useRef, useEffect } from 'react'
 import './GalleryShowcase.css'
+import { useProductStore } from '../context/ProductContext'
 
-export interface GalleryItem {
-  id: string
-  title: string
-  subtitle?: string
-  type: 'image' | 'video'
-  src: string
-  poster?: string
-}
-
-const galleryItems: GalleryItem[] = [
-  {
-    id: 'gallery-night-glow',
-    title: 'Midnight Solitude',
-    subtitle: 'Ambient Illumination',
-    type: 'image',
-    src: '/images/20240913_211304-hero.jpg',
-  },
-  {
-    id: 'gallery-artisan-carving',
-    title: 'Artisan Carving',
-    subtitle: 'Studio Process',
-    type: 'image',
-    src: '/images/20240520_161231-featured-1.jpg',
-  },
-  {
-    id: 'gallery-exhibition-space',
-    title: 'Exhibition Space',
-    subtitle: 'Arusha Showcase',
-    type: 'image',
-    src: '/images/IMG-20250601-WA0002-exhibition-1.jpg',
-  },
-  {
-    id: 'gallery-studio-film-1',
-    title: 'Artisan at Work',
-    subtitle: 'Studio Film',
-    type: 'video',
-    src: '/Artisan glow studio showcase.mp4',
-    poster: '/images/20240913_211304-hero.jpg',
-  },
-  {
-    id: 'gallery-celestial-radiance',
-    title: 'Celestial Radiance',
-    subtitle: 'Pendant Form',
-    type: 'image',
-    src: '/images/20240614_140014-featured-3-.jpg',
-  },
-  {
-    id: 'gallery-installation',
-    title: 'Gallery Installation',
-    subtitle: 'Curated Collection',
-    type: 'image',
-    src: '/images/20240525_105359-exhibition-2-.jpg',
-  },
-  {
-    id: 'gallery-workbench',
-    title: 'The Workbench',
-    subtitle: 'Handcraft Tools',
-    type: 'image',
-    src: '/images/20241018_094717-reach-1-.jpg',
-  },
-  {
-    id: 'gallery-botanical-sculpting',
-    title: 'Botanical Sculpting',
-    subtitle: 'Organic Contours',
-    type: 'image',
-    src: '/images/20240804_155809-featured-4-.jpg',
-  },
-  {
-    id: 'gallery-curated-showcase',
-    title: 'Curated Showcase',
-    subtitle: 'Exhibition View',
-    type: 'image',
-    src: '/images/20240525_105410-exhibition-3-.jpg',
-  },
-  {
-    id: 'gallery-crystal-refraction',
-    title: 'Crystal Refraction',
-    subtitle: 'Beadwork Detail',
-    type: 'image',
-    src: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
-  },
-  {
-    id: 'gallery-studio-film-2',
-    title: 'Glow Studio Showcase',
-    subtitle: 'Behind the Craft',
-    type: 'video',
-    src: '/Artisan glow studio showcase.mp4',
-    poster: '/images/20240804_155809-featured-4-.jpg',
-  },
-  {
-    id: 'gallery-perforation',
-    title: 'Hand Perforation',
-    subtitle: 'Precision Pattern',
-    type: 'image',
-    src: '/images/20240913_145501-reach-2-.jpg',
-  },
-  {
-    id: 'gallery-savanna-terrain-1',
-    title: 'Savanna Expedition',
-    subtitle: 'Natural Landscape',
-    type: 'image',
-    src: '/images/terrain-1.jpeg',
-  },
-  {
-    id: 'gallery-savanna-terrain-2',
-    title: 'Arusha Terrain',
-    subtitle: 'Studio Inspiration',
-    type: 'image',
-    src: '/images/terrain-2.jpeg',
-  },
-  {
-    id: 'gallery-savanna-terrain-3',
-    title: 'Artisan Heritage',
-    subtitle: 'Field Exploration',
-    type: 'image',
-    src: '/images/terrain-3.jpeg',
-  },
-  {
-    id: 'gallery-savanna-terrain-4',
-    title: 'Organic Elements',
-    subtitle: 'Natural Flora',
-    type: 'image',
-    src: '/images/terrain-4.jpeg',
-  },
-  {
-    id: 'gallery-coral-reef',
-    title: 'Coral Luminescence',
-    subtitle: 'Organic Reef Form',
-    type: 'image',
-    src: '/images/coral-1.jpg',
-  },
-  {
-    id: 'gallery-studio-film-3',
-    title: 'Calabash Illuminated',
-    subtitle: 'Live Studio',
-    type: 'video',
-    src: '/Artisan glow studio showcase.mp4',
-    poster: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
-  },
-  {
-    id: 'gallery-hanging-three-family',
-    title: 'Cascading Triplets',
-    subtitle: 'Suspended Cluster',
-    type: 'image',
-    src: '/images/3-way-hanging-familiy-1.jpg',
-  },
-]
-
-// Duplicate 4 sets for seamless infinite loop wrapping
-const infiniteGallery = [
-  ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set0-${item.id}-${idx}` })),
-  ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set1-${item.id}-${idx}` })),
-  ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set2-${item.id}-${idx}` })),
-  ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set3-${item.id}-${idx}` })),
-]
+export type { GalleryItem } from '../context/ProductContext'
 
 export function GalleryShowcase() {
+  const { galleryItems } = useProductStore()
+
+  // Duplicate 4 sets for seamless infinite loop wrapping (driven by live context data)
+  const infiniteGallery = [
+    ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set0-${item.id}-${idx}` })),
+    ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set1-${item.id}-${idx}` })),
+    ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set2-${item.id}-${idx}` })),
+    ...galleryItems.map((item, idx) => ({ ...item, loopKey: `set3-${item.id}-${idx}` })),
+  ]
+
   const trackWrapperRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const isDraggingRef = useRef(false)
@@ -231,7 +88,7 @@ export function GalleryShowcase() {
       clearTimeout(initTimer)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [galleryItems.length])
 
   // Native onScroll listener for trackpad & touch gestures
   const handleScroll = () => {
@@ -348,4 +205,3 @@ export function GalleryShowcase() {
     </section>
   )
 }
-

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Lock,
@@ -26,9 +26,13 @@ import {
   Sparkles,
   Megaphone,
   Bell,
-  Calendar
+  Calendar,
+  Film,
+  GalleryHorizontal,
+  Move,
+  Link2,
 } from 'lucide-react'
-import { useProductStore, type Product } from '../context/ProductContext'
+import { useProductStore, type Product, type GalleryItem } from '../context/ProductContext'
 import GourdLogo from './GourdLogo'
 import './AdminPortal.css'
 
@@ -52,7 +56,13 @@ export const AdminPortal: React.FC = () => {
     logout,
     changePassword,
     exportProductsJson,
-    importProductsJson
+    importProductsJson,
+    // Gallery management
+    galleryItems,
+    addGalleryItem,
+    updateGalleryItem,
+    deleteGalleryItem,
+    resetGalleryToDefaults,
   } = useProductStore()
 
   // Login form state
@@ -61,12 +71,18 @@ export const AdminPortal: React.FC = () => {
   const [loginError, setLoginError] = useState('')
 
   // Dashboard state
-  const [activeTab, setActiveTab] = useState<'products' | 'announcements' | 'settings' | 'backup' | 'security'>('products')
+  const [activeTab, setActiveTab] = useState<'products' | 'gallery' | 'announcements' | 'settings' | 'backup' | 'security'>('products')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [isAddingNew, setIsAddingNew] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+  // Gallery state
+  const [galleryFilter, setGalleryFilter] = useState<'all' | 'video' | 'image'>('all')
+  const [gallerySearch, setGallerySearch] = useState('')
+  const [editingGalleryItem, setEditingGalleryItem] = useState<GalleryItem | null>(null)
+  const [isAddingGallery, setIsAddingGallery] = useState(false)
 
   // Security tab state
   const [newPassword, setNewPassword] = useState('')
@@ -142,6 +158,63 @@ export const AdminPortal: React.FC = () => {
     setEditingProduct(null)
     setIsAddingNew(false)
   }
+
+  // Handle Gallery Media Upload (file to data URL)
+  const handleGalleryMediaUpload = (e: React.ChangeEvent<HTMLInputElement>, isPoster = false) => {
+    const file = e.target.files?.[0]
+    if (!file || !editingGalleryItem) return
+    if (file.type.startsWith('video/') && file.size > 8 * 1024 * 1024) {
+      alert('Video file is larger than 8MB. For web performance, place the video file in the public folder (e.g. /my-video.mp4) and enter the path directly.')
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = () => {
+      const res = reader.result as string
+      if (res) {
+        if (isPoster) {
+          setEditingGalleryItem({ ...editingGalleryItem, poster: res })
+        } else {
+          setEditingGalleryItem({ ...editingGalleryItem, src: res })
+        }
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // Handle Save Gallery Item
+  const handleSaveGalleryItem = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editingGalleryItem || !editingGalleryItem.src) {
+      alert('Please provide a media source (URL or upload)')
+      return
+    }
+    if (isAddingGallery) {
+      addGalleryItem({
+        title: editingGalleryItem.title || 'Untitled Moment',
+        subtitle: editingGalleryItem.subtitle || '',
+        type: editingGalleryItem.type || 'image',
+        src: editingGalleryItem.src,
+        poster: editingGalleryItem.poster || '',
+      })
+      showToast(`Added ${editingGalleryItem.type === 'video' ? 'video' : 'image'} to gallery showcase!`)
+    } else {
+      updateGalleryItem(editingGalleryItem.id, editingGalleryItem)
+      showToast(`Updated "${editingGalleryItem.title}"!`)
+    }
+    setEditingGalleryItem(null)
+    setIsAddingGallery(false)
+  }
+
+  // Filtered Gallery Items
+  const filteredGalleryItems = galleryItems.filter(item => {
+    const matchesFilter =
+      galleryFilter === 'all' || item.type === galleryFilter
+    const matchesSearch =
+      item.title.toLowerCase().includes(gallerySearch.toLowerCase()) ||
+      (item.subtitle && item.subtitle.toLowerCase().includes(gallerySearch.toLowerCase())) ||
+      item.src.toLowerCase().includes(gallerySearch.toLowerCase())
+    return matchesFilter && matchesSearch
+  })
 
   // Filtered Products
   const filteredProducts = products.filter(p => {
@@ -295,6 +368,16 @@ export const AdminPortal: React.FC = () => {
               <Tag size={16} />
               <span>Lamps &amp; Prices</span>
               <span className="admin-count-tag">{products.length}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`}
+              onClick={() => setActiveTab('gallery')}
+            >
+              <Film size={16} />
+              <span>Gallery &amp; Videos</span>
+              <span className="admin-count-tag">{galleryItems.length}</span>
             </button>
 
             <button
@@ -510,6 +593,205 @@ export const AdminPortal: React.FC = () => {
                     ))
                   )}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: GALLERY & VIDEOS */}
+          {activeTab === 'gallery' && (
+            <div className="admin-tab-content">
+              {/* Header and Controls */}
+              <div className="admin-section-header">
+                <div>
+                  <h1 className="admin-title">Gallery &amp; Video Showcase</h1>
+                  <p className="admin-subtitle">
+                    Manage the short looping studio videos and photographs displayed in the continuous horizontal infinite scroll section on your home page.
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className="admin-btn primary"
+                    onClick={() => {
+                      setIsAddingGallery(true)
+                      setEditingGalleryItem({
+                        id: `gallery-video-${Date.now()}`,
+                        title: 'Studio Film',
+                        subtitle: 'Artisan Glow',
+                        type: 'video',
+                        src: '/Artisan glow studio showcase.mp4',
+                        poster: '/images/20240913_211304-hero.jpg',
+                      })
+                    }}
+                  >
+                    <Plus size={16} /> Add Video
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-btn outline"
+                    onClick={() => {
+                      setIsAddingGallery(true)
+                      setEditingGalleryItem({
+                        id: `gallery-image-${Date.now()}`,
+                        title: 'Studio Moment',
+                        subtitle: 'Calabash Craft',
+                        type: 'image',
+                        src: '/images/20240913_211304-hero.jpg',
+                      })
+                    }}
+                  >
+                    <Plus size={16} /> Add Image
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-btn outline"
+                    style={{ color: '#777' }}
+                    onClick={() => {
+                      if (confirm('Reset gallery to default studio videos and photos?')) {
+                        resetGalleryToDefaults()
+                        showToast('Gallery reset to default items.')
+                      }
+                    }}
+                    title="Reset gallery items to default collection"
+                  >
+                    <RefreshCw size={14} /> Reset
+                  </button>
+                </div>
+              </div>
+
+              {/* Gallery Metrics Cards */}
+              <div className="gallery-stats-row">
+                <div className="gallery-stat-chip active">
+                  <span className="stat-num">{galleryItems.length}</span>
+                  <span className="stat-label">Total Items</span>
+                </div>
+                <div className="gallery-stat-chip video">
+                  <Film size={15} />
+                  <span className="stat-num">{galleryItems.filter(i => i.type === 'video').length}</span>
+                  <span className="stat-label">Looping Videos</span>
+                </div>
+                <div className="gallery-stat-chip image">
+                  <ImageIcon size={15} />
+                  <span className="stat-num">{galleryItems.filter(i => i.type === 'image').length}</span>
+                  <span className="stat-label">Editorial Photos</span>
+                </div>
+              </div>
+
+              {/* Filters Bar */}
+              <div className="admin-filter-bar" style={{ marginTop: '16px' }}>
+                <div className="admin-search-wrap">
+                  <Search size={16} className="admin-search-icon" />
+                  <input
+                    type="text"
+                    value={gallerySearch}
+                    onChange={e => setGallerySearch(e.target.value)}
+                    placeholder="Search by title, subtitle, or media path..."
+                    className="admin-input search-input"
+                  />
+                  {gallerySearch && (
+                    <button type="button" onClick={() => setGallerySearch('')} className="admin-clear-btn">
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+
+                <div className="admin-select-wrap">
+                  <select
+                    value={galleryFilter}
+                    onChange={e => setGalleryFilter(e.target.value as 'all' | 'video' | 'image')}
+                    className="admin-select"
+                  >
+                    <option value="all">All Media Types ({galleryItems.length})</option>
+                    <option value="video">🎬 Videos Only ({galleryItems.filter(i => i.type === 'video').length})</option>
+                    <option value="image">📷 Images Only ({galleryItems.filter(i => i.type === 'image').length})</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Gallery Grid / List */}
+              <div className="admin-gallery-grid">
+                {filteredGalleryItems.length === 0 ? (
+                  <div className="admin-empty-state" style={{ gridColumn: '1 / -1' }}>
+                    <p>No gallery items match your filter.</p>
+                    <button
+                      type="button"
+                      onClick={() => { setGallerySearch(''); setGalleryFilter('all') }}
+                      className="admin-btn outline small"
+                    >
+                      Reset Filter
+                    </button>
+                  </div>
+                ) : (
+                  filteredGalleryItems.map((item, idx) => (
+                    <div key={item.id} className={`admin-gallery-card ${item.type === 'video' ? 'is-video' : ''}`}>
+                      <div className="admin-gallery-media-preview">
+                        {item.type === 'video' ? (
+                          <div className="gallery-video-preview-wrapper">
+                            <video
+                              src={item.src}
+                              poster={item.poster}
+                              muted
+                              loop
+                              autoPlay
+                              playsInline
+                              className="admin-gallery-preview-media"
+                            />
+                            <span className="media-type-badge video">
+                              <Film size={11} /> Video Loop
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="gallery-image-preview-wrapper">
+                            <img
+                              src={item.src}
+                              alt={item.title}
+                              className="admin-gallery-preview-media"
+                            />
+                            <span className="media-type-badge image">
+                              <ImageIcon size={11} /> Photo
+                            </span>
+                          </div>
+                        )}
+                        <span className="gallery-item-index">#{idx + 1}</span>
+                      </div>
+
+                      <div className="admin-gallery-card-body">
+                        <div className="admin-gallery-card-info">
+                          <h4 className="gallery-card-title">{item.title}</h4>
+                          {item.subtitle && <span className="gallery-card-subtitle">{item.subtitle}</span>}
+                          <span className="gallery-card-src" title={item.src}>{item.src}</span>
+                        </div>
+
+                        <div className="admin-gallery-card-actions">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsAddingGallery(false)
+                              setEditingGalleryItem(JSON.parse(JSON.stringify(item)))
+                            }}
+                            className="admin-icon-btn"
+                            title="Edit Media Item"
+                          >
+                            <Edit3 size={15} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (confirm(`Remove "${item.title}" from gallery showcase?`)) {
+                                deleteGalleryItem(item.id)
+                                showToast(`Removed "${item.title}"`)
+                              }
+                            }}
+                            className="admin-icon-btn danger"
+                            title="Delete Item"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}
@@ -1237,6 +1519,179 @@ export const AdminPortal: React.FC = () => {
                 </button>
                 <button type="submit" className="admin-btn primary">
                   <Check size={16} /> Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT / CREATE GALLERY ITEM MODAL */}
+      {editingGalleryItem && (
+        <div className="admin-modal-backdrop" onClick={() => setEditingGalleryItem(null)}>
+          <div className="admin-modal" onClick={e => e.stopPropagation()}>
+            <div className="admin-modal-head">
+              <h2>{isAddingGallery ? (editingGalleryItem.type === 'video' ? 'Add Video Card to Gallery' : 'Add Image Card to Gallery') : `Edit: ${editingGalleryItem.title}`}</h2>
+              <button type="button" onClick={() => setEditingGalleryItem(null)} className="admin-close-modal">
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveGalleryItem} className="admin-modal-body">
+              {/* Media Type Toggle */}
+              <div className="admin-form-group">
+                <label>Media Card Type *</label>
+                <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
+                  <button
+                    type="button"
+                    className={`media-type-toggle-btn ${editingGalleryItem.type === 'video' ? 'active' : ''}`}
+                    onClick={() => setEditingGalleryItem({ ...editingGalleryItem, type: 'video' })}
+                  >
+                    <Film size={16} />
+                    <span>Looping Video</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`media-type-toggle-btn ${editingGalleryItem.type === 'image' ? 'active' : ''}`}
+                    onClick={() => setEditingGalleryItem({ ...editingGalleryItem, type: 'image' })}
+                  >
+                    <ImageIcon size={16} />
+                    <span>Editorial Photo</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Title & Subtitle */}
+              <div className="admin-grid-2">
+                <div className="admin-form-group">
+                  <label>Title *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingGalleryItem.title}
+                    onChange={e => setEditingGalleryItem({ ...editingGalleryItem, title: e.target.value })}
+                    placeholder="e.g. Artisan at Work"
+                    className="admin-input"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label>Subtitle / Tag</label>
+                  <input
+                    type="text"
+                    value={editingGalleryItem.subtitle || ''}
+                    onChange={e => setEditingGalleryItem({ ...editingGalleryItem, subtitle: e.target.value })}
+                    placeholder="e.g. Studio Film or Studio Process"
+                    className="admin-input"
+                  />
+                </div>
+              </div>
+
+              {/* Source Path / URL */}
+              <div className="admin-form-group">
+                <label>{editingGalleryItem.type === 'video' ? 'Video File Path or URL *' : 'Image File Path or URL *'}</label>
+                <input
+                  type="text"
+                  required
+                  value={editingGalleryItem.src}
+                  onChange={e => setEditingGalleryItem({ ...editingGalleryItem, src: e.target.value })}
+                  placeholder={editingGalleryItem.type === 'video' ? '/Artisan glow studio showcase.mp4 or https://...' : '/images/my-photo.jpg'}
+                  className="admin-input"
+                />
+                {editingGalleryItem.type === 'video' && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+                    <small style={{ color: '#777' }}>Quick presets:</small>
+                    <button
+                      type="button"
+                      className="preset-chip-btn"
+                      style={{ padding: '3px 8px', fontSize: '11px' }}
+                      onClick={() => setEditingGalleryItem({
+                        ...editingGalleryItem,
+                        src: '/Artisan glow studio showcase.mp4',
+                        poster: editingGalleryItem.poster || '/images/20240913_211304-hero.jpg'
+                      })}
+                    >
+                      <Film size={12} /> Studio Showcase MP4
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Video Poster Thumbnail (only if video) */}
+              {editingGalleryItem.type === 'video' && (
+                <div className="admin-form-group">
+                  <label>Poster Thumbnail Image (optional for video)</label>
+                  <input
+                    type="text"
+                    value={editingGalleryItem.poster || ''}
+                    onChange={e => setEditingGalleryItem({ ...editingGalleryItem, poster: e.target.value })}
+                    placeholder="/images/20240913_211304-hero.jpg"
+                    className="admin-input"
+                  />
+                  <small>Displayed while the video buffer loads.</small>
+                </div>
+              )}
+
+              {/* File Upload Option */}
+              <div className="admin-form-group">
+                <label>Or Upload from Device</label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <label className="admin-btn outline small" style={{ cursor: 'pointer' }}>
+                    <Upload size={14} /> Choose {editingGalleryItem.type === 'video' ? 'Video File' : 'Image File'}
+                    <input
+                      type="file"
+                      accept={editingGalleryItem.type === 'video' ? 'video/mp4,video/webm' : 'image/*'}
+                      onChange={e => handleGalleryMediaUpload(e, false)}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {editingGalleryItem.type === 'video' && (
+                    <label className="admin-btn outline small" style={{ cursor: 'pointer' }}>
+                      <ImageIcon size={14} /> Choose Poster Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={e => handleGalleryMediaUpload(e, true)}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              {/* Live Preview Box */}
+              {editingGalleryItem.src && (
+                <div className="admin-form-group">
+                  <label>Preview</label>
+                  <div className="gallery-modal-preview">
+                    {editingGalleryItem.type === 'video' ? (
+                      <video
+                        src={editingGalleryItem.src}
+                        poster={editingGalleryItem.poster}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="modal-preview-media"
+                      />
+                    ) : (
+                      <img
+                        src={editingGalleryItem.src}
+                        alt="Preview"
+                        className="modal-preview-media"
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Footer */}
+              <div className="admin-modal-footer" style={{ margin: '20px -26px -24px', padding: '16px 26px' }}>
+                <button type="button" onClick={() => setEditingGalleryItem(null)} className="admin-btn outline">
+                  Cancel
+                </button>
+                <button type="submit" className="admin-btn primary">
+                  <Check size={16} /> {isAddingGallery ? 'Add to Gallery' : 'Save Changes'}
                 </button>
               </div>
             </form>

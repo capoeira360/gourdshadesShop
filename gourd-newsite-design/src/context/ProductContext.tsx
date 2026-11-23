@@ -1,6 +1,41 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { products as initialProducts, type Product as BaseProduct } from '../data/products'
 
+// ─── Gallery Item type ───────────────────────────────────────────────────────
+export interface GalleryItem {
+  id: string
+  title: string
+  subtitle?: string
+  type: 'image' | 'video'
+  src: string
+  poster?: string    // optional thumbnail for video cards
+}
+
+// Default gallery items (matches the static list in GalleryShowcase.tsx)
+export const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
+  { id: 'gallery-night-glow',       title: 'Midnight Solitude',      subtitle: 'Ambient Illumination', type: 'image', src: '/images/20240913_211304-hero.jpg' },
+  { id: 'gallery-artisan-carving',  title: 'Artisan Carving',        subtitle: 'Studio Process',       type: 'image', src: '/images/20240520_161231-featured-1.jpg' },
+  { id: 'gallery-exhibition-space', title: 'Exhibition Space',        subtitle: 'Arusha Showcase',      type: 'image', src: '/images/IMG-20250601-WA0002-exhibition-1.jpg' },
+  { id: 'gallery-studio-film-1',    title: 'Artisan at Work',        subtitle: 'Studio Film',          type: 'video', src: '/Artisan glow studio showcase.mp4', poster: '/images/20240913_211304-hero.jpg' },
+  { id: 'gallery-celestial-radiance', title: 'Celestial Radiance',   subtitle: 'Pendant Form',         type: 'image', src: '/images/20240614_140014-featured-3-.jpg' },
+  { id: 'gallery-installation',     title: 'Gallery Installation',   subtitle: 'Curated Collection',   type: 'image', src: '/images/20240525_105359-exhibition-2-.jpg' },
+  { id: 'gallery-workbench',        title: 'The Workbench',          subtitle: 'Handcraft Tools',      type: 'image', src: '/images/20241018_094717-reach-1-.jpg' },
+  { id: 'gallery-botanical-sculpting', title: 'Botanical Sculpting', subtitle: 'Organic Contours',     type: 'image', src: '/images/20240804_155809-featured-4-.jpg' },
+  { id: 'gallery-curated-showcase', title: 'Curated Showcase',       subtitle: 'Exhibition View',      type: 'image', src: '/images/20240525_105410-exhibition-3-.jpg' },
+  { id: 'gallery-crystal-refraction', title: 'Crystal Refraction',   subtitle: 'Beadwork Detail',      type: 'image', src: '/images/IMG-20250401-WA0006-feature-replace1.jpg' },
+  { id: 'gallery-studio-film-2',    title: 'Glow Studio Showcase',   subtitle: 'Behind the Craft',     type: 'video', src: '/Artisan glow studio showcase.mp4', poster: '/images/20240804_155809-featured-4-.jpg' },
+  { id: 'gallery-perforation',      title: 'Hand Perforation',       subtitle: 'Precision Pattern',    type: 'image', src: '/images/20240913_145501-reach-2-.jpg' },
+  { id: 'gallery-savanna-terrain-1', title: 'Savanna Expedition',    subtitle: 'Natural Landscape',    type: 'image', src: '/images/terrain-1.jpeg' },
+  { id: 'gallery-savanna-terrain-2', title: 'Arusha Terrain',        subtitle: 'Studio Inspiration',   type: 'image', src: '/images/terrain-2.jpeg' },
+  { id: 'gallery-savanna-terrain-3', title: 'Artisan Heritage',      subtitle: 'Field Exploration',    type: 'image', src: '/images/terrain-3.jpeg' },
+  { id: 'gallery-savanna-terrain-4', title: 'Organic Elements',      subtitle: 'Natural Flora',        type: 'image', src: '/images/terrain-4.jpeg' },
+  { id: 'gallery-coral-reef',       title: 'Coral Luminescence',     subtitle: 'Organic Reef Form',    type: 'image', src: '/images/coral-1.jpg' },
+  { id: 'gallery-studio-film-3',    title: 'Calabash Illuminated',   subtitle: 'Live Studio',          type: 'video', src: '/Artisan glow studio showcase.mp4', poster: '/images/IMG-20250401-WA0006-feature-replace1.jpg' },
+  { id: 'gallery-hanging-three-family', title: 'Cascading Triplets', subtitle: 'Suspended Cluster',    type: 'image', src: '/images/3-way-hanging-familiy-1.jpg' },
+]
+
+const STORAGE_KEY_GALLERY = 'gourd_shades_gallery_v1'
+
 export interface Product extends BaseProduct {
   availabilityStatus?: 'available' | 'sold' | 'rare';
   availabilityNote?: string;
@@ -105,6 +140,13 @@ interface ProductContextType {
   isWishlistOpen: boolean;
   openWishlist: () => void;
   closeWishlist: () => void;
+  // Gallery management
+  galleryItems: GalleryItem[];
+  addGalleryItem: (item: Omit<GalleryItem, 'id'>) => void;
+  updateGalleryItem: (id: string, updates: Partial<GalleryItem>) => void;
+  deleteGalleryItem: (id: string) => void;
+  reorderGalleryItems: (items: GalleryItem[]) => void;
+  resetGalleryToDefaults: () => void;
 }
 
 const STORAGE_KEY_PRODUCTS = 'gourd_shades_products_v1'
@@ -192,6 +234,20 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
 
+  // Gallery items state (persists to localStorage)
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_GALLERY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed
+      }
+    } catch (e) {
+      console.warn('Failed to load gallery items from localStorage:', e)
+    }
+    return DEFAULT_GALLERY_ITEMS
+  })
+
   // Save wishlist on change
   useEffect(() => {
     try {
@@ -223,6 +279,37 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const openWishlist = () => setIsWishlistOpen(true)
   const closeWishlist = () => setIsWishlistOpen(false)
+
+  // Save gallery items on change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_GALLERY, JSON.stringify(galleryItems))
+    } catch (e) {
+      console.warn('Failed to save gallery items to localStorage:', e)
+    }
+  }, [galleryItems])
+
+  const addGalleryItem = (item: Omit<GalleryItem, 'id'>) => {
+    const newItem: GalleryItem = { ...item, id: `gallery-custom-${Date.now()}` }
+    setGalleryItems(prev => [...prev, newItem])
+  }
+
+  const updateGalleryItem = (id: string, updates: Partial<GalleryItem>) => {
+    setGalleryItems(prev => prev.map(item => item.id === id ? { ...item, ...updates } : item))
+  }
+
+  const deleteGalleryItem = (id: string) => {
+    setGalleryItems(prev => prev.filter(item => item.id !== id))
+  }
+
+  const reorderGalleryItems = (items: GalleryItem[]) => {
+    setGalleryItems(items)
+  }
+
+  const resetGalleryToDefaults = () => {
+    setGalleryItems(DEFAULT_GALLERY_ITEMS)
+    localStorage.removeItem(STORAGE_KEY_GALLERY)
+  }
 
   // Save products on change
   useEffect(() => {
@@ -272,6 +359,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     localStorage.removeItem(STORAGE_KEY_PRODUCTS)
     localStorage.removeItem(STORAGE_KEY_SETTINGS)
     localStorage.removeItem(STORAGE_KEY_ANNOUNCEMENTS)
+    setGalleryItems(DEFAULT_GALLERY_ITEMS)
+    localStorage.removeItem(STORAGE_KEY_GALLERY)
   }
 
   const updateStudioSettings = (updates: Partial<StudioSettings>) => {
@@ -398,7 +487,14 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         clearWishlist,
         isWishlistOpen,
         openWishlist,
-        closeWishlist
+        closeWishlist,
+        // Gallery management
+        galleryItems,
+        addGalleryItem,
+        updateGalleryItem,
+        deleteGalleryItem,
+        reorderGalleryItems,
+        resetGalleryToDefaults,
       }}
     >
       {children}
