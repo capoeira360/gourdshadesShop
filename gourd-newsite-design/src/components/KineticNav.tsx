@@ -52,7 +52,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
   const navigate = useNavigate()
   const searchInputRef = useRef<HTMLInputElement>(null)
   const navRef = useRef<HTMLElement>(null)
-  const logoLinkRef = useRef<HTMLDivElement>(null)
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const [navTheme, setNavTheme] = useState<NavTheme>(() => getInitialTheme(location.pathname))
@@ -65,13 +64,85 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
     let rafId: number | null = null
 
     const updateNavTheme = () => {
-      setIsScrolled(window.scrollY > 20)
-      const logoEl = logoLinkRef.current
-      if (!logoEl) return
+      const scrollY = window.scrollY
+      setIsScrolled(scrollY > 20)
 
-      const rect = logoEl.getBoundingClientRect()
-      const probeX = Math.round(rect.left + rect.width / 2)
-      const probeY = Math.round(rect.top + rect.height / 2)
+      const navEl = navRef.current
+      const navRect = navEl?.getBoundingClientRect()
+      // Center vertical probe line of the fixed topbar (typically y ≈ 32-36px)
+      const probeY = navRect ? Math.round(navRect.top + navRect.height / 2) : 34
+
+      // 1. Primary Strategy: Check explicit section bounding boxes at probeY
+      // This is the most deterministic approach across scroll positions and layout hierarchies
+      const candidateSections = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          'main > section, main > div, main > article, section, [data-logo-theme], [data-nav-theme], .catalog, .footer, .hero-copy, .hero-visual, .detail-layout, .detail-page, .story-preview, .intro-band'
+        )
+      )
+
+      // Find the deepest or most specific section intersecting probeY
+      for (const section of candidateSections) {
+        const rect = section.getBoundingClientRect()
+        if (rect.top <= probeY && rect.bottom >= probeY) {
+          // If on desktop hero and probing the left vs right column
+          if (section.classList.contains('hero')) {
+            const heroCopy = section.querySelector<HTMLElement>('.hero-copy')
+            const heroVisual = section.querySelector<HTMLElement>('.hero-visual')
+            if (heroCopy && heroVisual) {
+              const copyRect = heroCopy.getBoundingClientRect()
+              // Logo is on the left; check if probe is inside hero-copy
+              if (copyRect.top <= probeY && copyRect.bottom >= probeY) {
+                setNavTheme('red')
+                return
+              }
+            }
+          }
+
+          // Check explicit data-logo-theme / data-nav-theme
+          const explicitTheme =
+            section.getAttribute('data-logo-theme') ||
+            section.getAttribute('data-nav-theme')
+          if (
+            explicitTheme === 'white' ||
+            explicitTheme === 'red' ||
+            explicitTheme === 'dark'
+          ) {
+            setNavTheme(explicitTheme as NavTheme)
+            return
+          }
+
+          // Class-based classification of known sections
+          if (
+            section.matches(
+              '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .about-hero-image, .story-preview, .footer, .bg-dark, .dark-section, .fullscreen-lightbox'
+            )
+          ) {
+            setNavTheme('dark')
+            return
+          }
+
+          if (section.matches('.hero-copy, .contact-bottom, .bg-red')) {
+            setNavTheme('red')
+            return
+          }
+
+          if (
+            section.matches(
+              '.intro-band, .catalog, #catalog-section, .featured-section, .new-designs-section, .editorial-gallery-section, .values-strip, .legal-page, .about-intro, .about-content, .about-origin-extension, .community-section, .contact-editorial-section, .editorial-categories-section, .detail-layout, .detail-page'
+            )
+          ) {
+            setNavTheme('white')
+            return
+          }
+        }
+      }
+
+      // 2. Secondary Strategy: Point-based inspection at logo position and center
+      const brandSlot = document.getElementById('brand-slot')
+      const slotRect = brandSlot?.getBoundingClientRect()
+      const probeX = slotRect && slotRect.width > 0
+        ? Math.round(slotRect.left + slotRect.width / 2)
+        : Math.round(Math.min(window.innerWidth * 0.12, 140))
 
       const elements = document.elementsFromPoint(probeX, probeY)
 
@@ -80,13 +151,14 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           el.closest('.the-frankie-header') ||
           el.closest('.frankie-mobile-drawer') ||
           el.closest('.cookie-banner') ||
+          el.closest('.intro-overlay') ||
           el.tagName === 'HTML' ||
           el.tagName === 'BODY'
         ) {
           continue
         }
 
-        // 1. Explicit data-logo-theme
+        // Explicit data-logo-theme on ancestor
         const themedAncestor = el.closest('[data-logo-theme]') as HTMLElement | null
         if (themedAncestor) {
           const explicit = themedAncestor.getAttribute('data-logo-theme')
@@ -96,22 +168,24 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           }
         }
 
-        // 2. Class-based detection
+        // Class matching
         if (
           el.closest(
-            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
+            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .footer, .bg-dark, .dark-section, .fullscreen-lightbox'
           )
         ) {
           setNavTheme('dark')
           return
         }
-        if (el.closest('.intro-band, .hero-copy, .contact-bottom, .bg-red')) {
+
+        if (el.closest('.hero-copy, .contact-bottom, .bg-red')) {
           setNavTheme('red')
           return
         }
+
         if (
           el.closest(
-            '.featured-section, .new-designs-section, .editorial-gallery-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section, .editorial-categories-section'
+            '.intro-band, .featured-section, .new-designs-section, .editorial-gallery-section, .values-strip, .legal-page, .catalog, .about-intro, .about-content, .contact-editorial-section, .editorial-categories-section, .detail-layout'
           ) ||
           (el.closest('.page-intro') && !el.closest('.products-hero-bg, .contact-hero-bg, .community-hero-bg'))
         ) {
@@ -119,7 +193,7 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           return
         }
 
-        // 3. Computed style luminance
+        // Computed style luminance check
         let current: HTMLElement | null = el as HTMLElement
         while (current && current !== document.body) {
           const style = window.getComputedStyle(current)
@@ -133,16 +207,18 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
               const a = rgbMatch[3] !== undefined ? parseFloat(rgbMatch[3]) : 1
 
               if (a > 0.4) {
+                // Vibrant red background detection
                 if (r > 165 && g < 110 && b < 110) {
                   setNavTheme('red')
                   return
                 }
                 const lum = 0.299 * r + 0.587 * g + 0.114 * b
-                if (lum < 75) {
+                if (lum < 85) {
                   setNavTheme('dark')
                   return
                 }
-                if (lum > 160) {
+                // Light/cream/white/pink backgrounds
+                if (lum >= 85) {
                   setNavTheme('white')
                   return
                 }
@@ -153,7 +229,8 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         }
       }
 
-      if (window.scrollY < 80) {
+      // Fallback: at top of page, use initial route theme; when scrolled, default to high-contrast white
+      if (scrollY < 80) {
         setNavTheme(getInitialTheme(location.pathname))
       } else {
         setNavTheme('white')

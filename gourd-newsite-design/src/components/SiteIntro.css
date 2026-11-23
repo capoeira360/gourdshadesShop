@@ -30,8 +30,7 @@
 }
 
 body.intro-lock {
-  overflow: hidden !important;
-  height: 100vh !important;
+  overflow-y: hidden;
 }
 
 /* ============ INTRO OVERLAY ============ */
@@ -129,32 +128,6 @@ body.intro-lock {
   text-align: right;
   font-weight: 500;
   color: #fff;
-}
-
-.intro-skip-hint {
-  position: absolute;
-  top: 24px;
-  right: 28px;
-  padding: 6px 14px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  transition: color 0.25s, border-color 0.25s, background 0.25s;
-  pointer-events: auto;
-  cursor: pointer;
-  z-index: 20;
-}
-
-.intro-skip-hint:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.08);
 }
 
 @media (max-width: 580px) {
@@ -388,51 +361,53 @@ body.intro-lock {
   transition: color 0.3s ease;
 }
 
-/* 1. Theme Red (Only when header is theme-red AND not hovered and not menu-active) */
+/* 1. Theme Red (When header is theme-red on red background AND not hovered and not menu-active)
+   Clean crisp pure white #ffffff for letters, calabash emblem, and dot */
 body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered),
 .intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered),
 .intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) {
-  color: #f5cdcc !important;
+  color: #ffffff !important;
 }
 
-body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-shades-word .intro-ch i,
-.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i,
-.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i {
-  color: #f5cdcc !important;
+body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-ch i,
+.intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .intro-ch i,
+.intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .intro-ch i {
+  color: #ffffff !important;
   background: none !important;
   -webkit-background-clip: unset !important;
   background-clip: unset !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25) !important;
 }
 
 body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-silhouette,
 .intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .gourd-silhouette,
 .intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .gourd-silhouette {
-  fill: #f5cdcc !important;
+  fill: #ffffff !important;
 }
 
 body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .gourd-contour-draw,
 .intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .gourd-contour-draw,
 .intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .gourd-contour-draw {
-  stroke: #f5cdcc !important;
+  stroke: #ffffff !important;
 }
 
 body:has(.the-frankie-header.theme-red:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-dot,
 .intro-logo.docking.theme-red:not(.menu-active):not(.header-hovered) .intro-dot,
 .intro-logo.docked.theme-red:not(.menu-active):not(.header-hovered) .intro-dot {
-  color: #f5cdcc !important;
+  color: #ffffff !important;
 }
 
-/* 2. Theme Dark (Photography hero pages: /products, /contact, /community when not hovered) */
+/* 2. Theme Dark (Dark image / photography hero banners / product cards: unhovered, unscrolled)
+   Matches reference screenshot: crisp white letters + vibrant red #dc3331 calabash & dot */
 body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered),
 .intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered),
 .intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) {
   color: #ffffff !important;
 }
 
-body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-shades-word .intro-ch i,
-.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i,
-.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .intro-shades-word .intro-ch i {
+body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-hovered)) .intro-logo.docked:not(.header-hovered) .intro-ch i,
+.intro-logo.docking.theme-dark:not(.menu-active):not(.header-hovered) .intro-ch i,
+.intro-logo.docked.theme-dark:not(.menu-active):not(.header-hovered) .intro-ch i {
   color: #ffffff !important;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
 }
@@ -455,7 +430,8 @@ body:has(.the-frankie-header.theme-dark:not(.menu-active):not(:hover):not(.is-ho
   color: var(--color-earth, #dc3331) !important;
 }
 
-/* 3. Theme White, Header Hover, Scrolled, or Mobile Menu Open */
+/* 3. Theme White, Header Hover, Scrolled, or Mobile Menu Open
+   Dark Charcoal #252622 letters + vibrant red #dc3331 calabash & dot */
 body:has(.the-frankie-header.theme-white) .intro-logo.docked,
 body:has(.the-frankie-header.menu-active) .intro-logo.docked,
 body:has(.the-frankie-header:hover) .intro-logo.docked,
@@ -469,16 +445,16 @@ body:has(#gourd-main-logo:hover) .intro-logo.docked,
   color: #252622 !important;
 }
 
-body:has(.the-frankie-header.theme-white) .intro-logo.docked .intro-shades-word .intro-ch i,
-body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-shades-word .intro-ch i,
-body:has(.the-frankie-header:hover) .intro-logo.docked .intro-shades-word .intro-ch i,
-body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-shades-word .intro-ch i,
-body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-shades-word .intro-ch i,
-.intro-logo.docking.theme-white .intro-shades-word .intro-ch i,
-.intro-logo.docked.theme-white .intro-shades-word .intro-ch i,
-.intro-logo.docking.menu-active .intro-shades-word .intro-ch i,
-.intro-logo.docked.menu-active .intro-shades-word .intro-ch i,
-.intro-logo.docked.header-hovered .intro-shades-word .intro-ch i {
+body:has(.the-frankie-header.theme-white) .intro-logo.docked .intro-ch i,
+body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-ch i,
+body:has(.the-frankie-header:hover) .intro-logo.docked .intro-ch i,
+body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-ch i,
+body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-ch i,
+.intro-logo.docking.theme-white .intro-ch i,
+.intro-logo.docked.theme-white .intro-ch i,
+.intro-logo.docking.menu-active .intro-ch i,
+.intro-logo.docked.menu-active .intro-ch i,
+.intro-logo.docked.header-hovered .intro-ch i {
   color: #252622 !important;
   background: none !important;
   -webkit-background-clip: unset !important;

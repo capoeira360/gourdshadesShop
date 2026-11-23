@@ -206,86 +206,97 @@ export function SiteIntro() {
     const intro = introRef.current
     const bar = barRef.current
 
-    if (!logo || !intro) return
-
-    // Reset styles
-    logo.className = 'intro-logo'
-    intro.classList.remove('out', 'go')
-    if (bar) {
-      bar.style.transition = 'none'
-      bar.style.transform = 'scaleX(0)'
+    if (!logo || !intro) {
+      document.body.classList.remove('intro-lock')
+      document.body.classList.add('ready')
+      isRunningRef.current = false
+      return
     }
-    setCount('000')
-    void intro.offsetWidth
 
-    // Wait for fonts to measure accurately
-    if (document.fonts) {
-      try {
-        await document.fonts.ready
-      } catch { }
+    try {
+      // Reset styles
+      logo.className = 'intro-logo'
+      intro.classList.remove('out', 'go')
+      if (bar) {
+        bar.style.transition = 'none'
+        bar.style.transform = 'scaleX(0)'
+      }
+      setCount('000')
+      void intro.offsetWidth
+
+      // Wait for fonts to measure accurately
+      if (document.fonts) {
+        try {
+          await document.fonts.ready
+        } catch { }
+      }
+      await sleep(40)
+      measure()
+
+      const s1 = fitScale()
+      const M = metricsRef.current
+
+      // Phase 1 — Calabash emblem alone, large, at true center
+      const big = s1 * 1.6
+      place(window.innerWidth / 2 - big * M.lc.x, window.innerHeight / 2 - big * M.lc.y, big, 0)
+      logo.classList.add('visible')
+
+      await sleep(80)
+      if (isDockedRef.current) return
+      intro.classList.add('go')
+      runCounter(4200)
+
+      // The Gourd SVG outline contour draws itself directly (no circle!)
+      logo.classList.add('draw')
+      await sleep(1100)
+      if (isDockedRef.current) return
+
+      // Gourd body floods with glowing sunset gradient & illuminated perforations
+      logo.classList.add('fill')
+      await sleep(600)
+      if (isDockedRef.current) return
+
+      // Light glint sweeps across the calabash perforations
+      logo.classList.add('shine')
+      await sleep(500)
+      if (isDockedRef.current) return
+
+      // Phase 2 — Letters rise out smoothly showing the full name "Gourd Shades"
+      place(
+        (window.innerWidth - s1 * M.w) / 2,
+        (window.innerHeight - s1 * M.h) / 2,
+        s1,
+        1200
+      )
+      logo.classList.add('show')
+
+      // Hold the full name for visitor to appreciate
+      await sleep(1800)
+      if (isDockedRef.current) return
+
+      // Phase 3 — Slide to navbar brand slot (Matches footer logo format G[svg]urd Shades.)
+      const d = dockTarget()
+      intro.classList.add('out')
+      logo.classList.add('docking')
+      syncHeaderTheme()
+      place(d.tx, d.ty, d.s, 1200)
+
+      await sleep(1000)
+      if (isDockedRef.current) return
+      document.body.classList.add('ready')
+      document.body.classList.remove('intro-lock')
+
+      await sleep(250)
+      isDockedRef.current = true
+      isRunningRef.current = false
+      logo.classList.remove('docking')
+      logo.classList.add('docked')
+      setShowOverlay(false)
+    } finally {
+      // Always guarantee scroll lock is lifted
+      document.body.classList.remove('intro-lock')
+      document.body.classList.add('ready')
     }
-    await sleep(40)
-    measure()
-
-    const s1 = fitScale()
-    const M = metricsRef.current
-
-    // Phase 1 — Calabash emblem alone, large, at true center
-    const big = s1 * 1.6
-    place(window.innerWidth / 2 - big * M.lc.x, window.innerHeight / 2 - big * M.lc.y, big, 0)
-    logo.classList.add('visible')
-
-    await sleep(80)
-    if (isDockedRef.current) return
-    intro.classList.add('go')
-    runCounter(4200)
-
-    // The Gourd SVG outline contour draws itself directly (no circle!)
-    logo.classList.add('draw')
-    await sleep(1100)
-    if (isDockedRef.current) return
-
-    // Gourd body floods with glowing sunset gradient & illuminated perforations
-    logo.classList.add('fill')
-    await sleep(600)
-    if (isDockedRef.current) return
-
-    // Light glint sweeps across the calabash perforations
-    logo.classList.add('shine')
-    await sleep(500)
-    if (isDockedRef.current) return
-
-    // Phase 2 — Letters rise out smoothly showing the full name "Gourd Shades"
-    place(
-      (window.innerWidth - s1 * M.w) / 2,
-      (window.innerHeight - s1 * M.h) / 2,
-      s1,
-      1200
-    )
-    logo.classList.add('show')
-
-    // Hold the full name for visitor to appreciate
-    await sleep(1800)
-    if (isDockedRef.current) return
-
-    // Phase 3 — Slide to navbar brand slot (Matches footer logo format G[svg]urd Shades.)
-    const d = dockTarget()
-    intro.classList.add('out')
-    logo.classList.add('docking')
-    syncHeaderTheme()
-    place(d.tx, d.ty, d.s, 1200)
-
-    await sleep(1000)
-    if (isDockedRef.current) return
-    document.body.classList.add('ready')
-    document.body.classList.remove('intro-lock')
-
-    await sleep(250)
-    isDockedRef.current = true
-    isRunningRef.current = false
-    logo.classList.remove('docking')
-    logo.classList.add('docked')
-    setShowOverlay(false)
   }, [measure, place, fitScale, dockTarget, runCounter, syncHeaderTheme])
 
   // Sync docked logo coordinates on resize and scroll
@@ -349,13 +360,32 @@ export function SiteIntro() {
     }
   }, [measure, dockTarget])
 
-  // Escape key to skip
+  // Keyboard & mouse wheel / touch to unlock scroll if user wants to scroll right away
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') skipIntro()
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+        if (!isDockedRef.current) skipIntro()
+      }
     }
+    const handleScrollAttempt = () => {
+      if (!isDockedRef.current) skipIntro()
+    }
+
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener('wheel', handleScrollAttempt, { passive: true })
+    window.addEventListener('touchmove', handleScrollAttempt, { passive: true })
+
+    // Safety fallback: guaranteed scroll unlock after 6 seconds max
+    const safetyTimer = setTimeout(() => {
+      if (!isDockedRef.current) skipIntro()
+    }, 6000)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('wheel', handleScrollAttempt)
+      window.removeEventListener('touchmove', handleScrollAttempt)
+      clearTimeout(safetyTimer)
+    }
   }, [skipIntro])
 
   // Header theme mutation observer (syncs colors dynamically with navbar)
@@ -429,23 +459,9 @@ export function SiteIntro() {
         <div
           ref={introRef}
           className="intro-overlay"
-          onClick={skipIntro}
-          aria-label="Gourd Shades Intro — Click anywhere to skip"
+          aria-label="Gourd Shades Intro"
         >
           <div className="intro-glow" />
-
-          {/* Skip button pill */}
-          <button
-            type="button"
-            className="intro-skip-hint"
-            onClick={e => {
-              e.stopPropagation()
-              skipIntro()
-            }}
-            aria-label="Skip intro"
-          >
-            Skip Intro ✕
-          </button>
 
           {/* Bottom Meta Progress Bar */}
           <div className="intro-meta">

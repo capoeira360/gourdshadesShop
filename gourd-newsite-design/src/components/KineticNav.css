@@ -155,20 +155,24 @@
   transition: color 0.25s ease;
 }
 
-/* 1. Theme Red (Terracotta hero banners: unhovered, unscrolled) */
+/* 1. Theme Red (Red hero banners & red sections: unhovered, unscrolled) */
 .the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo,
 .the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo span {
-  color: var(--color-pink, #f5cdcc) !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25) !important;
 }
 
 .the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .gourd-logo-icon {
-  color: var(--color-pink, #f5cdcc) !important;
-  fill: var(--color-pink, #f5cdcc) !important;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2)) !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.25)) !important;
 }
 
-/* 2. Theme Dark (Dark image hero banners: unhovered, unscrolled) */
+.the-frankie-header.theme-red:not(.menu-active):not(:hover) .frankie-brand-logo .wordmark-dot {
+  color: #ffffff !important;
+}
+
+/* 2. Theme Dark (Dark image / photography hero banners / product cards: unhovered, unscrolled) */
 .the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo,
 .the-frankie-header.theme-dark:not(.menu-active):not(:hover) .frankie-brand-logo span {
   color: #ffffff !important;
@@ -322,83 +326,83 @@
 /* Default / Theme White (and when menu-active is open) */
 .the-frankie-header.theme-white .frankie-nav-link,
 .the-frankie-header.menu-active .frankie-nav-link {
-  color: var(--frankie-text);
+  color: var(--frankie-text, #1a1a18) !important;
   text-shadow: none !important;
 }
 .the-frankie-header.theme-white .frankie-nav-link.is-active,
 .the-frankie-header.menu-active .frankie-nav-link.is-active {
-  color: #000000;
+  color: #000000 !important;
 }
 .the-frankie-header.theme-white .frankie-nav-link.is-active::after,
 .the-frankie-header.menu-active .frankie-nav-link.is-active::after {
-  background: #111111;
+  background: #111111 !important;
 }
 .the-frankie-header.theme-white .search-cursor-bar,
 .the-frankie-header.menu-active .search-cursor-bar {
-  color: var(--frankie-badge-red);
+  color: var(--frankie-badge-red, #dc3331) !important;
 }
 .the-frankie-header.theme-white .frankie-util-btn,
 .the-frankie-header.menu-active .frankie-util-btn {
-  color: var(--frankie-text);
+  color: var(--frankie-text, #1a1a18) !important;
   text-shadow: none !important;
 }
 .the-frankie-header.theme-white .frankie-counter,
 .the-frankie-header.menu-active .frankie-counter {
-  color: var(--frankie-muted);
+  color: var(--frankie-muted, #75746e) !important;
 }
 .the-frankie-header.theme-white .frankie-mobile-toggle,
 .the-frankie-header.menu-active .frankie-mobile-toggle {
-  color: var(--frankie-text);
+  color: var(--frankie-text, #1a1a18) !important;
 }
 
-/* Theme Red (Terracotta hero banners, when NOT open) */
+/* Theme Red (Terracotta / Red hero banners & sections, when NOT open) */
 .the-frankie-header.theme-red:not(.menu-active) .frankie-nav-link {
-  color: #fffef6;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25) !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .frankie-nav-link.is-active {
-  color: #f5cdcc;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .frankie-nav-link.is-active::after {
-  background: #f5cdcc;
+  background: #ffffff !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .search-cursor-bar {
-  color: #f5cdcc;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .frankie-util-btn {
-  color: #fffef6;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25) !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .frankie-counter {
-  color: #f5cdcc;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-red:not(.menu-active) .frankie-mobile-toggle {
-  color: #fffef6;
+  color: #ffffff !important;
 }
 
-/* Theme Dark (Dark image / photography hero banners, when NOT open) */
+/* Theme Dark (Dark image / photography hero banners & product cards, when NOT open) */
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-nav-link {
-  color: #faf8f5;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7) !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-nav-link.is-active {
-  color: #e5c99e;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-nav-link.is-active::after {
-  background: #e5c99e;
+  background: #ffffff !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .search-cursor-bar {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-util-btn {
-  color: #faf8f5;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7) !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-counter {
-  color: #d5c4a9;
+  color: #ffffff !important;
 }
 .the-frankie-header.theme-dark:not(.menu-active) .frankie-mobile-toggle {
-  color: #faf8f5;
+  color: #ffffff !important;
 }
 
 /* Nav Links & Buttons Hover States (Desktop Fine Pointers Only) */

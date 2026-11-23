@@ -179,7 +179,7 @@ function Header({ count, openCart }: { count: number; openCart: () => void }) {
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" data-logo-theme="dark">
       <div className="footer-top">
         <div>
           <MaskedHeading
@@ -377,7 +377,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="intro-band" data-logo-theme="red">
+      <section className="intro-band" data-logo-theme="white">
         <MaskedHeading
           as="p"
           className="intro-band-note"
@@ -941,7 +941,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   }, [product.name])
 
   return (
-    <main className="detail-page">
+    <main className="detail-page" data-logo-theme="white">
       <div className="detail-breadcrumb" data-logo-theme="white">
         <Link to="/products" className="detail-back-link">
           <ArrowLeft size={16} /> Back to all lamps
@@ -951,7 +951,7 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
         </span>
       </div>
 
-      <div className="detail-layout">
+      <div className="detail-layout" data-logo-theme="white">
         <div className="detail-gallery">
           <SlideMaskCard direction="left" delay={0.1}>
             <div
@@ -1252,7 +1252,7 @@ function About() {
         />
       </section>
 
-      <section className="about-content">
+      <section className="about-content" data-logo-theme="white">
         <div>
           <MaskedHeading
             as="h2"
@@ -1296,7 +1296,7 @@ function About() {
         </div>
       </section>
 
-      <section className="about-origin-extension">
+      <section className="about-origin-extension" data-logo-theme="white">
         <div className="about-origin-gallery">
           <SlideMaskCard direction="left" delay={0.1}>
             <figure className="about-origin-figure">
@@ -1367,7 +1367,7 @@ function About() {
       </section>
 
       {/* Values Strip */}
-      <section className="values-strip about-values-strip">
+      <section className="values-strip about-values-strip" data-logo-theme="white">
         <ScrollFadeReveal delay={0.1}>
           <span className="value-num">01 /</span>
           <strong>Natural materials.</strong>
@@ -1562,7 +1562,7 @@ function Community() {
       </section>
 
       {/* Chapter 02: Exhibitions */}
-      <section className="community-section">
+      <section className="community-section" data-logo-theme="white">
         <div className="community-grid reversed">
           <SlideMaskCard direction="right" delay={0.15} className="community-slide-card">
             <div className="community-visual">
