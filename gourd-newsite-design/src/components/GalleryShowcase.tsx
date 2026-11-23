@@ -4,8 +4,10 @@ import './GalleryShowcase.css'
 export interface GalleryItem {
   id: string
   title: string
-  image: string
   subtitle?: string
+  type: 'image' | 'video'
+  src: string
+  poster?: string
 }
 
 const galleryItems: GalleryItem[] = [
@@ -13,97 +15,137 @@ const galleryItems: GalleryItem[] = [
     id: 'gallery-night-glow',
     title: 'Midnight Solitude',
     subtitle: 'Ambient Illumination',
-    image: '/images/20240913_211304-hero.jpg',
+    type: 'image',
+    src: '/images/20240913_211304-hero.jpg',
   },
   {
     id: 'gallery-artisan-carving',
     title: 'Artisan Carving',
     subtitle: 'Studio Process',
-    image: '/images/20240520_161231-featured-1.jpg',
+    type: 'image',
+    src: '/images/20240520_161231-featured-1.jpg',
   },
   {
     id: 'gallery-exhibition-space',
     title: 'Exhibition Space',
     subtitle: 'Arusha Showcase',
-    image: '/images/IMG-20250601-WA0002-exhibition-1.jpg',
+    type: 'image',
+    src: '/images/IMG-20250601-WA0002-exhibition-1.jpg',
+  },
+  {
+    id: 'gallery-studio-film-1',
+    title: 'Artisan at Work',
+    subtitle: 'Studio Film',
+    type: 'video',
+    src: '/Artisan glow studio showcase.mp4',
+    poster: '/images/20240913_211304-hero.jpg',
   },
   {
     id: 'gallery-celestial-radiance',
     title: 'Celestial Radiance',
     subtitle: 'Pendant Form',
-    image: '/images/20240614_140014-featured-3-.jpg',
+    type: 'image',
+    src: '/images/20240614_140014-featured-3-.jpg',
   },
   {
     id: 'gallery-installation',
     title: 'Gallery Installation',
     subtitle: 'Curated Collection',
-    image: '/images/20240525_105359-exhibition-2-.jpg',
+    type: 'image',
+    src: '/images/20240525_105359-exhibition-2-.jpg',
   },
   {
     id: 'gallery-workbench',
     title: 'The Workbench',
     subtitle: 'Handcraft Tools',
-    image: '/images/20241018_094717-reach-1-.jpg',
+    type: 'image',
+    src: '/images/20241018_094717-reach-1-.jpg',
   },
   {
     id: 'gallery-botanical-sculpting',
     title: 'Botanical Sculpting',
     subtitle: 'Organic Contours',
-    image: '/images/20240804_155809-featured-4-.jpg',
+    type: 'image',
+    src: '/images/20240804_155809-featured-4-.jpg',
   },
   {
     id: 'gallery-curated-showcase',
     title: 'Curated Showcase',
     subtitle: 'Exhibition View',
-    image: '/images/20240525_105410-exhibition-3-.jpg',
+    type: 'image',
+    src: '/images/20240525_105410-exhibition-3-.jpg',
   },
   {
     id: 'gallery-crystal-refraction',
     title: 'Crystal Refraction',
     subtitle: 'Beadwork Detail',
-    image: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
+    type: 'image',
+    src: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
+  },
+  {
+    id: 'gallery-studio-film-2',
+    title: 'Glow Studio Showcase',
+    subtitle: 'Behind the Craft',
+    type: 'video',
+    src: '/Artisan glow studio showcase.mp4',
+    poster: '/images/20240804_155809-featured-4-.jpg',
   },
   {
     id: 'gallery-perforation',
     title: 'Hand Perforation',
     subtitle: 'Precision Pattern',
-    image: '/images/20240913_145501-reach-2-.jpg',
+    type: 'image',
+    src: '/images/20240913_145501-reach-2-.jpg',
   },
   {
     id: 'gallery-savanna-terrain-1',
     title: 'Savanna Expedition',
     subtitle: 'Natural Landscape',
-    image: '/images/terrain-1.jpeg',
+    type: 'image',
+    src: '/images/terrain-1.jpeg',
   },
   {
     id: 'gallery-savanna-terrain-2',
     title: 'Arusha Terrain',
     subtitle: 'Studio Inspiration',
-    image: '/images/terrain-2.jpeg',
+    type: 'image',
+    src: '/images/terrain-2.jpeg',
   },
   {
     id: 'gallery-savanna-terrain-3',
     title: 'Artisan Heritage',
     subtitle: 'Field Exploration',
-    image: '/images/terrain-3.jpeg',
+    type: 'image',
+    src: '/images/terrain-3.jpeg',
   },
   {
     id: 'gallery-savanna-terrain-4',
     title: 'Organic Elements',
     subtitle: 'Natural Flora',
-    image: '/images/terrain-4.jpeg',
+    type: 'image',
+    src: '/images/terrain-4.jpeg',
   },
   {
     id: 'gallery-coral-reef',
     title: 'Coral Luminescence',
     subtitle: 'Organic Reef Form',
-    image: '/images/coral-1.jpg',
+    type: 'image',
+    src: '/images/coral-1.jpg',
+  },
+  {
+    id: 'gallery-studio-film-3',
+    title: 'Calabash Illuminated',
+    subtitle: 'Live Studio',
+    type: 'video',
+    src: '/Artisan glow studio showcase.mp4',
+    poster: '/images/IMG-20250401-WA0006-feature-replace1.jpg',
   },
   {
     id: 'gallery-hanging-three-family',
     title: 'Cascading Triplets',
     subtitle: 'Suspended Cluster',
-    image: '/images/3-way-hanging-familiy-1.jpg',
+    type: 'image',
+    src: '/images/3-way-hanging-familiy-1.jpg',
   },
 ]
 
@@ -271,15 +313,33 @@ export function GalleryShowcase() {
       >
         <div ref={trackRef} className="editorial-gallery-track">
           {infiniteGallery.map((item) => (
-            <article key={item.loopKey} className="editorial-gallery-card">
+            <article
+              key={item.loopKey}
+              className={`editorial-gallery-card${item.type === 'video' ? ' editorial-gallery-card--video' : ''}`}
+            >
               <div className="editorial-gallery-frame">
-                <img
-                  src={item.image}
-                  alt={item.title || "Calabash artisan studio gallery"}
-                  className="editorial-gallery-img"
-                  loading="lazy"
-                  draggable={false}
-                />
+                {item.type === 'video' ? (
+                  <video
+                    className="editorial-gallery-video"
+                    src={item.src}
+                    poster={item.poster}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    disablePictureInPicture
+                    draggable={false}
+                  />
+                ) : (
+                  <img
+                    src={item.src}
+                    alt={item.title || 'Calabash artisan studio gallery'}
+                    className="editorial-gallery-img"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                )}
               </div>
             </article>
           ))}

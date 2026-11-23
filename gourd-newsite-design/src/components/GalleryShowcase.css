@@ -106,6 +106,42 @@
   transition: none;
 }
 
+/* =========================================================
+   VIDEO CARDS — auto-play, muted, loop, no controls
+   ========================================================= */
+.editorial-gallery-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0 !important;
+  user-select: none;
+  pointer-events: none;
+  transition: none;
+}
+
+/* Subtle play-badge on video cards */
+.editorial-gallery-card--video .editorial-gallery-frame::after {
+  content: '▶';
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
 /* Bottom Labels */
 .editorial-gallery-label {
   display: flex;
