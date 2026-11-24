@@ -829,14 +829,22 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const isSaved = product ? isInWishlist(product.id) : false
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [added, setAdded] = useState(false)
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    specifications: false,
-    guarantee: false,
-  })
+  const [activeDrawerTab, setActiveDrawerTab] = useState<'specifications' | 'guarantee' | null>(null)
 
-  const toggleSection = (section: string) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }))
-  }
+  // Prevent background scroll while info drawer is open and handle ESC key
+  useEffect(() => {
+    if (activeDrawerTab) {
+      document.body.style.overflow = 'hidden'
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setActiveDrawerTab(null)
+      }
+      window.addEventListener('keydown', handleKeyDown)
+      return () => {
+        document.body.style.overflow = ''
+        window.removeEventListener('keydown', handleKeyDown)
+      }
+    }
+  }, [activeDrawerTab])
 
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now() + Math.random())
 
@@ -1129,33 +1137,19 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
             )
           })()}
 
-          {/* Collapsible Accordions: Specifications & Studio Delivery */}
+          {/* Information Drawers: Specifications & Studio Delivery (Slide-out panel without extending page height) */}
           <div className="detail-accordions">
             {/* Specifications & Dimensions */}
             <div className="accordion-item">
               <button
                 type="button"
                 className="accordion-trigger"
-                onClick={() => toggleSection('specifications')}
-                aria-expanded={openSections.specifications}
+                onClick={() => setActiveDrawerTab('specifications')}
+                aria-label="Open Specifications & Dimensions drawer"
               >
                 <span className="accordion-title">Specifications &amp; Dimensions</span>
-                <ChevronDown
-                  size={18}
-                  className={`accordion-chevron ${openSections.specifications ? 'chevron-open' : ''}`}
-                />
+                <ChevronRight size={18} className="accordion-chevron" />
               </button>
-              <div className={`accordion-content ${openSections.specifications ? 'content-open' : ''}`}>
-                {product.specifications && product.specifications.length > 0 ? (
-                  <ul className="accordion-list">
-                    {product.specifications.map((spec, idx) => (
-                      <li key={idx}>{spec}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="accordion-text">Handcrafted natural calabash with standard electrical fixture.</p>
-                )}
-              </div>
             </div>
 
             {/* Studio Delivery & Guarantee */}
@@ -1163,32 +1157,12 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
               <button
                 type="button"
                 className="accordion-trigger"
-                onClick={() => toggleSection('guarantee')}
-                aria-expanded={openSections.guarantee}
+                onClick={() => setActiveDrawerTab('guarantee')}
+                aria-label="Open Studio Delivery & Guarantee drawer"
               >
                 <span className="accordion-title">Studio Delivery &amp; Guarantee</span>
-                <ChevronDown
-                  size={18}
-                  className={`accordion-chevron ${openSections.guarantee ? 'chevron-open' : ''}`}
-                />
+                <ChevronRight size={18} className="accordion-chevron" />
               </button>
-              <div className={`accordion-content ${openSections.guarantee ? 'content-open' : ''}`}>
-                <ul className="accordion-list">
-                  <li>3-month comprehensive warranty on all electrical fixtures and wiring</li>
-                  <li>Handcrafted to order from cured organic Tanzanian calabash</li>
-                  <li>Secure export-grade packaging with shock absorption</li>
-                  <li>Studio location: {STUDIO_LOCATION}</li>
-                  <li>Shape availability confirmed directly before crafting begins</li>
-                </ul>
-                <a
-                  className="accordion-whatsapp-link"
-                  href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappMessage}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={15} /> Inquire Directly via WhatsApp
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -1212,6 +1186,148 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
           ))}
         </div>
       </section>
+
+      {/* Slide-out Editorial Information Drawer (Opens without extending page height) */}
+      <AnimatePresence>
+        {activeDrawerTab && (
+          <>
+            <motion.div
+              className="drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveDrawerTab(null)}
+            />
+            <motion.aside
+              className="cart-drawer info-drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label={activeDrawerTab === 'specifications' ? 'Product Specifications' : 'Studio Delivery & Guarantee'}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="drawer-header">
+                <div>
+                  <span className="eyebrow">{formatCategory(product.category).toUpperCase()}</span>
+                  <h2>{product.name}</h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveDrawerTab(null)}
+                  aria-label="Close drawer"
+                  className="drawer-close-btn"
+                >
+                  <X size={22} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Segmented Tab Switcher inside the drawer */}
+              <div className="info-drawer-tabs">
+                <button
+                  type="button"
+                  className={`info-drawer-tab ${activeDrawerTab === 'specifications' ? 'active' : ''}`}
+                  onClick={() => setActiveDrawerTab('specifications')}
+                >
+                  Specifications &amp; Dimensions
+                </button>
+                <button
+                  type="button"
+                  className={`info-drawer-tab ${activeDrawerTab === 'guarantee' ? 'active' : ''}`}
+                  onClick={() => setActiveDrawerTab('guarantee')}
+                >
+                  Delivery &amp; Guarantee
+                </button>
+              </div>
+
+              {/* Drawer Scrollable Body */}
+              <div className="info-drawer-body">
+                {activeDrawerTab === 'specifications' && (
+                  <div className="info-drawer-section">
+                    <div className="info-drawer-card">
+                      <span className="info-card-label">Handcrafted Details</span>
+                      {product.specifications && product.specifications.length > 0 ? (
+                        <ul className="info-drawer-list">
+                          {product.specifications.map((spec, idx) => (
+                            <li key={idx}>
+                              <span className="info-list-bullet" />
+                              <span>{spec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="info-drawer-text">
+                          Handcrafted natural organic Tanzanian calabash with standard electrical fixture.
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="info-drawer-card info-card-highlight">
+                      <span className="info-card-label">Natural Gourd Dimensions</span>
+                      <p className="info-drawer-text">
+                        Because natural calabash fruits grow organically on the vine, every harvested lamp retains its authentic individual proportions and carved perforation silhouette.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {activeDrawerTab === 'guarantee' && (
+                  <div className="info-drawer-section">
+                    <div className="info-drawer-card">
+                      <span className="info-card-label">Arusha Studio Promise</span>
+                      <ul className="info-drawer-list">
+                        <li>
+                          <span className="info-list-bullet" />
+                          <span><strong>3-Month Warranty:</strong> Full coverage on all electrical fixtures, sockets, and internal wiring.</span>
+                        </li>
+                        <li>
+                          <span className="info-list-bullet" />
+                          <span><strong>Organic Tanzanian Calabash:</strong> 100% natural cured gourd harvested in northern Tanzania.</span>
+                        </li>
+                        <li>
+                          <span className="info-list-bullet" />
+                          <span><strong>Export-Grade Packaging:</strong> Multi-layer shock absorption box engineered for global shipping.</span>
+                        </li>
+                        <li>
+                          <span className="info-list-bullet" />
+                          <span><strong>Studio Location:</strong> {STUDIO_LOCATION}</span>
+                        </li>
+                        <li>
+                          <span className="info-list-bullet" />
+                          <span><strong>Direct Confirmation:</strong> Individual gourd shape availability confirmed with you before packing or dispatch.</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="info-drawer-cta">
+                      <a
+                        className="info-whatsapp-cta"
+                        href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappMessage}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MessageCircle size={18} /> Inquire Directly via WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Drawer Footer */}
+              <div className="info-drawer-footer">
+                <button
+                  type="button"
+                  className="button-dark info-drawer-done-btn"
+                  onClick={() => setActiveDrawerTab(null)}
+                >
+                  Done
+                </button>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </main>
   )
 }

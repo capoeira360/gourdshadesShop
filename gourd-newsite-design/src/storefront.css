@@ -277,6 +277,10 @@
   color: #252622;
 }
 
+.accordion-trigger:hover .accordion-chevron {
+  transform: translateX(4px);
+}
+
 .accordion-title {
   font-family: var(--font-small, 'DM Sans', sans-serif);
   font-size: 15px;
@@ -287,8 +291,181 @@
 
 .accordion-chevron {
   color: inherit;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+}
+
+/* =========================================================
+   PRODUCT DETAIL INFO DRAWER (Specifications & Guarantee)
+   Opens in slide-out panel without extending page height
+   ========================================================= */
+
+.info-drawer {
+  background: var(--color-alabaster, #fffef6) !important;
+  color: #252622 !important;
+}
+
+.info-drawer-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-earth-soft, rgba(37, 38, 34, 0.12));
+  background: #f7f5ed;
+  padding: 0 24px;
+  gap: 16px;
+}
+
+.info-drawer-tab {
+  background: none;
+  border: none;
+  padding: 14px 4px 12px;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #77766f;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.info-drawer-tab:hover {
+  color: #252622;
+}
+
+.info-drawer-tab.active {
+  color: var(--color-earth, #dc3331);
+  font-weight: 600;
+}
+
+.info-drawer-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-earth, #dc3331);
+}
+
+.info-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-drawer-card {
+  background: #ffffff;
+  border: 1px solid var(--border-earth-soft, rgba(37, 38, 34, 0.12));
+  padding: 22px 24px;
+}
+
+.info-card-label {
+  display: block;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-earth, #dc3331);
+  margin-bottom: 14px;
+}
+
+.info-drawer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-drawer-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: #383733;
+}
+
+.info-list-bullet {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-earth, #dc3331);
+  flex-shrink: 0;
+  position: relative;
+  top: -2px;
+}
+
+.info-drawer-text {
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #55544e;
+  margin: 0;
+}
+
+.info-card-highlight {
+  background: #faf8f2;
+}
+
+.info-drawer-cta {
+  margin-top: 8px;
+}
+
+.info-whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  font-family: var(--font-small, 'DM Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.info-whatsapp-cta:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.info-drawer-footer {
+  padding: 20px 32px max(24px, env(safe-area-inset-bottom, 24px));
+  border-top: 1px solid var(--border-earth-soft, rgba(37, 38, 34, 0.12));
+  background: var(--color-alabaster, #fffef6);
+}
+
+.info-drawer-done-btn {
+  width: 100% !important;
+  justify-content: center !important;
+  min-height: 46px !important;
+}
+
+.drawer-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  color: #252622;
+  transition: opacity 0.2s;
+}
+
+.drawer-close-btn:hover {
+  opacity: 0.7;
 }
 
 .accordion-chevron.chevron-open {
