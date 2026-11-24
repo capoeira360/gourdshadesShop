@@ -32,7 +32,7 @@ import {
   Move,
   Link2,
 } from 'lucide-react'
-import { useProductStore, type Product, type GalleryItem } from '../context/ProductContext'
+import { useProductStore, type Product, type GalleryItem, DEFAULT_DELIVERY_GUARANTEE } from '../context/ProductContext'
 import GourdLogo from './GourdLogo'
 import './AdminPortal.css'
 
@@ -147,12 +147,18 @@ export const AdminPortal: React.FC = () => {
     e.preventDefault()
     if (!editingProduct) return
 
+    const cleanedProduct: Product = {
+      ...editingProduct,
+      specifications: (editingProduct.specifications || []).map(s => s.trim()).filter(Boolean),
+      deliveryGuarantee: (editingProduct.deliveryGuarantee || []).map(s => s.trim()).filter(Boolean),
+    }
+
     if (isAddingNew) {
-      addProduct(editingProduct)
-      showToast(`Added "${editingProduct.name}" to catalog!`)
+      addProduct(cleanedProduct)
+      showToast(`Added "${cleanedProduct.name}" to catalog!`)
     } else {
-      updateProduct(editingProduct.id, editingProduct)
-      showToast(`Updated "${editingProduct.name}" successfully!`)
+      updateProduct(cleanedProduct.id, cleanedProduct)
+      showToast(`Updated "${cleanedProduct.name}" successfully!`)
     }
 
     setEditingProduct(null)
@@ -461,7 +467,8 @@ export const AdminPortal: React.FC = () => {
                       ],
                       features: ['Handcrafted in Tanzania', 'Unique natural pattern', 'Standard E27 fitting'],
                       availabilityStatus: 'available',
-                      availabilityNote: 'Rare gourd shape. Handcrafted to order.'
+                      availabilityNote: 'Rare gourd shape. Handcrafted to order.',
+                      deliveryGuarantee: DEFAULT_DELIVERY_GUARANTEE
                     })
                   }}
                 >
@@ -1193,11 +1200,27 @@ export const AdminPortal: React.FC = () => {
                   <div className="admin-form-group">
                     <label><Shield size={14} /> Electrical Guarantee Note</label>
                     <textarea
-                      rows={3}
+                      rows={2}
                       value={studioSettings.guaranteeNote}
                       onChange={e => updateStudioSettings({ guaranteeNote: e.target.value })}
                       className="admin-textarea"
                     />
+                  </div>
+
+                  <div className="admin-form-group">
+                    <label><Shield size={14} /> Standard Studio Delivery &amp; Guarantee Points (One per line)</label>
+                    <textarea
+                      rows={5}
+                      value={(studioSettings.defaultDeliveryGuarantee || DEFAULT_DELIVERY_GUARANTEE).join('\n')}
+                      onChange={e => {
+                        const lines = e.target.value.split('\n')
+                        updateStudioSettings({ defaultDeliveryGuarantee: lines })
+                      }}
+                      className="admin-textarea"
+                    />
+                    <small style={{ color: '#777', display: 'block', marginTop: '4px' }}>
+                      These bullet points appear in the <strong>Studio Delivery &amp; Guarantee</strong> drawer for any product that doesn't have custom guarantee points.
+                    </small>
                   </div>
 
                   <div className="admin-form-actions">
@@ -1436,6 +1459,91 @@ export const AdminPortal: React.FC = () => {
                   placeholder="Warm human description of the carved piece..."
                   className="admin-textarea"
                 />
+              </div>
+
+              {/* Row 5: Specifications & Dimensions Drawer Content */}
+              <div className="admin-form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                  <label style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Sliders size={14} /> Specifications &amp; Dimensions (One per line)
+                  </label>
+                  <button
+                    type="button"
+                    className="admin-btn outline small"
+                    style={{ padding: '3px 9px', fontSize: '11px' }}
+                    onClick={() => {
+                      const template = [
+                        'Dimensions: Various sizes available [20"-30" diameter / 25"-35cm heights]',
+                        'Materials: Natural Tanzanian gourd (calabash)',
+                        'Beadwork: Hand-perforated with colored crystal glass beads',
+                        'Bulb Type: E27 Standard Base',
+                        'Wattage: 3W-10W [LED recommended]',
+                        'Voltage: 120V-240V AC',
+                        'Warranty: 3-month comprehensive studio warranty on electrical fixtures',
+                      ]
+                      setEditingProduct({
+                        ...editingProduct,
+                        specifications: template,
+                      })
+                    }}
+                  >
+                    Insert Standard Spec Template
+                  </button>
+                </div>
+                <textarea
+                  rows={5}
+                  value={(editingProduct.specifications || []).join('\n')}
+                  onChange={e => {
+                    const lines = e.target.value.split('\n')
+                    setEditingProduct({
+                      ...editingProduct,
+                      specifications: lines,
+                    })
+                  }}
+                  placeholder={'Dimensions: 25cm height\nMaterials: gourd (calabash)\nBulb Type: E27 Standard Base\nWattage: 5W LED'}
+                  className="admin-textarea"
+                />
+                <small style={{ color: '#777', display: 'block', marginTop: '4px' }}>
+                  Each line appears as a separate bullet point in the slide-out <strong>Specifications &amp; Dimensions</strong> drawer on the product page.
+                </small>
+              </div>
+
+              {/* Row 6: Studio Delivery & Guarantee Drawer Content */}
+              <div className="admin-form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                  <label style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Shield size={14} /> Studio Delivery &amp; Guarantee Points (One per line)
+                  </label>
+                  <button
+                    type="button"
+                    className="admin-btn outline small"
+                    style={{ padding: '3px 9px', fontSize: '11px' }}
+                    onClick={() => {
+                      setEditingProduct({
+                        ...editingProduct,
+                        deliveryGuarantee: DEFAULT_DELIVERY_GUARANTEE,
+                      })
+                    }}
+                  >
+                    Insert Standard Guarantee
+                  </button>
+                </div>
+                <textarea
+                  rows={5}
+                  value={(editingProduct.deliveryGuarantee || []).join('\n')}
+                  onChange={e => {
+                    const lines = e.target.value.split('\n')
+                    setEditingProduct({
+                      ...editingProduct,
+                      deliveryGuarantee: lines,
+                    })
+                  }}
+                  placeholder={'3-month comprehensive warranty on all electrical fixtures\nHandcrafted to order from cured organic Tanzanian calabash\nSecure export-grade packaging with shock absorption\nStudio location: Arusha, Tanzania'}
+                  className="admin-textarea"
+                />
+                <small style={{ color: '#777', display: 'block', marginTop: '4px' }}>
+                  Each line appears as a bullet point in the <strong>Studio Delivery &amp; Guarantee</strong> drawer. (Leave empty to use global studio defaults).
+                </small>
               </div>
 
               {/* Row 5: Images Manager */}

@@ -40,6 +40,7 @@ export interface Product extends BaseProduct {
   availabilityStatus?: 'available' | 'sold' | 'rare';
   availabilityNote?: string;
   isNewEntry?: boolean;
+  deliveryGuarantee?: string[];
 }
 
 export interface AnnouncementNote {
@@ -92,6 +93,14 @@ export const DEFAULT_ANNOUNCEMENT_SETTINGS: AnnouncementSettings = {
   ],
 }
 
+export const DEFAULT_DELIVERY_GUARANTEE: string[] = [
+  '3-month comprehensive warranty on all electrical fixtures and wiring',
+  'Handcrafted to order from cured organic Tanzanian calabash',
+  'Secure export-grade packaging with shock absorption',
+  'Studio location: Arusha, Tanzania',
+  'Shape availability confirmed directly before crafting begins',
+]
+
 export interface StudioSettings {
   phone: string;
   whatsapp: string;
@@ -99,6 +108,7 @@ export interface StudioSettings {
   address: string;
   announcement: string;
   guaranteeNote: string;
+  defaultDeliveryGuarantee?: string[];
 }
 
 const DEFAULT_SETTINGS: StudioSettings = {
@@ -107,7 +117,8 @@ const DEFAULT_SETTINGS: StudioSettings = {
   email: 'isaacmunis@gourdshades.com',
   address: 'Arusha Studio, Tanzania',
   announcement: 'Handcrafted one-of-a-kind calabash luminaires. Worldwide shipping available.',
-  guaranteeNote: '3-Month Electrical Studio Guarantee on all custom wiring & fittings.'
+  guaranteeNote: '3-Month Electrical Studio Guarantee on all custom wiring & fittings.',
+  defaultDeliveryGuarantee: DEFAULT_DELIVERY_GUARANTEE,
 }
 
 interface ProductContextType {

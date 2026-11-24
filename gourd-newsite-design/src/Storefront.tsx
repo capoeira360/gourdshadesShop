@@ -823,7 +823,7 @@ function ProductsPage() {
 }
 
 function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
-  const { products, isInWishlist, toggleWishlist } = useProductStore()
+  const { products, studioSettings, isInWishlist, toggleWishlist } = useProductStore()
   const { id } = useParams<{ id: string }>()
   const product = products.find(p => p.id === id)
   const isSaved = product ? isInWishlist(product.id) : false
@@ -929,6 +929,22 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
   const whatsappMessage = encodeURIComponent(
     `Hello Gourd Shades,\nI am interested in inquiring about the "${product.name}" lamp (ID: ${product.id}).\nPrice: ${product.price}\nPlease let me know about availability and order steps.`
   )
+
+  const deliveryItems = useMemo(() => {
+    if (product?.deliveryGuarantee && product.deliveryGuarantee.filter(Boolean).length > 0) {
+      return product.deliveryGuarantee.filter(Boolean)
+    }
+    if (studioSettings?.defaultDeliveryGuarantee && studioSettings.defaultDeliveryGuarantee.filter(Boolean).length > 0) {
+      return studioSettings.defaultDeliveryGuarantee.filter(Boolean)
+    }
+    return [
+      '3-month comprehensive warranty on all electrical fixtures and wiring',
+      'Handcrafted to order from cured organic Tanzanian calabash',
+      'Secure export-grade packaging with shock absorption',
+      `Studio location: ${studioSettings?.address || STUDIO_LOCATION}`,
+      'Shape availability confirmed directly before crafting begins',
+    ]
+  }, [product?.deliveryGuarantee, studioSettings?.defaultDeliveryGuarantee, studioSettings?.address])
 
   const titleLines = useMemo(() => {
     const parts = product.name.trim().split(/\s+/)
@@ -1247,9 +1263,9 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
                   <div className="info-drawer-section">
                     <div className="info-drawer-card">
                       <span className="info-card-label">Handcrafted Details</span>
-                      {product.specifications && product.specifications.length > 0 ? (
+                      {product.specifications && product.specifications.filter(Boolean).length > 0 ? (
                         <ul className="info-drawer-list">
-                          {product.specifications.map((spec, idx) => (
+                          {product.specifications.filter(Boolean).map((spec, idx) => (
                             <li key={idx}>
                               <span className="info-list-bullet" />
                               <span>{spec}</span>
@@ -1277,33 +1293,19 @@ function ProductDetail({ addToCart }: { addToCart: (id: string) => void }) {
                     <div className="info-drawer-card">
                       <span className="info-card-label">Arusha Studio Promise</span>
                       <ul className="info-drawer-list">
-                        <li>
-                          <span className="info-list-bullet" />
-                          <span><strong>3-Month Warranty:</strong> Full coverage on all electrical fixtures, sockets, and internal wiring.</span>
-                        </li>
-                        <li>
-                          <span className="info-list-bullet" />
-                          <span><strong>Organic Tanzanian Calabash:</strong> 100% natural cured gourd harvested in northern Tanzania.</span>
-                        </li>
-                        <li>
-                          <span className="info-list-bullet" />
-                          <span><strong>Export-Grade Packaging:</strong> Multi-layer shock absorption box engineered for global shipping.</span>
-                        </li>
-                        <li>
-                          <span className="info-list-bullet" />
-                          <span><strong>Studio Location:</strong> {STUDIO_LOCATION}</span>
-                        </li>
-                        <li>
-                          <span className="info-list-bullet" />
-                          <span><strong>Direct Confirmation:</strong> Individual gourd shape availability confirmed with you before packing or dispatch.</span>
-                        </li>
+                        {deliveryItems.map((item, idx) => (
+                          <li key={idx}>
+                            <span className="info-list-bullet" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
 
                     <div className="info-drawer-cta">
                       <a
                         className="info-whatsapp-cta"
-                        href={`https://wa.me/${STUDIO_PHONE_RAW}?text=${whatsappMessage}`}
+                        href={`https://wa.me/${(studioSettings?.whatsapp || STUDIO_PHONE_RAW).replace(/[^0-9]/g, '')}?text=${whatsappMessage}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
