@@ -333,8 +333,8 @@ body.intro-lock {
   transition: opacity 0.25s ease, filter 0.25s ease, color 0.3s ease;
 }
 
-.intro-logo.docking .intro-shades-word .intro-ch i,
-.intro-logo.docked .intro-shades-word .intro-ch i {
+.intro-logo.docking .intro-ch i,
+.intro-logo.docked .intro-ch i {
   color: #252622 !important;
   background: none !important;
   -webkit-background-clip: unset !important;
@@ -437,6 +437,7 @@ body:has(.the-frankie-header.menu-active) .intro-logo.docked,
 body:has(.the-frankie-header:hover) .intro-logo.docked,
 body:has(.the-frankie-header.is-hovered) .intro-logo.docked,
 body:has(#gourd-main-logo:hover) .intro-logo.docked,
+body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intro-logo.docked,
 .intro-logo.docking.theme-white,
 .intro-logo.docked.theme-white,
 .intro-logo.docking.menu-active,
@@ -450,6 +451,7 @@ body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-ch i,
 body:has(.the-frankie-header:hover) .intro-logo.docked .intro-ch i,
 body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-ch i,
 body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-ch i,
+body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intro-logo.docked .intro-ch i,
 .intro-logo.docking.theme-white .intro-ch i,
 .intro-logo.docked.theme-white .intro-ch i,
 .intro-logo.docking.menu-active .intro-ch i,
@@ -467,6 +469,7 @@ body:has(.the-frankie-header.menu-active) .intro-logo.docked .gourd-silhouette,
 body:has(.the-frankie-header:hover) .intro-logo.docked .gourd-silhouette,
 body:has(.the-frankie-header.is-hovered) .intro-logo.docked .gourd-silhouette,
 body:has(#gourd-main-logo:hover) .intro-logo.docked .gourd-silhouette,
+body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intro-logo.docked .gourd-silhouette,
 .intro-logo.docking.theme-white .gourd-silhouette,
 .intro-logo.docked.theme-white .gourd-silhouette,
 .intro-logo.docking.menu-active .gourd-silhouette,
@@ -480,6 +483,7 @@ body:has(.the-frankie-header.menu-active) .intro-logo.docked .gourd-contour-draw
 body:has(.the-frankie-header:hover) .intro-logo.docked .gourd-contour-draw,
 body:has(.the-frankie-header.is-hovered) .intro-logo.docked .gourd-contour-draw,
 body:has(#gourd-main-logo:hover) .intro-logo.docked .gourd-contour-draw,
+body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intro-logo.docked .gourd-contour-draw,
 .intro-logo.docking.theme-white .gourd-contour-draw,
 .intro-logo.docked.theme-white .gourd-contour-draw,
 .intro-logo.docking.menu-active .gourd-contour-draw,
@@ -493,6 +497,7 @@ body:has(.the-frankie-header.menu-active) .intro-logo.docked .intro-dot,
 body:has(.the-frankie-header:hover) .intro-logo.docked .intro-dot,
 body:has(.the-frankie-header.is-hovered) .intro-logo.docked .intro-dot,
 body:has(#gourd-main-logo:hover) .intro-logo.docked .intro-dot,
+body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intro-logo.docked .intro-dot,
 .intro-logo.docking.theme-white .intro-dot,
 .intro-logo.docked.theme-white .intro-dot,
 .intro-logo.docking.menu-active .intro-dot,

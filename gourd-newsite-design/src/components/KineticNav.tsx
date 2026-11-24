@@ -72,6 +72,12 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
       // Center vertical probe line of the fixed topbar (typically y ≈ 32-36px)
       const probeY = navRect ? Math.round(navRect.top + navRect.height / 2) : 34
 
+      const brandSlot = document.getElementById('brand-slot')
+      const slotRect = brandSlot?.getBoundingClientRect()
+      const probeX = slotRect && slotRect.width > 0
+        ? Math.round(slotRect.left + slotRect.width / 2)
+        : Math.round(Math.min(window.innerWidth * 0.12, 140))
+
       // 1. Primary Strategy: Check explicit section bounding boxes at probeY
       // This is the most deterministic approach across scroll positions and layout hierarchies
       const candidateSections = Array.from(
@@ -98,6 +104,24 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
             }
           }
 
+          // If on story preview (split columns: image on left, copy on right)
+          if (section.classList.contains('story-preview')) {
+            const storyImg = section.querySelector<HTMLElement>('.story-image')
+            const storyCopy = section.querySelector<HTMLElement>('.story-copy')
+            if (storyImg && storyCopy) {
+              const imgRect = storyImg.getBoundingClientRect()
+              const copyRect = storyCopy.getBoundingClientRect()
+              if (imgRect.top <= probeY && imgRect.bottom >= probeY && imgRect.left <= probeX && imgRect.right >= probeX) {
+                setNavTheme('dark')
+                return
+              }
+              if (copyRect.top <= probeY && copyRect.bottom >= probeY) {
+                setNavTheme('white')
+                return
+              }
+            }
+          }
+
           // Check explicit data-logo-theme / data-nav-theme
           const explicitTheme =
             section.getAttribute('data-logo-theme') ||
@@ -114,14 +138,14 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
           // Class-based classification of known sections
           if (
             section.matches(
-              '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .about-hero-image, .story-preview, .footer, .bg-dark, .dark-section, .fullscreen-lightbox'
+              '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .about-hero-image, .story-image, .bg-dark, .dark-section, .fullscreen-lightbox'
             )
           ) {
             setNavTheme('dark')
             return
           }
 
-          if (section.matches('.hero-copy, .contact-bottom, .bg-red')) {
+          if (section.matches('.hero-copy, .contact-bottom, .bg-red, .footer')) {
             setNavTheme('red')
             return
           }
@@ -138,12 +162,6 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
       }
 
       // 2. Secondary Strategy: Point-based inspection at logo position and center
-      const brandSlot = document.getElementById('brand-slot')
-      const slotRect = brandSlot?.getBoundingClientRect()
-      const probeX = slotRect && slotRect.width > 0
-        ? Math.round(slotRect.left + slotRect.width / 2)
-        : Math.round(Math.min(window.innerWidth * 0.12, 140))
-
       const elements = document.elementsFromPoint(probeX, probeY)
 
       for (const el of elements) {
@@ -171,14 +189,14 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         // Class matching
         if (
           el.closest(
-            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .footer, .bg-dark, .dark-section, .fullscreen-lightbox'
+            '.products-hero-bg, .contact-hero-bg, .community-hero-bg, .detail-image, .detail-gallery, .hero-visual, .story-image, .about-hero-image, .bg-dark, .dark-section, .fullscreen-lightbox'
           )
         ) {
           setNavTheme('dark')
           return
         }
 
-        if (el.closest('.hero-copy, .contact-bottom, .bg-red')) {
+        if (el.closest('.hero-copy, .contact-bottom, .bg-red, .footer')) {
           setNavTheme('red')
           return
         }

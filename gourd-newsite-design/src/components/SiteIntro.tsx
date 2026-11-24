@@ -142,10 +142,12 @@ export function SiteIntro() {
     const isRed = classes.includes('theme-red')
     const isDark = classes.includes('theme-dark')
     const isWhite = classes.includes('theme-white')
+    const isScrolled = classes.includes('is-scrolled')
+    const effectiveWhite = isWhite || isMenuOpen || (isScrolled && !isRed && !isDark) || (!isRed && !isDark)
 
     logo.classList.toggle('theme-red', isRed && !isMenuOpen)
     logo.classList.toggle('theme-dark', isDark && !isMenuOpen)
-    logo.classList.toggle('theme-white', isWhite || isMenuOpen)
+    logo.classList.toggle('theme-white', effectiveWhite)
     logo.classList.toggle('menu-active', isMenuOpen)
   }, [])
 

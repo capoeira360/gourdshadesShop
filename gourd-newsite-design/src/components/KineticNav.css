@@ -325,7 +325,8 @@
 
 /* Default / Theme White (and when menu-active is open) */
 .the-frankie-header.theme-white .frankie-nav-link,
-.the-frankie-header.menu-active .frankie-nav-link {
+.the-frankie-header.menu-active .frankie-nav-link,
+.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark) .frankie-nav-link {
   color: var(--frankie-text, #1a1a18) !important;
   text-shadow: none !important;
 }

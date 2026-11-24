@@ -179,7 +179,7 @@ function Header({ count, openCart }: { count: number; openCart: () => void }) {
 
 function Footer() {
   return (
-    <footer className="footer" data-logo-theme="dark">
+    <footer className="footer" data-logo-theme="red">
       <div className="footer-top">
         <div>
           <MaskedHeading
@@ -453,8 +453,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="story-preview" data-logo-theme="dark">
-        <div className="story-image">
+      <section className="story-preview">
+        <div className="story-image" data-logo-theme="dark">
           <ParallaxImage
             src="/images/background-replace.jpg"
             alt="Master artisan carving calabash lamp in Gourd Shades workshop"
@@ -465,7 +465,7 @@ function Home() {
             scale={1.04}
           />
         </div>
-        <div className="story-copy">
+        <div className="story-copy" data-logo-theme="white">
           <MaskedHeading
             as="h2"
             lines={[
