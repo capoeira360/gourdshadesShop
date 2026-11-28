@@ -546,269 +546,278 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         </div>
       </div>
 
-      {/* 2. MEGA MENU: SHOP (Matching Screenshot 2) */}
+      {/* 2 & 3. MEGA MENUS: SHOP + EXPLORE
+          Outer wrapper opens/closes as one unit.
+          Inner panels crossfade in-place — the container never collapses between tabs. */}
       <AnimatePresence>
-        {activeMega === 'shop' && (
+        {(activeMega === 'shop' || activeMega === 'explore') && (
           <motion.div
-            className="frankie-megamenu shop-mega"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.14, ease: 'easeOut' }}
-            onMouseEnter={() => handleMouseEnter('shop')}
+            className="frankie-megamenu-outer"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="shop-mega-grid">
-              {/* Column 1: Primary Category Hierarchy */}
-              <div className="mega-col category-col">
-                <span className="mega-col-heading">Categories</span>
-                <ul className="mega-link-list">
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn is-highlight"
-                      onClick={() => handleSelectFilter('All lamps')}
-                    >
-                      All Lamps
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Artisan Pieces')}
-                    >
-                      Artisan Pieces
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('New Designs')}
-                    >
-                      New Designs
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Custom Design')}
-                    >
-                      Custom Studio
-                    </button>
-                  </li>
-                </ul>
-              </div>
+            {/* SHOP content */}
+            <motion.div
+              className="frankie-megamenu shop-mega mega-panel-layer"
+              initial={false}
+              animate={{ opacity: activeMega === 'shop' ? 1 : 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              style={{ pointerEvents: activeMega === 'shop' ? 'auto' : 'none' }}
+              onMouseEnter={() => handleMouseEnter('shop')}
+              aria-hidden={activeMega !== 'shop'}
+            >
+              <div className="shop-mega-grid">
+                {/* Column 1: Primary Category Hierarchy */}
+                <div className="mega-col category-col">
+                  <span className="mega-col-heading">Categories</span>
+                  <ul className="mega-link-list">
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn is-highlight"
+                        onClick={() => handleSelectFilter('All lamps')}
+                      >
+                        All Lamps
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Artisan Pieces')}
+                      >
+                        Artisan Pieces
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('New Designs')}
+                      >
+                        New Designs
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Custom Design')}
+                      >
+                        Custom Studio
+                      </button>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Column 2: Collections & Subcategories */}
-              <div className="mega-col subcategories-col">
-                <span className="mega-col-heading">Collections</span>
-                <ul className="mega-link-list">
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn is-strong"
-                      onClick={() => handleSelectFilter('Wildlife Sculptures')}
-                    >
-                      Wildlife Sculptures
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Botanical & Trees')}
-                    >
-                      Botanical &amp; Trees
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Abstract & Contemporary')}
-                    >
-                      Abstract &amp; Contemporary
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn with-badge"
-                      onClick={() => handleSelectFilter('Savanna Twilight Edit')}
-                    >
-                      <span>Savanna Twilight Edit</span>
-                      <span className="mega-badge">NEW</span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
+                {/* Column 2: Collections & Subcategories */}
+                <div className="mega-col subcategories-col">
+                  <span className="mega-col-heading">Collections</span>
+                  <ul className="mega-link-list">
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn is-strong"
+                        onClick={() => handleSelectFilter('Wildlife Sculptures')}
+                      >
+                        Wildlife Sculptures
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Botanical & Trees')}
+                      >
+                        Botanical &amp; Trees
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Abstract & Contemporary')}
+                      >
+                        Abstract &amp; Contemporary
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn with-badge"
+                        onClick={() => handleSelectFilter('Savanna Twilight Edit')}
+                      >
+                        <span>Savanna Twilight Edit</span>
+                        <span className="mega-badge">NEW</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Column 3: Curated Edits & Lighting Placements */}
-              <div className="mega-col edits-col">
-                <span className="mega-col-heading">Curated Edits</span>
-                <ul className="mega-link-list">
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn is-strong"
-                      onClick={() => handleSelectFilter('Floor Lamps')}
-                    >
-                      Floor Lamps
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Hanging Lamps')}
-                    >
-                      Hanging Lamps
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('Bedside & Table')}
-                    >
-                      Bedside &amp; Table
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      className="mega-text-btn"
-                      onClick={() => handleSelectFilter('The Arusha Capsule')}
-                    >
-                      The Arusha Capsule
-                    </button>
-                  </li>
-                </ul>
-              </div>
+                {/* Column 3: Curated Edits & Lighting Placements */}
+                <div className="mega-col edits-col">
+                  <span className="mega-col-heading">Curated Edits</span>
+                  <ul className="mega-link-list">
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn is-strong"
+                        onClick={() => handleSelectFilter('Floor Lamps')}
+                      >
+                        Floor Lamps
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Hanging Lamps')}
+                      >
+                        Hanging Lamps
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('Bedside & Table')}
+                      >
+                        Bedside &amp; Table
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="mega-text-btn"
+                        onClick={() => handleSelectFilter('The Arusha Capsule')}
+                      >
+                        The Arusha Capsule
+                      </button>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Column 4: Large Fashion-House Editorial Image Showcase */}
-              <div className="mega-col editorial-showcase-col">
-                <Link
-                  to="/products?filter=New+Entries"
-                  className="editorial-showcase-card"
-                  onClick={() => setActiveMega(null)}
-                >
-                  <div className="editorial-showcase-img-wrap">
-                    <img
-                      src="/images/standing-bedside-2.jpeg"
-                      alt="Handcrafted standing bedside gourd luminaire"
-                      className="editorial-showcase-img"
-                    />
-                  </div>
-                  <div className="editorial-showcase-label">
-                    <span className="editorial-arrow">↳</span>
-                    <span>NEW IN</span>
-                  </div>
-                </Link>
+                {/* Column 4: Large Fashion-House Editorial Image Showcase */}
+                <div className="mega-col editorial-showcase-col">
+                  <Link
+                    to="/products?filter=New+Entries"
+                    className="editorial-showcase-card"
+                    onClick={() => setActiveMega(null)}
+                  >
+                    <div className="editorial-showcase-img-wrap">
+                      <img
+                        src="/images/standing-bedside-2.jpeg"
+                        alt="Handcrafted standing bedside gourd luminaire"
+                        className="editorial-showcase-img"
+                      />
+                    </div>
+                    <div className="editorial-showcase-label">
+                      <span className="editorial-arrow">↳</span>
+                      <span>NEW IN</span>
+                    </div>
+                  </Link>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
 
-      {/* 3. MEGA MENU: EXPLORE (Matching Screenshot 3) */}
-      <AnimatePresence>
-        {activeMega === 'explore' && (
-          <motion.div
-            className="frankie-megamenu explore-mega"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.14, ease: 'easeOut' }}
-            onMouseEnter={() => handleMouseEnter('explore')}
-          >
-            <div className="explore-mega-grid">
-              {/* Column 1: Links */}
-              <div className="mega-col explore-links-col">
-                <ul className="mega-link-list large-links">
-                  <li>
-                    <Link
-                      to="/about"
-                      className="mega-large-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      About us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/contact"
-                      className="mega-large-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      Contact
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/community"
-                      className="mega-large-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      Community &amp; Outreach
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/about#craft"
-                      className="mega-large-link"
-                      onClick={() => setActiveMega(null)}
-                    >
-                      The Craftsmanship
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* EXPLORE content — overlaid, crossfades in when activeMega === 'explore' */}
+            <motion.div
+              className="frankie-megamenu explore-mega mega-panel-layer mega-panel-overlay"
+              initial={false}
+              animate={{ opacity: activeMega === 'explore' ? 1 : 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              style={{ pointerEvents: activeMega === 'explore' ? 'auto' : 'none' }}
+              onMouseEnter={() => handleMouseEnter('explore')}
+              aria-hidden={activeMega !== 'explore'}
+            >
+              <div className="explore-mega-grid">
+                {/* Column 1: Links */}
+                <div className="mega-col explore-links-col">
+                  <ul className="mega-link-list large-links">
+                    <li>
+                      <Link
+                        to="/about"
+                        className="mega-large-link"
+                        onClick={() => setActiveMega(null)}
+                      >
+                        About us
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/contact"
+                        className="mega-large-link"
+                        onClick={() => setActiveMega(null)}
+                      >
+                        Contact
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/community"
+                        className="mega-large-link"
+                        onClick={() => setActiveMega(null)}
+                      >
+                        Community &amp; Outreach
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/about#craft"
+                        className="mega-large-link"
+                        onClick={() => setActiveMega(null)}
+                      >
+                        The Craftsmanship
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Column 2: Editorial Card 1 (Contact / Artisan) */}
-              <div className="mega-col explore-card-col">
-                <Link
-                  to="/contact"
-                  className="explore-editorial-card"
-                  onClick={() => setActiveMega(null)}
-                >
-                  <div className="explore-card-img-wrap">
-                    <img
-                      src="/images/IMG-20250529-WA0007-nav-contacts.jpg"
-                      alt="Artisan studio craftsmanship in Arusha"
-                      className="explore-card-img"
-                    />
-                  </div>
-                  <div className="editorial-showcase-label">
-                    <span className="editorial-arrow">↳</span>
-                    <span>CONTACT</span>
-                  </div>
-                </Link>
-              </div>
+                {/* Column 2: Editorial Card 1 (Contact / Artisan) */}
+                <div className="mega-col explore-card-col">
+                  <Link
+                    to="/contact"
+                    className="explore-editorial-card"
+                    onClick={() => setActiveMega(null)}
+                  >
+                    <div className="explore-card-img-wrap">
+                      <img
+                        src="/images/IMG-20250529-WA0007-nav-contacts.jpg"
+                        alt="Artisan studio craftsmanship in Arusha"
+                        className="explore-card-img"
+                      />
+                    </div>
+                    <div className="editorial-showcase-label">
+                      <span className="editorial-arrow">↳</span>
+                      <span>CONTACT</span>
+                    </div>
+                  </Link>
+                </div>
 
-              {/* Column 3: Editorial Card 2 (Once Upon a Time in Arusha) */}
-              <div className="mega-col explore-card-col wide">
-                <Link
-                  to="/about"
-                  className="explore-editorial-card"
-                  onClick={() => setActiveMega(null)}
-                >
-                  <div className="explore-card-img-wrap">
-                    <img
-                      src="/images/image-wm-about.jpg"
-                      alt="Isaac Munis crafting in Arusha, Tanzania"
-                      className="explore-card-img"
-                    />
-                  </div>
-                  <div className="editorial-showcase-label">
-                    <span className="editorial-arrow">↳</span>
-                    <span>ONCE UPON A TIME IN ARUSHA</span>
-                  </div>
-                </Link>
+                {/* Column 3: Editorial Card 2 (Once Upon a Time in Arusha) */}
+                <div className="mega-col explore-card-col wide">
+                  <Link
+                    to="/about"
+                    className="explore-editorial-card"
+                    onClick={() => setActiveMega(null)}
+                  >
+                    <div className="explore-card-img-wrap">
+                      <img
+                        src="/images/image-wm-about.jpg"
+                        alt="Isaac Munis crafting in Arusha, Tanzania"
+                        className="explore-card-img"
+                      />
+                    </div>
+                    <div className="editorial-showcase-label">
+                      <span className="editorial-arrow">↳</span>
+                      <span>ONCE UPON A TIME IN ARUSHA</span>
+                    </div>
+                  </Link>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -818,10 +827,10 @@ export function KineticNav({ cartCount = 0, onOpenCart }: KineticNavProps) {
         {activeMega === 'search' && (
           <motion.div
             className="frankie-search-panel"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.14, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="search-bar-row">
               <Search size={16} className="search-input-icon" />

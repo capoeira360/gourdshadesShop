@@ -133,7 +133,8 @@
 }
 
 .detail-category-eyebrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-small, sans-serif);
   font-size: 11px;
   font-weight: 700;
@@ -2150,12 +2151,18 @@ p,
 
 /* === PRODUCT CARD SIDE MASK REVEAL SCROLL ANIMATION === */
 .product-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   padding-bottom: 4px;
   margin-bottom: -4px;
 }
 
 .product-card-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
   opacity: 1;
   translate: 0 0;
 
@@ -3246,12 +3253,45 @@ main,
 }
 
 .product-card-info {
-  padding: 20px 18px 22px;
+  flex: 1;
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
   color: var(--color-earth);
 }
 
+/* Hide description paragraph on listing cards — detail page shows full info */
+.product-card-info > div > p,
+.product-card-info p:not(.price):not(.price-sold) {
+  display: none !important;
+}
+
+.product-card-info .eyebrow {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+}
+
+.product-card-info h3 {
+  font-size: clamp(28px, 2.3vw, 34px) !important;
+  line-height: 1.06 !important;
+  letter-spacing: -0.04em !important;
+  margin: 0 !important;
+}
+
+.product-card-info .price:not(.price-sold) {
+  font-size: clamp(18px, 1.5vw, 22px) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
 .product-card-info h3,
-.product-card-info p,
 .product-card-info .eyebrow,
 .product-card-info .muted,
 .product-card-info .price {
@@ -5252,7 +5292,7 @@ em,
   }
 
   .story-image {
-    height: 360px !important;
+    height: 100% !important;
   }
 
   .story-copy {
@@ -5286,8 +5326,22 @@ em,
     aspect-ratio: 1 / 1.12 !important;
   }
 
+  .product-card-info {
+    padding: 14px 16px 16px !important;
+    gap: 10px !important;
+  }
+
   .product-card-info h3 {
-    font-size: clamp(20px, 5.2vw, 25px) !important;
+    font-size: clamp(22px, 5.8vw, 28px) !important;
+  }
+
+  .product-card-info .price:not(.price-sold) {
+    font-size: clamp(16px, 4.2vw, 19px) !important;
+  }
+
+  .product-card .price-sold {
+    font-size: 9.5px !important;
+    padding: 5px 11px !important;
   }
 
   /* Cart Drawer Fullscreen Mobile Sheet */
@@ -5452,11 +5506,26 @@ em,
 
 /* 2. Product Detail Page Wishlist Button & Sold States */
 .price-sold {
-  font-size: 11px !important;
-  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px !important;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700 !important;
   color: #9c4d32 !important;
+  background: rgba(156, 77, 50, 0.08);
+  border: 1px solid rgba(156, 77, 50, 0.22);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+/* Card-level sold badge: compact pill aligned with price height */
+.product-card .price-sold {
+  margin-top: 2px !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  padding: 6px 13px;
 }
 
 .detail-meta-pill-row {
@@ -5470,14 +5539,15 @@ em,
 .detail-pill-badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  padding: 6px 16px;
   border-radius: 999px;
   font-family: var(--font-small, 'DM Sans', sans-serif);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1;
+  vertical-align: middle;
 }
 
 .detail-pill-badge.new-entry {

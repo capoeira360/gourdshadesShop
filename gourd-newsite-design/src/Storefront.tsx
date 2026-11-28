@@ -155,7 +155,7 @@ function ProductCard({
         <div className="product-card-info">
           <div>
             <span className="eyebrow muted">
-              {formatCategory(product.category)} / 0{index + 1}
+              {product.subCategory || formatCategory(product.category)}
             </span>
             <h3>
               <Link to={`/products/${product.id}`}>{product.name}</Link>
@@ -253,7 +253,6 @@ function Footer() {
           </button>
           <a href={`mailto:${STUDIO_EMAIL}`}>gourdshadestz@gmail.com</a>
           <a href={`tel:${STUDIO_PHONE}`}>{STUDIO_PHONE}</a>
-          <span>{STUDIO_LOCATION}</span>
         </div>
         <div className="footer-meta">
           <span>© {new Date().getFullYear()} Gourd Shades Artisan Lighting</span>

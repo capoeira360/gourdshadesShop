@@ -405,15 +405,32 @@ export function SiteIntro() {
 
   // Mount effect
   useEffect(() => {
+    const checkRoute = () => {
+      const isAdminRoute = window.location.pathname.startsWith('/admin')
+      document.body.classList.toggle('admin-route', isAdminRoute)
+      if (isAdminRoute) {
+        skipIntro()
+      }
+    }
+    checkRoute()
+
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (isReduced) {
-      skipIntro()
-    } else {
-      playIntro()
+    if (!window.location.pathname.startsWith('/admin')) {
+      if (isReduced) {
+        skipIntro()
+      } else {
+        playIntro()
+      }
     }
 
+    window.addEventListener('popstate', checkRoute)
+    const interval = setInterval(checkRoute, 400)
+
     return () => {
+      window.removeEventListener('popstate', checkRoute)
+      clearInterval(interval)
       document.body.classList.remove('intro-lock')
+      document.body.classList.remove('admin-route')
       if (rafCountRef.current) cancelAnimationFrame(rafCountRef.current)
     }
   }, [playIntro, skipIntro])

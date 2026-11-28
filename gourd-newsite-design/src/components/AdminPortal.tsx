@@ -275,7 +275,9 @@ export const AdminPortal: React.FC = () => {
       <div className="admin-login-wrapper">
         <div className="admin-login-card">
           <div className="admin-login-brand">
-            <GourdLogo iconSize={42} showText={true} />
+            <Link to="/" className="admin-brand-link" aria-label="Gourd Shades Home">
+              <GourdLogo showText={true} />
+            </Link>
             <span className="admin-portal-badge">STUDIO CMS PORTAL</span>
           </div>
 
@@ -347,7 +349,9 @@ export const AdminPortal: React.FC = () => {
       {/* Top Admin Header Bar */}
       <header className="admin-topbar">
         <div className="admin-topbar-left">
-          <GourdLogo iconSize={36} showText={true} />
+          <Link to="/" className="admin-brand-link" aria-label="Gourd Shades Home">
+            <GourdLogo showText={true} />
+          </Link>
           <span className="admin-mode-pill">STUDIO ADMIN</span>
         </div>
 

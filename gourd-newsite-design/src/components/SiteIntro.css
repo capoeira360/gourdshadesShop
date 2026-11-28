@@ -522,3 +522,21 @@ body:has(.the-frankie-header.is-scrolled:not(.theme-red):not(.theme-dark)) .intr
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hide storefront intro overlay & docked logo when inside Admin Portal */
+body.admin-route #gourd-main-logo,
+body.admin-route .intro-logo,
+body.admin-route .intro-logo.docked,
+body.admin-route .intro-overlay,
+body:has(.admin-dashboard-container) #gourd-main-logo,
+body:has(.admin-dashboard-container) .intro-logo,
+body:has(.admin-dashboard-container) .intro-logo.docked,
+body:has(.admin-login-wrapper) #gourd-main-logo,
+body:has(.admin-login-wrapper) .intro-logo,
+body:has(.admin-login-wrapper) .intro-logo.docked,
+body:has(.admin-dashboard-container) .intro-overlay,
+body:has(.admin-login-wrapper) .intro-overlay {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
